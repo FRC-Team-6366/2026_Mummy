@@ -19,9 +19,6 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
-  public static final Mode simMode = Mode.SIM;
-  public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
-
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -32,4 +29,7 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+
+  public static final Mode simMode = Mode.SIM;
+  public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 }
