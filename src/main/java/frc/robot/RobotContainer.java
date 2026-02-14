@@ -65,10 +65,10 @@ public class RobotContainer {
      m_driverController.b().whileTrue
      (Commands.parallel(
       Commands.runOnce(() -> shooter.stop()),
-      Commands.runOnce(() -> kicker.stop()),
-      Commands.runOnce(() -> indexer.stop())
+      Commands.runOnce(() -> kicker.stop())
+      // Commands.runOnce(() -> indexer.stop()
       )
-     );
+      );
      m_driverController.leftTrigger().whileTrue(Commands.runOnce(() -> kicker.kickDecrements()));
      m_driverController.rightTrigger().whileTrue(Commands.runOnce(() -> kicker.kickIncrements()));
 
