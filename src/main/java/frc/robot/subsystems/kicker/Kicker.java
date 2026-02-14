@@ -1,6 +1,9 @@
 package frc.robot.subsystems.kicker;
 
 
+
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -11,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Kicker extends SubsystemBase {
     private final TalonFX kickMotor;
     double power = 0;
+    KickerIO kickerIO;
+    KickerIOInputs inputs = new KickerIOInputsAutoLogged();
     public Kicker(){
         kickMotor = new TalonFX(24);
         TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
@@ -53,6 +58,9 @@ public class Kicker extends SubsystemBase {
      @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //2.14.2026 I think this is an auto generated comment above. no clue what it means
+    this.kickerIO.updateInputs(inputs);
+    Logger.processInputs("IndexerSubstem", inputs);
   }
 
   @Override
