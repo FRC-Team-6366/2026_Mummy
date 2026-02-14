@@ -35,13 +35,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-<<<<<<< HEAD
-    this.shooter = new Shooter(2, 3);
-    this.indexer = new Indexer(new IndexerIOTalonFX());
-=======
     this.shooter = new Shooter();
-    this.indexer = new Indexer();
->>>>>>> shooter
+    this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker();
 
     // Configure the trigger bindings
