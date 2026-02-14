@@ -37,7 +37,7 @@ public final class Constants {
 
   public class ShooterConstants {
     public static final int leadShooterMotorId = 7;
-    public static final int follwerShooterMotorId = 8;
+    public static final int followerShooterMotorId = 8;
     public static final int hoodMotorId = 9;
     public static final int hoodMotorCANCoderId = 10;
     public static final int shooterAimMotorId = 11;

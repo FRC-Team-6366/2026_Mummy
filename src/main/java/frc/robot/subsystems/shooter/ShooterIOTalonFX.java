@@ -10,7 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import frc.robot.Constants;
 
-import frc.robot.subsystems.shooter.ShooterConstants;
+
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -58,7 +58,7 @@ ShooterIOTalonFX(){
     this.leadShooterMotor.getConfigurator().apply(leadcfg);
 
 
-    followShooterMotor = new TalonFX(ShooterConstants.followShooterID);
+    followShooterMotor = new TalonFX(Constants.ShooterConstants.followerShooterMotorId);
 
     followShooterVolts = followShooterMotor.getMotorVoltage();
     followShooterPosition = followShooterMotor.getPosition();
