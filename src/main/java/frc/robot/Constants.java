@@ -19,6 +19,30 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+  public class drivetrainConstants {
+    public static final int leftFrontMotorId = 0;
+    public static final int rightFrontMotorId = 1;
+    public static final int leftRearMotorId = 2;
+    public static final int rightRearMotorId = 3;
+  }
+
+  public class IndexerConstants {
+    public static final int indexerMotorId = 4;
+    public static final int indexerWallMotorId = 5;
+  }
+
+  public class KickerConstants {
+    public static final int kickerMotorId = 6;
+  }
+
+  public class ShooterConstants {
+    public static final int leadShooterMotorId = 7;
+    public static final int follwerShooterMotorId = 8;
+    public static final int hoodMotorId = 9;
+    public static final int hoodMotorCANCoderId = 10;
+    public static final int shooterAimMotorId = 11;
+  }
+
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
