@@ -10,14 +10,9 @@ public class IndexerIOInputs {
     double indexRps = 0;
     double indexCurrent = 0;
     double indexSupplyCurrent = 0;
-
-
     double indexWallVolts = 0;
     double indexWallPosition = 0;
     double indexWallRps = 0;
     double indexWallCurrent = 0;
     double indexWallSupplyCurrent = 0; 
-
-    
 }
-
