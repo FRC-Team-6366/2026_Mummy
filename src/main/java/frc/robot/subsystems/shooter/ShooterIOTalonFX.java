@@ -10,7 +10,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import frc.robot.subsystems.shooter.ShooterConstants;
-import frc.robot.subsystems.shooter.ShooterConstants.IdConstants;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -45,7 +44,7 @@ public class ShooterIOTalonFX implements ShooterIO{
 
 
 ShooterIOTalonFX(){
-    leadShooterMotor = new TalonFX(IdConstants.leadShooterID);   
+    leadShooterMotor = new TalonFX(ShooterConstants.leadShooterID);   
  
     leadShooterVolts = leadShooterMotor.getMotorVoltage();
     leadShooterPosition = leadShooterMotor.getPosition();
@@ -58,7 +57,7 @@ ShooterIOTalonFX(){
     this.leadShooterMotor.getConfigurator().apply(leadcfg);
 
 
-    followShooterMotor = new TalonFX(IdConstants.followShooterID);
+    followShooterMotor = new TalonFX(ShooterConstants.followShooterID);
 
     followShooterVolts = followShooterMotor.getMotorVoltage();
     followShooterPosition = followShooterMotor.getPosition();
@@ -71,8 +70,8 @@ ShooterIOTalonFX(){
     this.followShooterMotor.getConfigurator().apply(followcfg);
 
 
-    hoodMotor = new TalonFX(IdConstants.hoodMotorID);
-    hoodEncoder = new CANcoder(IdConstants.hoodEncoderID);
+    hoodMotor = new TalonFX(ShooterConstants.hoodMotorID);
+    hoodEncoder = new CANcoder(ShooterConstants.hoodEncoderID);
 
     hoodVolts = hoodMotor.getMotorVoltage();
     hoodPosition = hoodMotor.getPosition();
