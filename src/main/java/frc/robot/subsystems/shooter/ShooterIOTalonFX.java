@@ -8,6 +8,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import frc.robot.Constants;
 
 import frc.robot.subsystems.shooter.ShooterConstants;
 import edu.wpi.first.units.measure.Angle;
@@ -44,7 +45,7 @@ public class ShooterIOTalonFX implements ShooterIO{
 
 
 ShooterIOTalonFX(){
-    leadShooterMotor = new TalonFX(ShooterConstants.leadShooterID);   
+    leadShooterMotor = new TalonFX(Constants.ShooterConstants.leadShooterMotorId);   
  
     leadShooterVolts = leadShooterMotor.getMotorVoltage();
     leadShooterPosition = leadShooterMotor.getPosition();
@@ -70,8 +71,8 @@ ShooterIOTalonFX(){
     this.followShooterMotor.getConfigurator().apply(followcfg);
 
 
-    hoodMotor = new TalonFX(ShooterConstants.hoodMotorID);
-    hoodEncoder = new CANcoder(ShooterConstants.hoodEncoderID);
+    hoodMotor = new TalonFX(Constants.ShooterConstants.hoodMotorId);
+    hoodEncoder = new CANcoder(Constants.ShooterConstants.hoodMotorCANCoderId);
 
     hoodVolts = hoodMotor.getMotorVoltage();
     hoodPosition = hoodMotor.getPosition();

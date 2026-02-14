@@ -31,12 +31,12 @@ public class IndexerIOTalonFX implements IndexerIO{
 
 
     public IndexerIOTalonFX(){
-        indexMotor= new TalonFX(38); //16
+        indexMotor= new TalonFX(4); //16
         TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexMotor.getConfigurator().apply(indMotorconfiguration);
 
-        indexWallMotor= new TalonFX(39);//STAND IN MOTOR, ask for wall motor device Id later
+        indexWallMotor= new TalonFX(5);//STAND IN MOTOR, ask for wall motor device Id later
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexWallMotor.getConfigurator().apply(indMotorconfiguration);
 
