@@ -18,6 +18,5 @@ public class IndexerIOInputs {
     double indexWallCurrent = 0;
     double indexWallSupplyCurrent = 0; 
 
-    
 }
 

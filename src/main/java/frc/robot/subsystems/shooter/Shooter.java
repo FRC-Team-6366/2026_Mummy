@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase{
     private final TalonFX motor1;
     private final TalonFX motor2;
+
     double power = 0;
 
     public Shooter(int motorId1, int motorId2){
