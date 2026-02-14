@@ -29,7 +29,7 @@ public class Robot extends LoggedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    Logger.start();
+    Logger.start(); //Starts the logger ability
   }
 
   /**
