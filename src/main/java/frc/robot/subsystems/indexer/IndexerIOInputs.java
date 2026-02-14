@@ -15,4 +15,10 @@ public class IndexerIOInputs {
     double indexWallRps = 0;
     double indexWallCurrent = 0;
     double indexWallSupplyCurrent = 0; 
+<<<<<<< HEAD
 }
+=======
+
+}
+
+>>>>>>> shooter

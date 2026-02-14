@@ -16,9 +16,6 @@ public class Indexer extends SubsystemBase {
 
     
     public void stop(){
-        // double voltage = 0;
-        // VoltageOut volts = new VoltageOut(voltage);
-        // kickMotor.setControl(volts);
         if (this.power>0){
             this.power =0;
         }

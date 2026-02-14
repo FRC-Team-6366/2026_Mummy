@@ -94,7 +94,7 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexCurrent,
         indexSupplyCurrent,
         indexWallVolts,
-        indexPosition,
+        indexWallPosition,
         indexWallRps,
         indexWallCurrent,
         indexWallSupplyCurrent).isOK();
@@ -104,11 +104,11 @@ public class IndexerIOTalonFX implements IndexerIO{
         inputs.indexCurrent = this.indexCurrent.getValueAsDouble();
         inputs.indexSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();
 
-        inputs.indexWallVolts = this.indexVolts.getValueAsDouble();
-        inputs.indexWallPosition = this.indexPosition.getValueAsDouble();
-        inputs.indexWallRps = this.indexRps.getValueAsDouble();
-        inputs.indexWallCurrent = this.indexCurrent.getValueAsDouble();
-        inputs.indexWallSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();
+        inputs.indexWallVolts = this.indexWallVolts.getValueAsDouble();
+        inputs.indexWallPosition = this.indexWallPosition.getValueAsDouble();
+        inputs.indexWallRps = this.indexWallRps.getValueAsDouble();
+        inputs.indexWallCurrent = this.indexWallCurrent.getValueAsDouble();
+        inputs.indexWallSupplyCurrent = this.indexWallSupplyCurrent.getValueAsDouble();
     }
     
     
