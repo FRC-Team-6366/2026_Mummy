@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Indexer extends SubsystemBase {
     private double power = 0;
     IndexerIO indexerIO;
-    IndexerIOInputs inputs = new IndexerIOInputsAutoLogged();
+    IndexerIOInputsAutoLogged inputs;
 
     public Indexer(){
         this.indexerIO = new IndexerIOTalonFX();
