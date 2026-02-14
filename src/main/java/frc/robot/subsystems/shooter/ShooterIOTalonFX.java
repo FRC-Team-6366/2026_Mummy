@@ -1,5 +1,111 @@
 package frc.robot.subsystems.shooter;
 
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+
+import frc.robot.subsystems.shooter.ShooterConstants;
+import frc.robot.subsystems.shooter.ShooterConstants.IdConstants;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Voltage;
+
 public class ShooterIOTalonFX {
+    TalonFX leadShooterMotor;
+    TalonFX followShooterMotor;
     
+    CANcoder hoodEncoder;
+    TalonFX hoodMotor;
+
+    StatusSignal<Voltage> leadShooterVolts;
+    StatusSignal<Angle> leadShooterPosition;
+    StatusSignal<AngularVelocity> leadShooterRps;
+    StatusSignal<Current> leadShooterCurrent;
+    StatusSignal<Current> leadShooterSupplyCurrent; 
+
+    StatusSignal<Voltage> followShooterVolts;
+    StatusSignal<Angle> followShooterPosition;
+    StatusSignal<AngularVelocity> followShooterRps;
+    StatusSignal<Current> followShooterCurrent;
+    StatusSignal<Current> followShooterSupplyCurrent; 
+
+    StatusSignal<Voltage> hoodVolts;
+    StatusSignal<Angle> hoodPosition;
+    StatusSignal<AngularVelocity> hoodRps;
+    StatusSignal<Current> hoodCurrent;
+    StatusSignal<Current> hoodSupplyCurrent; 
+    StatusSignal<Angle> hoodCANPositionRotations;
+    StatusSignal<AngularVelocity> hoodCANVelocityRps;
+
+
+ShooterIOTalonFX(){
+    leadShooterMotor = new TalonFX(IdConstants.leadShooterID);   
+ 
+    leadShooterVolts = leadShooterMotor.getMotorVoltage();
+    leadShooterPosition = leadShooterMotor.getPosition();
+    leadShooterRps = leadShooterMotor.getVelocity();
+    leadShooterCurrent = leadShooterMotor.getTorqueCurrent();
+    leadShooterSupplyCurrent = leadShooterMotor.getSupplyCurrent();
+
+    TalonFXConfiguration leadcfg = new TalonFXConfiguration();
+    leadcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
+    this.leadShooterMotor.getConfigurator().apply(leadcfg);
+
+
+    followShooterMotor = new TalonFX(IdConstants.followShooterID);
+
+    followShooterVolts = followShooterMotor.getMotorVoltage();
+    followShooterPosition = followShooterMotor.getPosition();
+    followShooterRps = followShooterMotor.getVelocity();
+    followShooterCurrent = followShooterMotor.getTorqueCurrent();
+    followShooterSupplyCurrent = followShooterMotor.getSupplyCurrent();
+
+    TalonFXConfiguration followcfg = new TalonFXConfiguration();
+    followcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    this.followShooterMotor.getConfigurator().apply(followcfg);
+
+
+    hoodMotor = new TalonFX(IdConstants.hoodMotorID);
+    hoodEncoder = new CANcoder(IdConstants.hoodEncoderID);
+
+    hoodVolts = hoodMotor.getMotorVoltage();
+    hoodPosition = hoodMotor.getPosition();
+    hoodRps = hoodMotor.getVelocity();
+    hoodCurrent = hoodMotor.getTorqueCurrent();
+    hoodSupplyCurrent = hoodMotor.getSupplyCurrent();
+    hoodCANPositionRotations = hoodEncoder.getAbsolutePosition();
+    hoodCANVelocityRps = hoodEncoder.getVelocity();
+
+    TalonFXConfiguration hoodcfg = new TalonFXConfiguration();
+    hoodcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    this.followShooterMotor.getConfigurator().apply(hoodcfg);
+
+    hoodMotor.setPosition(hoodEncoder.getAbsolutePosition().getValueAsDouble());
+
+        BaseStatusSignal.setUpdateFrequencyForAll(
+        50,
+        leadShooterVolts,
+        leadShooterPosition,
+        leadShooterRps,
+        leadShooterCurrent,
+        leadShooterSupplyCurrent,
+        followShooterVolts,
+        followShooterPosition,
+        followShooterRps,
+        followShooterCurrent,
+        followShooterSupplyCurrent,
+        hoodVolts,
+        hoodPosition,
+        hoodRps,
+        hoodCurrent);
+
+    leadShooterMotor.optimizeBusUtilization(0.0, 1.0);
+    followShooterMotor.optimizeBusUtilization(0.0, 1.0);
+}
+
+
 }
