@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Indexer extends SubsystemBase {
     private double power = 0;
     IndexerIO indexerIO;
-    IndexerIOInputs inputs = new IndexerIOInputsAutoLogged();
+    IndexerIOInputs inputs = new IndexerIOInputs();
 
     public Indexer(){
         this.indexerIO = new IndexerIOTalonFX();
@@ -46,7 +46,7 @@ public class Indexer extends SubsystemBase {
      @Override
   public void periodic() {
     this.indexerIO.updateInputs(inputs);
-    Logger.processInputs("IndexerSubsystem", inputs);
+    // Logger.processInputs("IndexerSubsystem", inputs);
   }
 
   @Override
