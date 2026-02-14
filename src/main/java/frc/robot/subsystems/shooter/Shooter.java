@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase{
         this.shooterIO.setShooterPower(power);
     }
 
-    public void indexIncrements(){
+    public void shooterIncrements(){
         if (this.power<1){
             this.power +=0.3; //0.2
 

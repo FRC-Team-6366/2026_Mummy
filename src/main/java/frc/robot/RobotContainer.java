@@ -34,7 +34,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    this.shooter = new Shooter(2, 3);
+    this.shooter = new Shooter();
     this.indexer = new Indexer();
     this.kicker = new Kicker();
 
@@ -58,9 +58,9 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.y().whileTrue(Commands.runOnce(() -> 
-    shooter.decrementVoltage()));
+    shooter.shooterDecrements()));
         m_driverController.x().whileTrue(Commands.runOnce(() -> 
-    shooter.incrementShooterVoltage()));
+    shooter.shooterIncrements()));
      m_driverController.b().whileTrue
      (Commands.parallel(
       Commands.runOnce(() -> shooter.stop()),
