@@ -15,7 +15,7 @@ public class Kicker extends SubsystemBase {
     private final TalonFX kickMotor;
     double power = 0;
     KickerIO kickerIO;
-    KickerIOInputs inputs = new KickerIOInputsAutoLogged();
+    KickerIOInputsAutoLogged inputs = new KickerIOInputsAutoLogged();
     public Kicker(){
         kickMotor = new TalonFX(24);
         TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
