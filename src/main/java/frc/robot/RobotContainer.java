@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.kicker.Kicker;
 import frc.robot.subsystems.shooter.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,7 +36,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     this.shooter = new Shooter(2, 3);
-    this.indexer = new Indexer();
+    this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker();
 
     // Configure the trigger bindings
