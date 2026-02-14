@@ -1,4 +1,6 @@
 package frc.robot.subsystems.shooter;
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -6,69 +8,48 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.indexer.IndexerIO;
+import frc.robot.subsystems.indexer.IndexerIOInputs;
+import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 
 public class Shooter extends SubsystemBase{
-    private final TalonFX motor1;
-    private final TalonFX motor2;
+    private double power = 0;
+    ShooterIO shooterIO;
+    ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    double power = 0;
-
-    public Shooter(int motorId1, int motorId2){
-        this.motor1 = new TalonFX(motorId1);
-        this.motor2 = new TalonFX(motorId2);
-
-        TalonFXConfiguration fx = new TalonFXConfiguration();
-
-        fx.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
-
-        this.motor2.getConfigurator().apply(fx);
-
-        TalonFXConfiguration cfg = new TalonFXConfiguration();
-
-        cfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-
-        this.motor1.getConfigurator().apply(cfg);
-
-    }
-
-    public void setPower(double power){
-    double voltage = 12 * power;
-    VoltageOut volts = new VoltageOut(voltage);
-    motor1.setControl(volts);
-    motor2.setControl(volts);
+    public Shooter(){
+        this.shooterIO = new ShooterIOTalonFX();
     }
 
 
-
-      public void incrementShooterVoltage() {
-    if (this.power < 1) {
-      this.power += 0.3;
-      this.setPower(power);
-    }
-  }
-
-  public void decrementVoltage() {
-    if (this.power > 0) {
-      this.power -= 0.3;
-      this.setPower(power);
-    }
-  }
-
-      public void stop(){
+    
+    public void stop(){
         if (this.power>0){
             this.power =0;
         }
-        this.setPower(power);
+        this.shooterIO.setShooterPower(power);
     }
-    
 
-      @Override
+    public void indexIncrements(){
+        if (this.power<1){
+            this.power +=0.3; //0.2
+
+        }
+        this.shooterIO.setShooterPower(power);
+    }
+    public void shooterDecrements(){
+        if (this.power>0){
+            this.power -=0.3;//0.2
+
+        }
+        this.shooterIO.setShooterPower(power);
+    }
+
+
+
+     @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
+    this.shooterIO.updateInputs(inputs);
+    Logger.processInputs("IndexerSubsystem", inputs);
   }
 }
