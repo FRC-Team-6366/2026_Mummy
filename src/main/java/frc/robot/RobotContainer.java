@@ -10,6 +10,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.kicker.Kicker;
+import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -17,9 +18,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
@@ -30,50 +34,59 @@ public class RobotContainer {
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_driverController = new CommandXboxController(
+      OperatorConstants.kDriverControllerPort);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     this.shooter = new Shooter();
     this.indexer = new Indexer(new IndexerIOTalonFX());
-    this.kicker = new Kicker();
+    this.kicker = new Kicker(new KickerIOTalonFX());
 
     // Configure the trigger bindings
     configureBindings();
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    // pressed,
     // cancelling on release.
-    m_driverController.y().whileTrue(Commands.runOnce(() -> 
-    shooter.shooterDecrements()));
-        m_driverController.x().whileTrue(Commands.runOnce(() -> 
-    shooter.shooterIncrements()));
-     m_driverController.b().whileTrue
-     (Commands.parallel(
-      Commands.runOnce(() -> shooter.stop()),
-      Commands.runOnce(() -> kicker.stop())
-      // Commands.runOnce(() -> indexer.stop()
-      )
-      );
-     m_driverController.leftTrigger().whileTrue(Commands.runOnce(() -> kicker.kickDecrements()));
-     m_driverController.rightTrigger().whileTrue(Commands.runOnce(() -> kicker.kickIncrements()));
+    m_driverController.y().whileTrue(Commands.runOnce(() -> shooter.shooterDecrements()));
+    m_driverController.x().whileTrue(Commands.runOnce(() -> shooter.shooterIncrements()));
+    m_driverController.b().whileTrue(Commands.parallel(
+        Commands.runOnce(() -> shooter.stop()),
+        Commands.runOnce(() -> kicker.turnOffKicker())
+    // Commands.runOnce(() -> indexer.stop()
+    ));
 
-     m_driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.indexDecrements()));
-     m_driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.indexIncrements()));
+    // Old Kicker commands. This should be removed
+    // m_driverController.leftTrigger().whileTrue(Commands.runOnce(() -> kicker.kickDecrements()));
+    // m_driverController.rightTrigger().whileTrue(Commands.runOnce(() -> kicker.kickIncrements()));
+
+    // New simpified kicker commands
+    m_driverController.leftTrigger().whileTrue(kicker.kickDecrement());
+    m_driverController.rightTrigger().whileTrue(kicker.kickIncrement());
+
+    m_driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.indexDecrements()));
+    m_driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.indexIncrements()));
 
   }
 
