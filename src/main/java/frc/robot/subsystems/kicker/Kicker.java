@@ -14,10 +14,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Kicker extends SubsystemBase {
     /**
-     * Double value to hold the current power setting for the kicker subsystem
-     * motor. This is used for the increment/decrement commands mainly
+     * Holds the current power setting for the kicker subsystem
+     * motor. This is used to support the increment/decrement commands mainly
      */
     double power = 0;
+    
+    /**
+     * KickerIO Hardware object that handles the physcial operations of the Kicker
+     * subsystem. This includes setting the motor outputs as well as recording
+     * motor status to be used for logging.
+     */
     KickerIO io;
     
     /**
