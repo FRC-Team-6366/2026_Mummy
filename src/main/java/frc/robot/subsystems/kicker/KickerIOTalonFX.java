@@ -13,6 +13,10 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants;
 
+/**
+ * KickerIO Hardware class that uses TalonFX motors for the purpose of faciliting the
+ * Kicker subsystem
+ */
 public class KickerIOTalonFX implements KickerIO {
     private final TalonFX kickMotor;
     StatusSignal<Voltage> kickVolts;
