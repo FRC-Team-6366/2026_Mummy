@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain.CommandSwerveDrivetrain;
+import frc.robot.subsystems.driveTrain.SwerveDrive;
 import frc.robot.subsystems.driveTrain.Telemetry;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
@@ -45,6 +46,7 @@ public class RobotContainer {
   Shooter shooter;
   Indexer indexer;
   Kicker kicker;
+  SwerveDrive swerveDrive;
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -78,6 +80,7 @@ public class RobotContainer {
     this.shooter = new Shooter();
     this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker(new KickerIOTalonFX());
+    this.swerveDrive = new SwerveDrive();
 
     // Configure the trigger bindings
     configureBindings();
@@ -99,22 +102,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-        // Note that X is defined as forward according to WPILib convention,
-    // and Y is defined as to the left according to WPILib convention.
-    drivetrain.setDefaultCommand(
-        // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(
-            () ->
-                drive
-                    .withVelocityX(
-                        -driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(
-                        -driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(
-                        -driverController.getRightX()
-                            * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            ));
-
+    swerveDrive.drivetrain.setDefaultCommand(swerveDrive.drive(driverController));
 
         // Idle while the robot is disabled. This ensures the configured
     // neutral mode is applied to the drive motors while disabled.
