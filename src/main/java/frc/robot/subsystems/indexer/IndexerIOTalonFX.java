@@ -79,7 +79,7 @@ public class IndexerIOTalonFX implements IndexerIO{
     }
 
     @Override
-    public void setIndexWallPower(double power) {
+    public void setIndexerWallPower(double power) {
         double voltage = power *12;
         VoltageOut volts = new VoltageOut(voltage);
         indexWallMotor.setControl(volts);
