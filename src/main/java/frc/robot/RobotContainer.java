@@ -85,8 +85,8 @@ public class RobotContainer {
     m_driverController.leftTrigger().whileTrue(kicker.kickDecrement());
     m_driverController.rightTrigger().whileTrue(kicker.kickIncrement());
 
-    m_driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.indexDecrements()));
-    m_driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.indexIncrements()));
+    m_driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
+    m_driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
 
   }
 
