@@ -12,6 +12,7 @@ import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.kicker.Kicker;
 import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIOTalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -41,7 +42,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    this.shooter = new Shooter();
+    this.shooter = new Shooter(new ShooterIOTalonFX());// weird error but I think i fixed it 2/17/2026
     this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker(new KickerIOTalonFX());
 
