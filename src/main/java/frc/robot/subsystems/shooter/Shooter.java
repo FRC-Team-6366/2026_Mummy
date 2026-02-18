@@ -39,8 +39,6 @@ public class Shooter extends SubsystemBase{
     public Shooter(ShooterIO io ){
         this.shooterIO = io;
     }
-
-
     
     public void stop(){
         if (this.power>0){
@@ -49,6 +47,9 @@ public class Shooter extends SubsystemBase{
         this.shooterIO.setShooterPower(power);
     }
 
+        public void setHoodAngle(double angle){
+        
+    }
      /**
      * Increases the shooter subsystem's output by 0.3 to a maximum power
      * of 1.

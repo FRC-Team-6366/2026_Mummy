@@ -3,14 +3,15 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.VoltageConfigs;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import frc.robot.Constants;
-
-
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -117,6 +118,16 @@ public class ShooterIOTalonFX implements ShooterIO{
     hoodEncoder.optimizeBusUtilization(0.0, 1.0);
 }
 
+
+
+public void hoodSetPower(double power){
+    double voltage = power *12;
+    VoltageOut volts = new VoltageOut(voltage);
+    hoodMotor.setControl(volts);
+    
+}
+
+
     @Override
     public void setShooterPower(double power) {
        double voltage = power *12;
@@ -146,6 +157,11 @@ public class ShooterIOTalonFX implements ShooterIO{
     // }
     // Have to ask Mr. Will why this code is duplicated from shooter io, and what variables to set it too. I'm sure it can wait
 
+    public Rotation2d currentAngle(){
+    //    angle = new Rotation2d(Units.rotationsToDegrees(hoodMotor.getPosition().getValueAsDouble()));
+
+        return  new Rotation2d(Units.rotationsToDegrees(hoodMotor.getPosition().getValueAsDouble()));
+    }
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {

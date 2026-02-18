@@ -1,5 +1,7 @@
 package frc.robot.subsystems.shooter;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public interface ShooterIO {
 
     /**
@@ -8,7 +10,10 @@ public interface ShooterIO {
      * @param power Power value between -1.0 and 1.0
      */
     public void setShooterPower(double power);
-    
+  
+    public Rotation2d currentAngle();
+
+
     /**
      * Updates the supplied inputs objects with the current status of the 
      * shooter motor
