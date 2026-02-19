@@ -20,9 +20,6 @@ public class ShooterIOTalonFX implements ShooterIO{
     TalonFX leadShooterMotor;
     TalonFX followShooterMotor;
     
-    // CANcoder hoodEncoder; 
-    //Put anything doing with an encoder in comments because we are not having it on the robot it seems
-    TalonFX hoodMotor;
 
     StatusSignal<Voltage> leadShooterVolts;
     StatusSignal<Angle> leadShooterPosition;
@@ -35,14 +32,6 @@ public class ShooterIOTalonFX implements ShooterIO{
     StatusSignal<AngularVelocity> followShooterRps;
     StatusSignal<Current> followShooterCurrent;
     StatusSignal<Current> followShooterSupplyCurrent; 
-
-    StatusSignal<Voltage> hoodVolts;
-    StatusSignal<Angle> hoodPosition;
-    StatusSignal<AngularVelocity> hoodRps;
-    StatusSignal<Current> hoodCurrent;
-    StatusSignal<Current> hoodSupplyCurrent; 
-    // StatusSignal<Angle> hoodCANPositionRotations;
-    // StatusSignal<AngularVelocity> hoodCANVelocityRps;
 
 
  public ShooterIOTalonFX(){
@@ -71,23 +60,6 @@ public class ShooterIOTalonFX implements ShooterIO{
     followcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
     this.followShooterMotor.getConfigurator().apply(followcfg);
 
-    // Continuing for the other potential motors
-    hoodMotor = new TalonFX(Constants.ShooterConstants.hoodMotorId);
-    // hoodEncoder = new CANcoder(Constants.ShooterConstants.hoodMotorCANCoderId);
-
-    hoodVolts = hoodMotor.getMotorVoltage();
-    hoodPosition = hoodMotor.getPosition();
-    hoodRps = hoodMotor.getVelocity();
-    hoodCurrent = hoodMotor.getTorqueCurrent();
-    hoodSupplyCurrent = hoodMotor.getSupplyCurrent();
-    // hoodCANPositionRotations = hoodEncoder.getAbsolutePosition();
-    // hoodCANVelocityRps = hoodEncoder.getVelocity();
-
-    TalonFXConfiguration hoodcfg = new TalonFXConfiguration();
-    hoodcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-    this.followShooterMotor.getConfigurator().apply(hoodcfg);
-
-    // hoodMotor.setPosition(hoodEncoder.getAbsolutePosition().getValueAsDouble());
 
         BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -100,23 +72,14 @@ public class ShooterIOTalonFX implements ShooterIO{
         followShooterPosition,
         followShooterRps,
         followShooterCurrent,
-        followShooterSupplyCurrent,
-        hoodVolts,
-        hoodPosition,
-        hoodRps,
-        hoodCurrent,
-        hoodSupplyCurrent
-        // hoodCANPositionRotations,
-        // hoodCANVelocityRps
-        );
+        followShooterSupplyCurrent);
 
         // Forcing optimal use of the CAN Bus for this subsystems
         // hardware
     leadShooterMotor.optimizeBusUtilization(0.0, 1.0);
     followShooterMotor.optimizeBusUtilization(0.0, 1.0);
 
-    hoodMotor.optimizeBusUtilization(0.0, 1.0);
-    // hoodEncoder.optimizeBusUtilization(0.0, 1.0);
+
 }
 
     @Override
@@ -126,28 +89,6 @@ public class ShooterIOTalonFX implements ShooterIO{
         leadShooterMotor.setControl(volts);
         followShooterMotor.setControl(volts);
     }
-
-
-
-    // @Override
-    // public void setHoodAngle(double angle){
-    //  hoodMotor.setControl(hoodPosition.withPosition(getValueAsDouble()));
-    // }
-
-
-    // /**
-    //  * This code is used to set the value of the Shooter. Will use the supplied value to convert between -12 -> 12 volts 
-    //  * 
-    //  * @param power Power value between -1.0 and 1.0
-    //  */ 
-    // @Override
-    // public void setShooterPower(double power) {
-    //     double voltage = power * 12;
-    //     VoltageOut volts = new VoltageOut(voltage);
-    //     shooterotor.setControl(volts);
-    // }
-    // Have to ask Mr. Will why this code is duplicated from shooter io, and what variables to set it too. I'm sure it can wait
-
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
@@ -161,15 +102,7 @@ inputs.connected = BaseStatusSignal.refreshAll(
         followShooterPosition,
         followShooterRps,
         followShooterCurrent,
-        followShooterSupplyCurrent,
-        hoodVolts,
-        hoodPosition,
-        hoodRps,
-        hoodCurrent,
-        hoodSupplyCurrent
-        // hoodCANPositionRotations,
-        // hoodCANVelocityRps
-        ).isOK();
+        followShooterSupplyCurrent).isOK();
         inputs.leadShooterVolts = this.leadShooterVolts.getValueAsDouble();
         inputs.leadShooterPosition = this.leadShooterPosition.getValueAsDouble();
         inputs.leadShooterRps = this.leadShooterRps.getValueAsDouble();
@@ -182,13 +115,6 @@ inputs.connected = BaseStatusSignal.refreshAll(
         inputs.followShooterCurrent = this.followShooterCurrent.getValueAsDouble();
         inputs.followShooterSupplyCurrent = this.followShooterSupplyCurrent.getValueAsDouble();
 
-        inputs.hoodVolts = this.hoodVolts.getValueAsDouble();
-        inputs.hoodPosition = this.hoodPosition.getValueAsDouble();
-        inputs.hoodRps = this.hoodRps.getValueAsDouble();
-        inputs.hoodCurrent = this.hoodCurrent.getValueAsDouble();
-        inputs.hoodSupplyCurrent = this.hoodSupplyCurrent.getValueAsDouble();
-        // inputs.hoodCANPositionRotations = this.hoodCANPositionRotations.getValueAsDouble();
-        // inputs.hoodCANVelocityRps = this.hoodCANVelocityRps.getValueAsDouble();
     }
 
 
