@@ -1,15 +1,43 @@
 package frc.robot.subsystems.shooter;
 
+import edu.wpi.first.math.MathUtil;
 import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+/**
+ *Big H here- this Substemy is for the Shooter class for the 2026 Mummybot. This class
+ * handles the interactions for for shooting the subsystem, and should have the could for the 
+ * shooting hood as well.
+ * @author Hayden
+ * @author Will 
+ * @author Do I need to put this here every time? I commmented out some old code and have a few notes here btw, if you ever need it for refrence.
+ */
 public class Shooter extends SubsystemBase{
+    /**
+     * Double value used for the current power setting in
+     *  increment and decrement commmands in the shooter subsystem.
+     */
     private double power = 0;
     ShooterIO shooterIO;
+
+    /**
+     * IOInputs object that holds and updates values of the devices in the 
+     * shooter system. It get logged and updated every loop.
+     */
     ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    public Shooter(){
-        this.shooterIO = new ShooterIOTalonFX();
+
+    /**
+     * Creates the subsystem using the shooterIO object and represents
+     * the hardware for the shooter subsystem
+     * <p>
+     * Example use:
+     * <pre>{@code Shooter shooter = new Shooter(new ShooterIOTalonFX());}</pre>
+     * @param io Hardware object that implements the ShooterIO interface class
+     * 
+     */
+    public Shooter(ShooterIO io ){
+        this.shooterIO = io;
     }
 
 
@@ -21,26 +49,104 @@ public class Shooter extends SubsystemBase{
         this.shooterIO.setShooterPower(power);
     }
 
-    public void shooterIncrements(){
-        if (this.power<1){
-            this.power +=0.3; //0.2
-
-        }
-        this.shooterIO.setShooterPower(power);
+     /**
+     * Increases the shooter subsystem's output by 0.3 to a maximum power
+     * of 1.
+     * <p>
+     * Example use:
+     * <pre>{@code controller.leftTrigger().whileTrue(shooter.shooterIncrement());}</pre>
+     * @return Command to increase the shooter subsystem output by 0.3
+     */
+    public Command shooterIncrements() {
+        return runOnce(
+            () -> {
+                // Clamp method returns either power, or the max or min value
+                // This ensures that power will never be greater than 1
+                this.power = MathUtil.clamp(this.power += 0.3, 0, 1);
+                
+                // Set the power of the ShooterIO hardware
+                this.shooterIO.setShooterPower(power);
+            }
+        );
     }
-    public void shooterDecrements(){
-        if (this.power>0){
-            this.power -=0.3;//0.2
 
-        }
-        this.shooterIO.setShooterPower(power);
+    // Old code getting commmented out. Our new code is above, and returns commands instead of directly changing the bot themselves. 
+
+    // public void shooterIncrements(){
+    //     if (this.power<1){
+    //         this.power +=0.3; //0.2
+
+    //     }
+    //     this.shooterIO.setShooterPower(power);
+    
+    // }
+
+     /**
+     * Decreases the shooter subsystem's output by 0.3 down to a minimum power
+     * of 0.
+     * <p>
+     * Example use:
+     * <pre>{@code controller.rightTrigger().whileTrue(shooter.shooterDeccrements());}</pre>
+     * @return Command to decrease the shooter subsystem output by 0.3
+     */
+    public Command shooterDecrements() {
+        return runOnce(
+            () -> {
+                // Clamp method returns either power, or the max or min value
+                // This ensures that power will never be greater than 1
+                this.power = MathUtil.clamp(this.power -= 0.3, 0, 1);
+                
+                // Set the power of the KickerIO hardware
+                this.shooterIO.setShooterPower(power);
+            }
+        );
+    } 
+    
+    // more old code 
+
+    // public void shooterDecrements(){
+    //     if (this.power>0){
+    //         this.power -=0.3;//0.2
+
+    //     }
+    //     this.shooterIO.setShooterPower(power);
+    // }
+
+
+    /**
+     * Stops the shooter, setting the power to 0.
+     * <p>
+     * Example use:
+     * <pre>{@code controller.b().whileTrue(shppter.turnOffShooter());}</pre>
+     * @return Command for turning off the shooter subsystem
+     */
+    public Command turnOffShooter() {
+        return this.runOnce(
+            () -> {
+                // Set power to 0
+                this.power = 0;
+
+                // Use power to stop the ShooterIO Hardware motor
+                this.shooterIO.setShooterPower(this.power);
+            }
+        );
     }
 
 
 
-     @Override
-  public void periodic() {
-    this.shooterIO.updateInputs(inputs);
-    Logger.processInputs("IndexerSubsystem", inputs);
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+
+        // Update inputs object with the current status of the ShooterIO hardware
+        // and then write values to the Log
+        this.shooterIO.updateInputs(inputs);
+        Logger.processInputs("ShooterSubsystem", inputs);
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run during simulation
   }
 }

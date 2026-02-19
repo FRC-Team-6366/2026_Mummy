@@ -45,7 +45,7 @@ public class ShooterIOTalonFX implements ShooterIO{
     // StatusSignal<AngularVelocity> hoodCANVelocityRps;
 
 
-ShooterIOTalonFX(){
+ public ShooterIOTalonFX(){
     leadShooterMotor = new TalonFX(Constants.ShooterConstants.leadShooterMotorId);   
  
     leadShooterVolts = leadShooterMotor.getMotorVoltage();
@@ -58,9 +58,9 @@ ShooterIOTalonFX(){
     leadcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
     this.leadShooterMotor.getConfigurator().apply(leadcfg);
 
-
+    // Setting the StatusSignal variables to be mapped to actual 
+    // aspect of the ShooterIO's hardware
     followShooterMotor = new TalonFX(Constants.ShooterConstants.followerShooterMotorId);
-
     followShooterVolts = followShooterMotor.getMotorVoltage();
     followShooterPosition = followShooterMotor.getPosition();
     followShooterRps = followShooterMotor.getVelocity();
@@ -71,7 +71,7 @@ ShooterIOTalonFX(){
     followcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
     this.followShooterMotor.getConfigurator().apply(followcfg);
 
-
+    // Continuing for the other potential motors
     hoodMotor = new TalonFX(Constants.ShooterConstants.hoodMotorId);
     // hoodEncoder = new CANcoder(Constants.ShooterConstants.hoodMotorCANCoderId);
 
@@ -110,6 +110,8 @@ ShooterIOTalonFX(){
         // hoodCANVelocityRps
         );
 
+        // Forcing optimal use of the CAN Bus for this subsystems
+        // hardware
     leadShooterMotor.optimizeBusUtilization(0.0, 1.0);
     followShooterMotor.optimizeBusUtilization(0.0, 1.0);
 
@@ -131,6 +133,20 @@ ShooterIOTalonFX(){
     // public void setHoodAngle(double angle){
     //  hoodMotor.setControl(hoodPosition.withPosition(getValueAsDouble()));
     // }
+
+
+    // /**
+    //  * This code is used to set the value of the Shooter. Will use the supplied value to convert between -12 -> 12 volts 
+    //  * 
+    //  * @param power Power value between -1.0 and 1.0
+    //  */ 
+    // @Override
+    // public void setShooterPower(double power) {
+    //     double voltage = power * 12;
+    //     VoltageOut volts = new VoltageOut(voltage);
+    //     shooterotor.setControl(volts);
+    // }
+    // Have to ask Mr. Will why this code is duplicated from shooter io, and what variables to set it too. I'm sure it can wait
 
 
     @Override
