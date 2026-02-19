@@ -88,14 +88,6 @@ ShooterIOTalonFX(){
         followShooterMotor.setControl(volts);
     }
 
-
-
-    // @Override
-    // public void setHoodAngle(double angle){
-    //  hoodMotor.setControl(hoodPosition.withPosition(getValueAsDouble()));
-    // }
-
-
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
 inputs.connected = BaseStatusSignal.refreshAll(
