@@ -17,12 +17,4 @@ public class ShooterIOInputs {
     double followShooterRps = 0;
     double followShooterCurrent = 0;
     double followShooterSupplyCurrent = 0; 
-
-    double hoodVolts = 0;
-    double hoodPosition = 0;
-    double hoodRps = 0;
-    double hoodCurrent = 0;
-    double hoodSupplyCurrent = 0;
-    double hoodCANPositionRotations = 0;
-    double hoodCANVelocityRps = 0;
 }

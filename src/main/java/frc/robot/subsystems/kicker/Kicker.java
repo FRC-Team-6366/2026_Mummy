@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Kicker subsystem class for the FRC 2026 robot. This class handles the
  * hardware and interactions for moving fuel from the indexer subsystem
  * to the shooter subsystem
- * @author Hayden
+ * @author Hayden H
  * @author Will E (Mentor)
  */
 public class Kicker extends SubsystemBase {

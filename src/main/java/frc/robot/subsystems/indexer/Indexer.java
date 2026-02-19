@@ -107,7 +107,7 @@ public class Indexer extends SubsystemBase {
   @Override
   public void periodic() {
     this.indexerIO.updateInputs(inputs);
-    Logger.processInputs("IndexerSubsystem", inputs);
+    Logger.processInputs("Indexer Subsystem", inputs);
   }
 
   @Override
