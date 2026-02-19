@@ -13,7 +13,8 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.subsystems.shooter.ShooterConstants.IdConstants;
+import frc.robot.Constants.ShooterConstants;
+
 
 public class HoodIOTalonFX implements HoodIO {
     TalonFX hoodMotor;
@@ -28,7 +29,7 @@ public class HoodIOTalonFX implements HoodIO {
     StatusSignal<AngularVelocity> hoodCANVelocityRps;
 
     public HoodIOTalonFX() {
-        hoodMotor = new TalonFX(IdConstants.hoodMotorID);
+        hoodMotor = new TalonFX(ShooterConstants.hoodMotorId);
 
         hoodVolts = hoodMotor.getMotorVoltage();
         hoodPosition = hoodMotor.getPosition();
