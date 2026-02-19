@@ -20,7 +20,8 @@ public class ShooterIOTalonFX implements ShooterIO{
     TalonFX leadShooterMotor;
     TalonFX followShooterMotor;
     
-    CANcoder hoodEncoder;
+    // CANcoder hoodEncoder; 
+    //Put anything doing with an encoder in comments because we are not having it on the robot it seems
     TalonFX hoodMotor;
 
     StatusSignal<Voltage> leadShooterVolts;
@@ -40,8 +41,8 @@ public class ShooterIOTalonFX implements ShooterIO{
     StatusSignal<AngularVelocity> hoodRps;
     StatusSignal<Current> hoodCurrent;
     StatusSignal<Current> hoodSupplyCurrent; 
-    StatusSignal<Angle> hoodCANPositionRotations;
-    StatusSignal<AngularVelocity> hoodCANVelocityRps;
+    // StatusSignal<Angle> hoodCANPositionRotations;
+    // StatusSignal<AngularVelocity> hoodCANVelocityRps;
 
 
 ShooterIOTalonFX(){
@@ -72,21 +73,21 @@ ShooterIOTalonFX(){
 
 
     hoodMotor = new TalonFX(Constants.ShooterConstants.hoodMotorId);
-    hoodEncoder = new CANcoder(Constants.ShooterConstants.hoodMotorCANCoderId);
+    // hoodEncoder = new CANcoder(Constants.ShooterConstants.hoodMotorCANCoderId);
 
     hoodVolts = hoodMotor.getMotorVoltage();
     hoodPosition = hoodMotor.getPosition();
     hoodRps = hoodMotor.getVelocity();
     hoodCurrent = hoodMotor.getTorqueCurrent();
     hoodSupplyCurrent = hoodMotor.getSupplyCurrent();
-    hoodCANPositionRotations = hoodEncoder.getAbsolutePosition();
-    hoodCANVelocityRps = hoodEncoder.getVelocity();
+    // hoodCANPositionRotations = hoodEncoder.getAbsolutePosition();
+    // hoodCANVelocityRps = hoodEncoder.getVelocity();
 
     TalonFXConfiguration hoodcfg = new TalonFXConfiguration();
     hoodcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
     this.followShooterMotor.getConfigurator().apply(hoodcfg);
 
-    hoodMotor.setPosition(hoodEncoder.getAbsolutePosition().getValueAsDouble());
+    // hoodMotor.setPosition(hoodEncoder.getAbsolutePosition().getValueAsDouble());
 
         BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -104,15 +105,16 @@ ShooterIOTalonFX(){
         hoodPosition,
         hoodRps,
         hoodCurrent,
-        hoodSupplyCurrent,
-        hoodCANPositionRotations,
-        hoodCANVelocityRps);
+        hoodSupplyCurrent
+        // hoodCANPositionRotations,
+        // hoodCANVelocityRps
+        );
 
     leadShooterMotor.optimizeBusUtilization(0.0, 1.0);
     followShooterMotor.optimizeBusUtilization(0.0, 1.0);
 
     hoodMotor.optimizeBusUtilization(0.0, 1.0);
-    hoodEncoder.optimizeBusUtilization(0.0, 1.0);
+    // hoodEncoder.optimizeBusUtilization(0.0, 1.0);
 }
 
     @Override
@@ -148,9 +150,10 @@ inputs.connected = BaseStatusSignal.refreshAll(
         hoodPosition,
         hoodRps,
         hoodCurrent,
-        hoodSupplyCurrent,
-        hoodCANPositionRotations,
-        hoodCANVelocityRps).isOK();
+        hoodSupplyCurrent
+        // hoodCANPositionRotations,
+        // hoodCANVelocityRps
+        ).isOK();
         inputs.leadShooterVolts = this.leadShooterVolts.getValueAsDouble();
         inputs.leadShooterPosition = this.leadShooterPosition.getValueAsDouble();
         inputs.leadShooterRps = this.leadShooterRps.getValueAsDouble();
@@ -168,8 +171,8 @@ inputs.connected = BaseStatusSignal.refreshAll(
         inputs.hoodRps = this.hoodRps.getValueAsDouble();
         inputs.hoodCurrent = this.hoodCurrent.getValueAsDouble();
         inputs.hoodSupplyCurrent = this.hoodSupplyCurrent.getValueAsDouble();
-        inputs.hoodCANPositionRotations = this.hoodCANPositionRotations.getValueAsDouble();
-        inputs.hoodCANVelocityRps = this.hoodCANVelocityRps.getValueAsDouble();
+        // inputs.hoodCANPositionRotations = this.hoodCANPositionRotations.getValueAsDouble();
+        // inputs.hoodCANVelocityRps = this.hoodCANVelocityRps.getValueAsDouble();
     }
 
 

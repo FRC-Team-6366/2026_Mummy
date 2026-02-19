@@ -23,6 +23,6 @@ public class ShooterIOInputs {
     double hoodRps = 0;
     double hoodCurrent = 0;
     double hoodSupplyCurrent = 0;
-    double hoodCANPositionRotations = 0;
-    double hoodCANVelocityRps = 0;
+    // double hoodCANPositionRotations = 0;
+    // double hoodCANVelocityRps = 0;
 }
