@@ -2,27 +2,30 @@ package frc.robot.subsystems.shooter.hood;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.shooter.ShooterIO;
-import frc.robot.subsystems.shooter.ShooterIOTalonFX;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Hood implements Subsystem {
+public class Hood extends SubsystemBase {
     private double power = 0;
     double setPointHoodDegree;
     HoodIO hoodIO;
     HoodIOInputsAutoLogged inputs = new HoodIOInputsAutoLogged();
 
-    public Hood() {
-        this.hoodIO = new HoodIOTalonFX();
+    public Hood(HoodIO io) {
+        this.hoodIO = io;
     }
 
-    public void hoodToAngle(double angle){
-        hoodIO.hoodToAngle(angle);
+    public Command hoodToAngle(double angle) {
         this.setPointHoodDegree = angle;
-        Logger.recordOutput("HoodSubsystem/Setpoints/setpoint", angle);
+        Logger.recordOutput("HoodSubsystem/Setpoints/setpoint", this.setPointHoodDegree);
+        return this.runOnce(
+                () -> {
+                    this.hoodIO.hoodToAngle(this.setPointHoodDegree);
+                });
     }
 
-    public boolean checkSetpoint(){
+    public boolean checkSetpoint() {
         double closedLoopErrorDegrees = hoodIO.getRotations().getDegrees() - setPointHoodDegree;
         this.hoodIO.getRotations();
         boolean atSetPoint = Math.abs(closedLoopErrorDegrees) < 1;

@@ -1,8 +1,14 @@
 package frc.robot.subsystems.shooter.hood;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -18,6 +24,9 @@ import frc.robot.Constants.ShooterConstants;
 
 public class HoodIOTalonFX implements HoodIO {
     TalonFX hoodMotor;
+
+    
+   MotionMagicVoltage positionVoltageRequest;
     VoltageOut volts;
 
     StatusSignal<Voltage> hoodVolts;
@@ -35,12 +44,26 @@ public class HoodIOTalonFX implements HoodIO {
         hoodPosition = hoodMotor.getPosition();
         hoodRps = hoodMotor.getVelocity();
         hoodCurrent = hoodMotor.getTorqueCurrent();
-        hoodSupplyCurrent = hoodMotor.getSupplyCurrent();
 
-        TalonFXConfiguration hoodcfg = new TalonFXConfiguration();
-        hoodcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         
-        this.hoodMotor.getConfigurator().apply(hoodcfg);
+
+                TalonFXConfiguration cfg = new TalonFXConfiguration();
+        cfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+            cfg.Slot0.kP = 0;
+    cfg.Slot0.kI =  0;
+    cfg.Slot0.kD = 0;
+    cfg.Slot0.kG = 0;
+    cfg.Slot0.kS = 0;
+    cfg.Slot0.kV = 0;
+    cfg.Slot0.kA = 0;
+    cfg.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+    cfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Units.degreesToRotations(0);
+    cfg.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+    cfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Units.degreesToRotations(0);
+        cfg.MotionMagic.withMotionMagicCruiseVelocity(RotationsPerSecond.of(0));
+    cfg.MotionMagic.withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(0));
+    cfg.MotionMagic.withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(0));    
+    this.hoodMotor.getConfigurator().apply(cfg);
 
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
@@ -52,20 +75,20 @@ public class HoodIOTalonFX implements HoodIO {
                 hoodCANPositionRotations,
                 hoodCANVelocityRps);
 
-        hoodMotor.optimizeBusUtilization(0.0, 1.0);
 
+        positionVoltageRequest = new MotionMagicVoltage(0.0);
         volts = new VoltageOut(0.0);
-    }
+        }
     
 
     @Override
     public Rotation2d getRotations() {
-    return new Rotation2d(Units.rotationsToRadians(hoodMotor.getPosition().getValueAsDouble()));
+        return new Rotation2d(Units.rotationsToRadians(hoodMotor.getPosition().getValueAsDouble()));
     }
 
     @Override
     public void hoodToAngle(double angle) {
-    hoodMotor.setControl(volts.withOutput(0));
+    hoodMotor.setControl(positionVoltageRequest.withPosition(Units.degreesToRotations(angle)).withSlot(0));
     }
 
     @Override
