@@ -31,7 +31,7 @@ public class IndexerIOTalonFX implements IndexerIO{
 
 
     public IndexerIOTalonFX(){
-        indexMotor= new TalonFX(4); //16
+        indexMotor= new TalonFX(18); //16
         TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexMotor.getConfigurator().apply(indMotorconfiguration);
