@@ -3,7 +3,6 @@ package frc.robot.subsystems.shooter.hood;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Second;
-import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -34,8 +33,6 @@ public class HoodIOTalonFX implements HoodIO {
     StatusSignal<AngularVelocity> hoodRps;
     StatusSignal<Current> hoodCurrent;
     StatusSignal<Current> hoodSupplyCurrent;
-    StatusSignal<Angle> hoodCANPositionRotations;
-    StatusSignal<AngularVelocity> hoodCANVelocityRps;
 
     public HoodIOTalonFX() {
         hoodMotor = new TalonFX(ShooterConstants.hoodMotorId);
@@ -44,8 +41,9 @@ public class HoodIOTalonFX implements HoodIO {
         hoodPosition = hoodMotor.getPosition();
         hoodRps = hoodMotor.getVelocity();
         hoodCurrent = hoodMotor.getTorqueCurrent();
+        hoodSupplyCurrent = hoodMotor.getSupplyCurrent();
 
-        hoodMotor.setPosition(0);
+
 
                 TalonFXConfiguration cfg = new TalonFXConfiguration();
         cfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -65,15 +63,17 @@ public class HoodIOTalonFX implements HoodIO {
     cfg.MotionMagic.withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(0));    
     this.hoodMotor.getConfigurator().apply(cfg);
 
+             hoodMotor.setPosition(0);
+
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
                 hoodVolts,
                 hoodPosition,
                 hoodRps,
                 hoodCurrent,
-                hoodSupplyCurrent,
-                hoodCANPositionRotations,
-                hoodCANVelocityRps);
+                hoodSupplyCurrent);
+
+            hoodMotor.optimizeBusUtilization(0.0, 1.0);
 
 
         positionVoltageRequest = new MotionMagicVoltage(0.0);
@@ -98,17 +98,13 @@ public class HoodIOTalonFX implements HoodIO {
                 hoodPosition,
                 hoodRps,
                 hoodCurrent,
-                hoodSupplyCurrent,
-                hoodCANPositionRotations,
-                hoodCANVelocityRps).isOK();
+                hoodSupplyCurrent).isOK();
 
         inputs.hoodVolts = this.hoodVolts.getValueAsDouble();
         inputs.hoodPosition = this.hoodPosition.getValueAsDouble();
         inputs.hoodRps = this.hoodRps.getValueAsDouble();
         inputs.hoodCurrent = this.hoodCurrent.getValueAsDouble();
         inputs.hoodSupplyCurrent = this.hoodSupplyCurrent.getValueAsDouble();
-        inputs.hoodCANPositionRotations = this.hoodCANPositionRotations.getValueAsDouble();
-        inputs.hoodCANVelocityRps = this.hoodCANVelocityRps.getValueAsDouble();
     }
 
 }

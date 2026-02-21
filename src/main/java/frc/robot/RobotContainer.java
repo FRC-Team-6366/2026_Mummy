@@ -6,10 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.driveTrain.CommandSwerveDrivetrain;
-import frc.robot.subsystems.driveTrain.Telemetry;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.kicker.Kicker;

@@ -3,11 +3,9 @@ package frc.robot.subsystems.shooter.hood;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hood extends SubsystemBase {
-    private double power = 0;
     double setPointHoodDegree;
     HoodIO hoodIO;
     HoodIOInputsAutoLogged inputs = new HoodIOInputsAutoLogged();
