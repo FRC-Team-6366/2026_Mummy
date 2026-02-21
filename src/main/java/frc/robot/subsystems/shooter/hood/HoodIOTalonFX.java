@@ -45,7 +45,7 @@ public class HoodIOTalonFX implements HoodIO {
         hoodRps = hoodMotor.getVelocity();
         hoodCurrent = hoodMotor.getTorqueCurrent();
 
-        
+        hoodMotor.setPosition(0);
 
                 TalonFXConfiguration cfg = new TalonFXConfiguration();
         cfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);

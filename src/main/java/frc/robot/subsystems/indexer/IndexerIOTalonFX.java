@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.units.measure.Voltage; //  Voltage
+import frc.robot.Constants;
 import edu.wpi.first.units.measure.AngularVelocity; // Rotations Per Second
 import edu.wpi.first.units.measure.Angle; // position
 import edu.wpi.first.units.measure.Current;// Supply current
@@ -31,12 +32,12 @@ public class IndexerIOTalonFX implements IndexerIO{
 
 
     public IndexerIOTalonFX(){
-        indexMotor= new TalonFX(18); //16
+        indexMotor= new TalonFX(Constants.IndexerConstants.indexerMotorId); //16
         TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexMotor.getConfigurator().apply(indMotorconfiguration);
 
-        indexWallMotor= new TalonFX(5);//STAND IN MOTOR, ask for wall motor device Id later
+        indexWallMotor= new TalonFX(Constants.IndexerConstants.indexerWallMotorId);//STAND IN MOTOR, ask for wall motor device Id later
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexWallMotor.getConfigurator().apply(indMotorconfiguration);
 
