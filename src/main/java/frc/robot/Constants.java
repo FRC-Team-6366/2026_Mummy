@@ -28,18 +28,18 @@ public final class Constants {
   }
 
   public class drivetrainConstants {
-    public static final int leftFrontDriveMotorId = 0;
-    public static final int leftFrontSteerMotorId = 1;  
-    public static final int leftFrontSteerEncoderId = 2;
-    public static final int rightFrontDriveMotorId = 3;
-    public static final int rightFrontSteerMotorId = 4;  
-    public static final int rightFrontSteerEncoderId = 5;
-    public static final int leftRearDriveMotorId = 6;
-    public static final int leftRearSteerMotorId = 7;  
-    public static final int leftRearSteerEncoderId = 8;
-    public static final int rightRearDriveMotorId = 9;
-    public static final int rightRearSteerMotorId = 10;  
-    public static final int rightRearSteerEncoderId = 11;
+    public static final int frontLeftDriveMotorId = 0;
+    public static final int frontLeftSteerMotorId = 1;  
+    public static final int frontLeftDriveEncoderId = 2;
+    public static final int frontRightDriveMotorId = 3;
+    public static final int frontRightSteerMotorId = 4;  
+    public static final int frontRightDriveEncoderId = 5;
+    public static final int rearLeftDriveMotorId = 6;
+    public static final int rearLeftSteerMotorId = 7;  
+    public static final int rearLeftDriveEncoderId = 8;
+    public static final int rearRightDriveMotorId = 9;
+    public static final int rearRightSteerMotorId = 10;  
+    public static final int rearRightDriveEncoderId = 11;
   }
 
   public class IndexerConstants {
@@ -52,10 +52,10 @@ public final class Constants {
   }
 
   public class ShooterConstants {
-    public static final int leadShooterMotorId = 15;
-    public static final int followerShooterMotorId = 16;
-    public static final int hoodMotorId = 17;
-    public static final int turretAimMotorId = 18;
+    public static final int leadShooterMotorId = 15; //15
+    public static final int followerShooterMotorId = 16; //16
+    public static final int hoodMotorId = 17; //17
+    public static final int turretAimMotorId = 18; //18
   }
 
   public class VisionConstants {
