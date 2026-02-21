@@ -28,27 +28,34 @@ public final class Constants {
   }
 
   public class drivetrainConstants {
-    public static final int leftFrontMotorId = 0;
-    public static final int rightFrontMotorId = 1;
-    public static final int leftRearMotorId = 2;
-    public static final int rightRearMotorId = 3;
+    public static final int leftFrontDriveMotorId = 0;
+    public static final int leftFrontSteerMotorId = 1;  
+    public static final int leftFrontSteerEncoderId = 2;
+    public static final int rightFrontDriveMotorId = 3;
+    public static final int rightFrontSteerMotorId = 4;  
+    public static final int rightFrontSteerEncoderId = 5;
+    public static final int leftRearDriveMotorId = 6;
+    public static final int leftRearSteerMotorId = 7;  
+    public static final int leftRearSteerEncoderId = 8;
+    public static final int rightRearDriveMotorId = 9;
+    public static final int rightRearSteerMotorId = 10;  
+    public static final int rightRearSteerEncoderId = 11;
   }
 
   public class IndexerConstants {
-    public static final int indexerMotorId = 4;
-    public static final int indexerWallMotorId = 5;
+    public static final int indexerMotorId = 12;
+    public static final int indexerWallMotorId = 13; 
   }
 
   public class KickerConstants {
-    public static final int kickerMotorId = 6;
+    public static final int kickerMotorId = 14; 
   }
 
   public class ShooterConstants {
-    public static final int leadShooterMotorId = 7;
-    public static final int followerShooterMotorId = 8;
-    public static final int hoodMotorId = 20;
-    public static final int hoodMotorCANCoderId = 10;
-    public static final int shooterAimMotorId = 11;
+    public static final int leadShooterMotorId = 15;
+    public static final int followerShooterMotorId = 16;
+    public static final int hoodMotorId = 17;
+    public static final int turretAimMotorId = 18;
   }
 
   public class VisionConstants {
