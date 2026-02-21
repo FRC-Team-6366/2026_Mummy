@@ -133,6 +133,30 @@ public class Shooter extends SubsystemBase{
     }
 
 
+    public Command setShooterVelocity10(){
+        return this.runOnce(
+            () -> {
+                this.shooterIO.setShooterVelocity(10);
+            }
+        );
+    }
+
+    public Command setShooterVelocity30(){
+        return this.runOnce(
+            () -> {
+                this.shooterIO.setShooterVelocity(30);
+            }
+        );
+    }
+
+    public Command setShooterVelocity60(){
+        return this.runOnce(
+            () -> {
+                this.shooterIO.setShooterVelocity(60);
+            }
+        );
+    }
+
 
 
     @Override

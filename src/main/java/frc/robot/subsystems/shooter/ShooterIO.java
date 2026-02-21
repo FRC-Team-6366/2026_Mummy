@@ -9,6 +9,9 @@ public interface ShooterIO {
      */
     public void setShooterPower(double power);
     
+    
+    public void setShooterVelocity(double rps);
+
     /**
      * Updates the supplied inputs objects with the current status of the 
      * shooter motor

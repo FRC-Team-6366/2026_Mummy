@@ -3,21 +3,28 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
+
 import frc.robot.Constants;
 
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.units.measure.Voltage;
 
 public class ShooterIOTalonFX implements ShooterIO{
     TalonFX leadShooterMotor;
     TalonFX followShooterMotor;
     
+    VelocityVoltage velocityVoltageRequest;
+    Follower follower;
 
     StatusSignal<Voltage> leadShooterVolts;
     StatusSignal<Angle> leadShooterPosition;
@@ -42,8 +49,14 @@ public class ShooterIOTalonFX implements ShooterIO{
     leadShooterSupplyCurrent = leadShooterMotor.getSupplyCurrent();
 
     TalonFXConfiguration leadcfg = new TalonFXConfiguration();
-    leadcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
+    leadcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    leadcfg.Slot0.kP = 0.5;
+    leadcfg.Slot0.kI = 0;
+    leadcfg.Slot0.kD = 0;
     this.leadShooterMotor.getConfigurator().apply(leadcfg);
+    
+    this.velocityVoltageRequest= new VelocityVoltage(0);
+    this.leadShooterMotor.setControl(velocityVoltageRequest.withSlot(0));
 
     // Setting the StatusSignal variables to be mapped to actual 
     // aspect of the ShooterIO's hardware
@@ -53,11 +66,8 @@ public class ShooterIOTalonFX implements ShooterIO{
     followShooterRps = followShooterMotor.getVelocity();
     followShooterCurrent = followShooterMotor.getTorqueCurrent();
     followShooterSupplyCurrent = followShooterMotor.getSupplyCurrent();
-
-    TalonFXConfiguration followcfg = new TalonFXConfiguration();
-    followcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-    this.followShooterMotor.getConfigurator().apply(followcfg);
-
+    follower = new Follower(Constants.ShooterConstants.leadShooterMotorId, MotorAlignmentValue.Opposed);
+    this.followShooterMotor.setControl(follower);
 
         BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -88,6 +98,8 @@ public class ShooterIOTalonFX implements ShooterIO{
         followShooterMotor.setControl(volts);
     }
 
+    
+
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
 inputs.connected = BaseStatusSignal.refreshAll(
@@ -113,6 +125,12 @@ inputs.connected = BaseStatusSignal.refreshAll(
         inputs.followShooterCurrent = this.followShooterCurrent.getValueAsDouble();
         inputs.followShooterSupplyCurrent = this.followShooterSupplyCurrent.getValueAsDouble();
 
+    }
+
+    @Override
+    public void setShooterVelocity(double rps) {
+        this.leadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rps));
+        this.followShooterMotor.setControl(this.follower);
     }
 
 

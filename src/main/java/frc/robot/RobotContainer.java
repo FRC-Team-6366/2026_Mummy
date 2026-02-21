@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -36,13 +35,13 @@ public class RobotContainer {
   Indexer indexer;
   Kicker kicker;
   Hood hood;
+  int mode; //
+
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
-
-
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -52,6 +51,7 @@ public class RobotContainer {
     this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker(new KickerIOTalonFX());
     this.hood = new Hood(new HoodIOTalonFX());
+    this.mode = 0;
 
     // Configure the trigger bindings
     configureBindings();
@@ -78,12 +78,33 @@ public class RobotContainer {
     driverController.x().whileTrue(Commands.runOnce(() -> shooter.shooterIncrements()));
     driverController.b().whileTrue(Commands.parallel(
         Commands.runOnce(() -> shooter.stop()),
-        Commands.runOnce(() -> kicker.turnOffKicker())
-    // Commands.runOnce(() -> indexer.stop()
-    ));
+        Commands.runOnce(() -> kicker.turnOffKicker()),
+        Commands.run(() -> hood.hoodToPosition0()),
+        Commands.runOnce(() -> indexer.turnOffIndexer())));
 
     // Old Kicker commands. This should be removed
-    driverController.a().whileTrue(hood.hoodToAngle(0));
+    // driverController.a().whileTrue(hood.hoodToAngle(0));
+
+    // driverController.a().onChange(
+    // () -> {if (this.mode ==0){
+    // this.mode = 1;
+    // shooter.setShooterVelocity10();
+    // hood.hoodToPosition0();
+    // }else if(this.mode ==1){
+    // this.mode =2;
+    // shooter.setShooterVelocity30();
+    // hood.hoodToPosition3();
+    // } else if(this.mode ==2){
+    // this.mode = 0;
+    // shooter.setShooterVelocity60();
+    // hood.hoodToPosition5();
+    // }}
+
+    // );
+
+    driverController.povLeft().whileTrue(Commands.parallel(shooter.setShooterVelocity10(), hood.hoodToPosition0()));
+    driverController.povUp().whileTrue(Commands.parallel(shooter.setShooterVelocity30(), hood.hoodToPosition3()));
+    driverController.povRight().whileTrue(Commands.parallel(shooter.setShooterVelocity60(), hood.hoodToPosition5()));
 
     // New simpified kicker commands
     driverController.leftTrigger().whileTrue(kicker.kickDecrement());

@@ -23,6 +23,30 @@ public class Hood extends SubsystemBase {
                 });
     }
 
+    public Command hoodToPosition0(){
+        return this.runOnce(
+            () -> {
+                this.hoodIO.hoodToPosition(0);
+            }
+        );
+    }
+
+    public Command hoodToPosition3(){
+        return this.runOnce(
+            () -> {
+                this.hoodIO.hoodToPosition(3);
+            }
+        );
+    }
+
+    public Command hoodToPosition5(){
+        return this.runOnce(
+            () -> {
+                this.hoodIO.hoodToPosition(5);
+            }
+        );
+    }
+    
     public boolean checkSetpoint() {
         double closedLoopErrorDegrees = hoodIO.getRotations().getDegrees() - setPointHoodDegree;
         this.hoodIO.getRotations();
@@ -37,4 +61,5 @@ public class Hood extends SubsystemBase {
         this.hoodIO.updateInputs(inputs);
         Logger.processInputs("HoodSubsystem", inputs);
     }
+
 }

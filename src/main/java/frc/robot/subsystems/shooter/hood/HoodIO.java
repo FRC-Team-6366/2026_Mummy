@@ -7,5 +7,7 @@ public interface HoodIO {
 
     public void hoodToAngle(double angle);
 
+    public void hoodToPosition(double position);
+
     public void updateInputs(HoodIOInputs inputs);
 }
