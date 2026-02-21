@@ -45,9 +45,9 @@ public class HoodIOTalonFX implements HoodIO {
 
 
 
-                TalonFXConfiguration cfg = new TalonFXConfiguration();
-        cfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-            cfg.Slot0.kP = 0;
+    TalonFXConfiguration cfg = new TalonFXConfiguration();
+    cfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
+    cfg.Slot0.kP = 0;
     cfg.Slot0.kI =  0;
     cfg.Slot0.kD = 0;
     cfg.Slot0.kG = 0;
@@ -55,9 +55,9 @@ public class HoodIOTalonFX implements HoodIO {
     cfg.Slot0.kV = 0;
     cfg.Slot0.kA = 0;
     cfg.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-    cfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Units.degreesToRotations(0);
+    cfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 3;//5.6 max
     cfg.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-    cfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Units.degreesToRotations(0);
+    cfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
         cfg.MotionMagic.withMotionMagicCruiseVelocity(RotationsPerSecond.of(0));
     cfg.MotionMagic.withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(0));
     cfg.MotionMagic.withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(0));    
