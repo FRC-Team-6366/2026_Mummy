@@ -23,6 +23,13 @@ public class Hood extends SubsystemBase {
                 });
     }
 
+    /**
+     * Sets the hood to rotate to position of 0 rotations (0 degrees)
+     * from the hoods starting position when the robot was turned on.
+     * 
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to move hood to position 0
+     */
     public Command hoodToPosition0(){
         return this.runOnce(
             () -> {
@@ -31,6 +38,13 @@ public class Hood extends SubsystemBase {
         );
     }
 
+    /**
+     * Sets the hood to rotate to position of 3 rotations (24.1 degrees)
+     * from the hoods starting position when the robot was turned on.
+     * 
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to move hood to position 3
+     */
     public Command hoodToPosition3(){
         return this.runOnce(
             () -> {
@@ -39,6 +53,13 @@ public class Hood extends SubsystemBase {
         );
     }
 
+    /**
+     * Sets the hood to rotate to position of 5 rotations (40.16 degrees)
+     * from the hoods starting position when the robot was turned on.
+     * 
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to move hood to position 5
+     */
     public Command hoodToPosition5(){
         return this.runOnce(
             () -> {
