@@ -111,6 +111,22 @@ public class ShooterIOTalonFX implements ShooterIO {
         this.followShooterMotor.setControl(this.follower);
     }
 
+    /**
+     * Sets the shooters velocity for shooting fuel.
+     * 
+     * @param rps Rotations per second
+     */
+    public void setShooterVelocityFeetPerSecond(double feetPerSecond) {
+        // double wheelDiameterInInches = 4;
+        // double wheelDiameterInFeet = wheelDiameterInInches / 12;
+        // double wheelCircumferenceInFeet = wheelDiameterInFeet * Math.PI;
+        // double rotationsPerSecond = feetPerSecond / wheelCircumferenceInFeet;
+        double rotationsPerSecond = feetPerSecond / ((4 / 12) * Math.PI);
+        
+        this.leadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rotationsPerSecond));
+        this.followShooterMotor.setControl(this.follower);
+    }
+
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
         inputs.connected = BaseStatusSignal.refreshAll(

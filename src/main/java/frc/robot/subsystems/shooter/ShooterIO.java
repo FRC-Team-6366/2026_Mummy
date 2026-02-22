@@ -9,12 +9,19 @@ public interface ShooterIO {
      */
     public void setShooterPower(double power);
     
-        /**
-     * Sets the shooters velocity for shooting fuel.
+    /**
+     * Sets the shooters velocity using rotations per second for shooting fuel.
      * 
      * @param rps Rotations per second
      */
     public void setShooterVelocity(double rps);
+
+    /**
+     * Sets the shooters velocity using feet per second for shooting fuel.
+     * 
+     * @param feetPerSecond feet per second (ft/s)
+     */
+    public void setShooterVelocityFeetPerSecond(double feetPerSecond);
 
     /**
      * Updates the supplied inputs objects with the current status of the 
