@@ -1,12 +1,14 @@
 package frc.robot.subsystems.shooter.hood;
 
+import java.util.function.BooleanSupplier;
+
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Hood extends SubsystemBase {
-    double setPointHoodDegree;
     HoodIO hoodIO;
     HoodIOInputsAutoLogged inputs = new HoodIOInputsAutoLogged();
 
@@ -14,73 +16,79 @@ public class Hood extends SubsystemBase {
         this.hoodIO = io;
     }
 
-    public Command hoodToAngle(double angle) {
-        this.setPointHoodDegree = angle;
-        Logger.recordOutput("HoodSubsystem/Setpoints/setpoint", this.setPointHoodDegree);
-        return this.runOnce(
-                () -> {
-                    this.hoodIO.hoodToAngle(this.setPointHoodDegree);
-                });
-    }
-
     /**
-     * Sets the hood to rotate to position of 0 rotations (0 degrees)
-     * from the hoods starting position when the robot was turned on.
-     * 
+     * Retracts the hood to its starting position
+     * <p>
      * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
-     * @return Command to move hood to position 0
+     * @return Command to set hood to starting position
      */
-    public Command hoodToPosition0(){
-        return this.runOnce(
-            () -> {
-                this.hoodIO.hoodToPosition(0);
-            }
-        );
-    }
+    public Command retractHood() {
 
-    /**
-     * Sets the hood to rotate to position of 3 rotations (24.1 degrees)
-     * from the hoods starting position when the robot was turned on.
-     * 
-     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
-     * @return Command to move hood to position 3
-     */
-    public Command hoodToPosition3(){
-        return this.runOnce(
-            () -> {
-                this.hoodIO.hoodToPosition(3);
-            }
-        );
-    }
-
-    /**
-     * Sets the hood to rotate to position of 5 rotations (40.16 degrees)
-     * from the hoods starting position when the robot was turned on.
-     * 
-     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
-     * @return Command to move hood to position 5
-     */
-    public Command hoodToPosition5(){
-        return this.runOnce(
-            () -> {
-                this.hoodIO.hoodToPosition(5);
-            }
-        );
+        return this.hoodToAngle(0);
     }
     
-    public boolean checkSetpoint() {
-        double closedLoopErrorDegrees = hoodIO.getRotations().getDegrees() - setPointHoodDegree;
-        this.hoodIO.getRotations();
-        boolean atSetPoint = Math.abs(closedLoopErrorDegrees) < 1;
-        Logger.recordOutput("HoodSubsystem/Setpoints/atSetPoint", setPointHoodDegree);
-        Logger.recordOutput("HoodSubsystem/Setpoints/closedLoopError", closedLoopErrorDegrees);
-        return atSetPoint;
+    /**
+     * Sets the hood for shooting at specified angle
+     * <p>
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @param angle Angle in degrees
+     * @return Command to set hood at angle for shooting
+     */
+    public Command hoodToAngle(double angle) {
+        return this.runOnce(
+            () -> {
+                this.hoodIO.hoodToAngle(angle);
+            });
+    }
+
+    /**
+     * Sets the hood for shooting at close targets
+     * <p>
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to set hood for close shooting
+     */
+    public Command hoodToAngleClose(){
+        return this.hoodToAngle(Constants.ShooterConstants.hoodPosition1Angle);
+    }
+
+    /**
+     * Sets the hood for shooting at medium distant targets
+     * <p>
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to set hood for medium shooting
+     */
+    public Command hoodToAngleMedium(){
+        return this.hoodToAngle(Constants.ShooterConstants.hoodPosition2Angle);
+    }
+
+    /**
+     * Sets the hood for shooting at far away targets
+     * <p>
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to set hood for far shooting
+     */
+    public Command hoodToAngleFar(){
+        return this.hoodToAngle(Constants.ShooterConstants.hoodPosition3Angle);
+    }
+
+    /**
+     * Returns whether the hood is at its set point distance, given a percent of tolerence
+     * specified in the HoodIO hardware class
+     * @return BooleanSupplier: True hood is at its setpoint, false otherwise
+     */
+    public BooleanSupplier hoodAtPositionSetpoint() {
+        return () -> this.hoodIO.hoodAtPositionSetpoint();
     }
 
     @Override
     public void periodic() {
         this.hoodIO.updateInputs(inputs);
         Logger.processInputs("HoodSubsystem", inputs);
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run during simulation
     }
 
 }

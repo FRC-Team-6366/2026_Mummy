@@ -1,23 +1,26 @@
 package frc.robot.subsystems.shooter;
 
 import edu.wpi.first.math.MathUtil;
+
+import java.util.function.BooleanSupplier;
+
 import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 /**
  *Big H here- this Substemy is for the Shooter class for the 2026 Mummybot. This class
  * handles the interactions for for shooting the subsystem, and should have the could for the 
  * shooting hood as well.
  * @author Hayden
  * @author Will 
- * @author Do I need to put this here every time? I commmented out some old code and have a few notes here btw, if you ever need it for refrence.
  */
 public class Shooter extends SubsystemBase{
     /**
      * Double value used for the current power setting in
      *  increment and decrement commmands in the shooter subsystem.
      */
-    private double power = 0;
+    private double velocityRPS = 0;
     ShooterIO shooterIO;
 
     /**
@@ -25,7 +28,6 @@ public class Shooter extends SubsystemBase{
      * shooter system. It get logged and updated every loop.
      */
     ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
-
 
     /**
      * Creates the subsystem using the shooterIO object and represents
@@ -40,15 +42,6 @@ public class Shooter extends SubsystemBase{
         this.shooterIO = io;
     }
 
-
-    
-    public void stop(){
-        if (this.power>0){
-            this.power =0;
-        }
-        this.shooterIO.setShooterPower(power);
-    }
-
      /**
      * Increases the shooter subsystem's output by 0.3 to a maximum power
      * of 1.
@@ -59,27 +52,13 @@ public class Shooter extends SubsystemBase{
      */
     public Command shooterIncrements() {
         return runOnce(
-            () -> {
-                // Clamp method returns either power, or the max or min value
-                // This ensures that power will never be greater than 1
-                this.power = MathUtil.clamp(this.power += 0.3, 0, 1);
-                
+            () -> {                
+                this.velocityRPS += 5;
                 // Set the power of the ShooterIO hardware
-                this.shooterIO.setShooterPower(power);
+                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
             }
         );
     }
-
-    // Old code getting commmented out. Our new code is above, and returns commands instead of directly changing the bot themselves. 
-
-    // public void shooterIncrements(){
-    //     if (this.power<1){
-    //         this.power +=0.3; //0.2
-
-    //     }
-    //     this.shooterIO.setShooterPower(power);
-    
-    // }
 
      /**
      * Decreases the shooter subsystem's output by 0.3 down to a minimum power
@@ -94,24 +73,13 @@ public class Shooter extends SubsystemBase{
             () -> {
                 // Clamp method returns either power, or the max or min value
                 // This ensures that power will never be greater than 1
-                this.power = MathUtil.clamp(this.power -= 0.3, 0, 1);
+                this.velocityRPS -= 5;
                 
                 // Set the power of the KickerIO hardware
-                this.shooterIO.setShooterPower(power);
+                this.shooterIO.setShooterVelocityRPS(velocityRPS);
             }
         );
-    } 
-    
-    // more old code 
-
-    // public void shooterDecrements(){
-    //     if (this.power>0){
-    //         this.power -=0.3;//0.2
-
-    //     }
-    //     this.shooterIO.setShooterPower(power);
-    // }
-
+    }
 
     /**
      * Stops the shooter, setting the power to 0.
@@ -124,40 +92,59 @@ public class Shooter extends SubsystemBase{
         return this.runOnce(
             () -> {
                 // Set power to 0
-                this.power = 0;
+                this.velocityRPS = 0;
 
                 // Use power to stop the ShooterIO Hardware motor
-                this.shooterIO.setShooterPower(this.power);
+                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
             }
         );
     }
 
 
-    public Command setShooterVelocity10(){
+    /**
+     * Sets the shooter for shooting at close targets
+     * @return Command to set shooter for close shooting
+     */
+    public Command setShooterVelocityLow(){
         return this.runOnce(
             () -> {
-                this.shooterIO.setShooterVelocity(10);
+                this.shooterIO.setShooterVelocityFeetPerSecond(Constants.ShooterConstants.shooterPosition1VelocityFPS);
             }
         );
     }
 
-    public Command setShooterVelocity30(){
+    /**
+     * Sets the shooter for shooting at medium distance targets
+     * @return Command to set shooter for medium shooting
+     */
+    public Command setShooterVelocityMedium(){
         return this.runOnce(
             () -> {
-                this.shooterIO.setShooterVelocity(30);
+                this.shooterIO.setShooterVelocityFeetPerSecond(Constants.ShooterConstants.shooterPosition2VelocityFPS);
             }
         );
     }
 
-    public Command setShooterVelocity60(){
+    /**
+     * Sets the shooter for shooting at far away targets
+     * @return Command to set shooter for far shooting
+     */
+    public Command setShooterVelocityHigh(){
         return this.runOnce(
             () -> {
-                this.shooterIO.setShooterVelocity(60);
+                this.shooterIO.setShooterVelocityFeetPerSecond(Constants.ShooterConstants.shooterPosition3VelocityFPS);
             }
         );
     }
 
-
+    /**
+     * Returns whether the shooter is at its set point velocity, given a percent of tolerence
+     * specified in the ShooterIO hardware class
+     * @return BooleanSupplier: True hood is at its setpoint, false otherwise
+     */
+    public BooleanSupplier shooterAtVelocitySetPoint() {
+        return () -> shooterIO.shooterAtVelocitySetPoint();
+    }
 
     @Override
     public void periodic() {
@@ -172,5 +159,5 @@ public class Shooter extends SubsystemBase{
     @Override
     public void simulationPeriodic() {
         // This method will be called once per scheduler run during simulation
-  }
+    }
 }

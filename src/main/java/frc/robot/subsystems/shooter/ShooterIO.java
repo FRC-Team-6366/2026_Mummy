@@ -1,20 +1,13 @@
 package frc.robot.subsystems.shooter;
 
 public interface ShooterIO {
-
-    /**
-     * Sets the power of the Shooter. Will used the supplied value and 
-     * convert it to a value between -12.0 volts and 12.0 volts
-     * @param power Power value between -1.0 and 1.0
-     */
-    public void setShooterPower(double power);
     
     /**
      * Sets the shooters velocity using rotations per second for shooting fuel.
      * 
      * @param rps Rotations per second
      */
-    public void setShooterVelocity(double rps);
+    public void setShooterVelocityRPS(double rps);
 
     /**
      * Sets the shooters velocity using feet per second for shooting fuel.
@@ -22,6 +15,19 @@ public interface ShooterIO {
      * @param feetPerSecond feet per second (ft/s)
      */
     public void setShooterVelocityFeetPerSecond(double feetPerSecond);
+
+    /**
+     * Returns the amount of error between the shooter's current velocity
+     * and the shooter's setpoint velocity;
+     * @return Difference of rotations per second
+     */
+    public double getShooterVelocityError();
+
+    /**
+     * Checks if the shooter is at the requested velocity setpoint
+     * @return True if shooter is at the velocity setpoint. False otherwise
+     */
+    public boolean shooterAtVelocitySetPoint();
 
     /**
      * Updates the supplied inputs objects with the current status of the 

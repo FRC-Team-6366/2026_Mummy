@@ -11,7 +11,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 import frc.robot.Constants;
-
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -38,6 +38,24 @@ public class ShooterIOTalonFX implements ShooterIO {
     StatusSignal<Current> followShooterCurrent;
     StatusSignal<Current> followShooterSupplyCurrent;
 
+    StatusSignal<Double> shooterVelocityError;
+
+    // Speficy min and max velocity for adjusting
+    // other elements of the shooter subsystem such as tolerance amount
+    public static final double shooterMinVelocityRPS = 0;
+    public static final double shooterMaxVelocityRPS = 6000;
+
+    
+    // Setpoint tracking variables
+    /**
+     * How far the shooter's velocity can be off and still be concidered at setpoint.
+     * Valid values from 0.0 (no tolerance!) to 100.0 (no accuracy!)
+     */
+    double setPointTolerancePercent = 1;
+    double setPointTolerance;
+    double velocitySetPointLow;
+    double velocitySetPointHigh;
+
     public ShooterIOTalonFX() {
         // Instantiating Lead Shooter motor and its variables for monitoring
         leadShooterMotor = new TalonFX(Constants.ShooterConstants.leadShooterMotorId);
@@ -46,6 +64,7 @@ public class ShooterIOTalonFX implements ShooterIO {
         leadShooterRps = leadShooterMotor.getVelocity();
         leadShooterCurrent = leadShooterMotor.getTorqueCurrent();
         leadShooterSupplyCurrent = leadShooterMotor.getSupplyCurrent();
+        shooterVelocityError = leadShooterMotor.getClosedLoopError();
 
         // Instantiating configuration for Lead Shooter motor
         TalonFXConfiguration leadcfg = new TalonFXConfiguration();
@@ -82,49 +101,48 @@ public class ShooterIOTalonFX implements ShooterIO {
                 followShooterPosition,
                 followShooterRps,
                 followShooterCurrent,
-                followShooterSupplyCurrent
+                followShooterSupplyCurrent,
+                shooterVelocityError
         );
 
         // Forcing optimal use of the CAN Bus for this subsystems
         // hardware
         leadShooterMotor.optimizeBusUtilization(0.0, 1.0);
         followShooterMotor.optimizeBusUtilization(0.0, 1.0);
-
+        
+        this.setPointTolerance = shooterMaxVelocityRPS * this.setPointTolerancePercent;
     }
 
     @Override
-    public void setShooterPower(double power) {
-        double voltage = power * 12;
-        VoltageOut volts = new VoltageOut(voltage);
-        leadShooterMotor.setControl(volts);
-        followShooterMotor.setControl(volts);
-    }
-
-    /**
-     * Sets the shooters velocity for shooting fuel.
-     * 
-     * @param rps Rotations per second
-     */
-    @Override
-    public void setShooterVelocity(double rps) {
-        this.leadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rps));
+    public void setShooterVelocityRPS(double rps) {
+        double rpsToUse = MathUtil.clamp(rps, shooterMinVelocityRPS, shooterMaxVelocityRPS);
+        this.leadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse));
         this.followShooterMotor.setControl(this.follower);
     }
 
-    /**
-     * Sets the shooters velocity for shooting fuel.
-     * 
-     * @param rps Rotations per second
-     */
+   @Override
     public void setShooterVelocityFeetPerSecond(double feetPerSecond) {
         // double wheelDiameterInInches = 4;
         // double wheelDiameterInFeet = wheelDiameterInInches / 12;
         // double wheelCircumferenceInFeet = wheelDiameterInFeet * Math.PI;
         // double rotationsPerSecond = feetPerSecond / wheelCircumferenceInFeet;
         double rotationsPerSecond = feetPerSecond / ((4 / 12) * Math.PI);
-        
-        this.leadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rotationsPerSecond));
+        double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
+
+        this.leadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse));
         this.followShooterMotor.setControl(this.follower);
+    }
+
+    @Override
+    public double getShooterVelocityError() {
+        return this.leadShooterMotor.getClosedLoopError().getValueAsDouble();
+    }
+
+    @Override
+    public boolean shooterAtVelocitySetPoint() {
+        // Get absolute value of the error and see if it is less
+        // than the setpoint tolerance
+        return Math.abs(this.getShooterVelocityError()) < this.setPointTolerance;
     }
 
     @Override
@@ -139,7 +157,11 @@ public class ShooterIOTalonFX implements ShooterIO {
                 followShooterPosition,
                 followShooterRps,
                 followShooterCurrent,
-                followShooterSupplyCurrent).isOK();
+                followShooterSupplyCurrent,
+                shooterVelocityError
+        ).isOK();
+        
+        // Update Hardware fields
         inputs.leadShooterVolts = this.leadShooterVolts.getValueAsDouble();
         inputs.leadShooterPosition = this.leadShooterPosition.getValueAsDouble();
         inputs.leadShooterRps = this.leadShooterRps.getValueAsDouble();
@@ -151,6 +173,11 @@ public class ShooterIOTalonFX implements ShooterIO {
         inputs.followShooterRps = this.followShooterRps.getValueAsDouble();
         inputs.followShooterCurrent = this.followShooterCurrent.getValueAsDouble();
         inputs.followShooterSupplyCurrent = this.followShooterSupplyCurrent.getValueAsDouble();
+
+        // Update Setpoint related fields
+        inputs.shooterVelocitySetpoint = this.velocityVoltageRequest.Velocity;
+        inputs.shooterVelocityError = this.shooterVelocityError.getValueAsDouble();
+        inputs.shooterAtVelocitySetpoint = this.shooterAtVelocitySetPoint();
     }
 
 }

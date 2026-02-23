@@ -76,35 +76,16 @@ public class RobotContainer {
     // cancelling on release.
     driverController.y().whileTrue(Commands.runOnce(() -> shooter.shooterDecrements()));
     driverController.x().whileTrue(Commands.runOnce(() -> shooter.shooterIncrements()));
-    driverController.b().whileTrue(Commands.parallel(
-        Commands.runOnce(() -> shooter.stop()),
-        Commands.runOnce(() -> kicker.turnOffKicker()),
-        Commands.run(() -> hood.hoodToPosition0()),
-        Commands.runOnce(() -> indexer.turnOffIndexer())));
-
-    // Old Kicker commands. This should be removed
-    // driverController.a().whileTrue(hood.hoodToAngle(0));
-
-    // driverController.a().onChange(
-    // () -> {if (this.mode ==0){
-    // this.mode = 1;
-    // shooter.setShooterVelocity10();
-    // hood.hoodToPosition0();
-    // }else if(this.mode ==1){
-    // this.mode =2;
-    // shooter.setShooterVelocity30();
-    // hood.hoodToPosition3();
-    // } else if(this.mode ==2){
-    // this.mode = 0;
-    // shooter.setShooterVelocity60();
-    // hood.hoodToPosition5();
-    // }}
-
-    // );
-
-    driverController.povLeft().whileTrue(Commands.parallel(shooter.setShooterVelocity10(), hood.hoodToPosition0()));
-    driverController.povUp().whileTrue(Commands.parallel(shooter.setShooterVelocity30(), hood.hoodToPosition3()));
-    driverController.povRight().whileTrue(Commands.parallel(shooter.setShooterVelocity60(), hood.hoodToPosition5()));
+    
+    // Stop all subsystems (except drivetrain)
+    driverController.b().whileTrue(
+      Commands.parallel(
+        shooter.turnOffShooter(),
+        kicker.turnOffKicker(),
+        indexer.turnOffIndexer(),
+        hood.retractHood()
+      )
+    );
 
     // New simpified kicker commands
     driverController.leftTrigger().whileTrue(kicker.kickDecrement());
@@ -112,6 +93,49 @@ public class RobotContainer {
 
     driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
     driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
+
+    // Set shooter to velocity 10 and and hood to position 0
+    driverController.povLeft().whileTrue(
+        Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityLow().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAngleClose().until(hood.hoodAtPositionSetpoint())
+            ),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
+
+    // Set shooter to velocity 30 and and hood to position 3
+    driverController.povUp().whileTrue(
+      Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityMedium().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAngleMedium().until(hood.hoodAtPositionSetpoint())
+            ),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
+
+    // Set shooter to velocity 60 and and hood to position 5
+    driverController.povRight().whileTrue(
+      Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityHigh().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAngleFar().until(hood.hoodAtPositionSetpoint())),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
+
+
 
   }
 
