@@ -1,7 +1,5 @@
 package frc.robot.subsystems.shooter;
 
-import edu.wpi.first.math.MathUtil;
-
 import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
