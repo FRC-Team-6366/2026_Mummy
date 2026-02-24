@@ -79,7 +79,8 @@ public class HoodIOTalonFX implements HoodIO {
                 hoodPosition,
                 hoodRps,
                 hoodCurrent,
-                hoodSupplyCurrent);
+                hoodSupplyCurrent,
+                hoodErrorFromSetpoint);
 
         hoodMotor.optimizeBusUtilization(0.0, 1.0);
 

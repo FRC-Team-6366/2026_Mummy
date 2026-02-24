@@ -42,7 +42,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     // Speficy min and max velocity for adjusting
     // other elements of the shooter subsystem such as tolerance amount
     public static final double shooterMinVelocityRPS = 0;
-    public static final double shooterMaxVelocityRPS = 6000;
+    public static final double shooterMaxVelocityRPS = 100;
 
     
     // Setpoint tracking variables
@@ -68,8 +68,8 @@ public class ShooterIOTalonFX implements ShooterIO {
         // Instantiating configuration for Lead Shooter motor
         TalonFXConfiguration leadcfg = new TalonFXConfiguration();
         leadcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-        leadcfg.Slot0.kP = 0.5;
-        leadcfg.Slot0.kI = 0;
+        leadcfg.Slot0.kP = 0.05;
+        leadcfg.Slot0.kV = 0.1166;
         leadcfg.Slot0.kD = 0;
         this.leadShooterMotor.getConfigurator().apply(leadcfg);
 

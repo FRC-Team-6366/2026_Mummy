@@ -46,7 +46,7 @@ public class Indexer extends SubsystemBase {
             () -> {
                 this.power = 0;
                 this.indexerIO.setIndexerPower(this.power);
-                this.indexerIO.setIndexerWallPower(this.power);
+                // this.indexerIO.setIndexerWallPower(this.power);
             }
         );
     }
@@ -63,7 +63,7 @@ public class Indexer extends SubsystemBase {
             () -> {
                 this.power = 1;
                 this.indexerIO.setIndexerPower(this.power);
-                this.indexerIO.setIndexerWallPower(this.power);
+                // this.indexerIO.setIndexerWallPower(this.power);
             }
         );
     }
@@ -81,7 +81,7 @@ public class Indexer extends SubsystemBase {
             () -> {
                 this.power = MathUtil.clamp(this.power += 0.2, 0, 1);
                 this.indexerIO.setIndexerPower(this.power);
-                this.indexerIO.setIndexerWallPower(this.power);
+                // this.indexerIO.setIndexerWallPower(this.power);
             }
         );
     }
@@ -99,7 +99,7 @@ public class Indexer extends SubsystemBase {
             () -> {
                 this.power = MathUtil.clamp(this.power -= 0.2, 0, 1);
                 this.indexerIO.setIndexerPower(this.power);
-                this.indexerIO.setIndexerWallPower(this.power);
+                // this.indexerIO.setIndexerWallPower(this.power);
             }
         );
     }

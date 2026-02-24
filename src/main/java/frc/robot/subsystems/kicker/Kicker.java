@@ -53,7 +53,7 @@ public class Kicker extends SubsystemBase {
             () -> {
                 // Clamp method returns either power, or the max or min value
                 // This ensures that power will never be greater than 1
-                this.power = MathUtil.clamp(this.power += 0.3, 0, 1);
+                this.power = MathUtil.clamp(this.power += 1, 0, 1);
                 
                 // Set the power of the KickerIO hardware
                 this.io.setKickPower(power);
