@@ -100,37 +100,43 @@ public class Shooter extends SubsystemBase{
 
 
     /**
-     * Sets the shooter for shooting at close targets
+     * Sets the shooter for shooting at when at the human station 
      * @return Command to set shooter for close shooting
      */
-    public Command setShooterVelocityLow(){
+    public Command setShooterVelocityPosition1(){
+        this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
+
         return this.runOnce(
             () -> {
-                this.shooterIO.setShooterVelocityFeetPerSecond(Constants.ShooterConstants.shooterPosition1VelocityFPS);
+                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
         );
     }
 
     /**
-     * Sets the shooter for shooting at medium distance targets
+     * Sets the shooter for shooting at tower/hanging bar
      * @return Command to set shooter for medium shooting
      */
-    public Command setShooterVelocityMedium(){
+    public Command setShooterVelocityPosition2(){
+        this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
+
         return this.runOnce(
             () -> {
-                this.shooterIO.setShooterVelocityFeetPerSecond(Constants.ShooterConstants.shooterPosition2VelocityFPS);
+        this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
         );
     }
 
     /**
-     * Sets the shooter for shooting at far away targets
+     * Sets the shooter for shooting from the trench against the wall
      * @return Command to set shooter for far shooting
      */
-    public Command setShooterVelocityHigh(){
+    public Command setShooterVelocityPosition3(){
+        this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
+
         return this.runOnce(
             () -> {
-                this.shooterIO.setShooterVelocityFeetPerSecond(Constants.ShooterConstants.shooterPosition3VelocityFPS);
+        this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
         );
     }

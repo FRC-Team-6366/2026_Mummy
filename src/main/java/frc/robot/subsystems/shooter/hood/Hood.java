@@ -42,32 +42,32 @@ public class Hood extends SubsystemBase {
     }
 
     /**
-     * Sets the hood for shooting at close targets
+     * Sets the hood for shooting at hanging station
      * <p>
      * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
      * @return Command to set hood for close shooting
      */
-    public Command hoodToAngleClose(){
+    public Command hoodToAnglePosition1(){
         return this.hoodToAngle(Constants.ShooterConstants.hoodPosition1Angle);
     }
 
     /**
-     * Sets the hood for shooting at medium distant targets
+     * Sets the hood for shooting at trench wall
      * <p>
      * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
      * @return Command to set hood for medium shooting
      */
-    public Command hoodToAngleMedium(){
+    public Command hoodToAnglePosition2(){
         return this.hoodToAngle(Constants.ShooterConstants.hoodPosition2Angle);
     }
 
     /**
-     * Sets the hood for shooting at far away targets
+     * Sets the hood for shooting at human player station
      * <p>
      * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
      * @return Command to set hood for far shooting
      */
-    public Command hoodToAngleFar(){
+    public Command hoodToAnglePosition3(){
         return this.hoodToAngle(Constants.ShooterConstants.hoodPosition3Angle);
     }
 

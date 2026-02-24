@@ -98,8 +98,8 @@ public class RobotContainer {
     driverController.povLeft().whileTrue(
         Commands.sequence(
             Commands.parallel(
-                shooter.setShooterVelocityLow().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodToAngleClose().until(hood.hoodAtPositionSetpoint())
+                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())
             ),
             Commands.parallel(
                 kicker.turnOnKicker(),
@@ -112,8 +112,8 @@ public class RobotContainer {
     driverController.povUp().whileTrue(
       Commands.sequence(
             Commands.parallel(
-                shooter.setShooterVelocityMedium().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodToAngleMedium().until(hood.hoodAtPositionSetpoint())
+                shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())
             ),
             Commands.parallel(
                 kicker.turnOnKicker(),
@@ -126,8 +126,8 @@ public class RobotContainer {
     driverController.povRight().whileTrue(
       Commands.sequence(
             Commands.parallel(
-                shooter.setShooterVelocityHigh().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodToAngleFar().until(hood.hoodAtPositionSetpoint())),
+                shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
             Commands.parallel(
                 kicker.turnOnKicker(),
                 indexer.turnOnIndexer()
