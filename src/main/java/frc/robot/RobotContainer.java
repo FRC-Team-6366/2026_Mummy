@@ -74,8 +74,8 @@ public class RobotContainer {
   private void configureBindings() {
 
     // cancelling on release.
-    driverController.y().whileTrue(Commands.runOnce(() -> shooter.shooterDecrements()));
-    driverController.x().whileTrue(Commands.runOnce(() -> shooter.shooterIncrements()));
+    driverController.y().whileTrue(shooter.shooterDecrements());
+    driverController.x().whileTrue(shooter.shooterIncrements());
     
     // Stop all subsystems (except drivetrain)
     driverController.b().whileTrue(
@@ -88,8 +88,8 @@ public class RobotContainer {
     );
 
     // New simpified kicker commands
-    driverController.leftTrigger().whileTrue(kicker.kickDecrement());
-    driverController.rightTrigger().whileTrue(kicker.kickIncrement());
+    driverController.leftTrigger().whileTrue(hood.hoodDecrements());
+    driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
     driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
     driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));

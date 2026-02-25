@@ -111,7 +111,7 @@ public class HoodIOTalonFX implements HoodIO {
         // We are trying to map the degrees 0 -> 45 to the motor rotations 0 -> 5.6
         // We map angle to an input value between 0 and 45 to prevent larger or smaller values
         // Then divide the angle by the ratio between the max angle (45) and the max postion in rotations (5.6)
-        double angletoRotations = MathUtil.clamp(angle, 0, 45) / (45 / hoodMaxPosition);
+        double angletoRotations = MathUtil.clamp(angle, 0.0, 45.0) / (45.0 / hoodMaxPosition);
         this.hoodMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
     }
 

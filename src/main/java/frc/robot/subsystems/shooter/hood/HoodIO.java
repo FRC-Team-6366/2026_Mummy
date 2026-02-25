@@ -39,6 +39,8 @@ public interface HoodIO {
      */
     public boolean hoodAtPositionSetpoint();
 
+    
+
     /**
      * Updates the supplied inputs object with the current status of the 
      * hood motor.

@@ -4,12 +4,15 @@ import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Hood extends SubsystemBase {
     HoodIO hoodIO;
+    double angle = 0;
+
     HoodIOInputsAutoLogged inputs = new HoodIOInputsAutoLogged();
 
     public Hood(HoodIO io) {
@@ -23,8 +26,8 @@ public class Hood extends SubsystemBase {
      * @return Command to set hood to starting position
      */
     public Command retractHood() {
-
-        return this.hoodToAngle(0);
+        this.angle = 0;
+        return this.hoodToAngle(this.angle);
     }
     
     /**
@@ -37,8 +40,29 @@ public class Hood extends SubsystemBase {
     public Command hoodToAngle(double angle) {
         return this.runOnce(
             () -> {
-                this.hoodIO.hoodToAngle(angle);
+                this.angle = angle;
+                this.hoodIO.hoodToAngle(this.angle);
             });
+    }
+
+    public Command hoodIncrements(){
+        return this.runOnce(
+         () ->
+         { 
+            this.angle += 1;
+            this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
+            this.hoodIO.hoodToAngle(this.angle);
+         });
+    }
+
+        public Command hoodDecrements(){
+        return this.runOnce(
+         () ->
+         { 
+            this.angle -= 1;
+         this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
+            this.hoodIO.hoodToAngle(this.angle);
+         });
     }
 
     /**

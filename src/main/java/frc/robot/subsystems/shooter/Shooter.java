@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase{
     public Command shooterIncrements() {
         return runOnce(
             () -> {                
-                this.velocityRPS += 5;
+                this.velocityRPS += 1;
                 // Set the power of the ShooterIO hardware
                 this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
             }
@@ -71,7 +71,7 @@ public class Shooter extends SubsystemBase{
             () -> {
                 // Clamp method returns either power, or the max or min value
                 // This ensures that power will never be greater than 1
-                this.velocityRPS -= 5;
+                this.velocityRPS -= 1;
                 
                 // Set the power of the KickerIO hardware
                 this.shooterIO.setShooterVelocityRPS(velocityRPS);
@@ -104,10 +104,10 @@ public class Shooter extends SubsystemBase{
      * @return Command to set shooter for close shooting
      */
     public Command setShooterVelocityPosition1(){
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
 
         return this.runOnce(
             () -> {
+                this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
                 this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
         );
@@ -118,10 +118,10 @@ public class Shooter extends SubsystemBase{
      * @return Command to set shooter for medium shooting
      */
     public Command setShooterVelocityPosition2(){
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
 
         return this.runOnce(
             () -> {
+        this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
         );
@@ -132,10 +132,10 @@ public class Shooter extends SubsystemBase{
      * @return Command to set shooter for far shooting
      */
     public Command setShooterVelocityPosition3(){
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
 
         return this.runOnce(
             () -> {
+        this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
         );
