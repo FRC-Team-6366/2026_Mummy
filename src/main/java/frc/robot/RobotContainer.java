@@ -79,6 +79,8 @@ public class RobotContainer {
 
    final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     
+    
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -155,40 +157,40 @@ public class RobotContainer {
 
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    // // cancelling on release.
-    // driverController.y().whileTrue(shooter.shooterDecrements());
-    // driverController.x().whileTrue(shooter.shooterIncrements());
+    // cancelling on release.
+    driverController.y().whileTrue(shooter.shooterDecrements());
+    driverController.x().whileTrue(shooter.shooterIncrements());
     
-    // // Stop all subsystems (except drivetrain)
-    // driverController.b().whileTrue(
-    //   Commands.parallel(
-    //     shooter.turnOffShooter(),
-    //     kicker.turnOffKicker(),
-    //     indexer.turnOffIndexer(),
-    //     hood.retractHood()
-    //   )
-    // );
+    // Stop all subsystems (except drivetrain)
+    driverController.b().whileTrue(
+      Commands.parallel(
+        shooter.turnOffShooter(),
+        kicker.turnOffKicker(),
+        indexer.turnOffIndexer(),
+        hood.retractHood()
+      )
+    );
 
-    // // New simpified kicker commands
-    // driverController.leftTrigger().whileTrue(hood.hoodDecrements());
-    // driverController.rightTrigger().whileTrue(hood.hoodIncrements());
+    // New simpified kicker commands
+    driverController.leftTrigger().whileTrue(hood.hoodDecrements());
+    driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
-    // driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
-    // driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
+    driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
+    driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
 
-    // // Set shooter to velocity 10 and and hood to position 0
-    // driverController.povLeft().whileTrue(
-    //     Commands.sequence(
-    //         Commands.parallel(
-    //             shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
-    //             hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())
-    //         ),
-    //         Commands.parallel(
-    //             kicker.turnOnKicker(),
-    //             indexer.turnOnIndexer()
-    //         )
-    //     )
-    // );
+    // Set shooter to velocity 10 and and hood to position 0
+    driverController.povLeft().whileTrue(
+        Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())
+            ),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
 
     // Set shooter to velocity 30 and and hood to position 3
     driverController.povUp().whileTrue(
