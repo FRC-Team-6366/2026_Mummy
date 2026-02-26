@@ -36,11 +36,28 @@ public class IntakeIOTalonFX implements IntakeIO{
 
 IntakeIOTalonFX(){
     intakeMotorPivot = new TalonFX(20);
+    iMPcfg = new TalonFXConfiguration();
+    iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    intakeMotorRollers.getConfigurator().apply(iMPcfg);
+        // Setting the StatusSignal variables to be mapped
+        // to actual aspect of the IntakeIO's hardware
+        intakePivotVolts = intakeMotorPivot.getMotorVoltage();
+        intakePivotPosition = intakeMotorPivot.getPosition();
+        intakePivotRps = intakeMotorPivot.getVelocity();
+        intakePivotCurrent = intakeMotorPivot.getTorqueCurrent();
+        intakePivotSupplyCurrent = intakeMotorPivot.getSupplyCurrent();
 
     intakeMotorRollers = new TalonFX(19);
     iMRcfg = new TalonFXConfiguration();
     iMRcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
     intakeMotorRollers.getConfigurator().apply(iMRcfg);
+        // Setting the StatusSignal variables to be mapped
+        // to actual aspect of the IntakeIO's hardware
+        intakeRollersVolts = intakeMotorPivot.getMotorVoltage();
+        intakeRollersPosition = intakeMotorPivot.getPosition();
+        intakeRollersRps = intakeMotorPivot.getVelocity();
+        intakeRollersCurrent = intakeMotorPivot.getTorqueCurrent();
+        intakeRollersSupplyCurrent = intakeMotorPivot.getSupplyCurrent();
 
 
 }
