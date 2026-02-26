@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.units.measure.Voltage; //  Voltage
+import frc.robot.Constants;
 import edu.wpi.first.units.measure.AngularVelocity; // Rotations Per Second
 import edu.wpi.first.units.measure.Angle; // position
 import edu.wpi.first.units.measure.Current;// Supply current
@@ -15,7 +16,7 @@ import edu.wpi.first.units.measure.Current;// Supply current
 
 public class IndexerIOTalonFX implements IndexerIO{
     private final TalonFX indexMotor;
-    private final TalonFX indexWallMotor;
+    // private final TalonFX indexWallMotor;
     
     StatusSignal<Voltage> indexVolts;
     StatusSignal<Angle> indexPosition;
@@ -31,14 +32,13 @@ public class IndexerIOTalonFX implements IndexerIO{
 
 
     public IndexerIOTalonFX(){
-        indexMotor= new TalonFX(4); //16
+        indexMotor= new TalonFX(Constants.IndexerConstants.indexerMotorId); //16
         TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexMotor.getConfigurator().apply(indMotorconfiguration);
 
-        indexWallMotor= new TalonFX(5);//STAND IN MOTOR, ask for wall motor device Id later
-        indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-        indexWallMotor.getConfigurator().apply(indMotorconfiguration);
+        // indexWallMotor= new TalonFX(Constants.IndexerConstants.indexerWallMotorId);//STAND IN MOTOR, ask for wall motor device Id later
+        // indexWallMotor.getConfigurator().apply(indMotorconfiguration);
 
         indexVolts = indexMotor.getMotorVoltage();
         indexPosition = indexMotor.getPosition();
@@ -46,11 +46,11 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexCurrent = indexMotor.getTorqueCurrent();
         indexSupplyCurrent = indexMotor.getSupplyCurrent();
 
-        indexWallVolts = indexWallMotor.getMotorVoltage();
-        indexWallPosition = indexWallMotor.getPosition();
-        indexWallRps = indexWallMotor.getVelocity();
-        indexWallCurrent = indexWallMotor.getTorqueCurrent();
-        indexWallSupplyCurrent = indexWallMotor.getSupplyCurrent();
+        // indexWallVolts = indexWallMotor.getMotorVoltage();
+        // indexWallPosition = indexWallMotor.getPosition();
+        // indexWallRps = indexWallMotor.getVelocity();
+        // indexWallCurrent = indexWallMotor.getTorqueCurrent();
+        // indexWallSupplyCurrent = indexWallMotor.getSupplyCurrent();
 
         
     BaseStatusSignal.setUpdateFrequencyForAll(
@@ -59,15 +59,16 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexPosition,
         indexRps,
         indexCurrent,
-        indexSupplyCurrent,
-        indexWallVolts,
-        indexPosition,
-        indexWallRps,
-        indexWallCurrent,
-        indexWallSupplyCurrent);
+        indexSupplyCurrent
+        // indexWallVolts,
+        // indexWallPosition,
+        // indexWallRps,
+        // indexWallCurrent,
+        // indexWallSupplyCurrent
+        );
 
     indexMotor.optimizeBusUtilization(0.0, 1.0);
-    indexWallMotor.optimizeBusUtilization(0.0, 1.0);
+    // indexWallMotor.optimizeBusUtilization(0.0, 1.0);
 
     }
 
@@ -78,12 +79,12 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexMotor.setControl(volts);
     }
 
-    @Override
-    public void setIndexerWallPower(double power) {
-        double voltage = power *12;
-        VoltageOut volts = new VoltageOut(voltage);
-        indexWallMotor.setControl(volts);
-    }
+    // @Override
+    // public void setIndexerWallPower(double power) {
+    //     double voltage = power *12;
+    //     VoltageOut volts = new VoltageOut(voltage);
+    //     indexWallMotor.setControl(volts);
+    // }
 
     @Override 
     public void updateInputs(IndexerIOInputs inputs){
@@ -92,23 +93,24 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexPosition,
         indexRps,
         indexCurrent,
-        indexSupplyCurrent,
-        indexWallVolts,
-        indexWallPosition,
-        indexWallRps,
-        indexWallCurrent,
-        indexWallSupplyCurrent).isOK();
+        indexSupplyCurrent
+        // indexWallVolts,
+        // indexWallPosition,
+        // indexWallRps,
+        // indexWallCurrent,
+        // indexWallSupplyCurrent
+        ).isOK();
         inputs.indexVolts = this.indexVolts.getValueAsDouble();
         inputs.indexPosition = this.indexPosition.getValueAsDouble();
         inputs.indexRps = this.indexRps.getValueAsDouble();
         inputs.indexCurrent = this.indexCurrent.getValueAsDouble();
         inputs.indexSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();
 
-        inputs.indexWallVolts = this.indexWallVolts.getValueAsDouble();
-        inputs.indexWallPosition = this.indexWallPosition.getValueAsDouble();
-        inputs.indexWallRps = this.indexWallRps.getValueAsDouble();
-        inputs.indexWallCurrent = this.indexWallCurrent.getValueAsDouble();
-        inputs.indexWallSupplyCurrent = this.indexWallSupplyCurrent.getValueAsDouble();
+        // inputs.indexWallVolts = this.indexWallVolts.getValueAsDouble();
+        // inputs.indexWallPosition = this.indexWallPosition.getValueAsDouble();
+        // inputs.indexWallRps = this.indexWallRps.getValueAsDouble();
+        // inputs.indexWallCurrent = this.indexWallCurrent.getValueAsDouble();
+        // inputs.indexWallSupplyCurrent = this.indexWallSupplyCurrent.getValueAsDouble();
     }
     
     

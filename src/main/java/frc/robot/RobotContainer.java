@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain.CommandSwerveDrivetrain;
 import frc.robot.subsystems.driveTrain.SwerveDrive;
@@ -17,21 +16,12 @@ import frc.robot.subsystems.kicker.Kicker;
 import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
-
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.RadiansPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-
-import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.swerve.SwerveRequest;
-
-import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.subsystems.shooter.hood.Hood;
+import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -48,31 +38,14 @@ public class RobotContainer {
   Indexer indexer;
   Kicker kicker;
   SwerveDrive swerveDrive;
+  Hood hood;
+  int mode; //
+
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
-
-        private double MaxSpeed =
-      1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-  private double MaxAngularRate =
-      RotationsPerSecond.of(0.75)
-          .in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
-  /* Setting up bindings for necessary control of the swerve drive platform */
-  private final SwerveRequest.FieldCentric drive =
-      new SwerveRequest.FieldCentric()
-          .withDeadband(MaxSpeed * 0.1)
-          .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-          .withDriveRequestType(
-              DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
-  private final Telemetry logger = new Telemetry(MaxSpeed);
-
-  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -82,6 +55,8 @@ public class RobotContainer {
     this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker(new KickerIOTalonFX());
     this.swerveDrive = new SwerveDrive();
+    this.hood = new Hood(new HoodIOTalonFX());
+    this.mode = 0;
 
     // Configure the trigger bindings
     configureBindings();
@@ -137,24 +112,68 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
-    driverController.y().whileTrue(Commands.runOnce(() -> shooter.shooterDecrements()));
-    driverController.x().whileTrue(Commands.runOnce(() -> shooter.shooterIncrements()));
-    driverController.b().whileTrue(Commands.parallel(
-        Commands.runOnce(() -> shooter.stop()),
-        Commands.runOnce(() -> kicker.turnOffKicker())
-    // Commands.runOnce(() -> indexer.stop()
-    ));
-
-    // Old Kicker commands. This should be removed
-    // m_driverController.leftTrigger().whileTrue(Commands.runOnce(() -> kicker.kickDecrements()));
-    // m_driverController.rightTrigger().whileTrue(Commands.runOnce(() -> kicker.kickIncrements()));
+    driverController.y().whileTrue(shooter.shooterDecrements());
+    driverController.x().whileTrue(shooter.shooterIncrements());
+    
+    // Stop all subsystems (except drivetrain)
+    driverController.b().whileTrue(
+      Commands.parallel(
+        shooter.turnOffShooter(),
+        kicker.turnOffKicker(),
+        indexer.turnOffIndexer(),
+        hood.retractHood()
+      )
+    );
 
     // New simpified kicker commands
-    driverController.leftTrigger().whileTrue(kicker.kickDecrement());
-    driverController.rightTrigger().whileTrue(kicker.kickIncrement());
+    driverController.leftTrigger().whileTrue(hood.hoodDecrements());
+    driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
     driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
     driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
+
+    // Set shooter to velocity 10 and and hood to position 0
+    driverController.povLeft().whileTrue(
+        Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())
+            ),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
+
+    // Set shooter to velocity 30 and and hood to position 3
+    driverController.povUp().whileTrue(
+      Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())
+            ),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
+
+    // Set shooter to velocity 60 and and hood to position 5
+    driverController.povRight().whileTrue(
+      Commands.sequence(
+            Commands.parallel(
+                shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
+                hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
+            Commands.parallel(
+                kicker.turnOnKicker(),
+                indexer.turnOnIndexer()
+            )
+        )
+    );
+
+
 
   }
 

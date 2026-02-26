@@ -31,7 +31,7 @@ public interface IndexerIO {
      * }</pre>
      * @param power Power value between -1.0 and 1.0
      */
-    public default void setIndexerWallPower(double power){};
+    // public default void setIndexerWallPower(double power){};
 
     /**
      * Updates the supplied inputs objects with the current status of the 

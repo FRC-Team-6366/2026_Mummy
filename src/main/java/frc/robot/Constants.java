@@ -28,27 +28,42 @@ public final class Constants {
   }
 
   public class drivetrainConstants {
-    public static final int leftFrontMotorId = 0;
-    public static final int rightFrontMotorId = 1;
-    public static final int leftRearMotorId = 2;
-    public static final int rightRearMotorId = 3;
+    public static final int frontLeftDriveMotorId = 0;
+    public static final int frontLeftSteerMotorId = 1;  
+    public static final int frontLeftDriveEncoderId = 2;
+    public static final int frontRightDriveMotorId = 3;
+    public static final int frontRightSteerMotorId = 4;  
+    public static final int frontRightDriveEncoderId = 5;
+    public static final int rearLeftDriveMotorId = 6;
+    public static final int rearLeftSteerMotorId = 7;  
+    public static final int rearLeftDriveEncoderId = 8;
+    public static final int rearRightDriveMotorId = 9;
+    public static final int rearRightSteerMotorId = 10;  
+    public static final int rearRightDriveEncoderId = 11;
   }
 
   public class IndexerConstants {
-    public static final int indexerMotorId = 4;
-    public static final int indexerWallMotorId = 5;
+    public static final int indexerMotorId = 12;
+    public static final int indexerWallMotorId = 13; 
   }
 
   public class KickerConstants {
-    public static final int kickerMotorId = 6;
+    public static final int kickerMotorId = 14; 
   }
 
   public class ShooterConstants {
-    public static final int leadShooterMotorId = 7;
-    public static final int followerShooterMotorId = 8;
-    public static final int hoodMotorId = 9;
-    public static final int hoodMotorCANCoderId = 10;
-    public static final int shooterAimMotorId = 11;
+    public static final int leadShooterMotorId = 15; //15
+    public static final int followerShooterMotorId = 16; //16
+    public static final double shooterPosition1VelocityFPS = 0;
+    public static final double shooterPosition2VelocityFPS = 63;
+    public static final double shooterPosition3VelocityFPS = 52;
+    
+    public static final int hoodMotorId = 17; //17
+    public static final double hoodPosition1Angle = 5;
+    public static final double hoodPosition2Angle = 32;
+    public static final double hoodPosition3Angle = 15.26;
+
+    public static final int turretAimMotorId = 18; //18
   }
 
   public class VisionConstants {
