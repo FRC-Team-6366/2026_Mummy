@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -34,11 +35,12 @@ public class IntakeIOTalonFX implements IntakeIO{
     
 
 IntakeIOTalonFX(){
+    intakeMotorPivot = new TalonFX(20);
+
     intakeMotorRollers = new TalonFX(19);
     iMRcfg = new TalonFXConfiguration();
-
-
-    intakeMotorPivot = new TalonFX(20);
+    iMRcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    intakeMotorRollers.getConfigurator().apply(iMRcfg);
 
 
 }
