@@ -60,8 +60,8 @@ public final class Constants {
     
     public static final int hoodMotorId = 17; //17
     public static final double hoodPosition1Angle = 5;
-    public static final double hoodPosition2Angle = 32;
-    public static final double hoodPosition3Angle = 15.26;
+    public static final double hoodPosition2Angle = 36.3;
+    public static final double hoodPosition3Angle = 25.17;
 
     public static final int turretAimMotorId = 18; //18
   }
