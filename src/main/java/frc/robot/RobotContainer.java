@@ -17,6 +17,8 @@ import frc.robot.subsystems.driveTrain.ModuleIOSim;
 import frc.robot.subsystems.driveTrain.ModuleIOTalonFX;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIOTalonFX;
 import frc.robot.subsystems.kicker.Kicker;
 import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
@@ -53,13 +55,15 @@ public class RobotContainer {
   Hood hood;
   int mode; //
   Drive drive;
+  Intake intake;
   LoggedDashboardChooser <Command> autoChooser;
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
-
+  private final CommandXboxController operatorController = new CommandXboxController(
+      OperatorConstants.kOperatorControllerPort);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -126,6 +130,7 @@ public class RobotContainer {
     this.indexer = new Indexer(new IndexerIOTalonFX());
     this.kicker = new Kicker(new KickerIOTalonFX());
     this.hood = new Hood(new HoodIOTalonFX());
+    this.intake = new Intake(new IntakeIOTalonFX());
     this.mode = 0;
 
     // Configure the trigger bindings
@@ -184,7 +189,7 @@ public class RobotContainer {
     driverController.x().whileTrue(shooter.shooterIncrements());
     
     // Stop all subsystems (except drivetrain)
-    driverController.b().whileTrue(
+    operatorController.b().whileTrue(
       Commands.parallel(
         shooter.turnOffShooter(),
         kicker.turnOffKicker(),
@@ -192,6 +197,9 @@ public class RobotContainer {
         hood.retractHood()
       )
     );
+
+    operatorController.a().whileTrue(intake.intakeRunRollers());
+    operatorController.y().whileTrue(intake.intakeStopRollers());
 
     // New simpified kicker commands
     driverController.leftTrigger().whileTrue(hood.hoodDecrements());
@@ -201,7 +209,7 @@ public class RobotContainer {
     driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
 
     // Set shooter to velocity 10 and and hood to position 0
-    driverController.povLeft().whileTrue(
+    operatorController.povLeft().whileTrue(
         Commands.sequence(
             Commands.parallel(
                 shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
@@ -215,7 +223,7 @@ public class RobotContainer {
     );
 
     // Set shooter to velocity 30 and and hood to position 3
-    driverController.povUp().whileTrue(
+    operatorController.povUp().whileTrue(
       Commands.sequence(
             Commands.parallel(
                 shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
@@ -229,7 +237,7 @@ public class RobotContainer {
     );
 
     // Set shooter to velocity 60 and and hood to position 5
-    driverController.povRight().whileTrue(
+    operatorController.povRight().whileTrue(
       Commands.sequence(
             Commands.parallel(
                 shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),

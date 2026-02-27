@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
+    
   }
 
   public class drivetrainConstants {
