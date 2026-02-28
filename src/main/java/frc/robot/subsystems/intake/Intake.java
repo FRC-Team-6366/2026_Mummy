@@ -86,7 +86,7 @@ public class Intake extends SubsystemBase{
      * <b>NOTE: Start the robot with the Intake Pivot Motor in the fully retracted position!</b>
      * @return Command to set Intake Pivot Motor to starting position
      */
-    public Command retractIntakePivot() {
+    public Command intakePivotAngleRetract() {
         this.angle = Constants.IntakeConstants.intakePivotRetractAngle;
         return this.intakePivotToAngle(this.angle);
     }

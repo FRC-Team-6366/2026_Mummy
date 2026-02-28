@@ -258,7 +258,9 @@ public class RobotContainer {
        /*Increments and Decrements Hood position using rotations
     * Is purely for testing purposes
     */
-   
+    operatorController.rightBumper().whileTrue(intake.intakePivotAngleExtend());
+    operatorController.leftBumper().whileTrue(intake.intakePivotAngleRetract());
+
 
        /*Increments and Decrements intake rollers speed
     * Is purely for testing purposes
