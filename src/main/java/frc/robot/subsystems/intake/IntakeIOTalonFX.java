@@ -40,7 +40,7 @@ public IntakeIOTalonFX(){
     intakeMotorPivot = new TalonFX(20);
     iMPcfg = new TalonFXConfiguration();
     iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-    intakeMotorRollers.getConfigurator().apply(iMPcfg);
+    intakeMotorPivot.getConfigurator().apply(iMPcfg);
         // Setting the StatusSignal variables to be mapped
         // to actual aspect of the IntakeIO's hardware
         intakePivotVolts = intakeMotorPivot.getMotorVoltage();
@@ -83,7 +83,7 @@ public IntakeIOTalonFX(){
         intakeMotorRollers.optimizeBusUtilization(0, 1);
 
         voltageRequest = new VoltageOut(0);
-        positionVoltageRequest = new MotionMagicVoltage(null);
+        positionVoltageRequest = new MotionMagicVoltage(0);
 }
 
 
