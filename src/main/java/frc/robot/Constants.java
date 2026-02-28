@@ -68,6 +68,11 @@ public final class Constants {
     public static final int turretAimMotorId = 18; //18
   }
 
+  public class IntakeConstants{
+    public static final int intakeRollersMotorId = 19; //19
+       public static final int intakePivotMotorId = 20; //20
+  }
+
   public class VisionConstants {
     // AprilTag layout
     public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);

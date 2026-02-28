@@ -17,4 +17,5 @@ public class IntakeIOInputs {
     double intakeRollersRps = 0;
     double intakeRollersCurrent = 0;
     double intakeRollersSupplyCurrent = 0;
+    double intakePivotErrorFromSetpoint = 0;
 }
