@@ -17,7 +17,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants;
 
-public class IntakeIOTalonFX implements IntakeIO{
+public class IntakeIOTalonFX implements IntakeIO {
     private TalonFX intakeRollersMotor;
     TalonFXConfiguration iMRcfg;
     StatusSignal<Voltage> intakeRollersVolts;
@@ -38,19 +38,17 @@ public class IntakeIOTalonFX implements IntakeIO{
     MotionMagicVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
 
-   double intakePivotMaxPosition = 0;
-       double setPointTolerance;
+    double intakePivotMaxPosition = 0;
+    double setPointTolerance;
     double positionSetPointLow;
     double positionSetPointHigh;
 
-    
+    public IntakeIOTalonFX() {
 
-public IntakeIOTalonFX(){
-
-    intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); //19
-    iMRcfg = new TalonFXConfiguration();
-    iMRcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-    intakeRollersMotor.getConfigurator().apply(iMRcfg);
+        intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); // 19
+        iMRcfg = new TalonFXConfiguration();
+        iMRcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+        intakeRollersMotor.getConfigurator().apply(iMRcfg);
         // Setting the StatusSignal variables to be mapped
         // to actual aspect of the IntakeIO's hardware
         intakeRollersVolts = intakeRollersMotor.getMotorVoltage();
@@ -59,10 +57,10 @@ public IntakeIOTalonFX(){
         intakeRollersCurrent = intakeRollersMotor.getTorqueCurrent();
         intakeRollersSupplyCurrent = intakeRollersMotor.getSupplyCurrent();
 
-    intakePivotMotor = new TalonFX(Constants.IntakeConstants.intakePivotMotorId); //20
-    iMPcfg = new TalonFXConfiguration();
-    iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-    intakePivotMotor.getConfigurator().apply(iMPcfg);
+        intakePivotMotor = new TalonFX(Constants.IntakeConstants.intakePivotMotorId); // 20
+        iMPcfg = new TalonFXConfiguration();
+        iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+        intakePivotMotor.getConfigurator().apply(iMPcfg);
         // Setting the StatusSignal variables to be mapped
         // to actual aspect of the IntakeIO's hardware
         intakePivotVolts = intakePivotMotor.getMotorVoltage();
@@ -72,26 +70,21 @@ public IntakeIOTalonFX(){
         intakePivotSupplyCurrent = intakePivotMotor.getSupplyCurrent();
         intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
 
+        BaseStatusSignal.setUpdateFrequencyForAll(
+                50,
+                intakeRollersVolts,
+                intakeRollersPosition,
+                intakeRollersRps,
+                intakeRollersCurrent,
+                intakeRollersSupplyCurrent,
+                intakePivotVolts,
+                intakePivotPosition,
+                intakePivotRps,
+                intakePivotCurrent,
+                intakePivotSupplyCurrent,
+                intakePivotErrorFromSetpoint);
 
-
-                BaseStatusSignal.setUpdateFrequencyForAll(
-            50,
-            intakeRollersVolts,
-            intakeRollersPosition,
-            intakeRollersRps,
-            intakeRollersCurrent,
-            intakeRollersSupplyCurrent,
-            intakePivotVolts,
-            intakePivotPosition,
-            intakePivotRps,
-            intakePivotCurrent,
-            intakePivotSupplyCurrent,
-            intakePivotErrorFromSetpoint
-        );
-
-
-
-            // Forcing optimal use of the CAN Bus for this subsystems
+        // Forcing optimal use of the CAN Bus for this subsystems
         // hardware
         intakeRollersMotor.optimizeBusUtilization(0, 1);
 
@@ -102,21 +95,19 @@ public IntakeIOTalonFX(){
 
         voltageRequest = new VoltageOut(0);
         positionVoltageRequest = new MotionMagicVoltage(0);
-}
+    }
 
-
-
-@Override
-public void rollersRunVolts(double power) {
+    @Override
+    public void rollersRunVolts(double power) {
         double voltage = power * 12;
         VoltageOut volts = new VoltageOut(voltage);
         intakeRollersMotor.setControl(volts);
-}
+    }
 
-@Override
-public void rollersStop() {
-intakeRollersMotor.stopMotor();
-}
+    @Override
+    public void rollersStop() {
+        intakeRollersMotor.stopMotor();
+    }
 
     @Override
     public Rotation2d getRotations() {
@@ -125,25 +116,19 @@ intakeRollersMotor.stopMotor();
 
     @Override
     public void intakePivotToAngle(double angle) {
-         double angletoRotations = MathUtil.clamp(angle, 0.0, 45.0) / (45.0 / intakePivotMaxPosition);
+        double angletoRotations = (MathUtil.clamp(angle, 15.0, 45.0) - 15.0) / (30.0 / intakePivotMaxPosition);
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
     }
-
-
 
     @Override
     public void intakePivotToPosition(double position) {
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(position));
     }
 
-
-
     @Override
     public double getIntakePivotPositionError() {
         return this.intakePivotMotor.getClosedLoopError().getValueAsDouble();
     }
-
-
 
     @Override
     public boolean intakeAtPositionSetpoint() {
@@ -155,21 +140,21 @@ intakeRollersMotor.stopMotor();
         // Check to make sure that all StatusSignal variables
         // are returning values
         inputs.connected = BaseStatusSignal.refreshAll(
-                    intakeRollersVolts,
-            intakeRollersPosition,
-            intakeRollersRps,
-            intakeRollersCurrent,
-            intakeRollersSupplyCurrent,    
-        intakePivotVolts,
-            intakePivotPosition,
-            intakePivotRps,
-            intakePivotCurrent,
-            intakePivotSupplyCurrent,
-            intakePivotErrorFromSetpoint
+                intakeRollersVolts,
+                intakeRollersPosition,
+                intakeRollersRps,
+                intakeRollersCurrent,
+                intakeRollersSupplyCurrent,
+                intakePivotVolts,
+                intakePivotPosition,
+                intakePivotRps,
+                intakePivotCurrent,
+                intakePivotSupplyCurrent,
+                intakePivotErrorFromSetpoint
 
         ).isOK();
 
-                inputs.intakeRollersVolts = this.intakeRollersVolts.getValueAsDouble();
+        inputs.intakeRollersVolts = this.intakeRollersVolts.getValueAsDouble();
         inputs.intakeRollersPosition = this.intakeRollersPosition.getValueAsDouble();
         inputs.intakeRollersRps = this.intakeRollersRps.getValueAsDouble();
         inputs.intakeRollersCurrent = this.intakeRollersCurrent.getValueAsDouble();

@@ -153,6 +153,18 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+
+    // Reset gyro to 0° when B button is pressed
+    driverController
+        .b()
+        .onTrue(
+            Commands.runOnce(
+                    () ->
+                        drive.setPose(
+                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
+                    drive)
+                .ignoringDisable(true));
+
        drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
@@ -173,38 +185,22 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    // Reset gyro to 0° when B button is pressed
-    driverController
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
-                    drive)
-                .ignoringDisable(true));
 
-    // cancelling on release.
+    /* Increments and Decrements Shooter speed
+    is purely for testing purposes
+    */
     driverController.y().whileTrue(shooter.shooterDecrements());
     driverController.x().whileTrue(shooter.shooterIncrements());
-    
-    // Stop all subsystems (except drivetrain)
-    operatorController.b().whileTrue(
-      Commands.parallel(
-        shooter.turnOffShooter(),
-        kicker.turnOffKicker(),
-        indexer.turnOffIndexer(),
-        hood.retractHood()
-      )
-    );
 
-    operatorController.a().whileTrue(intake.intakeRunRollers());
-    operatorController.y().whileTrue(intake.intakeStopRollers());
-
-    // New simpified kicker commands
+   /*Increments and Decrements Hood position using rotations
+    * Is purely for testing purposes
+    */
     driverController.leftTrigger().whileTrue(hood.hoodDecrements());
     driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
+       /*Increments and Decrements indexer speed 
+    * Is purely for testing purposes
+    */
     driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
     driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
 
@@ -249,37 +245,26 @@ public class RobotContainer {
         )
     );
 
-     // Default command, normal field-relative drive
-    drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -driverController.getLeftY(),
-            () -> -driverController.getLeftX(),
-            () -> -driverController.getRightX()));
+        // Stop all subsystems (except drivetrain)
+    operatorController.b().whileTrue(
+      Commands.parallel(
+        shooter.turnOffShooter(),
+        kicker.turnOffKicker(),
+        indexer.turnOffIndexer(),
+        hood.retractHood()
+      )
+    );
 
-    // Lock to 0° when A button is held
-    driverController
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kZero));
+       /*Increments and Decrements Hood position using rotations
+    * Is purely for testing purposes
+    */
+   
 
-    // Switch to X pattern when X button is pressed
-    driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    // Reset gyro to 0° when B button is pressed
-    driverController
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
-                    drive)
-                .ignoringDisable(true));
+       /*Increments and Decrements intake rollers speed
+    * Is purely for testing purposes
+    */
+    operatorController.a().whileTrue(intake.intakeRunRollers());
+    operatorController.y().whileTrue(intake.intakeStopRollers());
 
   }
 
