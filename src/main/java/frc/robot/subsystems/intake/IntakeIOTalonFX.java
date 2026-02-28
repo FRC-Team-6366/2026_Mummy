@@ -5,7 +5,9 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 
@@ -17,6 +19,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeIOTalonFX implements IntakeIO {
     private TalonFX intakeRollersMotor;
@@ -36,6 +39,9 @@ public class IntakeIOTalonFX implements IntakeIO {
     StatusSignal<Current> intakePivotSupplyCurrent;
     StatusSignal<Double> intakePivotErrorFromSetpoint;
 
+    private CANcoder intakePivotCANcoder;
+
+
     MotionMagicVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
 
@@ -46,6 +52,9 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     public IntakeIOTalonFX() {
 
+        intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
+        intakePivotCANcoder.setPosition(0);
+        
         intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); // 19
         iMRcfg = new TalonFXConfiguration();
         iMRcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -62,11 +71,20 @@ public class IntakeIOTalonFX implements IntakeIO {
         iMPcfg = new TalonFXConfiguration();
 
         iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 5.6;
+        iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 15.3;
         iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+
+        iMPcfg.Slot0.kP = 0.13;
+
+
         iMPcfg.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
         iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+        iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
+        iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+        iMPcfg.Feedback.RotorToSensorRatio = 38.89;
+        iMPcfg.Feedback.SensorToMechanismRatio =1;
+
         intakePivotMotor.getConfigurator().apply(iMPcfg);
         // Setting the StatusSignal variables to be mapped
         // to actual aspect of the IntakeIO's hardware
