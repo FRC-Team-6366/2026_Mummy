@@ -14,7 +14,6 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants;
-import frc.robot.subsystems.kicker.KickerIOInputs;
 
 public class IntakeIOTalonFX implements IntakeIO{
     private TalonFX intakeRollersMotor;
@@ -36,6 +35,8 @@ public class IntakeIOTalonFX implements IntakeIO{
 
     MotionMagicVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
+
+   double intakePivotMaxPosition = 0;
 
     
 
@@ -114,7 +115,7 @@ intakeRollersMotor.stopMotor();
 
     @Override
     public void intakePivotToAngle(double angle) {
-         double angletoRotations = MathUtil.clamp(angle, 0.0, 45.0) / (45.0 / hoodMaxPosition);
+         double angletoRotations = MathUtil.clamp(angle, 0.0, 45.0) / (45.0 / intakePivotMaxPosition);
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
     }
 
