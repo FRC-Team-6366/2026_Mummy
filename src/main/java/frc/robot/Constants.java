@@ -71,6 +71,9 @@ public final class Constants {
   public class IntakeConstants{
     public static final int intakeRollersMotorId = 19; //19
        public static final int intakePivotMotorId = 20; //20
+
+    public static final double  intakePivotRetractAngle = 0;
+    public static final double  intakePivotOutAngle = 0;
   }
 
   public class VisionConstants {

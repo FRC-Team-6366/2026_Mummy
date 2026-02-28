@@ -9,6 +9,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -37,6 +39,9 @@ public class IntakeIOTalonFX implements IntakeIO{
     VoltageOut voltageRequest;
 
    double intakePivotMaxPosition = 0;
+       double setPointTolerance;
+    double positionSetPointLow;
+    double positionSetPointHigh;
 
     
 
@@ -114,6 +119,11 @@ intakeRollersMotor.stopMotor();
 }
 
     @Override
+    public Rotation2d getRotations() {
+        return new Rotation2d(Units.rotationsToRadians(intakePivotMotor.getPosition().getValueAsDouble()));
+    }
+
+    @Override
     public void intakePivotToAngle(double angle) {
          double angletoRotations = MathUtil.clamp(angle, 0.0, 45.0) / (45.0 / intakePivotMaxPosition);
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
@@ -123,24 +133,21 @@ intakeRollersMotor.stopMotor();
 
     @Override
     public void intakePivotToPosition(double position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'intakePivotToPosition'");
+        this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(position));
     }
 
 
 
     @Override
     public double getIntakePivotPositionError() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIntakePivotPositionError'");
+        return this.intakePivotMotor.getClosedLoopError().getValueAsDouble();
     }
 
 
 
     @Override
     public boolean intakeAtPositionSetpoint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'intakeAtPositionSetpoint'");
+        return Math.abs(this.getIntakePivotPositionError()) < this.setPointTolerance;
     }
 
     @Override

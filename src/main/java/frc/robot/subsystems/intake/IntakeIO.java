@@ -12,8 +12,6 @@ public interface IntakeIO {
      */
     public Rotation2d getRotations();
 
-    public void updateInputs(IntakeIOInputs inputs);
- 
         /**
      * Sets the intake pivot motor to the position (number of rotations from start) based on
      * provided angle.
@@ -44,5 +42,7 @@ public interface IntakeIO {
     public void rollersRunVolts(double power);
 
     public void rollersStop();
+
+    public void updateInputs(IntakeIOInputs inputs);
     
 }
