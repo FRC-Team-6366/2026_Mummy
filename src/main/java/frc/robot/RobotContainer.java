@@ -155,7 +155,6 @@ public class RobotContainer {
 
        //                    Driver Buttons
 
-
        // Set the drivers movement for steering and driving on the driver joysticks
               drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -211,7 +210,6 @@ public class RobotContainer {
     
     
     //                    Operator Buttons
-
 
     // Set shooter to velocity 10 and and hood to position 0
     operatorController.povLeft().whileTrue(
