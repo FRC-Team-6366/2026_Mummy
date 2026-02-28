@@ -6,6 +6,7 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -28,7 +29,11 @@ public class Intake extends SubsystemBase {
 
                     // Use power to start the IntakeIO Hardware motor
                     this.intakeIO.rollersRunVolts(this.power);
-                });
+                }).unless(
+                    () -> {
+                        return (this.intakeIO.getRotations().getRotations() < 8.0);
+                    }
+                );
     }
 
     public Command intakeStopRollers() {
@@ -119,6 +124,18 @@ public class Intake extends SubsystemBase {
         return () -> this.intakeIO.intakeAtPositionSetpoint();
     }
 
+    public Command deployIntake(){
+        return Commands.sequence(
+            this.intakePivotAngleExtend(), this.intakeRunRollers()
+        );
+    }
+
+    public Command retractIntake(){
+        return Commands.parallel(
+            this.intakePivotAngleRetract(), this.intakeStopRollers()
+        );
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
@@ -128,6 +145,7 @@ public class Intake extends SubsystemBase {
         this.intakeIO.updateInputs(inputs);
         Logger.processInputs("IntakeSubsystem", inputs);
     }
+
 
     @Override
     public void simulationPeriodic() {

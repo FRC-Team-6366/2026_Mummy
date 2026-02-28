@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
@@ -38,7 +39,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     MotionMagicVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
 
-    double intakePivotMaxPosition = 0;
+    double intakePivotMaxPosition = 15.3;
     double setPointTolerance;
     double positionSetPointLow;
     double positionSetPointHigh;
@@ -59,6 +60,12 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         intakePivotMotor = new TalonFX(Constants.IntakeConstants.intakePivotMotorId); // 20
         iMPcfg = new TalonFXConfiguration();
+
+        iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 5.6;
+        iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+        iMPcfg.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
         iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         intakePivotMotor.getConfigurator().apply(iMPcfg);
         // Setting the StatusSignal variables to be mapped
@@ -116,7 +123,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     @Override
     public void intakePivotToAngle(double angle) {
-        double angletoRotations = (MathUtil.clamp(angle, 15.0, 45.0) - 15.0) / (30.0 / intakePivotMaxPosition);
+        double angletoRotations = (MathUtil.clamp(angle, 0.0, 140.0) ) / (140.0 / intakePivotMaxPosition);
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
     }
 
