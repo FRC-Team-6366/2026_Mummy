@@ -153,6 +153,16 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+       //                    Driver Buttons
+
+
+       // Set the drivers movement for steering and driving on the driver joysticks
+              drive.setDefaultCommand(
+        DriveCommands.joystickDrive(
+            drive,
+            () -> -driverController.getLeftY(),
+            () -> -driverController.getLeftX(),
+            () -> -driverController.getRightX()));
 
     // Reset gyro to 0° when B button is pressed
     driverController
@@ -164,13 +174,6 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
                     drive)
                 .ignoringDisable(true));
-
-       drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -driverController.getLeftY(),
-            () -> -driverController.getLeftX(),
-            () -> -driverController.getRightX()));
 
     // Lock to 0° when A button is held
     driverController
@@ -184,7 +187,6 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
 
     /* Increments and Decrements Shooter speed
     is purely for testing purposes
@@ -203,6 +205,13 @@ public class RobotContainer {
     */
     driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
     driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
+
+    
+    
+    
+    
+    //                    Operator Buttons
+
 
     // Set shooter to velocity 10 and and hood to position 0
     operatorController.povLeft().whileTrue(
@@ -260,7 +269,6 @@ public class RobotContainer {
     */
     operatorController.rightBumper().whileTrue(intake.intakePivotAngleExtend());
     operatorController.leftBumper().whileTrue(intake.intakePivotAngleRetract());
-
 
        /*Increments and Decrements intake rollers speed
     * Is purely for testing purposes
