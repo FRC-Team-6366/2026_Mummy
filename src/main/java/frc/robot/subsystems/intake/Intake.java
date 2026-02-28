@@ -136,6 +136,19 @@ public class Intake extends SubsystemBase {
         );
     }
 
+    public Command toggleIntake(){
+        if (this.intakeIO.getRotations().getRotations() <7.0){
+            // this.toggleIntake() = true;
+            return this.deployIntake();
+
+        } else {
+            // this.toggleIntake = false;
+            return this.retractIntake();
+            
+        }
+    }
+
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run

@@ -190,20 +190,20 @@ public class RobotContainer {
     /* Increments and Decrements Shooter speed
     is purely for testing purposes
     */
-    driverController.y().whileTrue(shooter.shooterDecrements());
-    driverController.x().whileTrue(shooter.shooterIncrements());
+    // driverController.y().whileTrue(shooter.shooterDecrements());
+    // driverController.x().whileTrue(shooter.shooterIncrements());
 
    /*Increments and Decrements Hood position using rotations
     * Is purely for testing purposes
     */
-    driverController.leftTrigger().whileTrue(hood.hoodDecrements());
-    driverController.rightTrigger().whileTrue(hood.hoodIncrements());
+    // driverController.leftTrigger().whileTrue(hood.hoodDecrements());
+    // driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
-       /*Increments and Decrements indexer speed 
-    * Is purely for testing purposes
-    */
-    driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
-    driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
+    //    /*Increments and Decrements indexer speed 
+    // * Is purely for testing purposes
+    // */
+    // driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
+    // driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
 
     
     
@@ -264,15 +264,21 @@ public class RobotContainer {
 
        /*Increments and Decrements Hood position using rotations
     * Is purely for testing purposes
-    */
-    // operatorController.rightBumper().whileTrue(intake.intakePivotAngleExtend());
-    // operatorController.leftBumper().whileTrue(intake.intakePivotAngleRetract());
-
+     */
+    // operatorController.rightTrigger().whileTrue(intake.deployIntake());
+    // operatorController.leftTrigger().whileTrue(intake.retractIntake());
+    
+    /*
+     * operator Controller.button().onFalse(
+     * if intake.angle 
+     * 
+     */
        /*Increments and Decrements intake rollers speed
     * Is purely for testing purposes
-    */
-    operatorController.a().whileTrue(intake.intakeRunRollers());
-    operatorController.y().whileTrue(intake.intakeStopRollers());
+     */
+    // operatorController.a().whileTrue(intake.intakeRunRollers());
+    // operatorController.y().whileTrue(intake.intakeStopRollers());
+    driverController.rightTrigger().onTrue(intake.toggleIntake());
 
   }
 
