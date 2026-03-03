@@ -187,8 +187,11 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-        driverController.rightTrigger().whileTrue(intake.deployIntake());
-    driverController.leftTrigger().whileTrue(intake.retractIntake());
+    driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
+    driverController.leftTrigger().whileTrue(intake.intakeStopRollers());
+
+    //     driverController.rightTrigger().whileTrue(intake.deployIntake());
+    // driverController.leftTrigger().whileTrue(intake.retractIntake());
 
     /* Increments and Decrements Shooter speed
     is purely for testing purposes
