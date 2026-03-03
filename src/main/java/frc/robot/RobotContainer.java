@@ -25,6 +25,8 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
 import frc.robot.subsystems.shooter.hood.Hood;
 import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
+import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.vision.VisionIOPhotonVision;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -48,245 +50,254 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  Shooter shooter;
-  Indexer indexer;
-  Kicker kicker;
-  Hood hood;
-  int mode; //
-  Drive drive;
-  Intake intake;
-  LoggedDashboardChooser <Command> autoChooser;
-  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    // The robot's subsystems and commands are defined here...
+    Shooter shooter;
+    Indexer indexer;
+    Kicker kicker;
+    Hood hood;
+    int mode; //
+    Drive drive;
+    // Intake intake;
+    Vision vision;
+    LoggedDashboardChooser<Command> autoChooser;
+    private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController driverController = new CommandXboxController(
-      OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController operatorController = new CommandXboxController(
-      OperatorConstants.kOperatorControllerPort);
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
+    // Replace with CommandPS4Controller or CommandJoystick if needed
+    private final CommandXboxController driverController = new CommandXboxController(
+            OperatorConstants.kDriverControllerPort);
+    private final CommandXboxController operatorController = new CommandXboxController(
+            OperatorConstants.kOperatorControllerPort);
 
-    switch (Constants.currentMode) {
-      case REAL:
-        // Real robot, instantiate hardware IO implementations
-        // ModuleIOTalonFX is intended for modules with TalonFX drive, TalonFX turn, and
-        // a CANcoder
-        drive =
-            new Drive(
-                new GyroIOPigeon2(),
-                new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                new ModuleIOTalonFX(TunerConstants.FrontRight),
-                new ModuleIOTalonFX(TunerConstants.BackLeft),
-                new ModuleIOTalonFX(TunerConstants.BackRight));
-                
-        break;
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
 
-      case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(TunerConstants.FrontLeft),
-                new ModuleIOSim(TunerConstants.FrontRight),
-                new ModuleIOSim(TunerConstants.BackLeft),
-                new ModuleIOSim(TunerConstants.BackRight));
-        break;
+        switch (Constants.currentMode) {
+            case REAL:
+                // Real robot, instantiate hardware IO implementations
+                // ModuleIOTalonFX is intended for modules with TalonFX drive, TalonFX turn, and
+                // a CANcoder
+                drive = new Drive(
+                        new GyroIOPigeon2(),
+                        new ModuleIOTalonFX(TunerConstants.FrontLeft),
+                        new ModuleIOTalonFX(TunerConstants.FrontRight),
+                        new ModuleIOTalonFX(TunerConstants.BackLeft),
+                        new ModuleIOTalonFX(TunerConstants.BackRight));
 
-      default:
-        // Replayed robot, disable IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {});
-        break;
+                vision = new Vision(drive::addVisionMeasurement,
+                        new VisionIOPhotonVision(Constants.VisionConstants.camera0Name,
+                                Constants.VisionConstants.robotToCamera0),
+                        new VisionIOPhotonVision(Constants.VisionConstants.camera1Name,
+                                Constants.VisionConstants.robotToCamera1),
+                        new VisionIOPhotonVision(Constants.VisionConstants.camera2Name,
+                                Constants.VisionConstants.robotToCamera2),
+                        new VisionIOPhotonVision(Constants.VisionConstants.camera3Name,
+                                Constants.VisionConstants.robotToCamera3));
+
+                break;
+
+            case SIM:
+                // Sim robot, instantiate physics sim IO implementations
+                drive = new Drive(
+                        new GyroIO() {
+                        },
+                        new ModuleIOSim(TunerConstants.FrontLeft),
+                        new ModuleIOSim(TunerConstants.FrontRight),
+                        new ModuleIOSim(TunerConstants.BackLeft),
+                        new ModuleIOSim(TunerConstants.BackRight));
+                break;
+
+            default:
+                // Replayed robot, disable IO implementations
+                drive = new Drive(
+                        new GyroIO() {
+                        },
+                        new ModuleIO() {
+                        },
+                        new ModuleIO() {
+                        },
+                        new ModuleIO() {
+                        },
+                        new ModuleIO() {
+                        });
+                break;
+        }
+
+        // Set up auto routines
+        autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+        // Set up SysId routines
+        autoChooser.addOption(
+                "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
+        autoChooser.addOption(
+                "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
+        autoChooser.addOption(
+                "Drive SysId (Quasistatic Forward)",
+                drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+                "Drive SysId (Quasistatic Reverse)",
+                drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        autoChooser.addOption(
+                "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+                "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
+        this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
+        this.indexer = new Indexer(new IndexerIOTalonFX());
+        this.kicker = new Kicker(new KickerIOTalonFX());
+        this.hood = new Hood(new HoodIOTalonFX());
+        // this.intake = new Intake(new IntakeIOTalonFX());
+        this.mode = 0;
+
+        // Configure the trigger bindings
+        configureBindings();
     }
 
-    // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    /**
+     * Use this method to define your trigger->command mappings. Triggers can be
+     * created via the
+     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+     * an arbitrary
+     * predicate, or via the named factories in {@link
+     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+     * {@link
+     * CommandXboxController
+     * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+     * PS4} controllers or
+     * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * joysticks}.
+     */
+    private void configureBindings() {
 
-    // Set up SysId routines
-    autoChooser.addOption(
-        "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
-    autoChooser.addOption(
-        "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        // Driver Buttons
 
-    this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
-    this.indexer = new Indexer(new IndexerIOTalonFX());
-    this.kicker = new Kicker(new KickerIOTalonFX());
-    this.hood = new Hood(new HoodIOTalonFX());
-    this.intake = new Intake(new IntakeIOTalonFX());
-    this.mode = 0;
+        // Set the drivers movement for steering and driving on the driver joysticks
+        drive.setDefaultCommand(
+                DriveCommands.joystickDrive(
+                        drive,
+                        () -> -driverController.getLeftY(),
+                        () -> -driverController.getLeftX(),
+                        () -> -driverController.getRightX()));
 
-    // Configure the trigger bindings
-    configureBindings();
-  }
+        // Reset gyro to 0° when B button is pressed
+        driverController
+                .b()
+                .onTrue(
+                        Commands.runOnce(
+                                () -> drive.setPose(
+                                        new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
+                                drive)
+                                .ignoringDisable(true));
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
+        // Lock to 0° when A button is held
+        driverController
+                .a()
+                .whileTrue(
+                        DriveCommands.joystickDriveAtAngle(
+                                drive,
+                                () -> -driverController.getLeftY(),
+                                () -> -driverController.getLeftX(),
+                                () -> Rotation2d.kZero));
 
-       //                    Driver Buttons
+        // Switch to X pattern when X button is pressed
+        driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-       // Set the drivers movement for steering and driving on the driver joysticks
-              drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -driverController.getLeftY(),
-            () -> -driverController.getLeftX(),
-            () -> -driverController.getRightX()));
+        // driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
+        // driverController.leftTrigger().whileTrue(intake.intakeStopRollers());
 
-    // Reset gyro to 0° when B button is pressed
-    driverController
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
-                    drive)
-                .ignoringDisable(true));
+        // driverController.rightTrigger().whileTrue(intake.deployIntake());
+        // driverController.leftTrigger().whileTrue(intake.retractIntake());
 
-    // Lock to 0° when A button is held
-    driverController
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kZero));
+        /*
+         * Increments and Decrements Shooter speed
+         * is purely for testing purposes
+         */
+        // driverController.y().whileTrue(shooter.shooterDecrements());
+        // driverController.x().whileTrue(shooter.shooterIncrements());
 
-    // Switch to X pattern when X button is pressed
-    driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+        /*
+         * Increments and Decrements Hood position using rotations
+         * Is purely for testing purposes
+         */
+        // driverController.leftTrigger().whileTrue(hood.hoodDecrements());
+        // driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
-    driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
-    driverController.leftTrigger().whileTrue(intake.intakeStopRollers());
+        // /*Increments and Decrements indexer speed
+        // * Is purely for testing purposes
+        // */
+        // driverController.leftBumper().whileTrue(Commands.runOnce(() ->
+        // indexer.decrementIndexer()));
+        // driverController.rightBumper().whileTrue(Commands.runOnce(() ->
+        // indexer.incrementIndexer()));
 
-    //     driverController.rightTrigger().whileTrue(intake.deployIntake());
-    // driverController.leftTrigger().whileTrue(intake.retractIntake());
+                // driverController.rightTrigger().onTrue(intake.toggleIntake());
 
-    /* Increments and Decrements Shooter speed
-    is purely for testing purposes
-    */
-    // driverController.y().whileTrue(shooter.shooterDecrements());
-    // driverController.x().whileTrue(shooter.shooterIncrements());
+        // driverController.leftTrigger().onTrue(intake.intakePivotAngleRetract());
+        // driverController.rightTrigger().onTrue(intake.intakePivotAngleExtend());
 
-   /*Increments and Decrements Hood position using rotations
-    * Is purely for testing purposes
-    */
-    // driverController.leftTrigger().whileTrue(hood.hoodDecrements());
-    // driverController.rightTrigger().whileTrue(hood.hoodIncrements());
 
-    //    /*Increments and Decrements indexer speed 
-    // * Is purely for testing purposes
-    // */
-    // driverController.leftBumper().whileTrue(Commands.runOnce(() -> indexer.decrementIndexer()));
-    // driverController.rightBumper().whileTrue(Commands.runOnce(() -> indexer.incrementIndexer()));
 
-    
-    
-    
-    
-    //                    Operator Buttons
 
-    // Set shooter to velocity 10 and and hood to position 0
-    operatorController.rightBumper().whileTrue(
-        Commands.sequence(
-            Commands.parallel(
-                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())
-            ),
-            Commands.parallel(
-                kicker.turnOnKicker(),
-                indexer.turnOnIndexer()
-            )
-        )
-    );
+        
 
-    // Set shooter to velocity 30 and and hood to position 3
-    operatorController.leftTrigger().whileTrue(
-      Commands.sequence(
-            Commands.parallel(
-                shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())
-            ),
-            Commands.parallel(
-                kicker.turnOnKicker(),
-                indexer.turnOnIndexer()
-            )
-        )
-    );
+        // Operator Buttons
 
-    // Set shooter to velocity 60 and and hood to position 5
-    operatorController.rightTrigger().whileTrue(
-      Commands.sequence(
-            Commands.parallel(
-                shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
-            Commands.parallel(
-                kicker.turnOnKicker(),
-                indexer.turnOnIndexer()
-            )
-        )
-    );
+        // Set shooter to velocity 10 and and hood to position 0
+        operatorController.rightBumper().whileTrue(
+                Commands.sequence(
+                        Commands.parallel(
+                                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
+                                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())),
+                        Commands.parallel(
+                                kicker.turnOnKicker(),
+                                indexer.turnOnIndexer())));
+
+        // Set shooter to velocity 30 and and hood to position 3
+        operatorController.leftTrigger().whileTrue(
+                Commands.sequence(
+                        Commands.parallel(
+                                shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
+                                hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())),
+                        Commands.parallel(
+                                kicker.turnOnKicker(),
+                                indexer.turnOnIndexer())));
+
+        // Set shooter to velocity 60 and and hood to position 5
+        operatorController.rightTrigger().whileTrue(
+                Commands.sequence(
+                        Commands.parallel(
+                                shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
+                                hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
+                        Commands.parallel(
+                                kicker.turnOnKicker(),
+                                indexer.turnOnIndexer())));
 
         // Stop all subsystems (except drivetrain)
-    operatorController.b().whileTrue(
-      Commands.parallel(
-        shooter.turnOffShooter(),
-        kicker.turnOffKicker(),
-        indexer.turnOffIndexer(),
-        hood.retractHood()
-      )
-    );
+        operatorController.b().whileTrue(
+                Commands.parallel(
+                        shooter.turnOffShooter(),
+                        kicker.turnOffKicker(),
+                        indexer.turnOffIndexer(),
+                        hood.retractHood()));
 
-       /*Increments and Decrements intake rollers speed
-    * Is purely for testing purposes
+        /*
+         * Increments and Decrements intake rollers speed
+         * Is purely for testing purposes
+         */
+        // operatorController.a().whileTrue(intake.intakeRunRollers());
+        // operatorController.y().whileTrue(intake.intakeStopRollers());
+
+
+    }
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
      */
-    // operatorController.a().whileTrue(intake.intakeRunRollers());
-    // operatorController.y().whileTrue(intake.intakeStopRollers());
-    // driverController.rightTrigger().onTrue(intake.toggleIntake());
-
-    // driverController.leftTrigger().onTrue(intake.intakePivotAngleRetract());
-    // driverController.rightTrigger().onTrue(intake.intakePivotAngleExtend());
-
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        return Autos.exampleAuto(m_exampleSubsystem);
+    }
 }

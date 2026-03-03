@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
@@ -83,17 +85,44 @@ public final class Constants {
     public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
     // Camera names, must match names configured on coprocessor
-    public static String camera0Name = "camera_0";
-    public static String camera1Name = "camera_1";
-    public static String camera2Name = "camera_0";
-    public static String camera3Name = "camera_1";
+    public static String camera0Name = "camFrontLeft";
+    public static String camera1Name = "camFrontRight";
+    public static String camera2Name = "camRearLeft";
+    public static String camera3Name = "camRearRight";
+
+
+    public static double camFrontLeftX = Units.inchesToMeters(-10.466);
+    public static double camFrontLeftY = Units.inchesToMeters(12.3);
+    public static double camFrontLeftZ = Units.inchesToMeters(20.375);
+    public static double camFrontLeftPitch = Units.degreesToRadians(-15);
+    public static double camFrontLeftYaw = Units.degreesToRadians(10);
+    
+    public static double camFrontRightX = Units.inchesToMeters(-10.466);
+    public static double camFrontRightY = Units.inchesToMeters(-12.3);
+    public static double camFrontRightZ = Units.inchesToMeters(20.375);
+    public static double camFrontRightPitch = Units.degreesToRadians(-15);
+    public static double camFrontRightYaw = Units.degreesToRadians(-10);
+
+    public static double camRearLeftX = Units.inchesToMeters(-12.53);
+    public static double camRearLeftY = Units.inchesToMeters(12.3);
+    public static double camRearLeftZ = Units.inchesToMeters(20.375);
+    public static double camRearLeftPitch = Units.degreesToRadians(-15);
+    public static double camRearLeftYaw = Units.degreesToRadians(170);
+
+    public static double camRearRightX = Units.inchesToMeters(-12.53);
+    public static double camRearRightY = Units.inchesToMeters(-12.3);
+    public static double camRearRightZ = Units.inchesToMeters(20.375);
+    public static double camRearRightPitch = Units.degreesToRadians(-15);
+    public static double camRearRightYaw = Units.degreesToRadians(-170);
+
+
 
     // Robot to camera transforms or lets the camera know where they are
     // (Not used by Limelight, configure in web UI instead)
-    public static Transform3d robotToCamera0 = new Transform3d(0.2, 0.0, 0.2, new Rotation3d(0.0, -0.4, 0.0));
-    public static Transform3d robotToCamera1 = new Transform3d(-0.2, 0.0, 0.2, new Rotation3d(0.0, -0.4, Math.PI));
-    public static Transform3d robotToCamera2 = new Transform3d(0.2, 0.0, 0.2, new Rotation3d(0.0, -0.4, 0.0));
-    public static Transform3d robotToCamera3 = new Transform3d(-0.2, 0.0, 0.2, new Rotation3d(0.0, -0.4, Math.PI));
+    public static Transform3d robotToCamera0 = new Transform3d(camFrontLeftX, camFrontLeftY, camFrontLeftZ, new Rotation3d(0.0, camFrontLeftPitch, camFrontLeftYaw));
+    public static Transform3d robotToCamera1 = new Transform3d(camFrontRightX, camFrontRightY, camFrontRightZ, new Rotation3d(0.0, camFrontRightPitch, camFrontRightYaw));
+    public static Transform3d robotToCamera2 = new Transform3d(camRearLeftX, camRearLeftY, camRearLeftZ, new Rotation3d(0.0,  camRearLeftPitch, camRearLeftYaw));
+    public static Transform3d robotToCamera3 = new Transform3d(camRearRightX, camRearRightY, camRearRightZ, new Rotation3d(0.0, camRearRightPitch, camRearRightYaw));
 
     // Basic filtering thresholds
     public static double maxAmbiguity = 0.3;
