@@ -187,6 +187,9 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
+        driverController.rightTrigger().whileTrue(intake.deployIntake());
+    driverController.leftTrigger().whileTrue(intake.retractIntake());
+
     /* Increments and Decrements Shooter speed
     is purely for testing purposes
     */
@@ -262,17 +265,6 @@ public class RobotContainer {
       )
     );
 
-       /*Increments and Decrements Hood position using rotations
-    * Is purely for testing purposes
-     */
-    driverController.rightTrigger().whileTrue(intake.deployIntake());
-    driverController.leftTrigger().whileTrue(intake.retractIntake());
-    
-    /*
-     * operator Controller.button().onFalse(
-     * if intake.angle 
-     * 
-     */
        /*Increments and Decrements intake rollers speed
     * Is purely for testing purposes
      */
