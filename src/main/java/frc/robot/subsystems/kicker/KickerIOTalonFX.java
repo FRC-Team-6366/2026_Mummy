@@ -24,7 +24,7 @@ public class KickerIOTalonFX implements KickerIO {
     public KickerIOTalonFX() {
         kickMotor = new TalonFX(Constants.KickerConstants.kickerMotorId);
         TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
-        kickConfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+        kickConfiguration.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
         kickMotor.getConfigurator().apply(kickConfiguration);
 
         // Setting the StatusSignal variables to be mapped

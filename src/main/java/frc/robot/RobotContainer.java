@@ -212,7 +212,7 @@ public class RobotContainer {
     //                    Operator Buttons
 
     // Set shooter to velocity 10 and and hood to position 0
-    operatorController.povLeft().whileTrue(
+    operatorController.rightBumper().whileTrue(
         Commands.sequence(
             Commands.parallel(
                 shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
@@ -226,7 +226,7 @@ public class RobotContainer {
     );
 
     // Set shooter to velocity 30 and and hood to position 3
-    operatorController.povUp().whileTrue(
+    operatorController.leftTrigger().whileTrue(
       Commands.sequence(
             Commands.parallel(
                 shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
@@ -240,7 +240,7 @@ public class RobotContainer {
     );
 
     // Set shooter to velocity 60 and and hood to position 5
-    operatorController.povRight().whileTrue(
+    operatorController.rightTrigger().whileTrue(
       Commands.sequence(
             Commands.parallel(
                 shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
@@ -265,8 +265,8 @@ public class RobotContainer {
        /*Increments and Decrements Hood position using rotations
     * Is purely for testing purposes
      */
-    // operatorController.rightTrigger().whileTrue(intake.deployIntake());
-    // operatorController.leftTrigger().whileTrue(intake.retractIntake());
+    driverController.rightTrigger().whileTrue(intake.deployIntake());
+    driverController.leftTrigger().whileTrue(intake.retractIntake());
     
     /*
      * operator Controller.button().onFalse(
@@ -278,7 +278,10 @@ public class RobotContainer {
      */
     // operatorController.a().whileTrue(intake.intakeRunRollers());
     // operatorController.y().whileTrue(intake.intakeStopRollers());
-    driverController.rightTrigger().onTrue(intake.toggleIntake());
+    // driverController.rightTrigger().onTrue(intake.toggleIntake());
+
+    // driverController.leftTrigger().onTrue(intake.intakePivotAngleRetract());
+    // driverController.rightTrigger().onTrue(intake.intakePivotAngleExtend());
 
   }
 

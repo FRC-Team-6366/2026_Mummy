@@ -56,12 +56,12 @@ public final class Constants {
   public class ShooterConstants {
     public static final int leadShooterMotorId = 15; //15
     public static final int followerShooterMotorId = 16; //16
-    public static final double shooterPosition1VelocityFPS = 0;
+    public static final double shooterPosition1VelocityFPS = 55;
     public static final double shooterPosition2VelocityFPS = 63;
     public static final double shooterPosition3VelocityFPS = 52;
     
     public static final int hoodMotorId = 17; //17
-    public static final double hoodPosition1Angle = 5;
+    public static final double hoodPosition1Angle = 22;
     public static final double hoodPosition2Angle = 36.3;
     public static final double hoodPosition3Angle = 25.17;
 
@@ -73,9 +73,9 @@ public final class Constants {
        public static final int intakePivotMotorId = 20; //20
     public static final int intakePivotCANcoderId = 21;
 
-    public static final double intakePivotStartPosition = 0;
-    public static final double  intakePivotRetractAngle = 0;
-    public static final double  intakePivotOutAngle = 0;
+    public static final double intakePivotStartAngleDegrees = 0;
+    public static final double  intakePivotRetractAngleDegrees = 0.1;
+    public static final double  intakePivotOutAngleDegrees = 136;
   }
 
   public class VisionConstants {

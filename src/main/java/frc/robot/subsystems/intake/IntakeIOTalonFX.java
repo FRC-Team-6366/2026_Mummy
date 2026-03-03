@@ -1,9 +1,14 @@
 package frc.robot.subsystems.intake;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Second;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -42,10 +47,10 @@ public class IntakeIOTalonFX implements IntakeIO {
     private CANcoder intakePivotCANcoder;
 
 
-    MotionMagicVoltage positionVoltageRequest;
+    PositionVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
 
-    double intakePivotMaxPosition = 15.3;
+    double intakePivotMaxPosition = 0.385;
     double setPointTolerance;
     double positionSetPointLow;
     double positionSetPointHigh;
@@ -53,11 +58,10 @@ public class IntakeIOTalonFX implements IntakeIO {
     public IntakeIOTalonFX() {
 
         intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
-        intakePivotCANcoder.setPosition(0);
         
         intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); // 19
         iMRcfg = new TalonFXConfiguration();
-        iMRcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+        iMRcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
         intakeRollersMotor.getConfigurator().apply(iMRcfg);
         // Setting the StatusSignal variables to be mapped
         // to actual aspect of the IntakeIO's hardware
@@ -71,13 +75,13 @@ public class IntakeIOTalonFX implements IntakeIO {
         iMPcfg = new TalonFXConfiguration();
 
         iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 15.3;
+        iMPcfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0.51;
         iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+        iMPcfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0.12;
 
-        iMPcfg.Slot0.kP = 0.13;
-
-
+        iMPcfg.Slot0.kP = 14;
+        iMPcfg.Slot0.kI = 0.5;
+        iMPcfg.Slot0.kG = 0.385;
         iMPcfg.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
         iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
@@ -94,6 +98,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         intakePivotCurrent = intakePivotMotor.getTorqueCurrent();
         intakePivotSupplyCurrent = intakePivotMotor.getSupplyCurrent();
         intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
+        // intakePivotCANcoder.setPosition(0.12);
 
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
@@ -116,10 +121,9 @@ public class IntakeIOTalonFX implements IntakeIO {
         // Forcing optimal use of the CAN Bus for this subsystems
         // hardware
         intakePivotMotor.optimizeBusUtilization(0, 1);
-        intakePivotMotor.setPosition(0);
 
         voltageRequest = new VoltageOut(0);
-        positionVoltageRequest = new MotionMagicVoltage(0);
+        positionVoltageRequest = new PositionVoltage(0);
     }
 
     @Override
@@ -140,8 +144,9 @@ public class IntakeIOTalonFX implements IntakeIO {
     }
 
     @Override
-    public void intakePivotToAngle(double angle) {
-        double angletoRotations = (MathUtil.clamp(angle, 0.0, 140.0) ) / (140.0 / intakePivotMaxPosition);
+    public void intakePivotToAngle(double angleDegrees) {
+        double angletoRotations = (MathUtil.clamp(angleDegrees, 0.0, 138.6) ) / 360; //Changes angle degree to rotations 
+        angletoRotations += 0.12;
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
     }
 
