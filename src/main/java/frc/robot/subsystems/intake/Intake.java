@@ -37,7 +37,7 @@ public class Intake extends SubsystemBase {
     }
 
     public Command intakeRunRollers() {
-        return this.runOnce(
+        return this.run(
                 () -> {
                     // Set power to full (1)
                     this.power = 0.67;
@@ -95,7 +95,7 @@ public class Intake extends SubsystemBase {
      */
     public Command intakePivotToAngle(double angle) {
        Logger.recordOutput("Pivot/Angle", angle);
-        return this.runOnce(
+        return this.run(
                 () -> {
                     this.angle = angle;
                     this.intakeIO.intakePivotToAngle(this.angle);

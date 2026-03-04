@@ -194,7 +194,7 @@ public class RobotContainer {
         driverController.rightBumper().debounce(0.1).onTrue(intake.toggleIntake());
 
         // Run intake rollers when LT is pressed
-        driverController.leftTrigger().whileTrue(intake.intakeRunRollers());
+        driverController.leftTrigger().or(operatorController.leftTrigger()).whileTrue(intake.intakeRunRollers());
 
         // Switch to X pattern when X button is pressed
         driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -212,7 +212,7 @@ public class RobotContainer {
         // Operator Controls
 
         // Run intake rollers when LT is pressed
-        operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
+
 
         // Auto speed and angle when RT is held
         operatorController.rightTrigger().whileTrue(Commands.sequence(

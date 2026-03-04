@@ -91,7 +91,7 @@ public class Kicker extends SubsystemBase {
      * @return Command for turning on the kicker subsystem
      */
     public Command turnOnKicker() {
-        return this.runOnce(
+        return this.run(
             () -> {
                 // Set power to full (1)
                 this.power = 1;

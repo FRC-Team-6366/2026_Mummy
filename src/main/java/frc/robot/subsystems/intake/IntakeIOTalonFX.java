@@ -2,6 +2,7 @@ package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
@@ -11,6 +12,7 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -40,6 +42,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     StatusSignal<Double> intakePivotErrorFromSetpoint;
 
     private CANcoder intakePivotCANcoder;
+    CANcoderConfiguration iPCANcfg;
 
 
     PositionVoltage positionVoltageRequest;
@@ -52,9 +55,8 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     public IntakeIOTalonFX() {
 
-        intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
-        
-        intakePivotCANcoder.setPosition(0.12);
+
+  
         intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); // 19
         iMRcfg = new TalonFXConfiguration();
         iMRcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
@@ -82,7 +84,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
         iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-        iMPcfg.Feedback.RotorToSensorRatio = 38.89;
+        iMPcfg.Feedback.RotorToSensorRatio = 22.22;
         iMPcfg.Feedback.SensorToMechanismRatio =1;
 
         intakePivotMotor.getConfigurator().apply(iMPcfg);
@@ -94,6 +96,13 @@ public class IntakeIOTalonFX implements IntakeIO {
         intakePivotCurrent = intakePivotMotor.getTorqueCurrent();
         intakePivotSupplyCurrent = intakePivotMotor.getSupplyCurrent();
         intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
+
+        intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
+        // intakePivotCANcoder.setPosition(0.12);
+
+        iPCANcfg = new CANcoderConfiguration();
+        iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+        intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
         
 
         BaseStatusSignal.setUpdateFrequencyForAll(

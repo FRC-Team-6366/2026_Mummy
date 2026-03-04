@@ -119,7 +119,7 @@ public class Shooter extends SubsystemBase{
      */
     public Command setShooterVelocityPosition1(){
 
-        return this.runOnce(
+        return this.run(
             () -> {
                 this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
                 this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
@@ -133,7 +133,7 @@ public class Shooter extends SubsystemBase{
      */
     public Command setShooterVelocityPosition2(){
 
-        return this.runOnce(
+        return this.run(
             () -> {
         this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
@@ -147,7 +147,7 @@ public class Shooter extends SubsystemBase{
      */
     public Command setShooterVelocityPosition3(){
 
-        return this.runOnce(
+        return this.run(
             () -> {
         this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
@@ -157,7 +157,7 @@ public class Shooter extends SubsystemBase{
 
     public Command setShooterAutoVelocity(Drive drive){
 
-        return this.runOnce(
+        return this.run(
             () -> {
                 // Create dummy pose at center of hub
                 Pose2d hubPose = new Pose2d(new Translation2d(3.254, 4.027), Rotation2d.fromDegrees(0));

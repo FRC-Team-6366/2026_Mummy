@@ -52,7 +52,7 @@ public class Hood extends SubsystemBase {
      * @return Command to set hood at angle for shooting
      */
     public Command hoodToAngle(double angle) {
-        return this.runOnce(
+        return this.run(
             () -> {
                 this.angle = angle;
                 this.hoodIO.hoodToAngle(this.angle);
@@ -111,7 +111,7 @@ public class Hood extends SubsystemBase {
 
     public Command setHoodAutoAngle(Drive drive){
 
-        return this.runOnce(
+        return this.run(
             () -> {
                 // Create dummy pose at center of hub
                 Pose2d hubPose = new Pose2d(new Translation2d(3.254, 4.027), Rotation2d.fromDegrees(0));
