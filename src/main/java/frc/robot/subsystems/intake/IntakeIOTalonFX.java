@@ -1,13 +1,8 @@
 package frc.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
-import static edu.wpi.first.units.Units.Second;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -15,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -24,7 +20,6 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants;
-import frc.robot.Constants.IntakeConstants;
 
 public class IntakeIOTalonFX implements IntakeIO {
     private TalonFX intakeRollersMotor;
@@ -98,7 +93,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         intakePivotCurrent = intakePivotMotor.getTorqueCurrent();
         intakePivotSupplyCurrent = intakePivotMotor.getSupplyCurrent();
         intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
-        // intakePivotCANcoder.setPosition(0.12);
+        
 
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
@@ -124,6 +119,19 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         voltageRequest = new VoltageOut(0);
         positionVoltageRequest = new PositionVoltage(0);
+    }
+
+    // Resets cancoder to 0.12 rotations, must be used when intake is at 
+    // upper hard limit
+    @Override
+    public void intakeResetCanCoder(){
+        intakePivotCANcoder.setPosition(0.12);
+    }
+
+    // Turns pivot neutral mode to 'brake' on true, 'coast' on false
+    @Override
+    public void setBrakeMode(boolean brakeMode) {
+        intakePivotMotor.setNeutralMode(brakeMode ? NeutralModeValue.Brake : NeutralModeValue.Coast);
     }
 
     @Override

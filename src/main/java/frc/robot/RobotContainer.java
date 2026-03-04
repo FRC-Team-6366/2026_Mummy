@@ -32,8 +32,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -57,7 +55,7 @@ public class RobotContainer {
     Hood hood;
     int mode; //
     Drive drive;
-    // Intake intake;
+    Intake intake;
     Vision vision;
     LoggedDashboardChooser<Command> autoChooser;
     private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -147,7 +145,7 @@ public class RobotContainer {
         this.indexer = new Indexer(new IndexerIOTalonFX());
         this.kicker = new Kicker(new KickerIOTalonFX());
         this.hood = new Hood(new HoodIOTalonFX());
-        // this.intake = new Intake(new IntakeIOTalonFX());
+        this.intake = new Intake(new IntakeIOTalonFX());
         this.mode = 0;
 
         // Configure the trigger bindings
@@ -170,7 +168,14 @@ public class RobotContainer {
      */
     private void configureBindings() {
 
-        // Driver Controls
+        // Default commands
+        //
+        // The below subsystems default to "off"
+        shooter.setDefaultCommand(shooter.turnOffShooter());
+        hood.setDefaultCommand(hood.retractHood());
+        kicker.setDefaultCommand(kicker.turnOffKicker());
+        indexer.setDefaultCommand(indexer.turnOffIndexer());
+        intake.setDefaultCommand(intake.intakeStopRollers());
 
         // Set the drivers movement for steering and driving on the driver joysticks
         drive.setDefaultCommand(
@@ -179,9 +184,17 @@ public class RobotContainer {
                         () -> -driverController.getLeftY(),
                         () -> -driverController.getLeftX(),
                         () -> -driverController.getRightX()));
+        
+        // Driver Controls
 
         // Lock to Hub when RT is held
         driverController.rightTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
+
+        // Toggle intake when RB is pressed
+        driverController.rightBumper().debounce(0.1).onTrue(intake.toggleIntake());
+
+        // Run intake rollers when LT is pressed
+        driverController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
         // Switch to X pattern when X button is pressed
         driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -198,11 +211,8 @@ public class RobotContainer {
 
         // Operator Controls
 
-        // Default commands
-        shooter.setDefaultCommand(shooter.turnOffShooter());
-        hood.setDefaultCommand(hood.retractHood());
-        kicker.setDefaultCommand(kicker.turnOffKicker());
-        indexer.setDefaultCommand(indexer.turnOffIndexer());
+        // Run intake rollers when LT is pressed
+        operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
         // Auto speed and angle when RT is held
         operatorController.rightTrigger().whileTrue(Commands.sequence(
@@ -219,7 +229,13 @@ public class RobotContainer {
                         shooter.turnOffShooter(),
                         kicker.turnOffKicker(),
                         indexer.turnOffIndexer(),
-                        hood.retractHood()));
+                        hood.retractHood(),
+                        intake.intakeStopRollers()
+                ));
+
+        // Resets cancoder to 0.12 rotations when start and back are pressed together,
+        // must be used when intake is at upper hard limit
+        operatorController.start().and(operatorController.back()).onTrue(intake.intakeResetCanCoder());
 
         // Shooting setpoints
         // Commented out while testing auto aim

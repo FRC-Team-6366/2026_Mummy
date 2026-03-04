@@ -14,11 +14,26 @@ public class Intake extends SubsystemBase {
 
     double angle = 0;
     double power = 0;
+    boolean intakeIsExtended = false;
     IntakeIO intakeIO;
     IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
     public Intake(IntakeIO io) {
         this.intakeIO = io;
+
+        // On intake initialization, find out if intake is extended or retracted
+        intakeIsExtended = this.intakeIO.getRotations().getRotations() > 0.25 ? true : false;
+    }
+
+    public Command intakeResetCanCoder() {
+        return this.runOnce(
+            () -> this.intakeIO.intakeResetCanCoder()
+        );
+    }
+
+    // Sets pivot to brake on true, coast on false
+    public Command setBrakeMode(boolean brakeMode) {
+        return this.runOnce(() -> this.intakeIO.setBrakeMode(brakeMode));
     }
 
     public Command intakeRunRollers() {
@@ -139,14 +154,30 @@ public class Intake extends SubsystemBase {
         );
     }
 
+    // Toggle intake in and out, does not start rollers. Rollers are controlled
+    // by both controllers LTs
     public Command toggleIntake(){
-        if (this.intakeIO.getRotations().getRotations() <7.0){
-            // this.toggleIntake() = true;
-            return this.deployIntake();
+        if (this.intakeIsExtended){
+            // INTAKE IS EXTENDED
+            // 1. Toggle the intake state
+            this.intakeIsExtended = false;
+
+            // 2. Retract and set brake mode
+            return Commands.sequence(
+                this.intakePivotAngleRetract().until(this.intakePivotAtPositionSetpoint()),
+                this.setBrakeMode(true)
+            );
 
         } else {
-            // this.toggleIntake = false;
-            return this.retractIntake();
+            // INTAKE IS RETRACTED
+            // 1. Toggle the intake state
+            this.intakeIsExtended = true;
+
+            // 2. Extend and set coast mode
+            return Commands.sequence(
+                this.intakePivotAngleExtend().until(this.intakePivotAtPositionSetpoint()),
+                this.setBrakeMode(false)
+            );
             
         }
     }
