@@ -7,8 +7,11 @@ package frc.robot;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
@@ -60,7 +63,7 @@ public final class Constants {
     public static final int followerShooterMotorId = 16; //16
     public static final double shooterPosition1VelocityFPS = 55;
     public static final double shooterPosition2VelocityFPS = 63;
-    public static final double shooterPosition3VelocityFPS = 52;
+    public static final double shooterPosition3VelocityFPS = 58;
     
     public static final int hoodMotorId = 17; //17
     public static final double hoodPosition1Angle = 22;
@@ -82,7 +85,8 @@ public final class Constants {
 
   public class VisionConstants {
     // AprilTag layout
-    public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
+    // public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
+    public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
 
     // Camera names, must match names configured on coprocessor
     public static String camera0Name = "camFrontLeft";
@@ -146,6 +150,12 @@ public final class Constants {
     public static double linearStdDevMegatag2Factor = 0.5; // More stable than full 3D solve
     public static double angularStdDevMegatag2Factor = Double.POSITIVE_INFINITY; // No rotation data available
 
+  }
+
+  public class PoseConstants {
+    public static Pose2d scorePosition1 = new Pose2d(new Translation2d(1.67, 3.83), Rotation2d.fromDegrees(180));
+    public static Pose2d scorePosition2R = new Pose2d(new Translation2d(0.885, 0.814), Rotation2d.fromDegrees(-142.4));
+    public static Pose2d scorePosition3R = new Pose2d(new Translation2d(4.063, 0.771), Rotation2d.fromDegrees(-100.16));
   }
 
   public static enum Mode {

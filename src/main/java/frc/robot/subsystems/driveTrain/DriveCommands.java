@@ -29,6 +29,12 @@ import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
 public class DriveCommands {
   private static final double DEADBAND = 0.1;
   private static final double ANGLE_KP = 5.0;
@@ -147,6 +153,30 @@ public class DriveCommands {
 
         // Reset PID controller when command starts
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
+  }
+
+  public static Command driveToPose(Drive drive, Supplier<Pose2d> targetPoseSupplier) {
+
+    return Commands.runOnce(
+        () -> {
+          Pose2d currentPose = drive.getPose();
+          Pose2d startPose = new Pose2d(currentPose.getTranslation(), currentPose.getRotation());
+
+          // new PPHolonomicDriveController(new PIDConstants(5.0), new PIDConstants(5.0));
+
+          List<Waypoint> waypoints =
+              PathPlannerPath.waypointsFromPoses(startPose, targetPoseSupplier.get());
+          PathPlannerPath path =
+              new PathPlannerPath(
+                  waypoints,
+                  new PathConstraints(
+                      5, 5, Units.degreesToRadians(360), Units.degreesToRadians(540)),
+                  null,
+                  new GoalEndState(0.0, targetPoseSupplier.get().getRotation()));
+
+          path.preventFlipping = true;
+          AutoBuilder.followPath(path).schedule();
+        });
   }
 
   /**
