@@ -28,6 +28,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
@@ -220,28 +221,12 @@ public class DriveCommands {
     .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
+  // Uses PathPlanner AutoBuilder to create a path to pose which avoids field obstructions
   public static Command driveToPose(Drive drive, Supplier<Pose2d> targetPoseSupplier) {
-
-    return Commands.runOnce(
-        () -> {
-          Pose2d currentPose = drive.getPose();
-          Pose2d startPose = new Pose2d(currentPose.getTranslation(), currentPose.getRotation());
-
-          // new PPHolonomicDriveController(new PIDConstants(5.0), new PIDConstants(5.0));
-
-          List<Waypoint> waypoints =
-              PathPlannerPath.waypointsFromPoses(startPose, targetPoseSupplier.get());
-          PathPlannerPath path =
-              new PathPlannerPath(
-                  waypoints,
-                  new PathConstraints(
-                      5, 5, Units.degreesToRadians(360), Units.degreesToRadians(540)),
-                  null,
-                  new GoalEndState(0.0, targetPoseSupplier.get().getRotation()));
-
-          path.preventFlipping = false;
-          AutoBuilder.followPath(path).schedule();
-        });
+    PathConstraints constraints = new PathConstraints(5, 5, Units.degreesToRadians(360), Units.degreesToRadians(540));
+    return Commands.defer(
+      () -> AutoBuilder.pathfindToPose(targetPoseSupplier.get(), constraints, 0.0), Set.of(drive)
+    );
   }
 
   /**
