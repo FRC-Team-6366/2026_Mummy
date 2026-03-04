@@ -170,7 +170,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
 
-        // Driver Buttons
+        // Driver Controls
 
         // Set the drivers movement for steering and driving on the driver joysticks
         drive.setDefaultCommand(
@@ -180,98 +180,38 @@ public class RobotContainer {
                         () -> -driverController.getLeftX(),
                         () -> -driverController.getRightX()));
 
-        // Reset gyro to 0° when B button is pressed
-        driverController
-                .b()
-                .onTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2R));
-
-        driverController
-                .x()
-                .onTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2L));
-
-        // Lock to 0° when A button is held
-        driverController
-                .a()
-                .whileTrue(
-                        DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition1));
-
-        driverController.rightBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3R));
-        driverController.leftBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3L));
-
-        driverController.rightTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive,() -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
+        // Lock to Hub when RT is held
+        driverController.rightTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
         // Switch to X pattern when X button is pressed
-        // driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-        // driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
-        // driverController.leftTrigger().whileTrue(intake.intakeStopRollers());
-
-        // driverController.rightTrigger().whileTrue(intake.deployIntake());
-        // driverController.leftTrigger().whileTrue(intake.retractIntake());
-
-        /*
-         * Increments and Decrements Shooter speed
-         * is purely for testing purposes
-         */
-        // driverController.y().whileTrue(shooter.shooterDecrements());
-        // driverController.x().whileTrue(shooter.shooterIncrements());
-
-        /*
-         * Increments and Decrements Hood position using rotations
-         * Is purely for testing purposes
-         */
-        // driverController.leftTrigger().whileTrue(hood.hoodDecrements());
-        // driverController.rightTrigger().whileTrue(hood.hoodIncrements());
-
-        // /*Increments and Decrements indexer speed
-        // * Is purely for testing purposes
-        // */
-        // driverController.leftBumper().whileTrue(Commands.runOnce(() ->
-        // indexer.decrementIndexer()));
-        // driverController.rightBumper().whileTrue(Commands.runOnce(() ->
-        // indexer.incrementIndexer()));
-
-                // driverController.rightTrigger().onTrue(intake.toggleIntake());
-
-        // driverController.leftTrigger().onTrue(intake.intakePivotAngleRetract());
-        // driverController.rightTrigger().onTrue(intake.intakePivotAngleExtend());
-
-
-
-
+        driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
         
+        // Shooting setpoints
+        // Commented out while testing auto aim
+        //
+        // driverController.leftBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3L));
+        // driverController.x().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2L));
+        // driverController.a().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition1));
+        // driverController.b().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2R)); 
+        // driverController.rightBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3R));
+                
 
-        // Operator Buttons
+        // Operator Controls
 
-        // Set shooter to velocity 10 and and hood to position 0
-        operatorController.rightBumper().whileTrue(
-                Commands.sequence(
-                        Commands.parallel(
-                                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
-                                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())),
-                        Commands.parallel(
-                                kicker.turnOnKicker(),
-                                indexer.turnOnIndexer())));
+        // Default commands
+        shooter.setDefaultCommand(shooter.turnOffShooter());
+        hood.setDefaultCommand(hood.retractHood());
+        kicker.setDefaultCommand(kicker.turnOffKicker());
+        indexer.setDefaultCommand(indexer.turnOffIndexer());
 
-        // Set shooter to velocity 30 and and hood to position 3
-        operatorController.leftTrigger().whileTrue(
-                Commands.sequence(
-                        Commands.parallel(
-                                shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
-                                hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())),
-                        Commands.parallel(
-                                kicker.turnOnKicker(),
-                                indexer.turnOnIndexer())));
-
-        // Set shooter to velocity 60 and and hood to position 5
-        // operatorController.rightTrigger().whileTrue(
-        //         Commands.sequence(
-        //                 Commands.parallel(
-        //                         shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
-        //                         hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
-        //                 Commands.parallel(
-        //                         kicker.turnOnKicker(),
-        //                         indexer.turnOnIndexer())));
+        // Auto speed and angle when RT is held
+        operatorController.rightTrigger().whileTrue(Commands.sequence(
+                Commands.parallel(
+                        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+                        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())),
+                Commands.parallel(
+                        kicker.turnOnKicker(),
+                        indexer.turnOnIndexer())));
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
@@ -281,21 +221,35 @@ public class RobotContainer {
                         indexer.turnOffIndexer(),
                         hood.retractHood()));
 
-        operatorController.rightTrigger().whileTrue(Commands.sequence(
-                        Commands.parallel(
-                                shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())),
-                        Commands.parallel(
-                                kicker.turnOnKicker(),
-                                indexer.turnOnIndexer())));
+        // Shooting setpoints
+        // Commented out while testing auto aim
+        //
+        // operatorController.rightBumper().whileTrue(
+        //         Commands.sequence(
+        //                 Commands.parallel(
+        //                         shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
+        //                         hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())),
+        //                 Commands.parallel(
+        //                         kicker.turnOnKicker(),
+        //                         indexer.turnOnIndexer())));
 
-        /*
-         * Increments and Decrements intake rollers speed
-         * Is purely for testing purposes
-         */
-        // operatorController.a().whileTrue(intake.intakeRunRollers());
-        // operatorController.y().whileTrue(intake.intakeStopRollers());
+        // operatorController.leftTrigger().whileTrue(
+        //         Commands.sequence(
+        //                 Commands.parallel(
+        //                         shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
+        //                         hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())),
+        //                 Commands.parallel(
+        //                         kicker.turnOnKicker(),
+        //                         indexer.turnOnIndexer())));
 
+        // operatorController.rightTrigger().whileTrue(
+        //         Commands.sequence(
+        //                 Commands.parallel(
+        //                         shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
+        //                         hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
+        //                 Commands.parallel(
+        //                         kicker.turnOnKicker(),
+        //                         indexer.turnOnIndexer())));
 
     }
 
