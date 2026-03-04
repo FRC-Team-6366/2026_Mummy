@@ -239,7 +239,7 @@ public class DriveCommands {
                   null,
                   new GoalEndState(0.0, targetPoseSupplier.get().getRotation()));
 
-          path.preventFlipping = true;
+          path.preventFlipping = false;
           AutoBuilder.followPath(path).schedule();
         });
   }
