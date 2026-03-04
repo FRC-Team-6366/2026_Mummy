@@ -71,6 +71,9 @@ public final class Constants {
     public static final double hoodPosition3Angle = 25.17;
 
     public static final int turretAimMotorId = 18; //18
+    
+    // Small angle adjustment to compensate for shooter offset
+    public static final double autoAimCompAngleRad = -0.035;
   }
 
   public class IntakeConstants{

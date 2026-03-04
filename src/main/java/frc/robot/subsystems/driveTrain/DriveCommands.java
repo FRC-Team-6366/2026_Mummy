@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -153,6 +155,69 @@ public class DriveCommands {
 
         // Reset PID controller when command starts
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
+  }
+
+  public static Command joystickDriveAutoAim(
+    Drive drive,
+    DoubleSupplier xSupplier,
+    DoubleSupplier ySupplier) {
+
+    // Create PID controller
+    ProfiledPIDController angleController =
+        new ProfiledPIDController(
+            ANGLE_KP,
+            0.0,
+            ANGLE_KD,
+            new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
+    angleController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Create dummy pose at center of hub
+    Pose2d hubPose = new Pose2d(new Translation2d(3.254, 4.027), Rotation2d.fromDegrees(0));
+
+    // Construct command
+    return Commands.run(
+      () -> {
+        // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
+        Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+        double hubToPoseX = hubToPose.getX();
+        double hubToPoseY = hubToPose.getY();
+
+        // Use Math.atan2 to get the desired heading angle in radians
+        // Order must be atan2(Y, X)
+        double desiredAngleRad = Math.atan2(hubToPoseY, hubToPoseX);
+        
+        // Adjust desired angle to account for shooter offset
+        desiredAngleRad -= Constants.ShooterConstants.autoAimCompAngleRad;
+
+        // Get linear velocity
+        Translation2d linearVelocity =
+            getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
+
+        // Calculate angular speed
+        double omega =
+            angleController.calculate(
+                drive.getRotation().getRadians(), desiredAngleRad);
+
+        // Convert to field relative speeds & send command
+        ChassisSpeeds speeds =
+            new ChassisSpeeds(
+                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
+                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
+                omega);
+        boolean isFlipped =
+            DriverStation.getAlliance().isPresent()
+                && DriverStation.getAlliance().get() == Alliance.Red;
+        drive.runVelocity(
+            ChassisSpeeds.fromFieldRelativeSpeeds(
+                speeds,
+                isFlipped
+                    ? drive.getRotation().plus(new Rotation2d(Math.PI))
+                    : drive.getRotation()));
+      },
+      drive)
+      
+    // Reset PID controller when command starts
+    .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
   public static Command driveToPose(Drive drive, Supplier<Pose2d> targetPoseSupplier) {

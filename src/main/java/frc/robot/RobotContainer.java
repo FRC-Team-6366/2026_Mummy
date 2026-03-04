@@ -198,6 +198,8 @@ public class RobotContainer {
         driverController.rightBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3R));
         driverController.leftBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3L));
 
+        driverController.rightTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive,() -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
+
         // Switch to X pattern when X button is pressed
         // driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
