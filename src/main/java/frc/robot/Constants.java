@@ -61,12 +61,12 @@ public final class Constants {
   public class ShooterConstants {
     public static final int leadShooterMotorId = 15; //15
     public static final int followerShooterMotorId = 16; //16
-    public static final double shooterPosition1VelocityFPS = 55;
-    public static final double shooterPosition2VelocityFPS = 63;
-    public static final double shooterPosition3VelocityFPS = 58;
+    public static final double shooterPosition1VelocityFPS = 55.0;
+    public static final double shooterPosition2VelocityFPS = 63.0;
+    public static final double shooterPosition3VelocityFPS = 58.0;
     
     public static final int hoodMotorId = 17; //17
-    public static final double hoodPosition1Angle = 22;
+    public static final double hoodPosition1Angle = 22.0;
     public static final double hoodPosition2Angle = 36.3;
     public static final double hoodPosition3Angle = 25.17;
 

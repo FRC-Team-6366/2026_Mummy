@@ -264,14 +264,14 @@ public class RobotContainer {
                                 indexer.turnOnIndexer())));
 
         // Set shooter to velocity 60 and and hood to position 5
-        operatorController.rightTrigger().whileTrue(
-                Commands.sequence(
-                        Commands.parallel(
-                                shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
-                                hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
-                        Commands.parallel(
-                                kicker.turnOnKicker(),
-                                indexer.turnOnIndexer())));
+        // operatorController.rightTrigger().whileTrue(
+        //         Commands.sequence(
+        //                 Commands.parallel(
+        //                         shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
+        //                         hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
+        //                 Commands.parallel(
+        //                         kicker.turnOnKicker(),
+        //                         indexer.turnOnIndexer())));
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
@@ -280,6 +280,14 @@ public class RobotContainer {
                         kicker.turnOffKicker(),
                         indexer.turnOffIndexer(),
                         hood.retractHood()));
+
+        operatorController.rightTrigger().whileTrue(Commands.sequence(
+                        Commands.parallel(
+                                shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())),
+                        Commands.parallel(
+                                kicker.turnOnKicker(),
+                                indexer.turnOnIndexer())));
 
         /*
          * Increments and Decrements intake rollers speed

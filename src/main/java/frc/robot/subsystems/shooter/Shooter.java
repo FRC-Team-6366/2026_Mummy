@@ -1,11 +1,18 @@
 package frc.robot.subsystems.shooter;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.driveTrain.Drive;
 /**
  *Big H here- this Substemy is for the Shooter class for the 2026 Mummybot. This class
  * handles the interactions for for shooting the subsystem, and should have the could for the 
@@ -27,6 +34,8 @@ public class Shooter extends SubsystemBase{
      */
     ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
+    public static InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
+
     /**
      * Creates the subsystem using the shooterIO object and represents
      * the hardware for the shooter subsystem
@@ -38,6 +47,12 @@ public class Shooter extends SubsystemBase{
      */
     public Shooter(ShooterIO io ){
         this.shooterIO = io;
+
+        // Interpolation map to calculate shooter speed for any given distance
+        // Starting with values from three set points
+        shooterSpeedMap.put(1.596, 55.0);
+        shooterSpeedMap.put(3.369, 58.0);
+        shooterSpeedMap.put(4.004, 63.0);
     }
 
      /**
@@ -137,6 +152,26 @@ public class Shooter extends SubsystemBase{
             () -> {
         this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+            }
+        );
+    }
+
+    public Command setShooterAutoVelocity(Drive drive){
+
+        return this.runOnce(
+            () -> {
+                // Create dummy pose at center of hub
+                Pose2d hubPose = new Pose2d(new Translation2d(3.254, 4.027), Rotation2d.fromDegrees(0));
+                // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
+                Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+                double hubToPoseX = hubToPose.getX();
+                double hubToPoseY = hubToPose.getY();
+                // Find the hypotenuse of the triangle
+                double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+
+                this.velocityRPS = shooterSpeedMap.get(distanceToHub);
+                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+
             }
         );
     }

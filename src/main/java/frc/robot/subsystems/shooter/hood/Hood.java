@@ -5,18 +5,32 @@ import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.driveTrain.Drive;
 
 public class Hood extends SubsystemBase {
     HoodIO hoodIO;
     double angle = 0;
 
+
     HoodIOInputsAutoLogged inputs = new HoodIOInputsAutoLogged();
+
+    public static InterpolatingDoubleTreeMap hoodAngleMap = new InterpolatingDoubleTreeMap();
 
     public Hood(HoodIO io) {
         this.hoodIO = io;
+        
+        // Interpolation map to calculate hood angle for any given distance
+        // Starting with values from three set points
+        hoodAngleMap.put(1.596, 22.0);
+        hoodAngleMap.put(3.369, 25.17);
+        hoodAngleMap.put(4.004, 36.3);
     }
 
     /**
@@ -93,6 +107,25 @@ public class Hood extends SubsystemBase {
      */
     public Command hoodToAnglePosition3(){
         return this.hoodToAngle(Constants.ShooterConstants.hoodPosition3Angle);
+    }
+
+    public Command setHoodAutoAngle(Drive drive){
+
+        return this.runOnce(
+            () -> {
+                // Create dummy pose at center of hub
+                Pose2d hubPose = new Pose2d(new Translation2d(3.254, 4.027), Rotation2d.fromDegrees(0));
+                // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
+                Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+                double hubToPoseX = hubToPose.getX();
+                double hubToPoseY = hubToPose.getY();
+                // Find the hypotenuse of the triangle
+                double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+
+                this.angle = hoodAngleMap.get(distanceToHub);
+                this.hoodIO.hoodToAngle(angle);
+            }
+        );
     }
 
     /**
