@@ -153,6 +153,8 @@ public final class Constants {
   }
 
   public class PoseConstants {
+    public static Pose2d scorePosition3L = new Pose2d(new Translation2d(4.063, 7.298), Rotation2d.fromDegrees(100.16));
+    public static Pose2d scorePosition2L = new Pose2d(new Translation2d(0.885, 7.255), Rotation2d.fromDegrees(138));
     public static Pose2d scorePosition1 = new Pose2d(new Translation2d(1.67, 3.83), Rotation2d.fromDegrees(180));
     public static Pose2d scorePosition2R = new Pose2d(new Translation2d(0.885, 0.814), Rotation2d.fromDegrees(-142.4));
     public static Pose2d scorePosition3R = new Pose2d(new Translation2d(4.063, 0.771), Rotation2d.fromDegrees(-100.16));

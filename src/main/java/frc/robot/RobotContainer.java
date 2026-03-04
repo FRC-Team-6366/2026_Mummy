@@ -185,6 +185,10 @@ public class RobotContainer {
                 .b()
                 .onTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2R));
 
+        driverController
+                .x()
+                .onTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2L));
+
         // Lock to 0° when A button is held
         driverController
                 .a()
@@ -192,9 +196,10 @@ public class RobotContainer {
                         DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition1));
 
         driverController.rightBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3R));
+        driverController.leftBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3L));
 
         // Switch to X pattern when X button is pressed
-        driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+        // driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
         // driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
         // driverController.leftTrigger().whileTrue(intake.intakeStopRollers());
