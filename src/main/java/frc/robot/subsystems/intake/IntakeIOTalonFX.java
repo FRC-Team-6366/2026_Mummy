@@ -54,6 +54,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
         
+        intakePivotCANcoder.setPosition(0.12);
         intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); // 19
         iMRcfg = new TalonFXConfiguration();
         iMRcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
