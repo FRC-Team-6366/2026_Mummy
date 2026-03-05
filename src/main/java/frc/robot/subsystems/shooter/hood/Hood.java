@@ -9,7 +9,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
@@ -112,10 +115,20 @@ public class Hood extends SubsystemBase {
 
     public Command setHoodAutoAngle(Drive drive){
 
-        return this.run(
+        // Create dummy pose at center of hub
+        Pose2d hubPoseBlue = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
+        Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180));
+
+        // Construct command
+        return Commands.run(
             () -> {
-                // Create dummy pose at center of hub
-                Pose2d hubPose = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
+                // Check for alliance side
+                boolean isFlipped =
+                    DriverStation.getAlliance().isPresent()
+                        && DriverStation.getAlliance().get() == Alliance.Red;
+                
+                // Select correct dummy pose
+                Pose2d hubPose = isFlipped ? hubPoseRed : hubPoseBlue;
                 // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
                 Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
                 double hubToPoseX = hubToPose.getX();

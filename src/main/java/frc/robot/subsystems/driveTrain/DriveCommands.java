@@ -170,11 +170,20 @@ public class DriveCommands {
     angleController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Create dummy pose at center of hub
-    Pose2d hubPose = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
+    Pose2d hubPoseBlue = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
+    Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180));
 
     // Construct command
     return Commands.run(
       () -> {
+        // Check for alliance side
+        boolean isFlipped =
+            DriverStation.getAlliance().isPresent()
+                && DriverStation.getAlliance().get() == Alliance.Red;
+        
+        // Select correct dummy pose
+        Pose2d hubPose = isFlipped ? hubPoseRed : hubPoseBlue;
+
         // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
         Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
         double hubToPoseX = hubToPose.getX();
@@ -202,9 +211,6 @@ public class DriveCommands {
                 linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
                 linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
                 omega);
-        boolean isFlipped =
-            DriverStation.getAlliance().isPresent()
-                && DriverStation.getAlliance().get() == Alliance.Red;
         drive.runVelocity(
             ChassisSpeeds.fromFieldRelativeSpeeds(
                 speeds,
