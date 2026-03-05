@@ -1,0 +1,50 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightTrenchSimple"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoHooder"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoKicker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIndexer"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

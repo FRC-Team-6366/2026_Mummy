@@ -31,6 +31,7 @@ import frc.robot.subsystems.vision.VisionIOPhotonVision;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -122,6 +123,14 @@ public class RobotContainer {
                 break;
         }
 
+
+        NamedCommands.registerCommand("AutoShooter", shooter.setShooterAutoVelocity(drive));
+        NamedCommands.registerCommand("AutoHooder", hood.setHoodAutoAngle(drive));
+        NamedCommands.registerCommand("AutoIndexer", indexer.turnOnIndexer());
+        NamedCommands.registerCommand("AutoKicker", kicker.turnOnKicker());
+        
+        
+        
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -284,6 +293,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+         return autoChooser.get();
     }
 }
