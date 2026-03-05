@@ -153,6 +153,12 @@ public class RobotContainer {
                 indexer.pulseIndexer(),
                 kicker.runKicker()
         ));
+        NamedCommands.registerCommand("ShooterStop",  Commands.parallel(
+                shooter.turnOffShooter(),
+                hood.retractHood(),
+                indexer.stopIndexer(),
+                kicker.stopKicker()
+        ));
         
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());

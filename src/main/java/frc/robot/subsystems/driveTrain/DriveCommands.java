@@ -171,7 +171,7 @@ public class DriveCommands {
 
     // Create dummy pose at center of hub
     Pose2d hubPoseBlue = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
-    Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180));
+    Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180)); // 180 may need to be 0 if robot is aiming wrong way on red alliance
 
     // Construct command
     return Commands.run(
