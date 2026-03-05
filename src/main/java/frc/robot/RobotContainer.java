@@ -239,6 +239,12 @@ public class RobotContainer {
         // must be used when intake is at upper hard limit
         operatorController.start().and(operatorController.back()).onTrue(intake.intakeResetCanCoder());
 
+        operatorController.rightBumper().whileTrue(Commands.parallel(
+                        shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
+                        hood.hoodToAngle(45).until(hood.hoodAtPositionSetpoint()),
+                        kicker.turnOnKicker(),
+                        indexer.turnOnIndexer()));
+
         // Shooting setpoints
         // Commented out while testing auto aim
         //
