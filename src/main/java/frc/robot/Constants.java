@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.RobotBase;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
@@ -56,6 +57,9 @@ public final class Constants {
 
   public class KickerConstants {
     public static final int kickerMotorId = 14; 
+
+    // Kicker power from 0 to 1
+    public static final int kickerPower = 1;
   }
 
   public class ShooterConstants {
@@ -78,12 +82,15 @@ public final class Constants {
 
   public class IntakeConstants{
     public static final int intakeRollersMotorId = 19; //19
-       public static final int intakePivotMotorId = 20; //20
+    public static final int intakePivotMotorId = 20; //20
     public static final int intakePivotCANcoderId = 21;
 
     public static final double intakePivotStartAngleDegrees = 0;
-    public static final double  intakePivotRetractAngleDegrees = 0.1;
-    public static final double  intakePivotOutAngleDegrees = 136;
+    public static final double intakePivotRetractAngleDegrees = 0.1;
+    public static final double intakePivotDeployAngleDegrees = 136;
+
+    // Intake roller power from 0 to 1
+    public static final double intakeRollerPower = 0.67;
   }
 
   public class VisionConstants {

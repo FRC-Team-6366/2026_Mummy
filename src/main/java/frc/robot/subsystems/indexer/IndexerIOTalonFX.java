@@ -37,21 +37,11 @@ public class IndexerIOTalonFX implements IndexerIO{
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexMotor.getConfigurator().apply(indMotorconfiguration);
 
-        // indexWallMotor= new TalonFX(Constants.IndexerConstants.indexerWallMotorId);//STAND IN MOTOR, ask for wall motor device Id later
-        // indexWallMotor.getConfigurator().apply(indMotorconfiguration);
-
         indexVolts = indexMotor.getMotorVoltage();
         indexPosition = indexMotor.getPosition();
         indexRps = indexMotor.getVelocity();
         indexCurrent = indexMotor.getTorqueCurrent();
         indexSupplyCurrent = indexMotor.getSupplyCurrent();
-
-        // indexWallVolts = indexWallMotor.getMotorVoltage();
-        // indexWallPosition = indexWallMotor.getPosition();
-        // indexWallRps = indexWallMotor.getVelocity();
-        // indexWallCurrent = indexWallMotor.getTorqueCurrent();
-        // indexWallSupplyCurrent = indexWallMotor.getSupplyCurrent();
-
         
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -60,15 +50,9 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexRps,
         indexCurrent,
         indexSupplyCurrent
-        // indexWallVolts,
-        // indexWallPosition,
-        // indexWallRps,
-        // indexWallCurrent,
-        // indexWallSupplyCurrent
         );
 
     indexMotor.optimizeBusUtilization(0.0, 1.0);
-    // indexWallMotor.optimizeBusUtilization(0.0, 1.0);
 
     }
 
@@ -79,13 +63,6 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexMotor.setControl(volts);
     }
 
-    // @Override
-    // public void setIndexerWallPower(double power) {
-    //     double voltage = power *12;
-    //     VoltageOut volts = new VoltageOut(voltage);
-    //     indexWallMotor.setControl(volts);
-    // }
-
     @Override 
     public void updateInputs(IndexerIOInputs inputs){
      inputs.connected = BaseStatusSignal.refreshAll(
@@ -94,23 +71,12 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexRps,
         indexCurrent,
         indexSupplyCurrent
-        // indexWallVolts,
-        // indexWallPosition,
-        // indexWallRps,
-        // indexWallCurrent,
-        // indexWallSupplyCurrent
         ).isOK();
         inputs.indexVolts = this.indexVolts.getValueAsDouble();
         inputs.indexPosition = this.indexPosition.getValueAsDouble();
         inputs.indexRps = this.indexRps.getValueAsDouble();
         inputs.indexCurrent = this.indexCurrent.getValueAsDouble();
         inputs.indexSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();
-
-        // inputs.indexWallVolts = this.indexWallVolts.getValueAsDouble();
-        // inputs.indexWallPosition = this.indexWallPosition.getValueAsDouble();
-        // inputs.indexWallRps = this.indexWallRps.getValueAsDouble();
-        // inputs.indexWallCurrent = this.indexWallCurrent.getValueAsDouble();
-        // inputs.indexWallSupplyCurrent = this.indexWallSupplyCurrent.getValueAsDouble();
     }
     
     

@@ -73,7 +73,7 @@ public class Hood extends SubsystemBase {
          });
     }
 
-        public Command hoodDecrements(){
+    public Command hoodDecrements(){
         return this.runOnce(
          () ->
          { 
@@ -113,6 +113,12 @@ public class Hood extends SubsystemBase {
         return this.hoodToAngle(Constants.ShooterConstants.hoodPosition3Angle);
     }
 
+    /**
+     * Automatically sets the hood for shooting from any distance
+     * <p>
+     * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
+     * @return Command to set hood for auto calculated shooting
+     */
     public Command setHoodAutoAngle(Drive drive){
 
         // Create dummy pose at center of hub

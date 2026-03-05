@@ -40,15 +40,14 @@ public class Indexer extends SubsystemBase {
      * Turns off the Indexer subsystem's motors
      * <p>
      * Example use:
-     * <pre>{@code controller.b().whileTrue(indexer.turnOffIndexer());}</pre>
+     * <pre>{@code controller.b().onTrue(indexer.stopIndexer());}</pre>
      * @return Command to turn off indexer motors
      */
-    public Command turnOffIndexer() {
+    public Command stopIndexer() {
         return this.runOnce(
             () -> {
                 this.power = 0;
                 this.indexerIO.setIndexerPower(this.power);
-                // this.indexerIO.setIndexerWallPower(this.power);
             }
         );
     }
@@ -57,19 +56,25 @@ public class Indexer extends SubsystemBase {
      * Turns on the Indexer subsystem's motors
      * <p>
      * Example use:
-     * <pre>{@code controller.a().whileTrue(indexer.turnOnIndexer());}</pre>
+     * <pre>{@code controller.a().whileTrue(indexer.runIndexer());}</pre>
      * @return Command to turn on indexer motors
      */
-    public Command turnOnIndexer() {
+    public Command runIndexer() {
         return this.run(
             () -> {
                 this.power = 1;
                 this.indexerIO.setIndexerPower(this.power);
-                // this.indexerIO.setIndexerWallPower(this.power);
             }
         );
     }
 
+    /**
+     * Pulses the Indexer subsystem's motors to help prevent stalled fuel
+     * <p>
+     * Example use:
+     * <pre>{@code controller.y().whileTrue(indexer.pulseIndexer());}</pre>
+     * @return Command to turn on indexer motors
+     */
     public Command pulseIndexer() {
         return Commands.repeatingSequence(
             Commands.runOnce(() -> this.indexerIO.setIndexerPower(1)),

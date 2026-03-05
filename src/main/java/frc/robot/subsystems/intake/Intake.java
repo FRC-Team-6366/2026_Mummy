@@ -25,6 +25,8 @@ public class Intake extends SubsystemBase {
         intakeIsExtended = this.intakeIO.getRotations().getRotations() > 0.25 ? true : false;
     }
 
+    // Reset the intake cancoder offset when pivot is at upper hard stop.
+    // Used for testing.
     public Command intakeResetCanCoder() {
         return this.runOnce(
             () -> this.intakeIO.intakeResetCanCoder()
@@ -38,18 +40,14 @@ public class Intake extends SubsystemBase {
 
     public Command intakeRunRollers() {
         return this.run(
-                () -> {
-                    // Set power to full (1)
-                    this.power = 0.67;
+            () -> {
+                // Set roller power
+                this.power = Constants.IntakeConstants.intakeRollerPower;
 
-                    // Use power to start the IntakeIO Hardware motor
-                    this.intakeIO.rollersRunVolts(this.power);
-                }
-                // ).unless(
-                //     () -> {
-                //         return (this.intakeIO.getRotations().getRotations() < 0.2);
-                //     }
-                );
+                // Use power to start the IntakeIO Hardware motor
+                this.intakeIO.rollersRunVolts(this.power);
+            }
+        );
     }
 
     public Command intakeStopRollers() {
@@ -112,7 +110,7 @@ public class Intake extends SubsystemBase {
      * 
      * @return Command to set Intake Pivot Motor to starting position
      */
-    public Command intakePivotAngleRetract() {
+    public Command retractIntake() {
         this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
         return this.intakePivotToAngle(this.angle);
     }
@@ -126,33 +124,8 @@ public class Intake extends SubsystemBase {
      * 
      * @return Command to set Intake Pivot Motor for close shooting
      */
-    public Command intakePivotAngleExtend() {
-        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotOutAngleDegrees);
-    }
-
-    /**
-     * Returns whether the Intake Pivot Motor is at its set point distance, given a
-     * percent of tolerence
-     * specified in the IntakeIO hardware class
-     * 
-     * @return BooleanSupplier: True Intake Pivot Motor is at its setpoint, false
-     *         otherwise
-     */
-    public BooleanSupplier intakePivotAtPositionSetpoint() {
-        Logger.recordOutput("Pivot/Angle", angle);
-        return () -> this.intakeIO.intakeAtPositionSetpoint();
-    }
-
-    public Command deployIntake(){
-        return Commands.sequence(
-            this.intakePivotAngleExtend().until(this.intakePivotAtPositionSetpoint()), this.intakeRunRollers().until(() -> true)
-        );
-    }
-
-    public Command retractIntake(){
-        return Commands.sequence(
-         this.intakeStopRollers().until(() -> true), this.intakePivotAngleRetract().until(this.intakePivotAtPositionSetpoint())
-        );
+    public Command deployIntake() {
+        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees);
     }
 
     // Toggle intake in and out, does not start rollers. Rollers are controlled
@@ -166,7 +139,7 @@ public class Intake extends SubsystemBase {
 
             // 2. Retract and set brake mode
             return Commands.sequence(
-                this.intakePivotAngleRetract().until(this.intakePivotAtPositionSetpoint()),
+                this.retractIntake().until(this.intakePivotAtPositionSetpoint()),
                 this.setBrakeMode(true)
             );
 
@@ -177,18 +150,31 @@ public class Intake extends SubsystemBase {
 
             // 2. Extend and set coast mode
             return Commands.sequence(
-                this.intakePivotAngleExtend().until(this.intakePivotAtPositionSetpoint()),
+                this.deployIntake().until(this.intakePivotAtPositionSetpoint()),
                 this.setBrakeMode(false)
             );
             
         }
     }
 
+    /**
+     * Returns whether the Intake Pivot Motor is at its set point distance, given a
+     * percent of tolerence
+     * specified in the IntakeIO hardware class
+     * 
+     * @return BooleanSupplier: True Intake Pivot Motor is at its setpoint, false
+     *         otherwise
+     */
+    public BooleanSupplier intakePivotAtPositionSetpoint() {
+        Logger.recordOutput("Pivot/Angle", angle);
+        return () -> this.intakeIO.intakeAtPositionSetpoint();
+    }    
+
     public Boolean isExtended(){
         return this.intakeIO.getRotations().getRotations() > 0.25;
     }
 
-        public Boolean isNotExtended(){
+    public Boolean isNotExtended(){
         return this.intakeIO.getRotations().getRotations() <= 0.25;
     }
 

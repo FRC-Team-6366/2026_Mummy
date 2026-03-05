@@ -90,7 +90,7 @@ public class Kicker extends SubsystemBase {
      * <pre>{@code controller.a().whileTrue(kicker.turnOnKicker());}</pre>
      * @return Command for turning on the kicker subsystem
      */
-    public Command turnOnKicker() {
+    public Command runKicker() {
         return this.run(
             () -> {
                 // Set power to full (1)
@@ -110,7 +110,7 @@ public class Kicker extends SubsystemBase {
      * <pre>{@code controller.b().whileTrue(kicker.turnOffKicker());}</pre>
      * @return Command for turning off the kicker subsystem
      */
-    public Command turnOffKicker() {
+    public Command stopKicker() {
         return this.runOnce(
             () -> {
                 // Set power to 0

@@ -5,9 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain.Drive;
 import frc.robot.subsystems.driveTrain.DriveCommands;
 import frc.robot.subsystems.driveTrain.GyroIO;
@@ -35,7 +33,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -61,7 +58,6 @@ public class RobotContainer {
     Intake intake;
     Vision vision;
     LoggedDashboardChooser<Command> autoChooser;
-    private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController driverController = new CommandXboxController(
@@ -124,30 +120,34 @@ public class RobotContainer {
                 break;
         }
 
-        this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
+        this.shooter = new Shooter(new ShooterIOTalonFX());
+        this.hood = new Hood(new HoodIOTalonFX());
         this.indexer = new Indexer(new IndexerIOTalonFX());
         this.kicker = new Kicker(new KickerIOTalonFX());
-        this.hood = new Hood(new HoodIOTalonFX());
         this.intake = new Intake(new IntakeIOTalonFX());
         this.mode = 0;
 
 
-        NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(Commands.parallel(
-                shooter.setShooterAutoVelocity(drive),
-                hood.setHoodAutoAngle(drive),
-                indexer.pulseIndexer(),
-                kicker.turnOnKicker()
-                ), new WaitCommand(6.0)));
+        NamedCommands.registerCommand("ShooterSpinUp", Commands.race(
+                Commands.parallel(
+                        shooter.setShooterAutoVelocity(drive),
+                        hood.setHoodAutoAngle(drive)
+                ), new WaitCommand(0.5)
+        ));
+        NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
+                Commands.parallel(
+                        shooter.setShooterAutoVelocity(drive),
+                        hood.setHoodAutoAngle(drive),
+                        indexer.pulseIndexer(),
+                        kicker.runKicker()
+                ), new WaitCommand(6.0)
+        ));
         NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
                 shooter.setShooterAutoVelocity(drive),
                 hood.setHoodAutoAngle(drive),
                 indexer.pulseIndexer(),
-                kicker.turnOnKicker()
-                ));
-        
-        
-        
-        
+                kicker.runKicker()
+        ));
         
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -196,7 +196,7 @@ public class RobotContainer {
         // The below subsystems default to "off"
         shooter.setDefaultCommand(shooter.turnOffShooter());
         hood.setDefaultCommand(hood.retractHood());
-        kicker.setDefaultCommand(kicker.turnOffKicker());
+        kicker.setDefaultCommand(kicker.stopKicker());
         // indexer.setDefaultCommand(indexer.turnOffIndexer());
         intake.setDefaultCommand(intake.intakeStopRollers());
 
@@ -216,9 +216,9 @@ public class RobotContainer {
         // Toggle intake when RB is pressed
         // driverController.rightBumper().debounce(0.1).onTrue(intake.toggleIntake());
 
-
-         driverController.rightBumper().onTrue(intake.intakePivotAngleExtend());
-         driverController.leftBumper().onTrue(intake.intakePivotAngleRetract());
+        // 
+        driverController.rightBumper().onTrue(intake.deployIntake());
+        driverController.leftBumper().onTrue(intake.retractIntake());
 
         // Run intake rollers when LT is pressed
         driverController.leftTrigger().or(operatorController.leftTrigger()).whileTrue(intake.intakeRunRollers());
@@ -245,15 +245,15 @@ public class RobotContainer {
         operatorController.rightTrigger().whileTrue(Commands.parallel(
                         shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
                         hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()),
-                        kicker.turnOnKicker(),
+                        kicker.runKicker(),
                         indexer.pulseIndexer()));
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
                 Commands.parallel(
                         shooter.turnOffShooter(),
-                        kicker.turnOffKicker(),
-                        indexer.turnOffIndexer(),
+                        kicker.stopKicker(),
+                        indexer.stopIndexer(),
                         hood.retractHood(),
                         intake.intakeStopRollers()
                 ));
@@ -265,8 +265,8 @@ public class RobotContainer {
         operatorController.rightBumper().whileTrue(Commands.parallel(
                         shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
                         hood.hoodToAngle(45).until(hood.hoodAtPositionSetpoint()),
-                        kicker.turnOnKicker(),
-                        indexer.turnOnIndexer()));
+                        kicker.runKicker(),
+                        indexer.runIndexer()));
 
         // Shooting setpoints
         // Commented out while testing auto aim
