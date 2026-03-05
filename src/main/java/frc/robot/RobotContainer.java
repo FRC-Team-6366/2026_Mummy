@@ -225,26 +225,16 @@ public class RobotContainer {
         driverController.rightBumper().onTrue(intake.deployIntake());
         driverController.leftBumper().onTrue(intake.retractIntake());
 
-        // Run intake rollers when LT is pressed
+        // Run intake rollers when LT is pressed by either driver or operator
         driverController.leftTrigger().or(operatorController.leftTrigger()).whileTrue(intake.intakeRunRollers());
 
         // Switch to X pattern when X button is pressed
         driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-        
-        // Shooting setpoints
-        // Commented out while testing auto aim
-        //
-        // driverController.leftBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3L));
-        // driverController.x().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2L));
-        // driverController.a().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition1));
-        // driverController.b().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition2R)); 
-        // driverController.rightBumper().whileTrue(DriveCommands.driveToPose(drive, () -> Constants.PoseConstants.scorePosition3R));
                 
 
         // Operator Controls
 
-        // Run intake rollers when LT is pressed
-
+        // Operator also controls intake rollers with LT, up in Driver Controls
 
         // Auto speed and angle when RT is held
         operatorController.rightTrigger().whileTrue(Commands.parallel(
@@ -267,41 +257,12 @@ public class RobotContainer {
         // must be used when intake is at upper hard limit
         operatorController.start().and(operatorController.back()).onTrue(intake.intakeResetCanCoder());
 
+        // Passing mode, RB does 45 deg hood and max shooter speed
         operatorController.rightBumper().whileTrue(Commands.parallel(
                         shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
                         hood.hoodToAngle(45).until(hood.hoodAtPositionSetpoint()),
                         kicker.runKicker(),
                         indexer.runIndexer()));
-
-        // Shooting setpoints
-        // Commented out while testing auto aim
-        //
-        // operatorController.rightBumper().whileTrue(
-        //         Commands.sequence(
-        //                 Commands.parallel(
-        //                         shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
-        //                         hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())),
-        //                 Commands.parallel(
-        //                         kicker.turnOnKicker(),
-        //                         indexer.turnOnIndexer())));
-
-        // operatorController.leftTrigger().whileTrue(
-        //         Commands.sequence(
-        //                 Commands.parallel(
-        //                         shooter.setShooterVelocityPosition2().until(shooter.shooterAtVelocitySetPoint()),
-        //                         hood.hoodToAnglePosition2().until(hood.hoodAtPositionSetpoint())),
-        //                 Commands.parallel(
-        //                         kicker.turnOnKicker(),
-        //                         indexer.turnOnIndexer())));
-
-        // operatorController.rightTrigger().whileTrue(
-        //         Commands.sequence(
-        //                 Commands.parallel(
-        //                         shooter.setShooterVelocityPosition3().until(shooter.shooterAtVelocitySetPoint()),
-        //                         hood.hoodToAnglePosition3().until(hood.hoodAtPositionSetpoint())),
-        //                 Commands.parallel(
-        //                         kicker.turnOnKicker(),
-        //                         indexer.turnOnIndexer())));
 
     }
 
