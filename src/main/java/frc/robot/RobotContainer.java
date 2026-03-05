@@ -138,12 +138,13 @@ public class RobotContainer {
                 indexer.pulseIndexer(),
                 kicker.turnOnKicker()
                 ), new WaitCommand(6.0)));
-        NamedCommands.registerCommand("AutoHooder", hood.setHoodAutoAngle(drive));
-        NamedCommands.registerCommand("AutoIndexer", indexer.turnOnIndexer());
-        NamedCommands.registerCommand("PulseIndexer", indexer.pulseIndexer());
-        NamedCommands.registerCommand("AutoKicker", kicker.turnOnKicker());
-        NamedCommands.registerCommand("IntakeRollersRun", intake.intakeRunRollers());
-        NamedCommands.registerCommand("IntakeRollersStop", intake.intakeStopRollers());
+        NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
+                shooter.setShooterAutoVelocity(drive),
+                hood.setHoodAutoAngle(drive),
+                indexer.pulseIndexer(),
+                kicker.turnOnKicker()
+                ));
+        
         
         
         

@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToHumanPlayer"
+            "pathName": "TrenchToHP"
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "AutoShooterSixSeconds"
+            "waitTime": 4.0
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "GetFromHuman"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShooterEndless"
           }
         }
       ]

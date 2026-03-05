@@ -11,34 +11,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoShooter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoHooder"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoKicker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PulseIndexer"
-                }
-              }
-            ]
+            "name": "AutoShooterSixSeconds"
           }
         }
       ]
