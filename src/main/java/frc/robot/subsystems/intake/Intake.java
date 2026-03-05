@@ -157,6 +157,7 @@ public class Intake extends SubsystemBase {
     // Toggle intake in and out, does not start rollers. Rollers are controlled
     // by both controllers LTs
     public Command toggleIntake(){
+       
         if (this.intakeIsExtended){
             // INTAKE IS EXTENDED
             // 1. Toggle the intake state
@@ -182,6 +183,13 @@ public class Intake extends SubsystemBase {
         }
     }
 
+    public Boolean isExtended(){
+        return this.intakeIO.getRotations().getRotations() > 0.25;
+    }
+
+        public Boolean isNotExtended(){
+        return this.intakeIO.getRotations().getRotations() <= 0.25;
+    }
 
     @Override
     public void periodic() {

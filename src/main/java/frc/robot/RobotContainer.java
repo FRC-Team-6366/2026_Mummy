@@ -191,7 +191,11 @@ public class RobotContainer {
         driverController.rightTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
         // Toggle intake when RB is pressed
-        driverController.rightBumper().debounce(0.1).onTrue(intake.toggleIntake());
+        // driverController.rightBumper().debounce(0.1).onTrue(intake.toggleIntake());
+
+
+         driverController.rightBumper().onTrue(intake.intakePivotAngleExtend());
+         driverController.leftBumper().onTrue(intake.intakePivotAngleRetract());
 
         // Run intake rollers when LT is pressed
         driverController.leftTrigger().or(operatorController.leftTrigger()).whileTrue(intake.intakeRunRollers());

@@ -170,7 +170,7 @@ public class DriveCommands {
     angleController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Create dummy pose at center of hub
-    Pose2d hubPose = new Pose2d(new Translation2d(3.254, 4.027), Rotation2d.fromDegrees(0));
+    Pose2d hubPose = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
 
     // Construct command
     return Commands.run(
