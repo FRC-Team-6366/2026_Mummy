@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HubToDepot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DepotPickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "DepotToShoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeStopRollers"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterSpinUp"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShooterEndless"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Get Fuel Then Shoot",
+  "choreoAuto": false
+}

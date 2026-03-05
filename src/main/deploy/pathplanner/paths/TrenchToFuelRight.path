@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7397004279600568,
-        "y": 0.6256633380884444
+        "x": 3.9941428571428563,
+        "y": 0.63375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9725962910128385,
-        "y": 0.9103138373751789
+        "x": 4.563443855716323,
+        "y": 0.5431793865905844
       },
-      "isLocked": false,
-      "linkedName": "HumanPlayerReload"
+      "isLocked": true,
+      "linkedName": "TrenchStartRight"
     },
     {
       "anchor": {
-        "x": 1.710099857346647,
-        "y": 1.9842225392296724
+        "x": 7.7,
+        "y": 0.78
       },
       "prevControl": {
-        "x": 1.4642653352353778,
-        "y": 1.5184308131241084
+        "x": 6.147360912981454,
+        "y": 0.5729814550641948
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "FuelPickupRight"
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -148.0
+    "velocity": 0,
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Starting Locations to Get Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -179.1185960034178
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

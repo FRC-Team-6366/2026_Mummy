@@ -5,34 +5,40 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "GoGetFuel"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "IntakeRollersRun"
+                  "pathName": "TrenchShotRight"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "GettingFuel"
+                  "name": "IntakeDeploy"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterSpinUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShooterSixSeconds"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Simple Shots",
   "choreoAuto": false
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.453095577746077,
-        "y": 0.5997860199714706
+        "x": 3.9941428571428563,
+        "y": 0.63375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.643584493016622,
-        "y": 0.6489241962478612
+        "x": 2.919532890688567,
+        "y": 0.63375
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TrenchStartRight"
     },
     {
       "anchor": {
-        "x": 1.7877318116975744,
-        "y": 1.4925534950071324
+        "x": 0.7397004279600568,
+        "y": 0.6256633380884444
       },
       "prevControl": {
-        "x": 2.805480881391218,
-        "y": 1.4051475296558695
+        "x": 2.331155492154065,
+        "y": 0.6256633380884444
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HumanPlayerShoot"
+      "linkedName": "OutpostReload"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -139.927109947649
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Starting Locations to Get Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -91.04162667600998
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 7.45
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.6839301801801803,
+        "y": 7.374966216216217
+      },
+      "isLocked": true,
+      "linkedName": "TrenchStartLeft"
+    },
+    {
+      "anchor": {
+        "x": 3.2447297297297304,
+        "y": 7.068547297297298
+      },
+      "prevControl": {
+        "x": 3.4694369369369373,
+        "y": 7.211542792792793
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 111.1247191460725
+  },
+  "reversed": false,
+  "folder": "Simple Shot Locations",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

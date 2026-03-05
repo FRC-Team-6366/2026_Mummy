@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.584251069900143,
-        "y": 1.013823109843081
+        "x": 3.459660714285714,
+        "y": 4.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.558373751783167,
-        "y": 2.17830242510699
+        "x": 3.3979391891891897,
+        "y": 5.015540540540541
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HubStartCenter"
     },
     {
       "anchor": {
-        "x": 7.4678031383737515,
-        "y": 5.7364336661911555
+        "x": 1.6132678571428567,
+        "y": 6.0109642857142855
       },
       "prevControl": {
-        "x": 7.480741797432239,
-        "y": 4.455506419400856
+        "x": 2.4071846846846854,
+        "y": 6.047150900900902
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "DepotPickup"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 88.26429541107161
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Starting Locations to Get Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 88.45184230102204
+    "rotation": 180.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

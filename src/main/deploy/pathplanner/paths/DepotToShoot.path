@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.453095577746077,
-        "y": 0.6386019971469341
+        "x": 0.74,
+        "y": 6.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.378485611291788,
-        "y": 0.6386019971469342
+        "x": 1.0770608108108108,
+        "y": 6.006295045045045
       },
       "isLocked": false,
-      "linkedName": "RightTrenchStart"
+      "linkedName": "DepotFinal"
     },
     {
       "anchor": {
-        "x": 0.7397004279600568,
-        "y": 0.6256633380884444
+        "x": 1.4164301801801806,
+        "y": 5.638592342342342
       },
       "prevControl": {
-        "x": 2.331155492154065,
-        "y": 0.6256633380884444
+        "x": 1.2632207207207213,
+        "y": 5.8632995495495495
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HumanPlayerReload"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.1185960034178
+    "rotation": 145.00797980144122
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Fuel Locations to Shot Locations",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

@@ -7,19 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TrenchToHP"
+            "pathName": "TrenchToOutpost"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 2.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GetFromHuman"
+            "pathName": "OutpostToShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterSpinUp"
           }
         },
         {
@@ -32,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Get Fuel Then Shoot",
   "choreoAuto": false
 }

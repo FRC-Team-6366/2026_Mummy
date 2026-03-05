@@ -26,6 +26,8 @@ import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOPhotonVision;
 
+import java.util.jar.Attributes.Name;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -53,10 +55,11 @@ public class RobotContainer {
     Indexer indexer;
     Kicker kicker;
     Hood hood;
-    int mode; //
+    int mode;
     Drive drive;
     Intake intake;
     Vision vision;
+
     LoggedDashboardChooser<Command> autoChooser;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -127,12 +130,14 @@ public class RobotContainer {
         this.intake = new Intake(new IntakeIOTalonFX());
         this.mode = 0;
 
-
+        NamedCommands.registerCommand("IntakeDeploy", intake.deployIntake());
+        NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
+        NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
         NamedCommands.registerCommand("ShooterSpinUp", Commands.race(
                 Commands.parallel(
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive)
-                ), new WaitCommand(0.5)
+                ), new WaitCommand(1.0)
         ));
         NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
                 Commands.parallel(
