@@ -35,6 +35,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -93,8 +95,7 @@ public class RobotContainer {
                                 Constants.VisionConstants.robotToCamera2),
                         new VisionIOPhotonVision(Constants.VisionConstants.camera3Name,
                                 Constants.VisionConstants.robotToCamera3));
-
-                break;
+                                break;
 
             case SIM:
                 // Sim robot, instantiate physics sim IO implementations
@@ -123,11 +124,27 @@ public class RobotContainer {
                 break;
         }
 
+        this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
+        this.indexer = new Indexer(new IndexerIOTalonFX());
+        this.kicker = new Kicker(new KickerIOTalonFX());
+        this.hood = new Hood(new HoodIOTalonFX());
+        this.intake = new Intake(new IntakeIOTalonFX());
+        this.mode = 0;
 
-        NamedCommands.registerCommand("AutoShooter", shooter.setShooterAutoVelocity(drive));
+
+        NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(Commands.parallel(
+                shooter.setShooterAutoVelocity(drive),
+                hood.setHoodAutoAngle(drive),
+                indexer.pulseIndexer(),
+                kicker.turnOnKicker()
+                ), new WaitCommand(6.0)));
         NamedCommands.registerCommand("AutoHooder", hood.setHoodAutoAngle(drive));
         NamedCommands.registerCommand("AutoIndexer", indexer.turnOnIndexer());
+        NamedCommands.registerCommand("PulseIndexer", indexer.pulseIndexer());
         NamedCommands.registerCommand("AutoKicker", kicker.turnOnKicker());
+        NamedCommands.registerCommand("IntakeRollersRun", intake.intakeRunRollers());
+        NamedCommands.registerCommand("IntakeRollersStop", intake.intakeStopRollers());
+        
         
         
         
@@ -150,12 +167,8 @@ public class RobotContainer {
         autoChooser.addOption(
                 "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-        this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
-        this.indexer = new Indexer(new IndexerIOTalonFX());
-        this.kicker = new Kicker(new KickerIOTalonFX());
-        this.hood = new Hood(new HoodIOTalonFX());
-        this.intake = new Intake(new IntakeIOTalonFX());
-        this.mode = 0;
+        
+        
 
         // Configure the trigger bindings
         configureBindings();
@@ -183,7 +196,7 @@ public class RobotContainer {
         shooter.setDefaultCommand(shooter.turnOffShooter());
         hood.setDefaultCommand(hood.retractHood());
         kicker.setDefaultCommand(kicker.turnOffKicker());
-        indexer.setDefaultCommand(indexer.turnOffIndexer());
+        // indexer.setDefaultCommand(indexer.turnOffIndexer());
         intake.setDefaultCommand(intake.intakeStopRollers());
 
         // Set the drivers movement for steering and driving on the driver joysticks
@@ -232,7 +245,7 @@ public class RobotContainer {
                         shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
                         hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()),
                         kicker.turnOnKicker(),
-                        indexer.turnOnIndexer()));
+                        indexer.pulseIndexer()));
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(

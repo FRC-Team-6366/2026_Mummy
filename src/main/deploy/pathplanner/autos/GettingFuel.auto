@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RightTrenchSimple"
+            "pathName": "GoGetFuel"
           }
         },
         {
@@ -17,25 +17,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooter"
+                  "name": "IntakeRollersRun"
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "AutoHooder"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoKicker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PulseIndexer"
+                  "pathName": "GettingFuel"
                 }
               }
             ]

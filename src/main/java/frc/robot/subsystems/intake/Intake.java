@@ -44,10 +44,11 @@ public class Intake extends SubsystemBase {
 
                     // Use power to start the IntakeIO Hardware motor
                     this.intakeIO.rollersRunVolts(this.power);
-                }).unless(
-                    () -> {
-                        return (this.intakeIO.getRotations().getRotations() < 0.2);
-                    }
+                }
+                // ).unless(
+                //     () -> {
+                //         return (this.intakeIO.getRotations().getRotations() < 0.2);
+                //     }
                 );
     }
 

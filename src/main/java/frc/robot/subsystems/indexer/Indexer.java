@@ -4,7 +4,9 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Indexer extends SubsystemBase {
     /**
@@ -65,6 +67,15 @@ public class Indexer extends SubsystemBase {
                 this.indexerIO.setIndexerPower(this.power);
                 // this.indexerIO.setIndexerWallPower(this.power);
             }
+        );
+    }
+
+    public Command pulseIndexer() {
+        return Commands.repeatingSequence(
+            Commands.runOnce(() -> this.indexerIO.setIndexerPower(1)),
+            new WaitCommand(0.25),
+            Commands.runOnce(() -> this.indexerIO.setIndexerPower(0.2)),
+            new WaitCommand(0.25)
         );
     }
 
