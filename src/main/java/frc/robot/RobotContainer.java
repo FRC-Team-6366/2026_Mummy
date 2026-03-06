@@ -227,7 +227,7 @@ public class RobotContainer {
                         drive,
                         () -> -driverController.getLeftY(),
                         () -> -driverController.getLeftX(),
-                        () -> new Rotation2d()));
+                        () -> Rotation2d.kZero));
 
         // Lock to Hub when RT is held
         driverController.leftTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
