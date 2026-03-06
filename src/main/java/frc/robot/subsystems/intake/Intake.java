@@ -129,35 +129,6 @@ public class Intake extends SubsystemBase {
         return this.intakePivotToAngle(this.angle);
     }
 
-    // Toggle intake in and out, does not start rollers. Rollers are controlled
-    // by both controllers LTs
-    public Command toggleIntake(){
-       
-        if (this.intakeIsExtended){
-            // INTAKE IS EXTENDED
-            // 1. Toggle the intake state
-            this.intakeIsExtended = false;
-
-            // 2. Retract and set brake mode
-            return Commands.sequence(
-                this.retractIntake().until(this.intakePivotAtPositionSetpoint()),
-                this.setBrakeMode(true)
-            );
-
-        } else {
-            // INTAKE IS RETRACTED
-            // 1. Toggle the intake state
-            this.intakeIsExtended = true;
-
-            // 2. Extend and set coast mode
-            return Commands.sequence(
-                this.deployIntake().until(this.intakePivotAtPositionSetpoint()),
-                this.setBrakeMode(false)
-            );
-            
-        }
-    }
-
     /**
      * Returns whether the Intake Pivot Motor is at its set point distance, given a
      * percent of tolerence
@@ -185,17 +156,18 @@ public class Intake extends SubsystemBase {
      * @return Command to either extend or retract the intake subsystem
      */
     public Command toggleIntakePivot() {
-        return this.runOnce(() -> {
-            if (this.intakeIO.getRotations().getRotations() < 0.25) {
-                this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
-                this.intakeIO.intakePivotToAngle(this.angle);
-                               this.intakeIO.setBrakeMode(false);
-            } else {
-                this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
-                this.intakeIO.intakePivotToAngle(this.angle);
-                this.intakeIO.setBrakeMode(true);
-            }
-        }
+        return this.runOnce(
+            () -> {
+                // Since this command needs to make a decision, we must handle
+                // the decision making inside of the lambda!
+                if (this.intakeIO.getRotations().getRotations() < 0.25) {
+                    this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
+                    this.intakeIO.intakePivotToAngle(this.angle);
+                } else {
+                    this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
+                    this.intakeIO.intakePivotToAngle(this.angle);
+                }
+            }  
         );
     }
 
