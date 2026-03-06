@@ -5,9 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain.Drive;
 import frc.robot.subsystems.driveTrain.DriveCommands;
 import frc.robot.subsystems.driveTrain.GyroIO;
@@ -60,7 +58,6 @@ public class RobotContainer {
     Intake intake;
     Vision vision;
     LoggedDashboardChooser<Command> autoChooser;
-    private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController driverController = new CommandXboxController(
