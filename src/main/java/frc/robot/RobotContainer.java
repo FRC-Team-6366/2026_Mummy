@@ -205,7 +205,7 @@ public class RobotContainer {
         // Default commands
         //
         // The below subsystems default to "off"
-        shooter.setDefaultCommand(shooter.turnOffShooter());
+        // shooter.setDefaultCommand(shooter.turnOffShooter());
         hood.setDefaultCommand(hood.retractHood());
         kicker.setDefaultCommand(kicker.stopKicker());
         indexer.setDefaultCommand(indexer.stopIndexer());
