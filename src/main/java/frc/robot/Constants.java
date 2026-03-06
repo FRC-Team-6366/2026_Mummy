@@ -168,6 +168,8 @@ public final class Constants {
     public static Pose2d scorePosition1 = new Pose2d(new Translation2d(1.67, 3.83), Rotation2d.fromDegrees(180));
     public static Pose2d scorePosition2R = new Pose2d(new Translation2d(0.885, 0.814), Rotation2d.fromDegrees(-142.4));
     public static Pose2d scorePosition3R = new Pose2d(new Translation2d(4.063, 0.771), Rotation2d.fromDegrees(-100.16));
+    public static Pose2d hubPoseBlue = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
+    public static Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180));
   }
 
   public static enum Mode {

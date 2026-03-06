@@ -56,6 +56,11 @@ public class Shooter extends SubsystemBase{
         shooterSpeedMap.put(1.596, 55.0);
         shooterSpeedMap.put(3.369, 58.0);
         shooterSpeedMap.put(4.004, 63.0);
+
+        shooterSpeedMap.put(1.01, 40.0);
+        shooterSpeedMap.put(1.596, 55.0);
+        shooterSpeedMap.put(3.369, 58.0);
+        shooterSpeedMap.put(4.004, 63.0);
     }
 
      /**
@@ -160,11 +165,6 @@ public class Shooter extends SubsystemBase{
     }
 
     public Command setShooterAutoVelocity(Drive drive){
-
-        // Create dummy pose at center of hub
-        Pose2d hubPoseBlue = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
-        Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180));
-
         // Construct command
         return Commands.run(
             () -> {
@@ -174,7 +174,7 @@ public class Shooter extends SubsystemBase{
                         && DriverStation.getAlliance().get() == Alliance.Red;
                 
                 // Select correct dummy pose
-                Pose2d hubPose = isFlipped ? hubPoseRed : hubPoseBlue;
+                Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
                 // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
                 Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
                 double hubToPoseX = hubToPose.getX();

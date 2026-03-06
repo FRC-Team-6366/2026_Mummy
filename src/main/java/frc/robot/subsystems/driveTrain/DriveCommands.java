@@ -169,10 +169,6 @@ public class DriveCommands {
             new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
     angleController.enableContinuousInput(-Math.PI, Math.PI);
 
-    // Create dummy pose at center of hub
-    Pose2d hubPoseBlue = new Pose2d(new Translation2d(4.539, 4.027), Rotation2d.fromDegrees(0));
-    Pose2d hubPoseRed = new Pose2d(new Translation2d(11.901, 4.027), Rotation2d.fromDegrees(180)); // 180 may need to be 0 if robot is aiming wrong way on red alliance
-
     // Construct command
     return Commands.run(
       () -> {
@@ -182,7 +178,7 @@ public class DriveCommands {
                 && DriverStation.getAlliance().get() == Alliance.Red;
         
         // Select correct dummy pose
-        Pose2d hubPose = isFlipped ? hubPoseRed : hubPoseBlue;
+        Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
 
         // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
         Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
