@@ -173,21 +173,25 @@ public class DriveCommands {
     return Commands.run(
       () -> {
         // Check for alliance side
-        boolean isFlipped =
-            DriverStation.getAlliance().isPresent()
-                && DriverStation.getAlliance().get() == Alliance.Red;
+        // boolean isFlipped =
+        //     DriverStation.getAlliance().isPresent()
+        //         && DriverStation.getAlliance().get() == Alliance.Red;
+
+        boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
         
         // Select correct dummy pose
         Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
 
         // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
         Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+        // Pose2d hubToPose = hubPose.relativeTo(drive.getPose());
         double hubToPoseX = hubToPose.getX();
         double hubToPoseY = hubToPose.getY();
 
         // Use Math.atan2 to get the desired heading angle in radians
         // Order must be atan2(Y, X)
         double desiredAngleRad = Math.atan2(hubToPoseY, hubToPoseX);
+        desiredAngleRad = isFlipped ? desiredAngleRad + Math.PI : desiredAngleRad;
         
         // Adjust desired angle to account for shooter offset
         desiredAngleRad -= Constants.ShooterConstants.autoAimCompAngleRad;

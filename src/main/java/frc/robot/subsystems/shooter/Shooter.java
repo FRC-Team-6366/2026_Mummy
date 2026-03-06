@@ -167,9 +167,11 @@ public class Shooter extends SubsystemBase{
         return Commands.run(
             () -> {
                 // Check for alliance side
-                boolean isFlipped =
-                    DriverStation.getAlliance().isPresent()
-                        && DriverStation.getAlliance().get() == Alliance.Red;
+                // boolean isFlipped =
+                //     DriverStation.getAlliance().isPresent()
+                //         && DriverStation.getAlliance().get() == Alliance.Red;
+
+                boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
                 
                 // Select correct dummy pose
                 Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
