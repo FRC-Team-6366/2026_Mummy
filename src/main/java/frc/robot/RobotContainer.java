@@ -199,9 +199,12 @@ public class RobotContainer {
         // Switch to X pattern when X button is pressed
         driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
+        driverController.rightBumper().debounce(0.1).whileTrue(this.intake.toggleIntakePivot());
+
         // driverController.rightBumper().debounce(0.1).and(this.hood.hoodAtPositionSetpoint())
 
-        driverController.rightBumper().debounce(0.1).whileTrue(this.intake.toggleIntakePivot());
+        // driverController.rightBumper().debounce(0.1).whileTrue(this.intake.toggleIntakePivot());
+        
         
         // Shooting setpoints
         // Commented out while testing auto aim
