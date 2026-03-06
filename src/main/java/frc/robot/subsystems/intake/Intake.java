@@ -162,9 +162,11 @@ public class Intake extends SubsystemBase {
                 if (this.intakeIO.getRotations().getRotations() < 0.25) {
                     this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
                     this.intakeIO.intakePivotToAngle(this.angle);
+                    this.intakeIO.setBrakeMode(false);
                 } else {
                     this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
                     this.intakeIO.intakePivotToAngle(this.angle);
+                                       this.intakeIO.setBrakeMode(true);
                 }
             }  
         );
