@@ -26,12 +26,6 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterSpinUp"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoShooterSixSeconds"
           }
         },

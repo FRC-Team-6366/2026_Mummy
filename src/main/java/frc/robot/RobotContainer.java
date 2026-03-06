@@ -205,7 +205,7 @@ public class RobotContainer {
         // shooter.setDefaultCommand(shooter.turnOffShooter());
         hood.setDefaultCommand(hood.retractHood());
         kicker.setDefaultCommand(kicker.stopKicker());
-        indexer.setDefaultCommand(indexer.stopIndexer());
+        //indexer.setDefaultCommand(indexer.stopIndexer());
         intake.setDefaultCommand(intake.intakeStopRollers());
 
         // Set the drivers movement for steering and driving on the driver joysticks
