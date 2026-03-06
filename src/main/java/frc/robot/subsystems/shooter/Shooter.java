@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase{
      *  increment and decrement commmands in the shooter subsystem.
      */
     private double velocityRPS = 0;
+    double distanceToHub = 0;
     ShooterIO shooterIO;
 
     /**
@@ -180,8 +181,8 @@ public class Shooter extends SubsystemBase{
                 double hubToPoseX = hubToPose.getX();
                 double hubToPoseY = hubToPose.getY();
                 // Find the hypotenuse of the triangle
-                double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
-
+                 this.distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+                
                 this.velocityRPS = shooterSpeedMap.get(distanceToHub);
                 this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
 
@@ -206,7 +207,8 @@ public class Shooter extends SubsystemBase{
         // and then write values to the Log
         this.shooterIO.updateInputs(inputs);
         Logger.processInputs("ShooterSubsystem", inputs);
-        Logger.recordOutput("HoodSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
+        Logger.recordOutput("ShooterSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
+        Logger.recordOutput("ShooterSubsystem/DistanceToHub", this.distanceToHub);
     }
 
     @Override
