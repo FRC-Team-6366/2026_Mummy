@@ -188,13 +188,13 @@ public class RobotContainer {
         // Driver Controls
 
         // Lock to Hub when RT is held
-        driverController.rightTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
+        driverController.leftTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
         // Toggle intake when RB is pressed
         // driverController.rightBumper().debounce(0.1).onTrue(intake.toggleIntake());
 
         // Run intake rollers when LT is pressed
-        driverController.leftTrigger().whileTrue(intake.intakeRunRollers());
+        driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
         // Switch to X pattern when X button is pressed
         driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
