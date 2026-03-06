@@ -1,8 +1,11 @@
 package frc.robot.subsystems.indexer;
 
+import java.time.Instant;
+
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -88,6 +91,23 @@ public class Indexer extends SubsystemBase {
         );
     }
 
+    public Command pulseIndexer2() {
+        return this.run(
+            () -> {
+                long endTime = System.currentTimeMillis() + 1000;
+                this.indexerIO.setIndexerPower(1.0);
+                while (System.currentTimeMillis() < endTime){
+                    // killing time...
+                }
+                this.indexerIO.setIndexerPower(0);
+                endTime = System.currentTimeMillis() + 500;
+                while(System.currentTimeMillis()< endTime){
+                    // killing time...
+                }
+
+            }
+        );
+    }
     /**
      * Increases the Indexer's subsystem's output by 0.2 to a maximum power
      * of 1.
