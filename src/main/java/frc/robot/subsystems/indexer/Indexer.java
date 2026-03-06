@@ -79,7 +79,7 @@ public class Indexer extends SubsystemBase {
         return Commands.repeatingSequence(
             Commands.runOnce(() -> this.indexerIO.setIndexerPower(1)),
             new WaitCommand(0.25),
-            Commands.runOnce(() -> this.indexerIO.setIndexerPower(0.5)),
+            Commands.run(() -> this.indexerIO.setIndexerPower(0.5)),
             new WaitCommand(0.25)
         );
     }
