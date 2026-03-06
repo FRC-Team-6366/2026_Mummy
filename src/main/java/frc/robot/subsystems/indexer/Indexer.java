@@ -77,10 +77,14 @@ public class Indexer extends SubsystemBase {
      */
     public Command pulseIndexer() {
         return Commands.repeatingSequence(
-            Commands.runOnce(() -> this.indexerIO.setIndexerPower(1)),
-            new WaitCommand(0.25),
-            Commands.run(() -> this.indexerIO.setIndexerPower(0.5)),
-            new WaitCommand(0.25)
+            Commands.race(
+                Commands.run(() -> this.indexerIO.setIndexerPower(1.0)),
+                new WaitCommand(1)
+            ),
+            Commands.race(
+                Commands.runOnce(() -> this.indexerIO.setIndexerPower(0.0)),
+                new WaitCommand(0.5)
+            )
         );
     }
 
