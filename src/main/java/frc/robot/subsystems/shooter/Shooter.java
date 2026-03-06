@@ -183,7 +183,8 @@ public class Shooter extends SubsystemBase{
                 double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
 
                 this.velocityRPS = shooterSpeedMap.get(distanceToHub);
-                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+                // this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
 
             }
         );
