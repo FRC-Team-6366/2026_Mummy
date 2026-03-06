@@ -323,6 +323,12 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        // return Autos.exampleAuto(m_exampleSubsystem);
+        return Commands.sequence(
+                Commands.print("Starting autonomous :: " + autoChooser.toString()),
+                autoChooser.get(),
+                Commands.print("Ending Autonomous")
+        );
+        // return autoChooser.get();
     }
 }

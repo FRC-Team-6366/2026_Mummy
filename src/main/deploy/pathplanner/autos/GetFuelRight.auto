@@ -45,6 +45,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Collect Fuel",
+  "folder": null,
   "choreoAuto": false
 }
