@@ -204,6 +204,7 @@ public class Shooter extends SubsystemBase{
         // and then write values to the Log
         this.shooterIO.updateInputs(inputs);
         Logger.processInputs("ShooterSubsystem", inputs);
+        Logger.recordOutput("HoodSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
     }
 
     @Override

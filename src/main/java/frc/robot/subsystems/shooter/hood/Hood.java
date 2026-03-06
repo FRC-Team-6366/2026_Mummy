@@ -154,6 +154,7 @@ public class Hood extends SubsystemBase {
     public void periodic() {
         this.hoodIO.updateInputs(inputs);
         Logger.processInputs("HoodSubsystem", inputs);
+        Logger.recordOutput("HoodSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
     }
 
     @Override
