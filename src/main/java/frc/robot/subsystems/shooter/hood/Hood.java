@@ -6,8 +6,6 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -31,7 +29,7 @@ public class Hood extends SubsystemBase {
         
         // Interpolation map to calculate hood angle for any given distance
         // Starting with values from three set points
-        hoodAngleMap.put(1.01, 0.0);        
+        hoodAngleMap.put(1.01, 0.0);
         hoodAngleMap.put(1.596, 22.0);
         hoodAngleMap.put(3.369, 25.17);
         hoodAngleMap.put(4.004, 36.3);

@@ -5,8 +5,6 @@ import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -183,8 +181,7 @@ public class Shooter extends SubsystemBase{
                 double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
 
                 this.velocityRPS = shooterSpeedMap.get(distanceToHub);
-                // this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
-                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
+                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
 
             }
         );
