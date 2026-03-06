@@ -31,9 +31,11 @@ import frc.robot.subsystems.vision.VisionIOPhotonVision;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -121,6 +123,36 @@ public class RobotContainer {
                         });
                 break;
         }
+
+                NamedCommands.registerCommand("IntakeDeploy", intake.deployIntake());
+        NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
+        NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
+        NamedCommands.registerCommand("ShooterSpinUp", 
+                Commands.parallel(
+                        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+                        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())
+                )
+        );
+        NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
+                Commands.parallel(
+                        shooter.setShooterAutoVelocity(drive),
+                        hood.setHoodAutoAngle(drive),
+                        indexer.pulseIndexer(),
+                        kicker.runKicker()
+                ), new WaitCommand(6.0)
+        ));
+        NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
+                shooter.setShooterAutoVelocity(drive),
+                hood.setHoodAutoAngle(drive),
+                indexer.pulseIndexer(),
+                kicker.runKicker()
+        ));
+        NamedCommands.registerCommand("ShooterStop",  Commands.parallel(
+                shooter.turnOffShooter(),
+                hood.retractHood(),
+                indexer.stopIndexer(),
+                kicker.stopKicker()
+        ));
 
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
