@@ -48,7 +48,8 @@ public class IntakeIOTalonFX implements IntakeIO {
     PositionVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
 
-    double intakePivotMaxPosition = 0.385;
+    double intakePivotMaxPosition = 0.5;
+    double setPointTolerancePercent = 5;
     double setPointTolerance;
     double positionSetPointLow;
     double positionSetPointHigh;
@@ -129,7 +130,10 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         voltageRequest = new VoltageOut(0);
         positionVoltageRequest = new PositionVoltage(0);
+
+        this.setPointTolerance = intakePivotMaxPosition * this.setPointTolerancePercent;
     }
+    
 
     // Resets cancoder to 0.12 rotations, must be used when intake is at 
     // upper hard limit

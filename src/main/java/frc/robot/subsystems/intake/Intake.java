@@ -61,28 +61,28 @@ public class Intake extends SubsystemBase {
      * 
      * @return Command to increment or increase the intakes pivot position.
      */
-    public Command intakePivotIncrements() {
-        return this.runOnce(
-                () -> {
-                    this.angle += 1;
-                    this.angle = MathUtil.clamp(this.angle, 0.0, 0.385);
-                    this.intakeIO.intakePivotToAngle(this.angle);
-                });
-    }
+    // public Command intakePivotIncrements() {
+    //     return this.runOnce(
+    //             () -> {
+    //                 this.angle += 1;
+    //                 this.angle = MathUtil.clamp(this.angle, 0.0, 0.385);
+    //                 this.intakeIO.intakePivotToAngle(this.angle);
+    //             });
+    // }
 
     /**
      * For testing purposes of decrementing the position of the intake down.
      * 
      * @return Command to decrement or decrease the intakes pivot position.
      */
-    public Command intakePivotDecrements() {
-        return this.runOnce(
-                () -> {
-                    this.angle -= 1;
-                    this.angle = MathUtil.clamp(this.angle, 0.0, 0.385);
-                    this.intakeIO.intakePivotToAngle(this.angle);
-                });
-    }
+    // public Command intakePivotDecrements() {
+    //     return this.runOnce(
+    //             () -> {
+    //                 this.angle -= 1;
+    //                 this.angle = MathUtil.clamp(this.angle, 0.0, 0.385);
+    //                 this.intakeIO.intakePivotToAngle(this.angle);
+    //             });
+    // }
 
     /**
      * Sets intake pivot motor to a certain angle based on what we put in to the
@@ -92,10 +92,10 @@ public class Intake extends SubsystemBase {
      * @return Command to set the Intake Pivot Motor at angle for shooting
      */
     public Command intakePivotToAngle(double angle) {
-       Logger.recordOutput("Pivot/Angle", angle);
         return this.run(
                 () -> {
                     this.angle = angle;
+                    Logger.recordOutput("Pivot/Angle", this.angle);
                     this.intakeIO.intakePivotToAngle(this.angle);
                 });
                 
@@ -110,8 +110,7 @@ public class Intake extends SubsystemBase {
      * @return Command to set Intake Pivot Motor to starting position
      */
     public Command retractIntake() {
-        this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
-        return this.intakePivotToAngle(this.angle);
+        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotRetractAngleDegrees);
     }
 
     /**
@@ -124,8 +123,7 @@ public class Intake extends SubsystemBase {
      * @return Command to set Intake Pivot Motor for close shooting
      */
     public Command deployIntake() {
-        this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
-        return this.intakePivotToAngle(this.angle);
+        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees);
     }
 
     /**
