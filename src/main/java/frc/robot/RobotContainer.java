@@ -265,7 +265,7 @@ public class RobotContainer {
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive),
                         kicker.runKicker(),
-                        indexer.pulseIndexer()));
+                        indexer.runIndexer()));
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
