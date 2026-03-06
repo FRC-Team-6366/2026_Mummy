@@ -129,7 +129,7 @@ public class RobotContainer {
         this.intake = new Intake(new IntakeIOTalonFX());
         this.mode = 0;
 
-                NamedCommands.registerCommand("IntakeDeploy", intake.deployIntake());
+                NamedCommands.registerCommand("IntakeDeploy", intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
         NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
         NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
         NamedCommands.registerCommand("ShooterSpinUp", 
