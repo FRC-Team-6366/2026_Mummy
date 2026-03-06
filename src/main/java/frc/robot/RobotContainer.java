@@ -297,14 +297,16 @@ public class RobotContainer {
         // Shooting setpoints
         // Commented out while testing auto aim
         //
-        // operatorController.rightBumper().whileTrue(
-        //         Commands.sequence(
-        //                 Commands.parallel(
-        //                         shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
-        //                         hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())),
-        //                 Commands.parallel(
-        //                         kicker.turnOnKicker(),
-        //                         indexer.turnOnIndexer())));
+        operatorController.a().whileTrue(
+                Commands.sequence(
+                        Commands.parallel(
+                                shooter.setShooterVelocityPosition1().until(shooter.shooterAtVelocitySetPoint()),
+                                hood.hoodToAnglePosition1().until(hood.hoodAtPositionSetpoint())),
+                        Commands.parallel(
+                                shooter.setShooterVelocityPosition1(),
+                                hood.hoodToAnglePosition1(),
+                                kicker.runKicker(),
+                                indexer.runIndexer())));
 
         // operatorController.leftTrigger().whileTrue(
         //         Commands.sequence(
