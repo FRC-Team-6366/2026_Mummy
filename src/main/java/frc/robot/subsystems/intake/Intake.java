@@ -125,7 +125,8 @@ public class Intake extends SubsystemBase {
      * @return Command to set Intake Pivot Motor for close shooting
      */
     public Command deployIntake() {
-        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees);
+        this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
+        return this.intakePivotToAngle(this.angle);
     }
 
     // Toggle intake in and out, does not start rollers. Rollers are controlled
@@ -176,6 +177,24 @@ public class Intake extends SubsystemBase {
 
     public Boolean isNotExtended(){
         return this.intakeIO.getRotations().getRotations() <= 0.25;
+    }
+
+    /**
+     * Toggle the Intake Pivot out and in. This uses the getRotations() of the subsystem
+     * to determine if it is currently retracted or extended.
+     * @return Command to either extend or retract the intake subsystem
+     */
+    public Command toggleIntakePivot() {
+        return this.runOnce(() -> {
+            if (this.intakeIO.getRotations().getRotations() < 0.25) {
+                this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
+                this.intakePivotToAngle(this.angle);
+            } else {
+                this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
+                this.intakePivotToAngle(this.angle);
+            }
+        }
+        );
     }
 
     @Override
