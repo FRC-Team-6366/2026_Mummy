@@ -124,6 +124,13 @@ public class RobotContainer {
                 break;
         }
 
+                this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
+        this.indexer = new Indexer(new IndexerIOTalonFX());
+        this.kicker = new Kicker(new KickerIOTalonFX());
+        this.hood = new Hood(new HoodIOTalonFX());
+        this.intake = new Intake(new IntakeIOTalonFX());
+        this.mode = 0;
+
                 NamedCommands.registerCommand("IntakeDeploy", intake.deployIntake());
         NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
         NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
@@ -173,12 +180,7 @@ public class RobotContainer {
         autoChooser.addOption(
                 "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-        this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
-        this.indexer = new Indexer(new IndexerIOTalonFX());
-        this.kicker = new Kicker(new KickerIOTalonFX());
-        this.hood = new Hood(new HoodIOTalonFX());
-        this.intake = new Intake(new IntakeIOTalonFX());
-        this.mode = 0;
+
 
         // Configure the trigger bindings
         configureBindings();
