@@ -219,6 +219,16 @@ public class RobotContainer {
         
         // Driver Controls
 
+         // Lock to 0° when A button is held
+        driverController
+                .a()
+                .whileTrue(
+                        DriveCommands.joystickDriveAtAngle(
+                        drive,
+                        () -> -driverController.getLeftY(),
+                        () -> -driverController.getLeftX(),
+                        () -> new Rotation2d()));
+
         // Lock to Hub when RT is held
         driverController.leftTrigger().whileTrue(DriveCommands.joystickDriveAutoAim(drive, () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
@@ -278,15 +288,7 @@ public class RobotContainer {
                         intake.intakeStopRollers()
                 ));
 
-        // Lock to 0° when A button is held
-        driverController
-                .a()
-                .whileTrue(
-                        DriveCommands.joystickDriveAtAngle(
-                        drive,
-                        () -> -driverController.getLeftY(),
-                        () -> -driverController.getLeftX(),
-                        () -> new Rotation2d()));
+       
 
         // Resets cancoder to 0.12 rotations when start and back are pressed together,
         // must be used when intake is at upper hard limit
