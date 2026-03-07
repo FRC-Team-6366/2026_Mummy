@@ -99,7 +99,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
 
         intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
-        // intakePivotCANcoder.setPosition(0.12);
+        intakePivotCANcoder.setPosition(0.12);
 
         iPCANcfg = new CANcoderConfiguration();
         iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
