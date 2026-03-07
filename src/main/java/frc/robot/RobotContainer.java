@@ -313,7 +313,12 @@ public class RobotContainer {
                 shooter.setShooterVelocityPosition3(),
                 hood.hoodToAngle(45),
                 kicker.runKicker(),
-                indexer.runIndexer()));
+                 Commands.repeatingSequence(Commands.race(
+                                indexer.runIndexer(),
+                                new WaitCommand(0.5)),
+                                Commands.race(
+                                        indexer.stopIndexer(),
+                                        new WaitCommand(0.2)))));
 
         // Auto speed and angle when RT is held
         operatorController.rightTrigger().whileTrue(
@@ -321,15 +326,15 @@ public class RobotContainer {
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive),
                         kicker.runKicker(),
-                                indexer.runIndexer()
-                               ));
+                        Commands.repeatingSequence(Commands.race(
+                        indexer.runIndexer(),
+                        new WaitCommand(0.5)),
+                        Commands.race(
+                        indexer.stopIndexer(),
+                        new WaitCommand(0.2))))
+                               );
 
-                                //                 Commands.repeatingSequence(Commands.race(
-                                // indexer.runIndexer(),
-                                // new WaitCommand(0.5)),
-                                // Commands.race(
-                                //         indexer.stopIndexer(),
-                                //         new WaitCommand(0.2))))
+                                               
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
