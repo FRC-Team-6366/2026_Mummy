@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.units.measure.Voltage; //  Voltage
 import frc.robot.Constants;
@@ -34,6 +35,7 @@ public class IndexerIOTalonFX implements IndexerIO{
     public IndexerIOTalonFX(){
         indexMotor= new TalonFX(Constants.IndexerConstants.indexerMotorId); //16
         TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
+        indMotorconfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
         indexMotor.getConfigurator().apply(indMotorconfiguration);
 
