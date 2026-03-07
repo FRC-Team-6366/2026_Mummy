@@ -103,6 +103,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         iPCANcfg = new CANcoderConfiguration();
         iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+        iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
         intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
         
 
