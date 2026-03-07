@@ -325,12 +325,15 @@ public class RobotContainer {
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive),
                         kicker.runKicker(),
-                        Commands.repeatingSequence(Commands.race(
-                                indexer.runIndexer(),
-                                new WaitCommand(0.5)),
-                                Commands.race(
-                                        indexer.stopIndexer(),
-                                        new WaitCommand(0.2)))));
+                                indexer.runIndexer()
+                               ));
+
+                                //                 Commands.repeatingSequence(Commands.race(
+                                // indexer.runIndexer(),
+                                // new WaitCommand(0.5)),
+                                // Commands.race(
+                                //         indexer.stopIndexer(),
+                                //         new WaitCommand(0.2))))
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
@@ -359,12 +362,8 @@ public class RobotContainer {
                                 shooter.setShooterVelocityPosition1(),
                                 hood.hoodToAnglePosition1(),
                                 kicker.runKicker(),
-                                Commands.repeatingSequence(Commands.race(
-                                        indexer.runIndexer(),
-                                        new WaitCommand(0.5)),
-                                        Commands.race(
-                                                indexer.stopIndexer(),
-                                                new WaitCommand(0.2))))));
+                                
+                                        indexer.runIndexer())));
 
         operatorController.x().whileTrue(
                 Commands.repeatingSequence(
