@@ -159,6 +159,7 @@ public class RobotContainer {
 
                 NamedCommands.registerCommand("IntakeDeploy",
                                 intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
+                NamedCommands.registerCommand("StopWithX", Commands.run(drive::stopWithX, drive));
                 NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
                 NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
                 NamedCommands.registerCommand("ShooterSpinUp",
