@@ -134,55 +134,68 @@ public class RobotContainer {
         this.intake = new Intake(new IntakeIOTalonFX());
         this.mode = 0;
 
-        NamedCommands.registerCommand("IntakeDeploy",
-                intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
-        NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
-        NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
-        NamedCommands.registerCommand("ShooterSpinUp",
-                Commands.parallel(
-                        shooter.setShooterAutoVelocity(drive)
-                                .until(shooter.shooterAtVelocitySetPoint()),
-                        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())));
-        NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
-                Commands.parallel(
-                        shooter.setShooterAutoVelocity(drive),
-                        hood.setHoodAutoAngle(drive),
-                        indexer.runIndexer(),
-                        kicker.runKicker()),
-                new WaitCommand(6.0)));
-        NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
-                shooter.setShooterAutoVelocity(drive),
-                hood.setHoodAutoAngle(drive),
-                indexer.runIndexer(),
-                kicker.runKicker()));
-        NamedCommands.registerCommand("ShooterStop", Commands.parallel(
-                shooter.turnOffShooter(),
-                hood.retractHood(),
-                indexer.stopIndexer(),
-                kicker.stopKicker()));
+                NamedCommands.registerCommand("IntakeDeploy",
+                                intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
+                NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
+                NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
+                NamedCommands.registerCommand("ShooterSpinUp",
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive)
+                                                                .until(shooter.shooterAtVelocitySetPoint()),
+                                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())));
+                NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive),
+                                                hood.setHoodAutoAngle(drive),
+                                                Commands.repeatingSequence(Commands.race(
+                                                                indexer.runIndexer(),
+                                                                new WaitCommand(0.5)),
+                                                                Commands.race(
+                                                                                indexer.stopIndexer(),
+                                                                                new WaitCommand(0.2))),
+                                                kicker.runKicker()),
+                                new WaitCommand(6.0)));
+                NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
+                                shooter.setShooterAutoVelocity(drive),
+                                hood.setHoodAutoAngle(drive),
+                                Commands.repeatingSequence(Commands.race(
+                                                indexer.runIndexer(),
+                                                new WaitCommand(0.5)),
+                                                Commands.race(
+                                                                indexer.stopIndexer(),
+                                                                new WaitCommand(0.2))),
+                                kicker.runKicker()));
+                NamedCommands.registerCommand("ShooterStop", Commands.parallel(
+                                shooter.turnOffShooter(),
+                                hood.retractHood(),
+                                indexer.stopIndexer(),
+                                kicker.stopKicker()));
 
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
                 // Set up SysId routines
                 //
-                //Commented out to clean up autochooser
+                // Commented out to clean up autochooser
                 //
                 // autoChooser.addOption(
-                //                 "Drive Wheel Radius Characterization",
-                //                 DriveCommands.wheelRadiusCharacterization(drive));
+                // "Drive Wheel Radius Characterization",
+                // DriveCommands.wheelRadiusCharacterization(drive));
                 // autoChooser.addOption(
-                //                 "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
+                // "Drive Simple FF Characterization",
+                // DriveCommands.feedforwardCharacterization(drive));
                 // autoChooser.addOption(
-                //                 "Drive SysId (Quasistatic Forward)",
-                //                 drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+                // "Drive SysId (Quasistatic Forward)",
+                // drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
                 // autoChooser.addOption(
-                //                 "Drive SysId (Quasistatic Reverse)",
-                //                 drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+                // "Drive SysId (Quasistatic Reverse)",
+                // drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
                 // autoChooser.addOption(
-                //                 "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+                // "Drive SysId (Dynamic Forward)",
+                // drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
                 // autoChooser.addOption(
-                //                 "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+                // "Drive SysId (Dynamic Reverse)",
+                // drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
         // Configure the trigger bindings
         configureBindings();
@@ -204,14 +217,14 @@ public class RobotContainer {
      */
     private void configureBindings() {
 
-        // Default commands
-        //
-        // The below subsystems default to "off"
-        // shooter.setDefaultCommand(shooter.turnOffShooter());
-        hood.setDefaultCommand(hood.retractHood());
-        kicker.setDefaultCommand(kicker.stopKicker());
-        indexer.setDefaultCommand(indexer.stopIndexer());
-        intake.setDefaultCommand(intake.intakeStopRollers());
+                // Default commands
+                //
+                // The below subsystems default to "off"
+                // shooter.setDefaultCommand(shooter.turnOffShooter());
+                hood.setDefaultCommand(hood.retractHood());
+                kicker.setDefaultCommand(kicker.stopKicker());
+                indexer.setDefaultCommand(indexer.stopIndexer());
+                //intake.setDefaultCommand(intake.intakeStopRollers());
 
         // Set the drivers movement for steering and driving on the driver joysticks
         drive.setDefaultCommand(
