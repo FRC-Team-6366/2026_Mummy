@@ -13,6 +13,13 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.driveTrain.Drive;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.kicker.Kicker;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.hood.Hood;
+import frc.robot.subsystems.vision.Vision;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -23,6 +30,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends LoggedRobot {
 
   private Command m_autonomousCommand;
+    Shooter shooter;
+    Indexer indexer;
+    Kicker kicker;
+    Hood hood;
+    int mode; //
+    Drive drive;
+    Intake intake;
+    Vision vision;
+
 
   private final RobotContainer m_robotContainer;
 
@@ -121,7 +137,11 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+       hood.setDefaultCommand(hood.retractHood());
+                kicker.setDefaultCommand(kicker.stopKicker());
+                indexer.setDefaultCommand(indexer.stopIndexer());
+  }
 
   @Override
   public void testInit() {
