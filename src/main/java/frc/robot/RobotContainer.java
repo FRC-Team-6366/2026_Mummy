@@ -25,6 +25,7 @@ import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
+import frc.robot.subsystems.shooter.ShooterIOTalonFXSim;
 import frc.robot.subsystems.shooter.hood.Hood;
 import frc.robot.subsystems.shooter.hood.HoodIOSim;
 import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
@@ -130,7 +131,7 @@ public class RobotContainer {
                         Constants.VisionConstants.camera3Name,
                         Constants.VisionConstants.robotToCamera3, drive::getPose)
                     );
-                this.shooter = new Shooter(new ShooterIOSim());
+                this.shooter = new Shooter(new ShooterIOTalonFXSim());
                 this.hood = new Hood(new HoodIOSim());
                 this.indexer = new Indexer(new IndexerIOSim());
                 this.intake = new Intake(new IntakeIOSim());
@@ -158,6 +159,7 @@ public class RobotContainer {
 
                 NamedCommands.registerCommand("IntakeDeploy",
                                 intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
+                NamedCommands.registerCommand("StopWithX", Commands.run(drive::stopWithX, drive));
                 NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
                 NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
                 NamedCommands.registerCommand("IntakeRetract", intake.retractIntake().until(intake.intakePivotAtPositionSetpoint()));
@@ -247,6 +249,7 @@ public class RobotContainer {
                 // shooter.setDefaultCommand(shooter.turnOffShooter());
                 // hood.setDefaultCommand(hood.retractHood());
                 // kicker.setDefaultCommand(kicker.stopKicker());
+
                 // indexer.setDefaultCommand(indexer.stopIndexer());
                 //intake.setDefaultCommand(intake.intakeStopRollers());
 
@@ -312,12 +315,7 @@ public class RobotContainer {
                 shooter.setShooterVelocityPosition3(),
                 hood.hoodToAngle(45),
                 kicker.runKicker(),
-                Commands.repeatingSequence(Commands.race(
-                        indexer.runIndexer(),
-                        new WaitCommand(0.5)),
-                        Commands.race(
-                                indexer.stopIndexer(),
-                                new WaitCommand(0.2)))));
+                indexer.runIndexer()));
 
         // Auto speed and angle when RT is held
         operatorController.rightTrigger().whileTrue(
@@ -325,12 +323,15 @@ public class RobotContainer {
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive),
                         kicker.runKicker(),
-                        Commands.repeatingSequence(Commands.race(
-                                indexer.runIndexer(),
-                                new WaitCommand(0.5)),
-                                Commands.race(
-                                        indexer.stopIndexer(),
-                                        new WaitCommand(0.2)))));
+                                indexer.runIndexer()
+                               ));
+
+                                //                 Commands.repeatingSequence(Commands.race(
+                                // indexer.runIndexer(),
+                                // new WaitCommand(0.5)),
+                                // Commands.race(
+                                //         indexer.stopIndexer(),
+                                //         new WaitCommand(0.2))))
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
@@ -359,12 +360,8 @@ public class RobotContainer {
                                 shooter.setShooterVelocityPosition1(),
                                 hood.hoodToAnglePosition1(),
                                 kicker.runKicker(),
-                                Commands.repeatingSequence(Commands.race(
-                                        indexer.runIndexer(),
-                                        new WaitCommand(0.5)),
-                                        Commands.race(
-                                                indexer.stopIndexer(),
-                                                new WaitCommand(0.2))))));
+                                
+                                        indexer.runIndexer())));
 
         operatorController.x().whileTrue(
                 Commands.repeatingSequence(
