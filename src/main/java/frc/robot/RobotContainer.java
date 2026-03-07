@@ -331,7 +331,7 @@ public class RobotContainer {
                         new WaitCommand(1)),
                         Commands.race(
                         indexer.stopIndexer(),
-                        new WaitCommand(1))))
+                        new WaitCommand(0.5))))
                                );
 
                                                
@@ -375,12 +375,12 @@ public class RobotContainer {
                                 intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees),
                                 new WaitCommand(1))));
 
-        operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
-        indexer.runIndexer(),
-        new WaitCommand(0.5)),
-        Commands.race(
-        indexer.stopIndexer(),
-        new WaitCommand(0.2))));
+        // operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
+        // indexer.runIndexer(),
+        // new WaitCommand(0.5)),
+        // Commands.race(
+        // indexer.stopIndexer(),
+        // new WaitCommand(0.2))));
 
         // operatorController.leftTrigger().whileTrue(
         // Commands.sequence(
