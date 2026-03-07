@@ -206,7 +206,7 @@ public class RobotContainer {
         // shooter.setDefaultCommand(shooter.turnOffShooter());
         hood.setDefaultCommand(hood.retractHood());
         kicker.setDefaultCommand(kicker.stopKicker());
-        //indexer.setDefaultCommand(indexer.stopIndexer());
+        indexer.setDefaultCommand(indexer.stopIndexer());
         intake.setDefaultCommand(intake.intakeStopRollers());
 
         // Set the drivers movement for steering and driving on the driver joysticks
@@ -267,7 +267,12 @@ public class RobotContainer {
                         shooter.setShooterVelocityPosition3(),
                         hood.hoodToAngle(45),
                         kicker.runKicker(),
-                        indexer.runIndexer()));
+                        Commands.repeatingSequence(Commands.race(
+                        indexer.runIndexer(),
+                        new WaitCommand(0.5)),
+                Commands.race(
+                        indexer.stopIndexer(),
+                        new WaitCommand(0.2)))));
         
 
         // Auto speed and angle when RT is held
@@ -276,7 +281,12 @@ public class RobotContainer {
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive),
                         kicker.runKicker(),
-                        indexer.runIndexer()));
+                        Commands.repeatingSequence(Commands.race(
+                        indexer.runIndexer(),
+                        new WaitCommand(0.5)),
+                Commands.race(
+                        indexer.stopIndexer(),
+                        new WaitCommand(0.2)))));
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(
@@ -318,12 +328,12 @@ public class RobotContainer {
                     intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint())
         ));
 
-        operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
-                        indexer.runIndexer(),
-                        new WaitCommand(0.5)),
-                Commands.race(
-                        indexer.stopIndexer(),
-                        new WaitCommand(0.2))));
+        // operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
+        //                 indexer.runIndexer(),
+        //                 new WaitCommand(0.5)),
+        //         Commands.race(
+        //                 indexer.stopIndexer(),
+        //                 new WaitCommand(0.2))));
 
         // operatorController.leftTrigger().whileTrue(
         //         Commands.sequence(
