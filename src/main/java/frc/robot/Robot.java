@@ -132,9 +132,9 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
 
-        m_robotContainer.hood.setDefaultCommand(m_robotContainer.hood.retractHood());
-        m_robotContainer.kicker.setDefaultCommand(m_robotContainer.kicker.stopKicker());
-        m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer());
+        m_robotContainer.hood.setDefaultCommand(m_robotContainer.hood.retractHood().withName("retracatHood()"));
+        m_robotContainer.kicker.setDefaultCommand(m_robotContainer.kicker.stopKicker().withName("stopKicker()"));
+        m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer().withName("stopIndexer()"));
     }
   }
 
