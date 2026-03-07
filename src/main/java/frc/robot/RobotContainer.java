@@ -325,8 +325,8 @@ public class RobotContainer {
 
         operatorController.x().whileTrue(Commands.repeatingSequence(Commands.race(
                     intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(intake.intakePivotAtPositionSetpoint()),
-                    new WaitCommand(0.5)), Commands.race(
-                    intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint()), new WaitCommand(0.5)
+                    new WaitCommand(2)), Commands.race(
+                    intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint()), new WaitCommand(2)
         )));
 
         // operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
