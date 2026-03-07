@@ -308,6 +308,8 @@ public class RobotContainer {
                                 kicker.runKicker(),
                                 indexer.runIndexer())));
 
+        operatorController.x().whileTrue(intake.pulseIntake());
+
         // operatorController.leftTrigger().whileTrue(
         //         Commands.sequence(
         //                 Commands.parallel(

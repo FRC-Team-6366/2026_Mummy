@@ -6,6 +6,7 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -164,9 +165,16 @@ public class Intake extends SubsystemBase {
                 } else {
                     this.angle = Constants.IntakeConstants.intakePivotRetractAngleDegrees;
                     this.intakeIO.intakePivotToAngle(this.angle);
-                                       this.intakeIO.setBrakeMode(true);
+                    this.intakeIO.setBrakeMode(true);
                 }
             }  
+        );
+    }
+
+    public Command pulseIntake() {
+        return Commands.repeatingSequence(
+                    this.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(this.intakePivotAtPositionSetpoint()),
+                    this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(this.intakePivotAtPositionSetpoint())
         );
     }
 
