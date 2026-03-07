@@ -315,7 +315,7 @@ public class RobotContainer {
 
         operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
                         indexer.runIndexer(),
-                        new WaitCommand(01)),
+                        new WaitCommand(0.5)),
                 Commands.race(
                         indexer.stopIndexer(),
                         new WaitCommand(0.2))));
