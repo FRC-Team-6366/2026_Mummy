@@ -21,30 +21,43 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "IntakeRunRollers"
+                  "pathName": "GettingFuelLeftToMid"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "GettingFuelLeftToRight"
+                  "name": "IntakeRunRollers"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "IntakeStopRollers"
+            "pathName": "MidfieldToShootLeft"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShooterEndless"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Collect Fuel",
+  "folder": "Get Fuel Then Shoot",
   "choreoAuto": false
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7397004279600568,
-        "y": 0.6256633380884444
+        "x": 8.881951807228914,
+        "y": 7.0838313253012055
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1479602532377555,
-        "y": 0.8766293405383685
+        "x": 8.866244741389893,
+        "y": 5.946482396486514
       },
-      "isLocked": true,
-      "linkedName": "OutpostReload"
+      "isLocked": false,
+      "linkedName": "FuelPickupLeft"
     },
     {
       "anchor": {
-        "x": 1.590067567567568,
-        "y": 1.2976576576576577
+        "x": 8.248144578313253,
+        "y": 4.00221686746988
       },
       "prevControl": {
-        "x": 1.319614364817735,
-        "y": 1.1246003319237228
+        "x": 8.196389942079302,
+        "y": 5.03730959214891
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "MidfieldIntakeRight"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.5,
-    "maxAcceleration": 10.0,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -147.52880770915155
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Fuel Locations to Shot Locations",
+  "folder": "Picking Up Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

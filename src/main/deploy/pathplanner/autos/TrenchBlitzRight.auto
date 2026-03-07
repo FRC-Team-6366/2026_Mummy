@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TrenchToFuelLeft"
+            "pathName": "TrenchToFuelRight"
           }
         },
         {
@@ -21,30 +21,43 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "IntakeRunRollers"
+                  "pathName": "GettingFuelRightToMid"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "GettingFuelLeftToRight"
+                  "name": "IntakeRunRollers"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "IntakeStopRollers"
+            "pathName": "MidfieldToShootRight"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShooterEndless"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Collect Fuel",
+  "folder": "Get Fuel Then Shoot",
   "choreoAuto": false
 }
