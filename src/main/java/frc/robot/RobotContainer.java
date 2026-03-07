@@ -306,7 +306,12 @@ public class RobotContainer {
                                 shooter.setShooterVelocityPosition1(),
                                 hood.hoodToAnglePosition1(),
                                 kicker.runKicker(),
-                                indexer.runIndexer())));
+                                Commands.repeatingSequence(Commands.race(
+                        indexer.runIndexer(),
+                        new WaitCommand(0.5)),
+                Commands.race(
+                        indexer.stopIndexer(),
+                        new WaitCommand(0.2))))));
 
         operatorController.x().whileTrue(Commands.repeatingSequence(
                     intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(intake.intakePivotAtPositionSetpoint()),
