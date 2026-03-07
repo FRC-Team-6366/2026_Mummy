@@ -20,16 +20,9 @@ public class IndexerIOTalonFX implements IndexerIO{
     // private final TalonFX indexWallMotor;
     
     StatusSignal<Voltage> indexVolts;
-    StatusSignal<Angle> indexPosition;
     StatusSignal<AngularVelocity> indexRps;
     StatusSignal<Current> indexCurrent;
     StatusSignal<Current> indexSupplyCurrent; 
-
-    StatusSignal<Voltage> indexWallVolts;
-    StatusSignal<Angle> indexWallPosition;
-    StatusSignal<AngularVelocity> indexWallRps;
-    StatusSignal<Current> indexWallCurrent;
-    StatusSignal<Current> indexWallSupplyCurrent; 
 
 
     public IndexerIOTalonFX(){
@@ -40,7 +33,6 @@ public class IndexerIOTalonFX implements IndexerIO{
         indexMotor.getConfigurator().apply(indMotorconfiguration);
 
         indexVolts = indexMotor.getMotorVoltage();
-        indexPosition = indexMotor.getPosition();
         indexRps = indexMotor.getVelocity();
         indexCurrent = indexMotor.getTorqueCurrent();
         indexSupplyCurrent = indexMotor.getSupplyCurrent();
@@ -48,7 +40,6 @@ public class IndexerIOTalonFX implements IndexerIO{
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
         indexVolts,
-        indexPosition,
         indexRps,
         indexCurrent,
         indexSupplyCurrent
@@ -69,13 +60,11 @@ public class IndexerIOTalonFX implements IndexerIO{
     public void updateInputs(IndexerIOInputs inputs){
      inputs.connected = BaseStatusSignal.refreshAll(
         indexVolts,
-        indexPosition,
         indexRps,
         indexCurrent,
         indexSupplyCurrent
         ).isOK();
         inputs.indexVolts = this.indexVolts.getValueAsDouble();
-        inputs.indexPosition = this.indexPosition.getValueAsDouble();
         inputs.indexRps = this.indexRps.getValueAsDouble();
         inputs.indexCurrent = this.indexCurrent.getValueAsDouble();
         inputs.indexSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();

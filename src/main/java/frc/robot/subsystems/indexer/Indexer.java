@@ -20,7 +20,6 @@ public class Indexer extends SubsystemBase {
      */
     private double power = 0;
     IndexerIO indexerIO;
-    Timer time = new Timer();
 
     /**
      * IOInputs object for holding current values for the devices of the
@@ -96,15 +95,15 @@ public class Indexer extends SubsystemBase {
      * 
      * @return Command to turn on indexer motors
      */
-    public Command pulseIndexer() {
-        return Commands.repeatingSequence(
-                Commands.race(
-                        this.runIndexer(),
-                        new WaitCommand(0.5)),
-                Commands.race(
-                        this.stopIndexer(),
-                        new WaitCommand(0.25)));
-    }
+    // public Command pulseIndexer() {
+    //     return Commands.repeatingSequence(
+    //             Commands.race(
+    //                     this.runIndexer(),
+    //                     new WaitCommand(0.5)),
+    //             Commands.race(
+    //                     this.stopIndexer(),
+    //                     new WaitCommand(0.25)));
+    // }
 
     // public Command pulseIndexer2() {
     // return this.run(

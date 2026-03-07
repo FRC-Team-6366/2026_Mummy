@@ -28,7 +28,6 @@ public class IndexerIOSim implements IndexerIO {
     public void updateInputs(IndexerIOInputs inputs) {
         inputs.connected = true;
         inputs.indexCurrent = this.indexMotor.getCurrentDrawAmps();
-        inputs.indexPosition = Double.POSITIVE_INFINITY;
         inputs.indexRps = this.indexMotor.getAngularVelocityRPM()/60;
         inputs.indexSupplyCurrent = this.indexMotor.getCurrentDrawAmps();
         inputs.indexVolts = this.indexMotor.getInputVoltage();
