@@ -17,7 +17,7 @@ public interface IndexerIO {
      * }</pre>
      * @param power Power value between -1.0 and 1.0
      */
-    public default void setIndexerPower(double power){}; 
+    public void setIndexerPower(double power); 
     
     /**
      * Sets the power of the vertical indexer motors to move
@@ -38,5 +38,5 @@ public interface IndexerIO {
      * indexer and indexer wall motors
      * @param inputs IndexerIOInputs object
      */
-    public default void updateInputs(IndexerIOInputs inputs){};
+    public void updateInputs(IndexerIOInputs inputs);
 }
