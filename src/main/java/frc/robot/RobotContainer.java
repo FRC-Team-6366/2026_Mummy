@@ -313,6 +313,13 @@ public class RobotContainer {
                     intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint())
         ));
 
+        operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
+                        indexer.runIndexer(),
+                        new WaitCommand(0.5)),
+                Commands.race(
+                        indexer.stopIndexer(),
+                        new WaitCommand(0.25))));
+
         // operatorController.leftTrigger().whileTrue(
         //         Commands.sequence(
         //                 Commands.parallel(
