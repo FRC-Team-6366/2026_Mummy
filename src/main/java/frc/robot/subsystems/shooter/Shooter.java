@@ -204,6 +204,7 @@ public class Shooter extends SubsystemBase{
         Logger.processInputs("ShooterSubsystem", inputs);
         Logger.recordOutput("ShooterSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
         Logger.recordOutput("ShooterSubsystem/DistanceToHub", this.distanceToHub);
+        Logger.recordOutput("ShooterSubsystem/DefaultCommand", this.getDefaultCommand()!=null ? this.getDefaultCommand().getName() : "N/A");
     }
 
     @Override

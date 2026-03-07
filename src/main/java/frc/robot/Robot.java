@@ -30,14 +30,7 @@ import frc.robot.subsystems.vision.Vision;
 public class Robot extends LoggedRobot {
 
   private Command m_autonomousCommand;
-    Shooter shooter;
-    Indexer indexer;
-    Kicker kicker;
-    Hood hood;
-    int mode; //
-    Drive drive;
-    Intake intake;
-    Vision vision;
+
 
 
   private final RobotContainer m_robotContainer;
@@ -104,7 +97,9 @@ public class Robot extends LoggedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    CommandScheduler.getInstance().cancelAll();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -112,6 +107,10 @@ public class Robot extends LoggedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_robotContainer.hood.removeDefaultCommand();
+    m_robotContainer.indexer.removeDefaultCommand();
+    m_robotContainer.kicker.removeDefaultCommand();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -132,15 +131,17 @@ public class Robot extends LoggedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+
+        m_robotContainer.hood.setDefaultCommand(m_robotContainer.hood.retractHood());
+        m_robotContainer.kicker.setDefaultCommand(m_robotContainer.kicker.stopKicker());
+        m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer());
     }
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-       hood.setDefaultCommand(hood.retractHood());
-                kicker.setDefaultCommand(kicker.stopKicker());
-                indexer.setDefaultCommand(indexer.stopIndexer());
+  
   }
 
   @Override

@@ -57,14 +57,14 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    Shooter shooter;
-    Indexer indexer;
-    Kicker kicker;
-    Hood hood;
-    int mode; //
-    Drive drive;
-    Intake intake;
-    Vision vision;
+  public Shooter shooter;
+    public Indexer indexer;
+    public Kicker kicker;
+    public Hood hood;
+    public int mode; //
+    public Drive drive;
+    public Intake intake;
+    public Vision vision;
     LoggedDashboardChooser<Command> autoChooser;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed

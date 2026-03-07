@@ -170,6 +170,7 @@ public class Indexer extends SubsystemBase {
     public void periodic() {
         this.indexerIO.updateInputs(inputs);
         Logger.processInputs("Indexer Subsystem", inputs);
+        Logger.recordOutput("IndexerSubsystem/DefaultCommand", this.getDefaultCommand()!=null ? this.getDefaultCommand().getName() : "N/A");
     }
 
     @Override

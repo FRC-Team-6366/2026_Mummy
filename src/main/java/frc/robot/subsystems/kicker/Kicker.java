@@ -130,6 +130,7 @@ public class Kicker extends SubsystemBase {
         // and then write values to the Log
         this.io.updateInputs(inputs);
         Logger.processInputs("Kicker Subsystem", inputs);
+        Logger.recordOutput("KickerSubsystem/DefaultCommand", this.getDefaultCommand()!=null ? this.getDefaultCommand().getName() : "N/A");
     }
 
     @Override

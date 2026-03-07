@@ -186,6 +186,7 @@ public class Intake extends SubsystemBase {
         // and then write values to the Log
         this.intakeIO.updateInputs(inputs);
         Logger.processInputs("IntakeSubsystem", inputs);
+        Logger.recordOutput("IntakeSubsystem/DefaultCommand", this.getDefaultCommand()!=null ? this.getDefaultCommand().getName() : "N/A");
     }
 
 

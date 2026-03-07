@@ -158,6 +158,7 @@ public class Hood extends SubsystemBase {
         this.hoodIO.updateInputs(inputs);
         Logger.processInputs("HoodSubsystem", inputs);
         Logger.recordOutput("HoodSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
+        Logger.recordOutput("HoodSubsystem/DefaultCommand", this.getDefaultCommand()!=null ? this.getDefaultCommand().getName() : "N/A");
     }
 
     @Override
