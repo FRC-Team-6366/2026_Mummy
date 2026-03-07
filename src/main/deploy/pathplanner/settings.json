@@ -9,8 +9,9 @@
     "Starting Locations to Get Fuel"
   ],
   "autoFolders": [
-    "Get Fuel Then Shoot",
     "Collect Fuel",
+    "Get Fuel Then Shoot",
+    "Test Autos",
     "Simple Shots"
   ],
   "defaultMaxVel": 5.5,

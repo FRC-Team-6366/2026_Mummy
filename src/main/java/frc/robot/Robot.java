@@ -13,6 +13,13 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.driveTrain.Drive;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.kicker.Kicker;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.hood.Hood;
+import frc.robot.subsystems.vision.Vision;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
