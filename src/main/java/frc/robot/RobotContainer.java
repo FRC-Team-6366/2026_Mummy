@@ -323,10 +323,11 @@ public class RobotContainer {
                         indexer.stopIndexer(),
                         new WaitCommand(0.2))))));
 
-        operatorController.x().whileTrue(Commands.repeatingSequence(
+        operatorController.x().whileTrue(Commands.repeatingSequence(Commands.race(
                     intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(intake.intakePivotAtPositionSetpoint()),
-                    intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint())
-        ));
+                    new WaitCommand(0.5)), Commands.race(
+                    intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint()), new WaitCommand(0.5)
+        )));
 
         // operatorController.y().whileTrue(Commands.repeatingSequence(Commands.race(
         //                 indexer.runIndexer(),
