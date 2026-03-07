@@ -48,6 +48,25 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "AutoShooterSixSeconds"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeHalfRetract"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "AutoShooterEndless"
                 }
               }

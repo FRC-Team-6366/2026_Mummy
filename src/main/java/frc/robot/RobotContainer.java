@@ -160,6 +160,8 @@ public class RobotContainer {
                                 intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
                 NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
                 NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
+                NamedCommands.registerCommand("IntakeRetract", intake.retractIntake().until(intake.intakePivotAtPositionSetpoint()));
+                NamedCommands.registerCommand("IntakeHalfRetract", intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
                 NamedCommands.registerCommand("ShooterSpinUp",
                                 Commands.parallel(
                                                 shooter.setShooterAutoVelocity(drive)
