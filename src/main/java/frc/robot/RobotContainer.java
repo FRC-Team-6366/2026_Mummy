@@ -25,6 +25,7 @@ import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
+import frc.robot.subsystems.shooter.ShooterIOTalonFXSim;
 import frc.robot.subsystems.shooter.hood.Hood;
 import frc.robot.subsystems.shooter.hood.HoodIOSim;
 import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
@@ -130,7 +131,7 @@ public class RobotContainer {
                         Constants.VisionConstants.camera3Name,
                         Constants.VisionConstants.robotToCamera3, drive::getPose)
                     );
-                this.shooter = new Shooter(new ShooterIOSim());
+                this.shooter = new Shooter(new ShooterIOTalonFXSim());
                 this.hood = new Hood(new HoodIOSim());
                 this.indexer = new Indexer(new IndexerIOSim());
                 this.intake = new Intake(new IntakeIOSim());

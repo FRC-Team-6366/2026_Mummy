@@ -17,7 +17,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 
 public class ShooterIOTalonFX implements ShooterIO {
-    TalonFX leadShooterMotor;
+    protected TalonFX leadShooterMotor;
     TalonFX followShooterMotor;
 
     // Used to control motor output by specifying rotaion speed
