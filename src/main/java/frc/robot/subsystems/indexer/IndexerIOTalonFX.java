@@ -11,7 +11,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Voltage; //  Voltage
 import frc.robot.Constants;
 import edu.wpi.first.units.measure.AngularVelocity; // Rotations Per Second
-import edu.wpi.first.units.measure.Angle; // position
 import edu.wpi.first.units.measure.Current;// Supply current
 
 
