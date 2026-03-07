@@ -72,7 +72,7 @@ public class Shooter extends SubsystemBase{
                 // Set the power of the ShooterIO hardware
                 this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
             }
-        );
+        ).withName("shooterIncrements()");
     }
 
      /**
@@ -93,7 +93,7 @@ public class Shooter extends SubsystemBase{
                 // Set the power of the KickerIO hardware
                 this.shooterIO.setShooterVelocityRPS(velocityRPS);
             }
-        );
+        ).withName("shooterDecrements()");
     }
 
     /**
@@ -112,7 +112,7 @@ public class Shooter extends SubsystemBase{
                 // Use power to stop the ShooterIO Hardware motor
                 this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
             }
-        );
+        ).withName("turnOffShooter()");
     }
 
 
@@ -127,7 +127,7 @@ public class Shooter extends SubsystemBase{
                 this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
                 this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
-        );
+        ).withName("setShooterVelocityPosition1()");
     }
 
     /**
@@ -141,7 +141,7 @@ public class Shooter extends SubsystemBase{
         this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
-        );
+        ).withName("setShooterVelocityPosition2()");
     }
 
     /**
@@ -155,7 +155,7 @@ public class Shooter extends SubsystemBase{
         this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
         this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
             }
-        );
+        ).withName("setShooterVelocityPosition3()");
     }
 
     public Command setShooterAutoVelocity(Drive drive){
@@ -182,7 +182,7 @@ public class Shooter extends SubsystemBase{
                 this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
 
             }
-        );
+        ).withName("setShooterAutoVelocity()");
     }
 
     /**

@@ -30,12 +30,12 @@ public class Intake extends SubsystemBase {
     public Command intakeResetCanCoder() {
         return this.runOnce(
             () -> this.intakeIO.intakeResetCanCoder()
-        );
+        ).withName("intakeResetCanCoder()");
     }
 
     // Sets pivot to brake on true, coast on false
     public Command setBrakeMode(boolean brakeMode) {
-        return this.runOnce(() -> this.intakeIO.setBrakeMode(brakeMode));
+        return this.runOnce(() -> this.intakeIO.setBrakeMode(brakeMode)).withName("setBrakeMode()");
     }
 
     public Command intakeRunRollers() {
@@ -47,14 +47,14 @@ public class Intake extends SubsystemBase {
                 // Use power to start the IntakeIO Hardware motor
                 this.intakeIO.rollersRunVolts(this.power);
             }
-        );
+        ).withName("intakeRunRollers()");
     }
 
     public Command intakeStopRollers() {
         return this.runOnce(
                 () -> {
                     this.intakeIO.rollersStop();
-                });
+                }).withName("intakeStopRollers()");
     }
 
     /**
@@ -98,7 +98,7 @@ public class Intake extends SubsystemBase {
                     this.angle = angle;
                     Logger.recordOutput("Pivot/Angle", this.angle);
                     this.intakeIO.intakePivotToAngle(this.angle);
-                });
+                }).withName("intakePivotToAngle()");
                 
     }
 
@@ -111,7 +111,7 @@ public class Intake extends SubsystemBase {
      * @return Command to set Intake Pivot Motor to starting position
      */
     public Command retractIntake() {
-        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotRetractAngleDegrees);
+        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotRetractAngleDegrees).withName("retractIntake()");
     }
 
     /**
@@ -124,7 +124,7 @@ public class Intake extends SubsystemBase {
      * @return Command to set Intake Pivot Motor for close shooting
      */
     public Command deployIntake() {
-        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees);
+        return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).withName("deployIntake()");
     }
 
     /**
@@ -168,14 +168,14 @@ public class Intake extends SubsystemBase {
                     this.intakeIO.setBrakeMode(true);
                 }
             }  
-        );
+        ).withName("toggleIntakePivot()");
     }
 
     public Command pulseIntake() {
         return Commands.repeatingSequence(
                     this.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(this.intakePivotAtPositionSetpoint()),
                     this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(this.intakePivotAtPositionSetpoint())
-        );
+        ).withName("pulseIntake()");
     }
 
     @Override

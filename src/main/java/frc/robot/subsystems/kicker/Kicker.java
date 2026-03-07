@@ -58,7 +58,7 @@ public class Kicker extends SubsystemBase {
                 // Set the power of the KickerIO hardware
                 this.io.setKickPower(power);
             }
-        );
+        ).withName("kickIncrement()");
     }
 
     /**
@@ -79,7 +79,7 @@ public class Kicker extends SubsystemBase {
                 // Set the power of the KickerIO hardware
                 this.io.setKickPower(power);
             }
-        );
+        ).withName("kickDecrement()");
     }
 
     /**
@@ -99,7 +99,7 @@ public class Kicker extends SubsystemBase {
                 // Use power to start the KickerIO Hardware motor
                 this.io.setKickPower(this.power);
             }
-        );
+        ).withName("runKicker()");
     }
 
     /**
@@ -119,7 +119,7 @@ public class Kicker extends SubsystemBase {
                 // Use power to stop the KickerIO Hardware motor
                 this.io.setKickPower(this.power);
             }
-        );
+        ).withName("stopKicker()");
     }
 
     @Override
