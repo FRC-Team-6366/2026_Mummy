@@ -17,16 +17,20 @@ import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOSim;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
 import frc.robot.subsystems.kicker.Kicker;
+import frc.robot.subsystems.kicker.KickerIOSim;
 import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
 import frc.robot.subsystems.shooter.hood.Hood;
+import frc.robot.subsystems.shooter.hood.HoodIOSim;
 import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOPhotonVision;
+import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -96,7 +100,10 @@ public class RobotContainer {
                                 Constants.VisionConstants.robotToCamera3));
 
                 this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
+                this.hood = new Hood(new HoodIOTalonFX());
                 this.indexer = new Indexer(new IndexerIOTalonFX());
+                this.intake = new Intake(new IntakeIOTalonFX());
+                this.kicker = new Kicker(new KickerIOTalonFX());
                 break;
 
             case SIM:
@@ -108,8 +115,26 @@ public class RobotContainer {
                         new ModuleIOSim(TunerConstants.FrontRight),
                         new ModuleIOSim(TunerConstants.BackLeft),
                         new ModuleIOSim(TunerConstants.BackRight));
+                this.vision = new Vision(
+                    drive::addVisionMeasurement,
+                    new VisionIOPhotonVisionSim(
+                        Constants.VisionConstants.camera0Name,
+                        Constants.VisionConstants.robotToCamera0, drive::getPose),
+                    new VisionIOPhotonVisionSim(
+                        Constants.VisionConstants.camera1Name,
+                        Constants.VisionConstants.robotToCamera1, drive::getPose),
+                    new VisionIOPhotonVisionSim(
+                        Constants.VisionConstants.camera2Name,
+                        Constants.VisionConstants.robotToCamera2, drive::getPose),
+                    new VisionIOPhotonVisionSim(
+                        Constants.VisionConstants.camera3Name,
+                        Constants.VisionConstants.robotToCamera3, drive::getPose)
+                    );
                 this.shooter = new Shooter(new ShooterIOSim());
+                this.hood = new Hood(new HoodIOSim());
                 this.indexer = new Indexer(new IndexerIOSim());
+                this.intake = new Intake(new IntakeIOSim());
+                this.kicker = new Kicker(new KickerIOSim());
                 break;
 
             default:
@@ -129,9 +154,6 @@ public class RobotContainer {
         }
 
         
-        this.kicker = new Kicker(new KickerIOTalonFX());
-        this.hood = new Hood(new HoodIOTalonFX());
-        this.intake = new Intake(new IntakeIOTalonFX());
         this.mode = 0;
 
                 NamedCommands.registerCommand("IntakeDeploy",

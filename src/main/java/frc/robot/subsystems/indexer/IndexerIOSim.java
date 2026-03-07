@@ -10,7 +10,12 @@ public class IndexerIOSim implements IndexerIO {
     private double volts = 0.0;
 
     public IndexerIOSim() {
-        this.indexMotor = new FlywheelSim(LinearSystemId.createFlywheelSystem(INDEX_GEARBOX, 1, 3), INDEX_GEARBOX, 0.004);
+        this.indexMotor = new FlywheelSim(
+            LinearSystemId.createFlywheelSystem(
+                INDEX_GEARBOX, 
+                1, 
+                3
+            ), INDEX_GEARBOX, 0.004);
     }
 
     @Override
