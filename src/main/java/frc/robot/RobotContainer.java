@@ -14,6 +14,7 @@ import frc.robot.subsystems.driveTrain.ModuleIO;
 import frc.robot.subsystems.driveTrain.ModuleIOSim;
 import frc.robot.subsystems.driveTrain.ModuleIOTalonFX;
 import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.IndexerIOSim;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
@@ -95,6 +96,7 @@ public class RobotContainer {
                                 Constants.VisionConstants.robotToCamera3));
 
                 this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
+                this.indexer = new Indexer(new IndexerIOTalonFX());
                 break;
 
             case SIM:
@@ -106,7 +108,8 @@ public class RobotContainer {
                         new ModuleIOSim(TunerConstants.FrontRight),
                         new ModuleIOSim(TunerConstants.BackLeft),
                         new ModuleIOSim(TunerConstants.BackRight));
-                shooter = new Shooter(new ShooterIOSim());
+                this.shooter = new Shooter(new ShooterIOSim());
+                this.indexer = new Indexer(new IndexerIOSim());
                 break;
 
             default:
@@ -125,7 +128,7 @@ public class RobotContainer {
                 break;
         }
 
-        this.indexer = new Indexer(new IndexerIOTalonFX());
+        
         this.kicker = new Kicker(new KickerIOTalonFX());
         this.hood = new Hood(new HoodIOTalonFX());
         this.intake = new Intake(new IntakeIOTalonFX());
