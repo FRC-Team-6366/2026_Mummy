@@ -106,6 +106,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
         intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
         
+        
 
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,

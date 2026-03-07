@@ -1,12 +1,8 @@
 package frc.robot.subsystems.indexer;
 
-import java.time.Instant;
-import java.util.TimerTask;
-
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -62,7 +58,7 @@ public class Indexer extends SubsystemBase {
                 () -> {
                     this.power = 0;
                     this.indexerIO.setIndexerPower(this.power);
-                });
+                }).withName("stopIndexer()");
     }
 
     /**
@@ -81,7 +77,7 @@ public class Indexer extends SubsystemBase {
                 () -> {
                     this.power = 1;
                     this.indexerIO.setIndexerPower(this.power);
-                });
+                }).withName("runIndexer()");
     }
 
     /**
@@ -141,7 +137,7 @@ public class Indexer extends SubsystemBase {
                     this.power = MathUtil.clamp(this.power += 0.2, 0, 1);
                     this.indexerIO.setIndexerPower(this.power);
                     // this.indexerIO.setIndexerWallPower(this.power);
-                });
+                }).withName("incrementIndexer()");
     }
 
     /**
@@ -162,7 +158,7 @@ public class Indexer extends SubsystemBase {
                     this.power = MathUtil.clamp(this.power -= 0.2, 0, 1);
                     this.indexerIO.setIndexerPower(this.power);
                     // this.indexerIO.setIndexerWallPower(this.power);
-                });
+                }).withName("decrementIndexer()");
     }
 
     @Override
