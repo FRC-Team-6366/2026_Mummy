@@ -318,7 +318,7 @@ public class RobotContainer {
                         new WaitCommand(01)),
                 Commands.race(
                         indexer.stopIndexer(),
-                        new WaitCommand(0.5))));
+                        new WaitCommand(0.2))));
 
         // operatorController.leftTrigger().whileTrue(
         //         Commands.sequence(
