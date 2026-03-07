@@ -59,7 +59,7 @@ public class Indexer extends SubsystemBase {
      * @return Command to turn off indexer motors
      */
     public Command stopIndexer() {
-        return this.runOnce(
+        return this.run(
                 () -> {
                     this.power = 0;
                     this.indexerIO.setIndexerPower(this.power);
