@@ -25,7 +25,6 @@ import frc.robot.subsystems.kicker.KickerIOTalonFX;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
-import frc.robot.subsystems.shooter.ShooterIOTalonFXSim;
 import frc.robot.subsystems.shooter.hood.Hood;
 import frc.robot.subsystems.shooter.hood.HoodIOSim;
 import frc.robot.subsystems.shooter.hood.HoodIOTalonFX;
@@ -44,7 +43,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -131,7 +129,7 @@ public class RobotContainer {
                         Constants.VisionConstants.camera3Name,
                         Constants.VisionConstants.robotToCamera3, drive::getPose)
                     );
-                this.shooter = new Shooter(new ShooterIOTalonFXSim());
+                this.shooter = new Shooter(new ShooterIOSim());
                 this.hood = new Hood(new HoodIOSim());
                 this.indexer = new Indexer(new IndexerIOSim());
                 this.intake = new Intake(new IntakeIOSim());
