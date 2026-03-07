@@ -308,7 +308,10 @@ public class RobotContainer {
                                 kicker.runKicker(),
                                 indexer.runIndexer())));
 
-        operatorController.x().whileTrue(intake.pulseIntake());
+        operatorController.x().whileTrue(Commands.repeatingSequence(
+                    intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(intake.intakePivotAtPositionSetpoint()),
+                    intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(intake.intakePivotAtPositionSetpoint())
+        ));
 
         // operatorController.leftTrigger().whileTrue(
         //         Commands.sequence(
