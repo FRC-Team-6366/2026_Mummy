@@ -24,8 +24,8 @@ public interface HoodIO {
      * number of rotations from the hood's starting position when the
      * robot was first turned on.
      * @param position Number of rotations
-     */
-    public void hoodToPosition(double position);
+    //  */
+    // public void hoodToPosition(double position);
 
     /**
      * Gets the difference between the motor's position (number of rotations) from its current setpoint

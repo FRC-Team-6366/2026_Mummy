@@ -16,7 +16,6 @@ import edu.wpi.first.units.measure.Current;// Supply current
 
 public class IndexerIOTalonFX implements IndexerIO{
     private final TalonFX indexMotor;
-    // private final TalonFX indexWallMotor;
     
     StatusSignal<Voltage> indexVolts;
     StatusSignal<AngularVelocity> indexRps;

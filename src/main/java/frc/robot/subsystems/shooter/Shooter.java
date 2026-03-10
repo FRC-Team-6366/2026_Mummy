@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase{
      * Double value used for the current power setting in
      *  increment and decrement commmands in the shooter subsystem.
      */
-    private double velocityRPS = 0;
+    private double velocityFPS = 0;
     double distanceToHub = 0;
     ShooterIO shooterIO;
 
@@ -68,9 +68,9 @@ public class Shooter extends SubsystemBase{
     public Command shooterIncrements() {
         return runOnce(
             () -> {                
-                this.velocityRPS += 1;
+                this.velocityFPS += 1;
                 // Set the power of the ShooterIO hardware
-                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
+                this.shooterIO.setShooterVelocityFeetPerSecond(this.velocityFPS);
             }
         ).withName("shooterIncrements()");
     }
@@ -88,10 +88,10 @@ public class Shooter extends SubsystemBase{
             () -> {
                 // Clamp method returns either power, or the max or min value
                 // This ensures that power will never be greater than 1
-                this.velocityRPS -= 1;
+                this.velocityFPS -= 1;
                 
                 // Set the power of the KickerIO hardware
-                this.shooterIO.setShooterVelocityRPS(velocityRPS);
+                this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
             }
         ).withName("shooterDecrements()");
     }
@@ -107,10 +107,10 @@ public class Shooter extends SubsystemBase{
         return this.runOnce(
             () -> {
                 // Set power to 0
-                this.velocityRPS = 0;
+                this.velocityFPS = 0;
 
                 // Use power to stop the ShooterIO Hardware motor
-                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
+                this.shooterIO.setShooterVelocityFeetPerSecond(this.velocityFPS);
             }
         ).withName("turnOffShooter()");
     }
@@ -124,8 +124,8 @@ public class Shooter extends SubsystemBase{
 
         return this.run(
             () -> {
-                this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
-                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+                this.velocityFPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
+                this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
             }
         ).withName("setShooterVelocityPosition1()");
     }
@@ -138,8 +138,8 @@ public class Shooter extends SubsystemBase{
 
         return this.run(
             () -> {
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
-        this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+        this.velocityFPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
+        this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
             }
         ).withName("setShooterVelocityPosition2()");
     }
@@ -152,8 +152,8 @@ public class Shooter extends SubsystemBase{
 
         return this.run(
             () -> {
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
-        this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+        this.velocityFPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
+        this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
             }
         ).withName("setShooterVelocityPosition3()");
     }
@@ -178,8 +178,8 @@ public class Shooter extends SubsystemBase{
                 // Find the hypotenuse of the triangle
                  this.distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
                 
-                this.velocityRPS = shooterSpeedMap.get(distanceToHub);
-                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
+                this.velocityFPS = shooterSpeedMap.get(distanceToHub);
+                this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
 
             }
         ).withName("setShooterAutoVelocity()");

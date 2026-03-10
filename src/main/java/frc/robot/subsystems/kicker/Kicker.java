@@ -1,7 +1,6 @@
 package frc.robot.subsystems.kicker;
 
 import org.littletonrobotics.junction.Logger;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -38,48 +37,6 @@ public class Kicker extends SubsystemBase {
      */
     public Kicker(KickerIO io) {
         this.io = io;
-    }
-
-    /**
-     * Increases the kicker subsystem's output by 0.3 to a maximum power
-     * of 1.
-     * <p>
-     * Example use:
-     * <pre>{@code controller.leftTrigger().whileTrue(kicker.kickIncrement());}</pre>
-     * @return Command to increase the kicker subsystem output by 0.3
-     */
-    public Command kickIncrement() {
-        return runOnce(
-            () -> {
-                // Clamp method returns either power, or the max or min value
-                // This ensures that power will never be greater than 1
-                this.power = MathUtil.clamp(this.power += 1, 0, 1);
-                
-                // Set the power of the KickerIO hardware
-                this.io.setKickPower(power);
-            }
-        ).withName("kickIncrement()");
-    }
-
-    /**
-     * Decreases the kicker subsystem's output by 0.3 down to a minimum power
-     * of 0.
-     * <p>
-     * Example use:
-     * <pre>{@code controller.rightTrigger().whileTrue(kicker.kickDeccrement());}</pre>
-     * @return Command to decrease the kicker subsystem output by 0.3
-     */
-    public Command kickDecrement() {
-        return runOnce(
-            () -> {
-                // Clamp method returns either power, or the max or min value
-                // This ensures that power will never be less than 0
-                this.power = MathUtil.clamp(this.power -= 0.3, 0, 1);
-                
-                // Set the power of the KickerIO hardware
-                this.io.setKickPower(power);
-            }
-        ).withName("kickDecrement()");
     }
 
     /**

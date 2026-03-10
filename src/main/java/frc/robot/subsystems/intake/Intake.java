@@ -5,7 +5,6 @@ import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -55,34 +54,6 @@ public class Intake extends SubsystemBase {
                     this.intakeIO.rollersStop();
                 }).withName("intakeStopRollers()");
     }
-
-    /**
-     * For testing purposes of incrementing the position of the intake up
-     * 
-     * @return Command to increment or increase the intakes pivot position.
-     */
-    // public Command intakePivotIncrements() {
-    //     return this.runOnce(
-    //             () -> {
-    //                 this.angle += 1;
-    //                 this.angle = MathUtil.clamp(this.angle, 0.0, 0.385);
-    //                 this.intakeIO.intakePivotToAngle(this.angle);
-    //             });
-    // }
-
-    /**
-     * For testing purposes of decrementing the position of the intake down.
-     * 
-     * @return Command to decrement or decrease the intakes pivot position.
-     */
-    // public Command intakePivotDecrements() {
-    //     return this.runOnce(
-    //             () -> {
-    //                 this.angle -= 1;
-    //                 this.angle = MathUtil.clamp(this.angle, 0.0, 0.385);
-    //                 this.intakeIO.intakePivotToAngle(this.angle);
-    //             });
-    // }
 
     /**
      * Sets intake pivot motor to a certain angle based on what we put in to the
@@ -139,14 +110,6 @@ public class Intake extends SubsystemBase {
         return () -> this.intakeIO.intakeAtPositionSetpoint();
     }    
 
-    public Boolean isExtended(){
-        return this.intakeIO.getRotations().getRotations() > 0.25;
-    }
-
-    public Boolean isNotExtended(){
-        return this.intakeIO.getRotations().getRotations() <= 0.25;
-    }
-
     /**
      * Toggle the Intake Pivot out and in. This uses the getRotations() of the subsystem
      * to determine if it is currently retracted or extended.
@@ -168,13 +131,6 @@ public class Intake extends SubsystemBase {
                 }
             }  
         ).withName("toggleIntakePivot()");
-    }
-
-    public Command pulseIntake() {
-        return Commands.repeatingSequence(
-                    this.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees).until(this.intakePivotAtPositionSetpoint()),
-                    this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).until(this.intakePivotAtPositionSetpoint())
-        ).withName("pulseIntake()");
     }
 
     @Override

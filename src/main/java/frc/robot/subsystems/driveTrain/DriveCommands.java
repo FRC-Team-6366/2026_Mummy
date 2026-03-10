@@ -172,10 +172,6 @@ public class DriveCommands {
     // Construct command
     return Commands.run(
       () -> {
-        // Check for alliance side
-        // boolean isFlipped =
-        //     DriverStation.getAlliance().isPresent()
-        //         && DriverStation.getAlliance().get() == Alliance.Red;
 
         boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
         
@@ -184,7 +180,6 @@ public class DriveCommands {
 
         // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
         Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
-        // Pose2d hubToPose = hubPose.relativeTo(drive.getPose());
         double hubToPoseX = hubToPose.getX();
         double hubToPoseY = hubToPose.getY();
 

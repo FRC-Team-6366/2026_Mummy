@@ -32,7 +32,6 @@ public interface IntakeIO {
      * 
      * @param position Number of rotations
      */
-    public void intakePivotToPosition(double position);
 
     /**
      * Gets the difference between the intake pivot motor's position (number of

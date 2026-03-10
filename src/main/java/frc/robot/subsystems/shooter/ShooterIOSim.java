@@ -20,13 +20,6 @@ public class ShooterIOSim implements ShooterIO {
     }
 
     @Override
-    public void setShooterVelocityRPS(double rps) {
-        this.rps = MathUtil.clamp(rps, shooterMinVelocityRPS, shooterMaxVelocityRPS);
-        this.radPerSeconds = this.rps*2*Math.PI;
-        this.leadShooterMotor.setAngularVelocity(radPerSeconds);
-    }
-
-    @Override
     public void setShooterVelocityFeetPerSecond(double feetPerSecond) {
         double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
         this.rps = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);

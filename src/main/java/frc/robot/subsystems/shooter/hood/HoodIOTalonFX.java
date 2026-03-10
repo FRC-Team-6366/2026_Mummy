@@ -115,16 +115,6 @@ public class HoodIOTalonFX implements HoodIO {
         this.hoodMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
     }
 
-    /**
-     * Sets the hood to move to a certian positon, otherwise known as
-     * number of rotations from starting position
-     * 
-     * @param position Number of rotations. Min 0, max 5.6
-     */
-    @Override
-    public void hoodToPosition(double position) {
-        this.hoodMotor.setControl(positionVoltageRequest.withPosition(position));
-    }
 
     @Override
     public double getHoodPositionError() {

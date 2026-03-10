@@ -1,6 +1,5 @@
 package frc.robot.subsystems.shooter.hood;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -29,12 +28,6 @@ public class HoodIOSim implements HoodIO {
     public void hoodToAngle(double angle) {
         this.angleRad = angle * 2 * Math.PI;
         this.hoodMotor.setAngle(this.angleRad);
-    }
-
-    @Override
-    public void hoodToPosition(double position) {
-        this.angleRad = (MathUtil.clamp(position, 0, 5.6) * (30 / hoodMaxPosition) + 15) * 2 * Math.PI;
-        this.hoodMotor.setAngle(this.angleRad );
     }
 
     @Override

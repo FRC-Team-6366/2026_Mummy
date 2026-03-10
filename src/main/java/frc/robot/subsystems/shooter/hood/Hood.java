@@ -4,7 +4,6 @@ import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -58,26 +57,6 @@ public class Hood extends SubsystemBase {
                 this.angle = angle;
                 this.hoodIO.hoodToAngle(this.angle);
             }).withName("hoodToAngle()");
-    }
-
-    public Command hoodIncrements(){
-        return this.runOnce(
-         () ->
-         { 
-            this.angle += 1;
-            this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
-            this.hoodIO.hoodToAngle(this.angle);
-         }).withName("hoodIncrements()");
-    }
-
-    public Command hoodDecrements(){
-        return this.runOnce(
-         () ->
-         { 
-            this.angle -= 1;
-         this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
-            this.hoodIO.hoodToAngle(this.angle);
-         }).withName("hoodDecrements()");
     }
 
     /**

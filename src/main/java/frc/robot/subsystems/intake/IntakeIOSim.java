@@ -49,12 +49,6 @@ public class IntakeIOSim implements IntakeIO {
     }
 
     @Override
-    public void intakePivotToPosition(double position) {
-        this.intakePivotAngleRad = Units.rotationsToRadians(MathUtil.clamp(position, 0.0, intakePivotMaxPosition));
-        this.intakePivotMotor.setAngle(this.intakePivotAngleRad);
-    }
-
-    @Override
     public double getIntakePivotPositionError() {
         return this.intakePivotAngleRad - this.intakePivotMotor.getAngularPositionRad();
     }

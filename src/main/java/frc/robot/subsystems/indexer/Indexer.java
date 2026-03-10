@@ -78,45 +78,6 @@ public class Indexer extends SubsystemBase {
     }
 
     /**
-     * Pulses the Indexer subsystem's motors to help prevent stalled fuel
-     * <p>
-     * Example use:
-     * 
-     * <pre>{@code
-     * controller.y().whileTrue(indexer.pulseIndexer());
-     * }</pre>
-     * 
-     * @return Command to turn on indexer motors
-     */
-    // public Command pulseIndexer() {
-    //     return Commands.repeatingSequence(
-    //             Commands.race(
-    //                     this.runIndexer(),
-    //                     new WaitCommand(0.5)),
-    //             Commands.race(
-    //                     this.stopIndexer(),
-    //                     new WaitCommand(0.25)));
-    // }
-
-    // public Command pulseIndexer2() {
-    // return this.run(
-    // () -> {
-    // long endTime = System.currentTimeMillis() + 1000;
-    // this.indexerIO.setIndexerPower(1.0);
-    // while (System.currentTimeMillis() < endTime){
-    // // killing time...
-    // }
-    // this.indexerIO.setIndexerPower(0);
-    // endTime = System.currentTimeMillis() + 500;
-    // while(System.currentTimeMillis()< endTime){
-    // // killing time...
-    // }
-
-    // }
-    // );
-    // }
-
-    /**
      * Increases the Indexer's subsystem's output by 0.2 to a maximum power
      * of 1.
      * <p>

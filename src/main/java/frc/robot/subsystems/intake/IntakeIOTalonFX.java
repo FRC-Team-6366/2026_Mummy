@@ -44,7 +44,6 @@ public class IntakeIOTalonFX implements IntakeIO {
     private CANcoder intakePivotCANcoder;
     CANcoderConfiguration iPCANcfg;
 
-
     PositionVoltage positionVoltageRequest;
     VoltageOut voltageRequest;
 
@@ -55,9 +54,6 @@ public class IntakeIOTalonFX implements IntakeIO {
     double positionSetPointHigh;
 
     public IntakeIOTalonFX() {
-
-
-  
         intakeRollersMotor = new TalonFX(Constants.IntakeConstants.intakeRollersMotorId); // 19
         iMRcfg = new TalonFXConfiguration();
         iMRcfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
@@ -105,8 +101,6 @@ public class IntakeIOTalonFX implements IntakeIO {
         iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
         iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
         intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
-        
-        
 
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
@@ -172,11 +166,6 @@ public class IntakeIOTalonFX implements IntakeIO {
         double angletoRotations = (MathUtil.clamp(angleDegrees, 0.0, 138.6) ) / 360; //Changes angle degree to rotations 
         angletoRotations += 0.12;
         this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
-    }
-
-    @Override
-    public void intakePivotToPosition(double position) {
-        this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(position));
     }
 
     @Override
