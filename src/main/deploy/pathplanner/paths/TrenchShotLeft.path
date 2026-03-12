@@ -48,7 +48,7 @@
   "folder": "Simple Shot Locations",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -88.63693122095023
   },
   "useDefaultConstraints": true
 }

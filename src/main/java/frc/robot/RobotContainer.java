@@ -38,6 +38,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -162,51 +164,63 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeHalfRetract",
         intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
     
-    NamedCommands.registerCommand("ShooterSpinUp",
-        Commands.parallel(
-            shooter.setShooterAutoVelocity(drive)
-                .until(shooter.shooterAtVelocitySetPoint()),
-            hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())));
+
+        NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
+        
+
+    // NamedCommands.registerCommand("ShooterSpinUp",
+    //     Commands.parallel(
+    //         shooter.setShooterAutoVelocity(drive)
+    //             .until(shooter.shooterAtVelocitySetPoint()),
+    //         hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())));
     
-    NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
-        Commands.parallel(
-            shooter.setShooterAutoVelocity(drive),
-            hood.setHoodAutoAngle(drive),
-            Commands.repeatingSequence(Commands.race(
-                Commands.repeatingSequence(Commands.race(
-                    indexer.runIndexer(),
-                    new WaitCommand(1)),
-                    Commands.race(
-                        indexer.stopIndexer(),
-                        new WaitCommand(0.5))),
-                new WaitCommand(0.5)),
-                Commands.race(
-                    indexer.stopIndexer(),
-                    new WaitCommand(0.2))),
-            kicker.runKicker()),
-        new WaitCommand(6.0)));
+
+    NamedCommands.registerCommand("AutoShooterSixSeconds", autoShootForSixSeconds());
+
+    // NamedCommands.registerCommand("AutoShooterSixSeconds", Commands.race(
+    //     Commands.parallel(
+    //         shooter.setShooterAutoVelocity(drive),
+    //         hood.setHoodAutoAngle(drive),
+    //         Commands.repeatingSequence(Commands.race(
+    //             Commands.repeatingSequence(Commands.race(
+    //                 indexer.runIndexer(),
+    //                 new WaitCommand(1)),
+    //                 Commands.race(
+    //                     indexer.stopIndexer(),
+    //                     new WaitCommand(0.5))),
+    //             new WaitCommand(0.5)),
+    //             Commands.race(
+    //                 indexer.stopIndexer(),
+    //                 new WaitCommand(0.2))),
+    //         kicker.runKicker()),
+    //     new WaitCommand(6.0)));
     
-    NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
-        shooter.setShooterAutoVelocity(drive),
-        hood.setHoodAutoAngle(drive),
-        Commands.repeatingSequence(Commands.race(
-            Commands.repeatingSequence(Commands.race(
-                indexer.runIndexer(),
-                new WaitCommand(1)),
-                Commands.race(
-                    indexer.stopIndexer(),
-                    new WaitCommand(0.5))),
-            new WaitCommand(0.5)),
-            Commands.race(
-                indexer.stopIndexer(),
-                new WaitCommand(0.2))),
-        kicker.runKicker()));
+
+    NamedCommands.registerCommand("AutoShooterEndless", autoShootForever());
+
+    // NamedCommands.registerCommand("AutoShooterEndless", Commands.parallel(
+    //     shooter.setShooterAutoVelocity(drive),
+    //     hood.setHoodAutoAngle(drive),
+    //     Commands.repeatingSequence(Commands.race(
+    //         Commands.repeatingSequence(Commands.race(
+    //             indexer.runIndexer(),
+    //             new WaitCommand(1)),
+    //             Commands.race(
+    //                 indexer.stopIndexer(),
+    //                 new WaitCommand(0.5))),
+    //         new WaitCommand(0.5)),
+    //         Commands.race(
+    //             indexer.stopIndexer(),
+    //             new WaitCommand(0.2))),
+    //     kicker.runKicker()));
+
+    NamedCommands.registerCommand("Stop", autoTurnOffAllButIntake());
     
-    NamedCommands.registerCommand("ShooterStop", Commands.parallel(
-        shooter.turnOffShooter(),
-        hood.retractHood(),
-        indexer.stopIndexer(),
-        kicker.stopKicker()));
+    // NamedCommands.registerCommand("ShooterStop", Commands.parallel(
+    //     shooter.shooterTurnOff(),
+    //     hood.retractHood(),
+    //     indexer.stopIndexer(),
+    //     kicker.stopKicker()));
     
     NamedCommands.getCommand("ShooterStop");
 
@@ -254,6 +268,8 @@ public class RobotContainer {
                 () -> -driverController.getLeftY(),
                 () -> -driverController.getLeftX(),
                 () -> Rotation2d.kZero));
+
+
 
     // Lock to Hub when RT is held
     driverController.leftTrigger().whileTrue(
@@ -304,7 +320,7 @@ public class RobotContainer {
     // Stop all subsystems (except drivetrain)
     operatorController.b().whileTrue(
         Commands.parallel(
-            shooter.turnOffShooter(),
+            shooter.shooterTurnOff(),
             kicker.stopKicker(),
             indexer.stopIndexer(),
             hood.retractHood(),
@@ -354,4 +370,54 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
+
+
+    // |==============================|
+    // |        Auto Commands         |
+    // |==============================|
+
+  public Command autoShootForSixSeconds(){
+   return Commands.race(
+        Commands.parallel(
+            shooter.setShooterAutoVelocity(drive),
+            hood.setHoodAutoAngle(drive),
+            indexer.pulseIndexer(),
+            kicker.runKicker()),
+        new WaitCommand(6.0));
+  }
+
+    public Command autoShooterSpinUp(){
+   return Commands.parallel(
+            shooter.setShooterAutoVelocity(drive)
+                .until(shooter.shooterAtVelocitySetPoint()),
+            hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()));
+  }
+
+    public Command autoShootForever(){
+   return Commands.parallel(
+        shooter.setShooterAutoVelocity(drive),
+        hood.setHoodAutoAngle(drive),
+        Commands.repeatingSequence(Commands.race(
+            indexer.pulseIndexer(),
+        kicker.runKicker())));
+    }
+
+        public Command autoTurnOffAllButIntake(){
+   return Commands.parallel(
+        shooter.shooterTurnOff(),
+        hood.retractHood(),
+        indexer.stopIndexer(),
+        kicker.stopKicker());
+    }
+
+    
+
+    // |==============================|
+    // |       TeleOp Commands        |
+    // |==============================|
+
+          public void rumble(){
+          double time = DriverStation.getMatchTime();
+   driverController.setRumble(null, mode);
+    }
 }

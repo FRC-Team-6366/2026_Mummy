@@ -130,9 +130,7 @@ public class Indexer extends SubsystemBase {
         Commands.race(
             this.runIndexer(),
             new WaitCommand(1)),
-        Commands.race(
-            this.stopIndexer(),
-            new WaitCommand(0.5)))
+            new WaitCommand(0.5))
         .withName("pulseIndexer()");
   }
 

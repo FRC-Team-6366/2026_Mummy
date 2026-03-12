@@ -41,7 +41,7 @@ public class Hood extends SubsystemBase {
    * @return Command to set hood to starting position
    */
   public Command retractHood() {
-    return this.hoodToAngle(this.angle).withName("retractHood()");
+    return this.hoodToAngle(15).withName("retractHood()");
   }
 
   /**

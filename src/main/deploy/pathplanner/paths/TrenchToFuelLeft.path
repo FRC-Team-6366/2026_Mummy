@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 90.0
+      "rotationDegrees": -89.81262823067561
     }
   ],
   "constraintZones": [],
@@ -53,7 +53,7 @@
   "folder": "Starting Locations to Get Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -88.63693122095023
   },
   "useDefaultConstraints": true
 }

@@ -122,7 +122,7 @@ public class Shooter extends SubsystemBase {
    * 
    * @return Command for turning off the shooter subsystem
    */
-  public Command turnOffShooter() {
+  public Command shooterTurnOff() {
     return this.runOnce(
         () -> {
           // Set power to 0
