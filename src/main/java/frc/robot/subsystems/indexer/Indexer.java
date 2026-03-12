@@ -36,7 +36,8 @@ public class Indexer extends SubsystemBase {
    * Indexer indexer = new Indexer(new IndexerIOTalonFX());
    * }</pre>
    * 
-   * @param io Hardware object that implements the IndexerIO interface class
+   * @param io
+   *          Hardware object that implements the IndexerIO interface class
    * 
    */
   public Indexer(IndexerIO io) {

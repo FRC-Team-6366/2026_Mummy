@@ -8,66 +8,60 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.units.measure.Voltage; //  Voltage
+import edu.wpi.first.units.measure.Voltage; // Voltage
 import frc.robot.Constants;
 import edu.wpi.first.units.measure.AngularVelocity; // Rotations Per Second
 import edu.wpi.first.units.measure.Current;// Supply current
 
+public class IndexerIOTalonFX implements IndexerIO {
+  private final TalonFX indexMotor;
 
-public class IndexerIOTalonFX implements IndexerIO{
-    private final TalonFX indexMotor;
-    
-    StatusSignal<Voltage> indexVolts;
-    StatusSignal<AngularVelocity> indexRps;
-    StatusSignal<Current> indexCurrent;
-    StatusSignal<Current> indexSupplyCurrent; 
+  StatusSignal<Voltage> indexVolts;
+  StatusSignal<AngularVelocity> indexRps;
+  StatusSignal<Current> indexCurrent;
+  StatusSignal<Current> indexSupplyCurrent;
 
+  public IndexerIOTalonFX() {
+    indexMotor = new TalonFX(Constants.IndexerConstants.indexerMotorId); // 16
+    TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
+    indMotorconfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    indexMotor.getConfigurator().apply(indMotorconfiguration);
 
-    public IndexerIOTalonFX(){
-        indexMotor= new TalonFX(Constants.IndexerConstants.indexerMotorId); //16
-        TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
-        indMotorconfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
-        indexMotor.getConfigurator().apply(indMotorconfiguration);
+    indexVolts = indexMotor.getMotorVoltage();
+    indexRps = indexMotor.getVelocity();
+    indexCurrent = indexMotor.getTorqueCurrent();
+    indexSupplyCurrent = indexMotor.getSupplyCurrent();
 
-        indexVolts = indexMotor.getMotorVoltage();
-        indexRps = indexMotor.getVelocity();
-        indexCurrent = indexMotor.getTorqueCurrent();
-        indexSupplyCurrent = indexMotor.getSupplyCurrent();
-        
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
         indexVolts,
         indexRps,
         indexCurrent,
-        indexSupplyCurrent
-        );
+        indexSupplyCurrent);
 
     indexMotor.optimizeBusUtilization(0.0, 1.0);
 
-    }
+  }
 
-    @Override
-    public void setIndexerPower(double power) {
-       double voltage = power *12;
-        VoltageOut volts = new VoltageOut(voltage);
-        indexMotor.setControl(volts);
-    }
+  @Override
+  public void setIndexerPower(double power) {
+    double voltage = power * 12;
+    VoltageOut volts = new VoltageOut(voltage);
+    indexMotor.setControl(volts);
+  }
 
-    @Override 
-    public void updateInputs(IndexerIOInputs inputs){
-     inputs.connected = BaseStatusSignal.refreshAll(
+  @Override
+  public void updateInputs(IndexerIOInputs inputs) {
+    inputs.connected = BaseStatusSignal.refreshAll(
         indexVolts,
         indexRps,
         indexCurrent,
-        indexSupplyCurrent
-        ).isOK();
-        inputs.indexVolts = this.indexVolts.getValueAsDouble();
-        inputs.indexRps = this.indexRps.getValueAsDouble();
-        inputs.indexCurrent = this.indexCurrent.getValueAsDouble();
-        inputs.indexSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();
-    }
-    
-    
+        indexSupplyCurrent).isOK();
+    inputs.indexVolts = this.indexVolts.getValueAsDouble();
+    inputs.indexRps = this.indexRps.getValueAsDouble();
+    inputs.indexCurrent = this.indexCurrent.getValueAsDouble();
+    inputs.indexSupplyCurrent = this.indexSupplyCurrent.getValueAsDouble();
+  }
 
 }

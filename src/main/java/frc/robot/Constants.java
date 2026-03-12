@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -32,64 +31,63 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
-    
+
   }
 
   public class drivetrainConstants {
     public static final int frontLeftDriveMotorId = 0;
-    public static final int frontLeftSteerMotorId = 1;  
+    public static final int frontLeftSteerMotorId = 1;
     public static final int frontLeftDriveEncoderId = 2;
     public static final int frontRightDriveMotorId = 3;
-    public static final int frontRightSteerMotorId = 4;  
+    public static final int frontRightSteerMotorId = 4;
     public static final int frontRightDriveEncoderId = 5;
     public static final int rearLeftDriveMotorId = 6;
-    public static final int rearLeftSteerMotorId = 7;  
+    public static final int rearLeftSteerMotorId = 7;
     public static final int rearLeftDriveEncoderId = 8;
     public static final int rearRightDriveMotorId = 9;
-    public static final int rearRightSteerMotorId = 10;  
+    public static final int rearRightSteerMotorId = 10;
     public static final int rearRightDriveEncoderId = 11;
   }
 
   public class IndexerConstants {
     public static final int indexerMotorId = 12;
-    public static final int indexerWallMotorId = 13; 
+    public static final int indexerWallMotorId = 13;
   }
 
   public class KickerConstants {
-    public static final int kickerMotorId = 14; 
+    public static final int kickerMotorId = 14;
 
     // Kicker power from 0 to 1
     public static final int kickerPower = 1;
   }
 
   public class ShooterConstants {
-    public static final int leadShooterMotorId = 15; //15
-    public static final int followerShooterMotorId = 16; //16
+    public static final int leadShooterMotorId = 15; // 15
+    public static final int followerShooterMotorId = 16; // 16
     public static final double shooterPosition1VelocityFPS = 55.0;
     public static final double shooterPosition2VelocityFPS = 63.0;
     public static final double shooterPosition3VelocityFPS = 100.0;
-    
-    public static final int hoodMotorId = 17; //17
+
+    public static final int hoodMotorId = 17; // 17
     public static final double hoodPosition1Angle = 22.0;
     public static final double hoodPosition2Angle = 36.3;
     public static final double hoodPosition3Angle = 25.17;
 
-    public static final int turretAimMotorId = 18; //18
-    
+    public static final int turretAimMotorId = 18; // 18
+
     // Small angle adjustment to compensate for shooter offset
     public static final double autoAimCompAngleRad = 0.0349;
   }
 
-  public class IntakeConstants{
-    public static final int intakeRollersMotorId = 19; //19
-    public static final int intakePivotMotorId = 20; //20
+  public class IntakeConstants {
+    public static final int intakeRollersMotorId = 19; // 19
+    public static final int intakePivotMotorId = 20; // 20
     public static final int intakePivotCANcoderId = 21;
 
     public static final double intakePivotStartAngleDegrees = 0;
     public static final double intakePivotRetractAngleDegrees = 0.1;
     public static final double intakePivotDeployAngleDegrees = 136;
     public static final double intakePivotPulseUpAngleDegrees = 50;
-    
 
     // Intake roller power from 0 to 1
     public static final double intakeRollerPower = 0.67;
@@ -97,7 +95,8 @@ public final class Constants {
 
   public class VisionConstants {
     // AprilTag layout
-    // public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
+    // public static AprilTagFieldLayout aprilTagLayout =
+    // AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
     public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
 
     // Camera names, must match names configured on coprocessor
@@ -106,13 +105,12 @@ public final class Constants {
     public static String camera2Name = "camRearLeft";
     public static String camera3Name = "camRearRight";
 
-
     public static double camFrontLeftX = Units.inchesToMeters(-10.466);
     public static double camFrontLeftY = Units.inchesToMeters(12.3);
     public static double camFrontLeftZ = Units.inchesToMeters(20.375);
     public static double camFrontLeftPitch = Units.degreesToRadians(-15);
     public static double camFrontLeftYaw = Units.degreesToRadians(10);
-    
+
     public static double camFrontRightX = Units.inchesToMeters(-10.466);
     public static double camFrontRightY = Units.inchesToMeters(-12.3);
     public static double camFrontRightZ = Units.inchesToMeters(20.375);
@@ -131,14 +129,16 @@ public final class Constants {
     public static double camRearRightPitch = Units.degreesToRadians(-15);
     public static double camRearRightYaw = Units.degreesToRadians(-170);
 
-
-
     // Robot to camera transforms or lets the camera know where they are
     // (Not used by Limelight, configure in web UI instead)
-    public static Transform3d robotToCamera0 = new Transform3d(camFrontLeftX, camFrontLeftY, camFrontLeftZ, new Rotation3d(0.0, camFrontLeftPitch, camFrontLeftYaw));
-    public static Transform3d robotToCamera1 = new Transform3d(camFrontRightX, camFrontRightY, camFrontRightZ, new Rotation3d(0.0, camFrontRightPitch, camFrontRightYaw));
-    public static Transform3d robotToCamera2 = new Transform3d(camRearLeftX, camRearLeftY, camRearLeftZ, new Rotation3d(0.0,  camRearLeftPitch, camRearLeftYaw));
-    public static Transform3d robotToCamera3 = new Transform3d(camRearRightX, camRearRightY, camRearRightZ, new Rotation3d(0.0, camRearRightPitch, camRearRightYaw));
+    public static Transform3d robotToCamera0 = new Transform3d(camFrontLeftX, camFrontLeftY, camFrontLeftZ,
+        new Rotation3d(0.0, camFrontLeftPitch, camFrontLeftYaw));
+    public static Transform3d robotToCamera1 = new Transform3d(camFrontRightX, camFrontRightY, camFrontRightZ,
+        new Rotation3d(0.0, camFrontRightPitch, camFrontRightYaw));
+    public static Transform3d robotToCamera2 = new Transform3d(camRearLeftX, camRearLeftY, camRearLeftZ,
+        new Rotation3d(0.0, camRearLeftPitch, camRearLeftYaw));
+    public static Transform3d robotToCamera3 = new Transform3d(camRearRightX, camRearRightY, camRearRightZ,
+        new Rotation3d(0.0, camRearRightPitch, camRearRightYaw));
 
     // Basic filtering thresholds
     public static double maxAmbiguity = 0.3;
