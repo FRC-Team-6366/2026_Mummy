@@ -34,7 +34,25 @@ public interface HoodIO {
    * @param angle
    *          Angle in degrees. Valid from 0 to 45 degrees max
    */
-  public void hoodToAngle(double angle);
+  public void hoodsToAngle(double angle);
+
+  /**
+   * Sets left hood to the position (number of rotations from start) based on
+   * provided angle.
+   * 
+   * @param angle
+   *          Angle in degrees. Valid from 0 to 45 degrees max
+   */
+  public void hoodToAngleLeft(double angle);
+
+  /**
+   * Sets left hood to the position (number of rotations from start) based on
+   * provided angle.
+   * 
+   * @param angle
+   *          Angle in degrees. Valid from 0 to 45 degrees max
+   */
+  public void hoodToAngleRight(double angle);
 
   /**
    * Sets the hood to move to a certian positon, otherwise known as

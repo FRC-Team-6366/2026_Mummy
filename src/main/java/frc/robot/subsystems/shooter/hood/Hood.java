@@ -41,7 +41,7 @@ public class Hood extends SubsystemBase {
    * @return Command to set hood to starting position
    */
   public Command retractHood() {
-    return this.hoodToAngle(15).withName("retractHood()");
+    return this.hoodsToAngle(15).withName("retractHood()");
   }
 
   /**
@@ -53,12 +53,28 @@ public class Hood extends SubsystemBase {
    *          Angle in degrees
    * @return Command to set hood at angle for shooting
    */
-  public Command hoodToAngle(double angle) {
+  public Command hoodsToAngle(double angle) {
     return this.run(
         () -> {
           this.angle = angle;
-          this.hoodIO.hoodToAngle(this.angle);
-        }).withName("hoodToAngle()");
+          this.hoodIO.hoodsToAngle(this.angle);
+        }).withName("hoodsToAngle()");
+  }
+
+  public Command hoodToAngleLeft(double angle) {
+    return this.run(
+      () -> {
+        this.hoodIO.hoodToAngleLeft(angle);
+      }
+    ).withName("hoodToAngleLeft()");
+  }
+
+  public Command hoodToAngleRight(double angle) {
+    return this.run(
+      () -> {
+        this.hoodIO.hoodToAngleRight(angle);
+      }
+    ).withName("hoodToAngleRight()");
   }
 
   /**
@@ -69,7 +85,7 @@ public class Hood extends SubsystemBase {
    * @return Command to set hood for close shooting
    */
   public Command hoodToAnglePosition1() {
-    return this.hoodToAngle(Constants.ShooterConstants.hoodPosition1Angle).withName("hoodToAnglePosition1()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition1Angle).withName("hoodToAnglePosition1()");
   }
 
   /**
@@ -80,7 +96,7 @@ public class Hood extends SubsystemBase {
    * @return Command to set hood for medium shooting
    */
   public Command hoodToAnglePosition2() {
-    return this.hoodToAngle(Constants.ShooterConstants.hoodPosition2Angle).withName("hoodToAnglePosition2()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition2Angle).withName("hoodToAnglePosition2()");
   }
 
   /**
@@ -91,7 +107,7 @@ public class Hood extends SubsystemBase {
    * @return Command to set hood for far shooting
    */
   public Command hoodToAnglePosition3() {
-    return this.hoodToAngle(Constants.ShooterConstants.hoodPosition3Angle).withName("hoodToAnglePosition3()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition3Angle).withName("hoodToAnglePosition3()");
   }
 
   /**
@@ -123,7 +139,7 @@ public class Hood extends SubsystemBase {
           double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
 
           this.angle = hoodAngleMap.get(distanceToHub);
-          this.hoodIO.hoodToAngle(angle);
+          this.hoodIO.hoodsToAngle(angle);
           // hubPose.getTranslation().getDistance(drive.getPose().getTranslation());
         }).withName("setHoodAutoAngle()");
   }

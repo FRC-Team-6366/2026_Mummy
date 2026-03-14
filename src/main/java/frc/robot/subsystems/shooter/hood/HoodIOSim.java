@@ -34,10 +34,22 @@ public class HoodIOSim implements HoodIO {
   }
 
   @Override
-  public void hoodToAngle(double angle) {
+  public void hoodsToAngle(double angle) {
     this.angleRad = angle * 2 * Math.PI;
     this.hoodMotorRight.setAngle(this.angleRad);
     this.hoodMotorLeft.setAngle(this.angleRad);
+  }
+
+  @Override
+  public void hoodToAngleLeft(double angle) {
+    this.angleRad = angle * 2 * Math.PI;
+    this.hoodMotorLeft.setAngle(this.angleRad);
+  }
+
+  @Override
+  public void hoodToAngleRight(double angle) {
+    this.angleRad = angle * 2 * Math.PI;
+    this.hoodMotorRight.setAngle(this.angleRad);
   }
 
   @Override

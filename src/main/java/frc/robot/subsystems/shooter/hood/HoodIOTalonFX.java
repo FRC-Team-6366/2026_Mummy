@@ -172,7 +172,7 @@ public class HoodIOTalonFX implements HoodIO {
    *          Angle in degrees. From 0 to 45 max
    */
   @Override
-  public void hoodToAngle(double angle) {
+  public void hoodsToAngle(double angle) {
     // We are trying to map the degrees 0 -> 45 to the motor rotations 0 -> 5.6
     // We map angle to an input value between 0 and 45 to prevent larger or smaller
     // values
@@ -182,6 +182,28 @@ public class HoodIOTalonFX implements HoodIO {
     this.hoodMotorLeft.setControl(positionVoltageRequestLeft.withPosition(angletoRotations));
     this.hoodMotorRight.setControl(positionVoltageRequestRight.withPosition(angletoRotations));
   }
+
+  @Override
+  public void hoodToAngleLeft(double angle) {
+    // We are trying to map the degrees 0 -> 45 to the motor rotations 0 -> 5.6
+    // We map angle to an input value between 0 and 45 to prevent larger or smaller
+    // values
+    // Then divide the angle by the ratio between the max angle (45) and the max
+    // postion in rotations (5.6)
+    double angletoRotations = (MathUtil.clamp(angle, 15.0, 45.0) - 15.0) / (30.0 / hoodMaxPosition);
+    this.hoodMotorLeft.setControl(positionVoltageRequestLeft.withPosition(angletoRotations));
+  }
+
+  @Override
+    public void hoodToAngleRight(double angle) {
+      // We are trying to map the degrees 0 -> 45 to the motor rotations 0 -> 5.6
+      // We map angle to an input value between 0 and 45 to prevent larger or smaller
+      // values
+      // Then divide the angle by the ratio between the max angle (45) and the max
+      // postion in rotations (5.6)
+      double angletoRotations = (MathUtil.clamp(angle, 15.0, 45.0) - 15.0) / (30.0 / hoodMaxPosition);
+      this.hoodMotorRight.setControl(positionVoltageRequestRight.withPosition(angletoRotations));
+    }
 
   @Override
   public double getHoodPositionErrorRight() {

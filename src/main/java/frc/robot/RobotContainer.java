@@ -271,7 +271,7 @@ public class RobotContainer {
             drive,
             () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
-    // Run intake rollers when LT is pressed
+    // Run intake rollers when RT is pressed
     driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
     // Switch to X pattern when X button is pressed
@@ -394,7 +394,7 @@ public class RobotContainer {
 
     return Commands.parallel(
         shooter.setShooterVelocityPosition3(),
-        hood.hoodToAngle(45),
+        hood.hoodsToAngle(45),
         kicker.runKicker(),
         Commands.repeatingSequence(Commands.race(
             indexer.runIndexer(),
@@ -402,5 +402,22 @@ public class RobotContainer {
             Commands.race(
                 indexer.stopIndexer(),
                 new WaitCommand(0.2))));
+  }
+
+  // |==============================|
+  // | Meme Commands |
+  // |==============================|
+
+  public Command miataWink() {
+    return Commands.repeatingSequence(
+        Commands.parallel(
+            hood.hoodToAngleLeft(0).until(hood.hoodAtPositionSetpoint()),
+            hood.hoodToAngleRight(20).until(hood.hoodAtPositionSetpoint())
+        ),
+        Commands.parallel(
+            hood.hoodToAngleLeft(20).until(hood.hoodAtPositionSetpoint()),
+            hood.hoodToAngleRight(0).until(hood.hoodAtPositionSetpoint())
+        )
+    );
   }
 }
