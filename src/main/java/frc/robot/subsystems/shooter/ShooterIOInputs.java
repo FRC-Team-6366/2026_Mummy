@@ -7,20 +7,39 @@ public class ShooterIOInputs {
   boolean connected = false;
 
   // For tracking Hardware statuses
-  double leadShooterVolts = 0;
-  double leadShooterPosition = 0;
-  double leadShooterRps = 0;
-  double leadShooterCurrent = 0;
-  double leadShooterSupplyCurrent = 0;
+  double rightLeadShooterVolts = 0;
+  double rightLeadShooterPosition = 0;
+  double rightLeadShooterRps = 0;
+  double rightLeadShooterCurrent = 0;
+  double rightLeadShooterSupplyCurrent = 0;
 
-  double followShooterVolts = 0;
-  double followShooterPosition = 0;
-  double followShooterRps = 0;
-  double followShooterCurrent = 0;
-  double followShooterSupplyCurrent = 0;
+  double rightFollowShooterVolts = 0;
+  double rightFollowShooterPosition = 0;
+  double rightFollowShooterRps = 0;
+  double rightFollowShooterCurrent = 0;
+  double rightFollowShooterSupplyCurrent = 0;
 
   // For tracking Setpoint statuses
-  double shooterVelocitySetpoint = 0;
-  double shooterVelocityError = 0;
-  boolean shooterAtVelocitySetpoint = false;
+  double rightShooterVelocitySetpoint = 0;
+  double rightShooterVelocityError = 0;
+  boolean rightShooterAtVelocitySetpoint = false;
+
+  double leftLeadShooterVolts = 0;
+  double leftLeadShooterPosition = 0;
+  double leftLeadShooterRps = 0;
+  double leftLeadShooterCurrent = 0;
+  double leftLeadShooterSupplyCurrent = 0;
+
+  double leftFollowShooterVolts = 0;
+  double leftFollowShooterPosition = 0;
+  double leftFollowShooterRps = 0;
+  double leftFollowShooterCurrent = 0;
+  double leftFollowShooterSupplyCurrent = 0;
+
+  // For tracking Setpoint statuses
+  double leftShooterVelocitySetpoint = 0;
+  double leftShooterVelocityError = 0;
+  boolean leftShooterAtVelocitySetpoint = false;
+
+
 }

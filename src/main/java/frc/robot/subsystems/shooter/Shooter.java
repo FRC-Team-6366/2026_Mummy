@@ -210,7 +210,7 @@ public class Shooter extends SubsystemBase {
    * @return BooleanSupplier: True hood is at its setpoint, false otherwise
    */
   public BooleanSupplier shooterAtVelocitySetPoint() {
-    return () -> shooterIO.shooterAtVelocitySetPoint();
+    return () -> shooterIO.rightShooterAtVelocitySetPoint();
   }
 
   @Override

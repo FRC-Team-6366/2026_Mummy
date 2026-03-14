@@ -62,8 +62,14 @@ public final class Constants {
   }
 
   public class ShooterConstants {
-    public static final int leadShooterMotorId = 15; // 15
-    public static final int followerShooterMotorId = 16; // 16
+    /**
+     * Id for Lead Right motor, where you are inside the robot looking
+     * in the same direction as the intake.
+     */
+    public static final int rightLeadShooterMotorId = 15; // 15
+    public static final int rightFollowerShooterMotorId = 16; // 16
+    public static final int leftLeadShooterMotorId = 22; // 
+    public static final int leftFollowerShooterMotorId = 23; // 
     public static final double shooterPosition1VelocityFPS = 55.0;
     public static final double shooterPosition2VelocityFPS = 63.0;
     public static final double shooterPosition3VelocityFPS = 100.0;
@@ -77,6 +83,8 @@ public final class Constants {
     // Small angle adjustment to compensate for shooter offset
     public static final double autoAimCompAngleRad = 0.0349;
   }
+
+  
 
   public class IntakeConstants {
     public static final int intakeRollersMotorId = 19; // 19
