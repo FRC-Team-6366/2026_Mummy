@@ -91,16 +91,16 @@ public class Robot extends LoggedRobot {
 
     double time = DriverStation.getMatchTime();
 
-    if (time <= 110 && time > 108) {
+    if (time <= 110 && time > 109) {
         m_robotContainer.rumbleBoth(1.0);
     }
-    else if (time <= 85 && time > 83) {
+    else if (time <= 85 && time > 84) {
         m_robotContainer.rumbleBoth(1.0);
     }
-    else if (time <= 60 && time > 58) {
+    else if (time <= 60 && time > 59) {
         m_robotContainer.rumbleBoth(1.0);
     }
-    else if (time <= 35 && time > 33) {
+    else if (time <= 35 && time > 34) {
         m_robotContainer.rumbleBoth(1.0);
     }
     else {
