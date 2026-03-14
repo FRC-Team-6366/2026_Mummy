@@ -24,14 +24,30 @@ public interface ShooterIO {
    * 
    * @return Difference of rotations per second
    */
-  public double getShooterVelocityError();
+  public double getRightShooterVelocityError();
+
+
+  /**
+   * Returns the amount of error between the shooter's current velocity
+   * and the shooter's setpoint velocity;
+   * 
+   * @return Difference of rotations per second
+   */
+  public double getLeftShooterVelocityError();
 
   /**
    * Checks if the shooter is at the requested velocity setpoint
    * 
    * @return True if shooter is at the velocity setpoint. False otherwise
    */
-  public boolean shooterAtVelocitySetPoint();
+  public boolean rightShooterAtVelocitySetPoint();
+
+  /**
+   * Checks if the shooter is at the requested velocity setpoint
+   * 
+   * @return True if shooter is at the velocity setpoint. False otherwise
+   */
+  public boolean leftShooterAtVelocitySetPoint();
 
   /**
    * Updates the supplied inputs objects with the current status of the

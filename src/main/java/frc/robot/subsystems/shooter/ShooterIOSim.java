@@ -28,31 +28,55 @@ public class ShooterIOSim implements ShooterIO {
   }
 
   @Override
-  public double getShooterVelocityError() {
+  public double getRightShooterVelocityError() {
     return this.rps - this.leadShooterMotor.getAngularVelocityRPM() / 60;
   }
 
   @Override
-  public boolean shooterAtVelocitySetPoint() {
-    return Math.abs(this.getShooterVelocityError()) < this.setpointThreshold;
+  public double getLeftShooterVelocityError() {
+    return this.rps - this.leadShooterMotor.getAngularVelocityRPM() / 60;
+  }
+
+  @Override
+  public boolean rightShooterAtVelocitySetPoint() {
+    return Math.abs(this.getRightShooterVelocityError()) < this.setpointThreshold;
+  }
+
+   @Override
+  public boolean leftShooterAtVelocitySetPoint() {
+    return Math.abs(this.getRightShooterVelocityError()) < this.setpointThreshold;
   }
 
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
     inputs.connected = true;
-    inputs.leadShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.leadShooterPosition = Double.POSITIVE_INFINITY;
-    inputs.leadShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
-    inputs.leadShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.leadShooterVolts = this.leadShooterMotor.getInputVoltage();
-    inputs.followShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.followShooterPosition = Double.POSITIVE_INFINITY;
-    inputs.followShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
-    inputs.followShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.followShooterVolts = this.leadShooterMotor.getInputVoltage();
-    inputs.shooterVelocitySetpoint = this.leadShooterMotor.getAngularVelocityRPM();
-    inputs.shooterVelocityError = this.getShooterVelocityError();
-    inputs.shooterAtVelocitySetpoint = this.shooterAtVelocitySetPoint();
+    inputs.rightLeadShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.rightLeadShooterPosition = Double.POSITIVE_INFINITY;
+    inputs.rightLeadShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
+    inputs.rightLeadShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.rightLeadShooterVolts = this.leadShooterMotor.getInputVoltage();
+    inputs.rightFollowShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.rightFollowShooterPosition = Double.POSITIVE_INFINITY;
+    inputs.rightFollowShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
+    inputs.rightFollowShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.rightFollowShooterVolts = this.leadShooterMotor.getInputVoltage();
+    inputs.rightShooterVelocitySetpoint = this.leadShooterMotor.getAngularVelocityRPM();
+    inputs.rightShooterVelocityError = this.getRightShooterVelocityError();
+    inputs.rightShooterAtVelocitySetpoint = this.rightShooterAtVelocitySetPoint();
+
+    inputs.leftLeadShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.leftLeadShooterPosition = Double.POSITIVE_INFINITY;
+    inputs.leftLeadShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
+    inputs.leftLeadShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.leftLeadShooterVolts = this.leadShooterMotor.getInputVoltage();
+    inputs.leftFollowShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.leftFollowShooterPosition = Double.POSITIVE_INFINITY;
+    inputs.leftFollowShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
+    inputs.leftFollowShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
+    inputs.leftFollowShooterVolts = this.leadShooterMotor.getInputVoltage();
+    inputs.leftShooterVelocitySetpoint = this.leadShooterMotor.getAngularVelocityRPM();
+    inputs.leftShooterVelocityError = this.getLeftShooterVelocityError();
+    inputs.leftShooterAtVelocitySetpoint = this.leftShooterAtVelocitySetPoint();
   }
 
 }
