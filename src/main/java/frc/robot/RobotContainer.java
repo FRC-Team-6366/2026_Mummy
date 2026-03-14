@@ -39,6 +39,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -359,9 +360,9 @@ public class RobotContainer {
   // | TeleOp Commands |
   // |==============================|
 
-  public void rumble() {
-    double time = DriverStation.getMatchTime();
-    driverController.setRumble(null, mode);
+  public void rumbleBoth(double power) {
+    driverController.setRumble(GenericHID.RumbleType.kBothRumble, power);
+    operatorController.setRumble(GenericHID.RumbleType.kBothRumble, power);
   }
 
   public Command turnOffAll() {

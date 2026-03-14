@@ -11,6 +11,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
@@ -87,6 +88,24 @@ public class Robot extends LoggedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    double time = DriverStation.getMatchTime();
+
+    if (time <= 110 && time > 108) {
+        m_robotContainer.rumbleBoth(1.0);
+    }
+    else if (time <= 85 && time > 83) {
+        m_robotContainer.rumbleBoth(1.0);
+    }
+    else if (time <= 60 && time > 58) {
+        m_robotContainer.rumbleBoth(1.0);
+    }
+    else if (time <= 35 && time > 33) {
+        m_robotContainer.rumbleBoth(1.0);
+    }
+    else {
+        m_robotContainer.rumbleBoth(0.0);
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
