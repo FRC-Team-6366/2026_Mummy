@@ -177,7 +177,7 @@ public class Shooter extends SubsystemBase {
 
   public Command setShooterAutoVelocity(Drive drive) {
     // Construct command
-    return Commands.run(
+    return this.run(
         () -> {
           // Check for alliance side
           // boolean isFlipped =

@@ -1,11 +1,14 @@
 package frc.robot.subsystems.intake;
 
+import java.time.chrono.ThaiBuddhistChronology;
 import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
@@ -122,7 +125,7 @@ public class Intake extends SubsystemBase {
         () -> {
           // Since this command needs to make a decision, we must handle
           // the decision making inside of the lambda!
-          if (this.intakeIO.getRotations().getRotations() < 0.25) {
+          if (this.intakeIO.getRotations().getRotations() < 0.4) {
             this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
             this.intakeIO.intakePivotToAngle(this.angle);
             this.intakeIO.setBrakeMode(false);
@@ -132,6 +135,20 @@ public class Intake extends SubsystemBase {
             this.intakeIO.setBrakeMode(true);
           }
         }).withName("toggleIntakePivot()");
+  }
+
+  public double getIntakeAngleSetpoint() {
+    return this.angle;
+  }
+
+  public Command intakePulsePivot() {
+    return Commands.repeatingSequence(
+            Commands.race(
+                this.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees),
+                new WaitCommand(1)),
+            Commands.race(
+                this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees),
+                new WaitCommand(1)));
   }
 
   @Override

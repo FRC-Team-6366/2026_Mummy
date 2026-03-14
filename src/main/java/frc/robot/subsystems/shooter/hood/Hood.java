@@ -103,7 +103,7 @@ public class Hood extends SubsystemBase {
    */
   public Command setHoodAutoAngle(Drive drive) {
     // Construct command
-    return Commands.run(
+    return this.run(
         () -> {
           // Check for alliance side
           // boolean isFlipped =

@@ -6,6 +6,7 @@ import org.littletonrobotics.junction.AutoLog;
 public class IntakeIOInputs {
   boolean connected = false;
 
+  double intakePivotSetpoint = 0;
   double intakePivotVolts = 0;
   double intakePivotPosition = 0;
   double intakePivotRps = 0;

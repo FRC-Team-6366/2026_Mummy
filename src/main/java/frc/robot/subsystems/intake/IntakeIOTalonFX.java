@@ -95,7 +95,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
 
     intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
-    // intakePivotCANcoder.setPosition(0.12);
+    intakePivotCANcoder.setPosition(0.12);
 
     iPCANcfg = new CANcoderConfiguration();
     iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
@@ -125,7 +125,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     intakePivotMotor.optimizeBusUtilization(0, 1);
 
     voltageRequest = new VoltageOut(0);
-    positionVoltageRequest = new PositionVoltage(0);
+    positionVoltageRequest = new PositionVoltage(0.12);
 
     this.setPointTolerance = intakePivotMaxPosition * this.setPointTolerancePercent;
   }
@@ -210,6 +210,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     inputs.intakePivotCurrent = this.intakePivotCurrent.getValueAsDouble();
     inputs.intakePivotSupplyCurrent = this.intakePivotSupplyCurrent.getValueAsDouble();
     inputs.intakePivotErrorFromSetpoint = this.intakePivotErrorFromSetpoint.getValueAsDouble();
+    inputs.intakePivotSetpoint = this.positionVoltageRequest.Position;
 
   }
 

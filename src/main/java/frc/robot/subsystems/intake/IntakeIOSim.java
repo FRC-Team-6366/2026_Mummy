@@ -92,6 +92,7 @@ public class IntakeIOSim implements IntakeIO {
     inputs.intakePivotCurrent = this.intakePivotMotor.getCurrentDrawAmps();
     inputs.intakePivotSupplyCurrent = this.intakePivotMotor.getCurrentDrawAmps();
     inputs.intakePivotErrorFromSetpoint = this.getIntakePivotPositionError();
+    inputs.intakePivotSetpoint = this.intakePivotAngleRad;
   }
 
 }
