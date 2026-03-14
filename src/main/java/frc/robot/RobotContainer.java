@@ -305,7 +305,7 @@ public class RobotContainer {
 
     operatorController.x().whileTrue(intake.intakePulsePivot());
 
-    operatorController.y().whileTrue(this.miataWink());
+    // operatorController.y().whileTrue(this.miataWink());
 
   }
 
@@ -411,16 +411,16 @@ public class RobotContainer {
   // | Meme Commands |
   // |==============================|
 
-  public Command miataWink() {
-    return Commands.repeatingSequence(
-        Commands.parallel(
-            hood.hoodToAngleLeft(0).until(hood.hoodAtPositionSetpoint()),
-            hood.hoodToAngleRight(20).until(hood.hoodAtPositionSetpoint())
-        ),
-        Commands.parallel(
-            hood.hoodToAngleLeft(20).until(hood.hoodAtPositionSetpoint()),
-            hood.hoodToAngleRight(0).until(hood.hoodAtPositionSetpoint())
-        )
-    );
-  }
+//   public Command miataWink() {
+//     return Commands.repeatingSequence(
+//         Commands.parallel(
+//             hood.hoodToAngleLeft(0).until(hood.hoodAtPositionSetpoint()),
+//             hood.hoodToAngleRight(20).until(hood.hoodAtPositionSetpoint())
+//         ),
+//         Commands.parallel(
+//             hood.hoodToAngleLeft(20).until(hood.hoodAtPositionSetpoint()),
+//             hood.hoodToAngleRight(0).until(hood.hoodAtPositionSetpoint())
+//         )
+//     );
+//   }
 }
