@@ -125,6 +125,11 @@ public class Indexer extends SubsystemBase {
         }).withName("decrementIndexer()");
   }
 
+  /**
+   * Returns command to pulse the indexer on for 1 second and off for half
+   * a second
+   * @return Pulse Indexer command
+   */
   public Command pulseIndexer() {
     return Commands.repeatingSequence(
         Commands.race(
