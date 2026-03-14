@@ -304,6 +304,8 @@ public class RobotContainer {
 
     operatorController.x().whileTrue(intake.intakePulsePivot());
 
+    operatorController.y().whileTrue(this.miataWink());
+
   }
 
   /**
