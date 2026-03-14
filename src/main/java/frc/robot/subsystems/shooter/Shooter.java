@@ -225,6 +225,8 @@ public class Shooter extends SubsystemBase {
     Logger.recordOutput("ShooterSubsystem/DistanceToHub", this.distanceToHub);
     Logger.recordOutput("ShooterSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("ShooterSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

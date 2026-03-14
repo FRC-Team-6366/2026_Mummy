@@ -162,6 +162,8 @@ public class Hood extends SubsystemBase {
     Logger.recordOutput("HoodSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
     Logger.recordOutput("HoodSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("HoodSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

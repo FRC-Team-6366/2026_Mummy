@@ -161,6 +161,8 @@ public class Intake extends SubsystemBase {
     Logger.processInputs("IntakeSubsystem", inputs);
     Logger.recordOutput("IntakeSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("IntakeSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

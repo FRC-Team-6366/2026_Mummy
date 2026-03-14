@@ -102,6 +102,8 @@ public class Kicker extends SubsystemBase {
     Logger.processInputs("Kicker Subsystem", inputs);
     Logger.recordOutput("KickerSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("KickerSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

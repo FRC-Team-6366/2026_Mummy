@@ -329,14 +329,14 @@ public class RobotContainer {
             hood.setHoodAutoAngle(drive),
             indexer.pulseIndexer(),
             kicker.runKicker()),
-        new WaitCommand(6.0));
+        new WaitCommand(6.0)).withName("autoShootForSixSeconds");
   }
 
   public Command autoShooterSpinUp() {
     return Commands.parallel(
         shooter.setShooterAutoVelocity(drive)
             .until(shooter.shooterAtVelocitySetPoint()),
-        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()));
+        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())).withName("autoShooterSpinUp");
   }
 
   public Command autoShootForever() {
@@ -345,7 +345,7 @@ public class RobotContainer {
         hood.setHoodAutoAngle(drive),
         Commands.repeatingSequence(Commands.race(
             indexer.pulseIndexer(),
-            kicker.runKicker())));
+            kicker.runKicker()))).withName("autoShootForever");
   }
 
   public Command autoTurnOffAllButIntake() {
@@ -353,7 +353,7 @@ public class RobotContainer {
         shooter.shooterTurnOff(),
         hood.retractHood(),
         indexer.stopIndexer(),
-        kicker.stopKicker());
+        kicker.stopKicker()).withName("autoTurnOffAllButIntake");
   }
 
   // |==============================|
@@ -371,7 +371,7 @@ public class RobotContainer {
         kicker.stopKicker(),
         indexer.stopIndexer(),
         hood.retractHood(),
-        intake.intakeStopRollers());
+        intake.intakeStopRollers()).withName("turnOffAll");
   }
 
   public Command shootAtPostion1() {
@@ -390,7 +390,7 @@ public class RobotContainer {
                 new WaitCommand(1)),
                 Commands.race(
                     indexer.stopIndexer(),
-                    new WaitCommand(0.5)))));
+                    new WaitCommand(0.5))))).withName("shootAtPostion1");
   }
 
   public Command passFuel() {
@@ -404,7 +404,7 @@ public class RobotContainer {
             new WaitCommand(0.5)),
             Commands.race(
                 indexer.stopIndexer(),
-                new WaitCommand(0.2))));
+                new WaitCommand(0.2)))).withName("passFuel");
   }
 
   // |==============================|
