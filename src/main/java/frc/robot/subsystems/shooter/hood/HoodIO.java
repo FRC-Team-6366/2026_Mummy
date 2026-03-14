@@ -4,7 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 public interface HoodIO {
   /**
-   * Gets the current number of rotations of the hood motor from its starting
+   * Gets the current number of rotations of the right hood motor from its starting
    * position
    * <p>
    * <b>NOTE: Move the hood to fully restracted position before turning on the
@@ -13,10 +13,22 @@ public interface HoodIO {
    * @return Rotation2d object representing the number of rotations of the hood
    *         motor
    */
-  public Rotation2d getRotations();
+  public Rotation2d getRotationsRight();
 
   /**
-   * Sets the hood to the position (number of rotations from start) based on
+   * Gets the current number of rotations of the left hood motor from its starting
+   * position
+   * <p>
+   * <b>NOTE: Move the hood to fully restracted position before turning on the
+   * robot!</b>
+   * 
+   * @return Rotation2d object representing the number of rotations of the hood
+   *         motor
+   */
+  public Rotation2d getRotationsLeft();
+
+  /**
+   * Sets both hoods to the position (number of rotations from start) based on
    * provided angle.
    * 
    * @param angle
@@ -36,15 +48,23 @@ public interface HoodIO {
   // public void hoodToPosition(double position);
 
   /**
-   * Gets the difference between the motor's position (number of rotations) from
+   * Gets the difference between the right motor's position (number of rotations) from
    * its current setpoint
    * 
    * @return Error amount
    */
-  public double getHoodPositionError();
+  public double getHoodPositionErrorRight();
 
   /**
-   * Returns whether the hood is at its set point distance, given a percent of
+   * Gets the difference between the left motor's position (number of rotations) from
+   * its current setpoint
+   * 
+   * @return Error amount
+   */
+  public double getHoodPositionErrorLeft();
+
+  /**
+   * Returns whether both hoods are at its set point distance, given a percent of
    * tolerence.
    * 
    * @return True if hood is at setpoint, false otherwise

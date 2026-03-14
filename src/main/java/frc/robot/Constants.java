@@ -68,12 +68,11 @@ public final class Constants {
     public static final double shooterPosition2VelocityFPS = 63.0;
     public static final double shooterPosition3VelocityFPS = 100.0;
 
-    public static final int hoodMotorId = 17; // 17
+    public static final int hoodRightMotorId = 17; // 17
+    public static final int hoodLeftMotorId = 18;
     public static final double hoodPosition1Angle = 22.0;
     public static final double hoodPosition2Angle = 36.3;
     public static final double hoodPosition3Angle = 25.17;
-
-    public static final int turretAimMotorId = 18; // 18
 
     // Small angle adjustment to compensate for shooter offset
     public static final double autoAimCompAngleRad = 0.0349;

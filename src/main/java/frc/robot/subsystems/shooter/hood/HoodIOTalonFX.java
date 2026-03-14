@@ -3,6 +3,7 @@ package frc.robot.subsystems.shooter.hood;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -17,20 +18,30 @@ import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants.ShooterConstants;
 
 public class HoodIOTalonFX implements HoodIO {
-  TalonFX hoodMotor;
+
+  TalonFX hoodMotorRight;
+  TalonFX hoodMotorLeft;
 
   /**
    * Used to control motor output by specifying postiton setpoint
    * (number of rotations from start position)
    */
-  PositionVoltage positionVoltageRequest;
+  PositionVoltage positionVoltageRequestRight;
+  PositionVoltage positionVoltageRequestLeft;
 
-  StatusSignal<Voltage> hoodVolts;
-  StatusSignal<Angle> hoodPosition;
-  StatusSignal<AngularVelocity> hoodRps;
-  StatusSignal<Current> hoodCurrent;
-  StatusSignal<Current> hoodSupplyCurrent;
-  StatusSignal<Double> hoodErrorFromSetpoint;
+  StatusSignal<Voltage> hoodVoltsRight;
+  StatusSignal<Angle> hoodPositionRight;
+  StatusSignal<AngularVelocity> hoodRPSRight;
+  StatusSignal<Current> hoodCurrentRight;
+  StatusSignal<Current> hoodSupplyCurrentRight;
+  StatusSignal<Double> hoodErrorFromSetpointRight;
+
+  StatusSignal<Voltage> hoodVoltsLeft;
+  StatusSignal<Angle> hoodPositionLeft;
+  StatusSignal<AngularVelocity> hoodRPSLeft;
+  StatusSignal<Current> hoodCurrentLeft;
+  StatusSignal<Current> hoodSupplyCurrentLeft;
+  StatusSignal<Double> hoodErrorFromSetpointLeft;
 
   // Speficy min and max position for adjusting
   // other elements of the hood subsystem such as tolerance amount
@@ -48,16 +59,11 @@ public class HoodIOTalonFX implements HoodIO {
   double positionSetPointHigh;
 
   public HoodIOTalonFX() {
-    // Instantiating Hood motor and its variables for monitoring
-    hoodMotor = new TalonFX(ShooterConstants.hoodMotorId);
-    hoodVolts = hoodMotor.getMotorVoltage();
-    hoodPosition = hoodMotor.getPosition();
-    hoodRps = hoodMotor.getVelocity();
-    hoodCurrent = hoodMotor.getTorqueCurrent();
-    hoodSupplyCurrent = hoodMotor.getSupplyCurrent();
-    hoodErrorFromSetpoint = hoodMotor.getClosedLoopError();
 
-    // Instantiating and configuring configuration for Hood motor
+    // |==============================|
+    // | Common Hood Configuration    |
+    // |==============================|
+
     TalonFXConfiguration cfg = new TalonFXConfiguration();
     cfg.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
     cfg.Slot0.kP = 1;
@@ -66,27 +72,77 @@ public class HoodIOTalonFX implements HoodIO {
     cfg.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 5.6;
     cfg.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
     cfg.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
-    this.hoodMotor.getConfigurator().apply(cfg);
+
+    // |==============================|
+    // | Right Hand Shooter Assy      |
+    // |==============================|
+
+    // Instantiating Right Hood motor and its variables for monitoring
+    hoodMotorRight = new TalonFX(ShooterConstants.hoodRightMotorId);
+    hoodVoltsRight = hoodMotorRight.getMotorVoltage();
+    hoodPositionRight = hoodMotorRight.getPosition();
+    hoodRPSRight = hoodMotorRight.getVelocity();
+    hoodCurrentRight = hoodMotorRight.getTorqueCurrent();
+    hoodSupplyCurrentRight = hoodMotorRight.getSupplyCurrent();
+    hoodErrorFromSetpointRight = hoodMotorRight.getClosedLoopError();
+
+    // Apply configuration
+    this.hoodMotorRight.getConfigurator().apply(cfg);
 
     // Set inital encoder value to 0
     // NOTE: Make sure hood is completely retracted with starting robot!
-    hoodMotor.setPosition(0);
+    hoodMotorRight.setPosition(0);
+
+    // |==============================|
+    // | Left Hand Shooter Assy      |
+    // |==============================|
+
+    // Instantiating Left Hood motor and its variables for monitoring
+    hoodMotorLeft = new TalonFX(ShooterConstants.hoodLeftMotorId);
+    hoodVoltsLeft = hoodMotorLeft.getMotorVoltage();
+    hoodPositionLeft = hoodMotorLeft.getPosition();
+    hoodRPSLeft = hoodMotorLeft.getVelocity();
+    hoodCurrentLeft = hoodMotorLeft.getTorqueCurrent();
+    hoodSupplyCurrentLeft = hoodMotorLeft.getSupplyCurrent();
+    hoodErrorFromSetpointLeft = hoodMotorLeft.getClosedLoopError();
+
+    // Apply configuration
+    this.hoodMotorLeft.getConfigurator().apply(cfg);
+
+    // Set inital encoder value to 0
+    // NOTE: Make sure hood is completely retracted with starting robot!
+    hoodMotorLeft.setPosition(0);
+
+    // |==============================|
+    // | Status Signal Updates        |
+    // |==============================|
 
     // Set update period for device metrics to be 50 Hz (20 milliseconds)
     BaseStatusSignal.setUpdateFrequencyForAll(
-        50,
-        hoodVolts,
-        hoodPosition,
-        hoodRps,
-        hoodCurrent,
-        hoodSupplyCurrent,
-        hoodErrorFromSetpoint);
+      50,
+      hoodVoltsRight,
+      hoodPositionRight,
+      hoodRPSRight,
+      hoodCurrentRight,
+      hoodSupplyCurrentRight,
+      hoodErrorFromSetpointRight,
+      hoodVoltsLeft,
+      hoodPositionLeft,
+      hoodRPSLeft,
+      hoodCurrentLeft,
+      hoodSupplyCurrentLeft,
+      hoodErrorFromSetpointLeft
+    );
 
-    hoodMotor.optimizeBusUtilization(0.0, 1.0);
+    hoodMotorRight.optimizeBusUtilization(0.0, 1.0);
+    hoodMotorLeft.optimizeBusUtilization(0.0, 1.0);
 
     // Instantiating position voltage object for setting the output position
-    positionVoltageRequest = new PositionVoltage(0);
-    hoodMotor.setControl(positionVoltageRequest.withSlot(0));
+    positionVoltageRequestRight = new PositionVoltage(0);
+    hoodMotorRight.setControl(positionVoltageRequestRight.withSlot(0));
+
+    positionVoltageRequestLeft = new PositionVoltage(0);
+    hoodMotorLeft.setControl(positionVoltageRequestLeft.withSlot(0));
 
     // Compute setpoint tolerance from max position and tolerance percent
     this.setPointTolerance = hoodMaxPosition * this.setPointTolerancePercent / 100;
@@ -96,8 +152,16 @@ public class HoodIOTalonFX implements HoodIO {
    * {@inheritDoc}
    */
   @Override
-  public Rotation2d getRotations() {
-    return new Rotation2d(Units.rotationsToRadians(hoodMotor.getPosition().getValueAsDouble()));
+  public Rotation2d getRotationsRight() {
+    return new Rotation2d(Units.rotationsToRadians(hoodMotorRight.getPosition().getValueAsDouble()));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Rotation2d getRotationsLeft() {
+    return new Rotation2d(Units.rotationsToRadians(hoodMotorLeft.getPosition().getValueAsDouble()));
   }
 
   /**
@@ -115,42 +179,64 @@ public class HoodIOTalonFX implements HoodIO {
     // Then divide the angle by the ratio between the max angle (45) and the max
     // postion in rotations (5.6)
     double angletoRotations = (MathUtil.clamp(angle, 15.0, 45.0) - 15.0) / (30.0 / hoodMaxPosition);
-    this.hoodMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
+    this.hoodMotorLeft.setControl(positionVoltageRequestLeft.withPosition(angletoRotations));
+    this.hoodMotorRight.setControl(positionVoltageRequestRight.withPosition(angletoRotations));
   }
 
   @Override
-  public double getHoodPositionError() {
-    return this.hoodMotor.getClosedLoopError().getValueAsDouble();
+  public double getHoodPositionErrorRight() {
+    return this.hoodMotorRight.getClosedLoopError().getValueAsDouble();
+  }
+
+  @Override
+  public double getHoodPositionErrorLeft() {
+    return this.hoodMotorLeft.getClosedLoopError().getValueAsDouble();
   }
 
   @Override
   public boolean hoodAtPositionSetpoint() {
     // Get absolute value of the error and see if it is less
-    // than the setpoint tolerance
-    return Math.abs(this.getHoodPositionError()) < this.setPointTolerance;
+    // than the setpoint tolerance for both shooter assemblies
+    return (Math.abs(this.getHoodPositionErrorRight()) < this.setPointTolerance) && (Math.abs(this.getHoodPositionErrorLeft()) < this.setPointTolerance);
   }
 
   @Override
   public void updateInputs(HoodIOInputs inputs) {
     inputs.connected = BaseStatusSignal.refreshAll(
-        hoodVolts,
-        hoodPosition,
-        hoodRps,
-        hoodCurrent,
-        hoodSupplyCurrent,
-        hoodErrorFromSetpoint).isOK();
+      hoodVoltsRight,
+      hoodPositionRight,
+      hoodRPSRight,
+      hoodCurrentRight,
+      hoodSupplyCurrentRight,
+      hoodErrorFromSetpointRight,
+      hoodVoltsLeft,
+      hoodPositionLeft,
+      hoodRPSLeft,
+      hoodCurrentLeft,
+      hoodSupplyCurrentLeft,
+      hoodErrorFromSetpointLeft).isOK();
 
     // Update Hardware fields
-    inputs.hoodVolts = this.hoodVolts.getValueAsDouble();
-    inputs.hoodPosition = this.hoodPosition.getValueAsDouble();
-    inputs.hoodRps = this.hoodRps.getValueAsDouble();
-    inputs.hoodCurrent = this.hoodCurrent.getValueAsDouble();
-    inputs.hoodSupplyCurrent = this.hoodSupplyCurrent.getValueAsDouble();
+    inputs.hoodVoltsRight = this.hoodVoltsRight.getValueAsDouble();
+    inputs.hoodPositionRight = this.hoodPositionRight.getValueAsDouble();
+    inputs.hoodRPSRight = this.hoodRPSRight.getValueAsDouble();
+    inputs.hoodCurrentRight = this.hoodCurrentRight.getValueAsDouble();
+    inputs.hoodSupplyCurrentRight = this.hoodSupplyCurrentRight.getValueAsDouble();
+
+    inputs.hoodVoltsLeft = this.hoodVoltsLeft.getValueAsDouble();
+    inputs.hoodPositionLeft = this.hoodPositionLeft.getValueAsDouble();
+    inputs.hoodRPSLeft = this.hoodRPSLeft.getValueAsDouble();
+    inputs.hoodCurrentLeft = this.hoodCurrentLeft.getValueAsDouble();
+    inputs.hoodSupplyCurrentLeft = this.hoodSupplyCurrentLeft.getValueAsDouble();
 
     // Upodate Setpoint related fields
-    inputs.hoodPositionSetpoint = this.positionVoltageRequest.Position;
-    inputs.hoodPositionError = this.hoodErrorFromSetpoint.getValueAsDouble();
-    inputs.hoodAtSetpoint = this.hoodAtPositionSetpoint();
+    inputs.hoodPositionSetpointRight = this.positionVoltageRequestRight.Position;
+    inputs.hoodPositionErrorRight = this.hoodErrorFromSetpointRight.getValueAsDouble();
+    inputs.hoodAtSetpointRight = this.hoodAtPositionSetpoint();
+
+    inputs.hoodPositionSetpointLeft = this.positionVoltageRequestLeft.Position;
+    inputs.hoodPositionErrorLeft = this.hoodErrorFromSetpointLeft.getValueAsDouble();
+    inputs.hoodAtSetpointLeft = this.hoodAtPositionSetpoint();
   }
 
 }

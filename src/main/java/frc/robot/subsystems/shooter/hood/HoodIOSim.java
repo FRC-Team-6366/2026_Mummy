@@ -7,7 +7,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class HoodIOSim implements HoodIO {
-  private DCMotorSim hoodMotor;
+  private DCMotorSim hoodMotorRight;
+  private DCMotorSim hoodMotorLeft;
   private DCMotor HOOD_GEARBOX = DCMotor.getKrakenX60(1);
   static final double hoodMinPosition = 0;
   static final double hoodMaxPosition = 5.6;
@@ -15,41 +16,64 @@ public class HoodIOSim implements HoodIO {
   private double setpointThreshold = (5.6 / 100) * 2;
 
   public HoodIOSim() {
-    this.hoodMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(HOOD_GEARBOX, 1, 1), HOOD_GEARBOX, 0.004, 0.04);
-    this.hoodMotor.setAngle(Units.degreesToRadians(15));
+    this.hoodMotorRight = new DCMotorSim(LinearSystemId.createDCMotorSystem(HOOD_GEARBOX, 1, 1), HOOD_GEARBOX, 0.004, 0.04);
+    this.hoodMotorRight.setAngle(Units.degreesToRadians(15));
+
+    this.hoodMotorLeft = new DCMotorSim(LinearSystemId.createDCMotorSystem(HOOD_GEARBOX, 1, 1), HOOD_GEARBOX, 0.004, 0.04);
+    this.hoodMotorLeft.setAngle(Units.degreesToRadians(15));
   }
 
   @Override
-  public Rotation2d getRotations() {
-    return Rotation2d.fromRadians(this.hoodMotor.getAngularPositionRad());
+  public Rotation2d getRotationsRight() {
+    return Rotation2d.fromRadians(this.hoodMotorRight.getAngularPositionRad());
+  }
+
+  @Override
+  public Rotation2d getRotationsLeft() {
+    return Rotation2d.fromRadians(this.hoodMotorLeft.getAngularPositionRad());
   }
 
   @Override
   public void hoodToAngle(double angle) {
     this.angleRad = angle * 2 * Math.PI;
-    this.hoodMotor.setAngle(this.angleRad);
+    this.hoodMotorRight.setAngle(this.angleRad);
+    this.hoodMotorLeft.setAngle(this.angleRad);
   }
 
   @Override
-  public double getHoodPositionError() {
-    return this.angleRad - this.hoodMotor.getAngularPositionRad();
+  public double getHoodPositionErrorRight() {
+    return this.angleRad - this.hoodMotorRight.getAngularPositionRad();
+  }
+
+  @Override
+  public double getHoodPositionErrorLeft() {
+    return this.angleRad - this.hoodMotorLeft.getAngularPositionRad();
   }
 
   @Override
   public boolean hoodAtPositionSetpoint() {
-    return Math.abs(this.getHoodPositionError()) < this.setpointThreshold;
+    return Math.abs(this.getHoodPositionErrorRight()) < this.setpointThreshold && Math.abs(this.getHoodPositionErrorLeft()) < this.setpointThreshold;
   }
 
   @Override
   public void updateInputs(HoodIOInputs inputs) {
     inputs.connected = true;
-    inputs.hoodCurrent = this.hoodMotor.getCurrentDrawAmps();
-    inputs.hoodPosition = this.hoodMotor.getAngularPositionRotations();
-    inputs.hoodPositionError = this.getHoodPositionError();
-    inputs.hoodPositionSetpoint = Units.radiansToRotations(angleRad);
-    inputs.hoodRps = this.hoodMotor.getAngularVelocityRPM() / 60;
-    inputs.hoodSupplyCurrent = this.hoodMotor.getCurrentDrawAmps();
-    inputs.hoodVolts = this.hoodMotor.getInputVoltage();
-    inputs.hoodAtSetpoint = this.hoodAtPositionSetpoint();
+    inputs.hoodCurrentRight = this.hoodMotorRight.getCurrentDrawAmps();
+    inputs.hoodPositionRight = this.hoodMotorRight.getAngularPositionRotations();
+    inputs.hoodPositionErrorRight = this.getHoodPositionErrorRight();
+    inputs.hoodPositionSetpointRight = Units.radiansToRotations(angleRad);
+    inputs.hoodRPSRight = this.hoodMotorRight.getAngularVelocityRPM() / 60;
+    inputs.hoodSupplyCurrentRight = this.hoodMotorRight.getCurrentDrawAmps();
+    inputs.hoodVoltsRight = this.hoodMotorRight.getInputVoltage();
+    inputs.hoodAtSetpointRight = this.hoodAtPositionSetpoint();
+
+    inputs.hoodCurrentLeft = this.hoodMotorLeft.getCurrentDrawAmps();
+    inputs.hoodPositionLeft = this.hoodMotorLeft.getAngularPositionRotations();
+    inputs.hoodPositionErrorLeft = this.getHoodPositionErrorLeft();
+    inputs.hoodPositionSetpointLeft = Units.radiansToRotations(angleRad);
+    inputs.hoodRPSLeft = this.hoodMotorLeft.getAngularVelocityRPM() / 60;
+    inputs.hoodSupplyCurrentLeft = this.hoodMotorLeft.getCurrentDrawAmps();
+    inputs.hoodVoltsLeft = this.hoodMotorLeft.getInputVoltage();
+    inputs.hoodAtSetpointLeft = this.hoodAtPositionSetpoint();
   }
 }
