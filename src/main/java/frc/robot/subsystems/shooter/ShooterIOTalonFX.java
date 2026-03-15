@@ -262,7 +262,6 @@ public class ShooterIOTalonFX implements ShooterIO {
       this.leftFlywheelSim.setInput(leftLeadShooterMotorVoltage);
       this.leftFlywheelSim.update(0.020);
 
-
       // 4. Write simulated velocity/position back into the TalonFX sim states
       double rightFlywheelRPS = rightFlywheelSim.getAngularVelocityRPM() / 60;
       double leftFlywheelRPS = leftFlywheelSim.getAngularVelocityRPM() / 60;
