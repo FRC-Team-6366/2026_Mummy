@@ -87,7 +87,7 @@ public interface HoodIO {
    * 
    * @return True if hood is at setpoint, false otherwise
    */
-  public boolean hoodAtPositionSetpoint();
+  public boolean hoodsAtPositionSetpoint();
 
   /**
    * Updates the supplied inputs object with the current status of the

@@ -215,7 +215,7 @@ public class HoodIOTalonFX implements HoodIO {
   }
 
   @Override
-  public boolean hoodAtPositionSetpoint() {
+  public boolean hoodsAtPositionSetpoint() {
     // Get absolute value of the error and see if it is less
     // than the setpoint tolerance for both shooter assemblies
     return (Math.abs(this.getHoodPositionErrorRight()) < this.setPointTolerance) && (Math.abs(this.getHoodPositionErrorLeft()) < this.setPointTolerance);
@@ -253,11 +253,11 @@ public class HoodIOTalonFX implements HoodIO {
     // Upodate Setpoint related fields
     inputs.hoodPositionSetpointRight = this.positionVoltageRequestRight.Position;
     inputs.hoodPositionErrorRight = this.hoodErrorFromSetpointRight.getValueAsDouble();
-    inputs.hoodAtSetpointRight = this.hoodAtPositionSetpoint();
+    inputs.hoodAtSetpointRight = this.hoodsAtPositionSetpoint();
 
     inputs.hoodPositionSetpointLeft = this.positionVoltageRequestLeft.Position;
     inputs.hoodPositionErrorLeft = this.hoodErrorFromSetpointLeft.getValueAsDouble();
-    inputs.hoodAtSetpointLeft = this.hoodAtPositionSetpoint();
+    inputs.hoodAtSetpointLeft = this.hoodsAtPositionSetpoint();
   }
 
 }

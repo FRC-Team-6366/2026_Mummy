@@ -63,7 +63,7 @@ public class HoodIOSim implements HoodIO {
   }
 
   @Override
-  public boolean hoodAtPositionSetpoint() {
+  public boolean hoodsAtPositionSetpoint() {
     return Math.abs(this.getHoodPositionErrorRight()) < this.setpointThreshold && Math.abs(this.getHoodPositionErrorLeft()) < this.setpointThreshold;
   }
 
@@ -77,7 +77,7 @@ public class HoodIOSim implements HoodIO {
     inputs.hoodRPSRight = this.hoodMotorRight.getAngularVelocityRPM() / 60;
     inputs.hoodSupplyCurrentRight = this.hoodMotorRight.getCurrentDrawAmps();
     inputs.hoodVoltsRight = this.hoodMotorRight.getInputVoltage();
-    inputs.hoodAtSetpointRight = this.hoodAtPositionSetpoint();
+    inputs.hoodAtSetpointRight = this.hoodsAtPositionSetpoint();
 
     inputs.hoodCurrentLeft = this.hoodMotorLeft.getCurrentDrawAmps();
     inputs.hoodPositionLeft = this.hoodMotorLeft.getAngularPositionRotations();
@@ -86,6 +86,6 @@ public class HoodIOSim implements HoodIO {
     inputs.hoodRPSLeft = this.hoodMotorLeft.getAngularVelocityRPM() / 60;
     inputs.hoodSupplyCurrentLeft = this.hoodMotorLeft.getCurrentDrawAmps();
     inputs.hoodVoltsLeft = this.hoodMotorLeft.getInputVoltage();
-    inputs.hoodAtSetpointLeft = this.hoodAtPositionSetpoint();
+    inputs.hoodAtSetpointLeft = this.hoodsAtPositionSetpoint();
   }
 }

@@ -60,6 +60,11 @@ public class Hood extends SubsystemBase {
         }).withName("hoodsToAngle()");
   }
 
+  /**
+   * Sets the left hood to the supplied angle (in degrees)
+   * @param angle (double) Angle in degrees
+   * @return Command to set the left hood's angle
+   */
   public Command hoodToAngleLeft(double angle) {
     return this.run(
       () -> {
@@ -68,6 +73,11 @@ public class Hood extends SubsystemBase {
     ).withName("hoodToAngleLeft()");
   }
 
+  /**
+   * Sets the right hood to the supplied angle (in degrees)
+   * @param angle (double) Angle in degrees
+   * @return Command to set the right hood's angle
+   */
   public Command hoodToAngleRight(double angle) {
     return this.run(
       () -> {
@@ -77,7 +87,7 @@ public class Hood extends SubsystemBase {
   }
 
   /**
-   * Sets the hood for shooting at hanging station
+   * Sets both the left and rightt hoods for shooting at tower station
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
@@ -88,7 +98,7 @@ public class Hood extends SubsystemBase {
   }
 
   /**
-   * Sets the hood for shooting at trench wall
+   * Sets both the left and rightt hoods for shooting at trench wall
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
@@ -99,7 +109,7 @@ public class Hood extends SubsystemBase {
   }
 
   /**
-   * Sets the hood for shooting at human player station
+   * Sets both the left and rightt hoods for shooting at human player station
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
@@ -110,7 +120,7 @@ public class Hood extends SubsystemBase {
   }
 
   /**
-   * Automatically sets the hood for shooting from any distance
+   * Automatically sets the hoods for shooting from any distance
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
@@ -151,7 +161,7 @@ public class Hood extends SubsystemBase {
    * @return BooleanSupplier: True hood is at its setpoint, false otherwise
    */
   public BooleanSupplier hoodAtPositionSetpoint() {
-    return () -> this.hoodIO.hoodAtPositionSetpoint();
+    return () -> this.hoodIO.hoodsAtPositionSetpoint();
   }
 
   @Override

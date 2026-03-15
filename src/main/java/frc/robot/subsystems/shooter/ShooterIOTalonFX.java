@@ -8,26 +8,40 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterIOTalonFX implements ShooterIO {
   protected TalonFX rightLeadShooterMotor;
-  TalonFX rightFollowerShooterMotor;
+  protected TalonFX rightFollowerShooterMotor;
 
-  TalonFX leftLeadShooterMotor;
-  TalonFX leftFollowerShooterMotor;
+  protected TalonFX leftLeadShooterMotor;
+  protected TalonFX leftFollowerShooterMotor;
 
   // Used to control motor output by specifying rotaion speed
   VelocityVoltage velocityVoltageRequest;
   // Used to make followShooterMotor mimic the leadShooterMotor
   Follower rightFollower;
   Follower leftFollower;
+
+  // ---- Simulation objects (only used in sim) ----
+  FlywheelSim rightFlywheelSim;
+  FlywheelSim leftFlywheelSim;
+  TalonFXSimState rightLeadShooterMotorSimState;
+  TalonFXSimState rightFollowerShooterMotorSimState;
+  TalonFXSimState leftLeadShooterMotorSimState;
+  TalonFXSimState leftFollowerShooterMotorSimState;
 
   StatusSignal<Voltage> rightLeadShooterVolts;
   StatusSignal<Angle> rightLeadShooterPosition;
@@ -40,13 +54,10 @@ public class ShooterIOTalonFX implements ShooterIO {
   StatusSignal<AngularVelocity> rightFollowerShooterRps;
   StatusSignal<Current> rightFollowerShooterCurrent;
   StatusSignal<Current> rightFollowerShooterSupplyCurrent;
-
   StatusSignal<Double> rightShooterVelocityError;
 
-
-
   // setting values for the second shooter...
-    StatusSignal<Voltage> leftLeadShooterVolts;
+  StatusSignal<Voltage> leftLeadShooterVolts;
   StatusSignal<Angle> leftLeadShooterPosition;
   StatusSignal<AngularVelocity> leftLeadShooterRps;
   StatusSignal<Current> leftLeadShooterCurrent;
@@ -57,7 +68,6 @@ public class ShooterIOTalonFX implements ShooterIO {
   StatusSignal<AngularVelocity> leftFollowerShooterRps;
   StatusSignal<Current> leftFollowerShooterCurrent;
   StatusSignal<Current> leftFollowerShooterSupplyCurrent;
-
   StatusSignal<Double> leftShooterVelocityError;
 
 
@@ -95,7 +105,6 @@ public class ShooterIOTalonFX implements ShooterIO {
     leftLeadShooterSupplyCurrent = leftLeadShooterMotor.getSupplyCurrent();
     leftShooterVelocityError = leftLeadShooterMotor.getClosedLoopError();
 
-
     // Instantiating configuration for Lead Shooter motor
     TalonFXConfiguration leadcfg = new TalonFXConfiguration();
     leadcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -130,7 +139,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     leftFollowerShooterCurrent = leftFollowerShooterMotor.getTorqueCurrent();
     leftFollowerShooterSupplyCurrent = leftFollowerShooterMotor.getSupplyCurrent();
     leftFollower = new Follower(Constants.ShooterConstants.leftLeadShooterMotorId, MotorAlignmentValue.Opposed);
-    this.leftFollowerShooterMotor.setControl(leftFollower);
+    this.leftFollowerShooterMotor.setControl(leftFollower);    
 
     // Set update period for device metrics to be 50 Hz (20 milliseconds)
     BaseStatusSignal.setUpdateFrequencyForAll(
@@ -166,6 +175,35 @@ public class ShooterIOTalonFX implements ShooterIO {
     leftLeadShooterMotor.optimizeBusUtilization(0.0, 1.0);
     leftFollowerShooterMotor.optimizeBusUtilization(0.0, 1.0);
 
+    if (Robot.isSimulation()) {
+      // Instantiate the flywheel object that simulates the shooter wheel
+      this.rightFlywheelSim = new FlywheelSim(
+        LinearSystemId.createFlywheelSystem(
+          DCMotor.getKrakenX60(2), 
+          0.001, 
+          1.0
+          ), 
+        DCMotor.getKrakenX60(2), 
+        0.004
+      );
+
+      this.leftFlywheelSim = new FlywheelSim(
+        LinearSystemId.createFlywheelSystem(
+          DCMotor.getKrakenX60(2), 
+          0.001, 
+          1.0
+          ), 
+        DCMotor.getKrakenX60(2), 
+        0.004
+      );
+      
+      // Instantiate the motor simulated states for reporting to simulators
+      this.rightLeadShooterMotorSimState = this.rightLeadShooterMotor.getSimState();
+      this.rightFollowerShooterMotorSimState = this.rightFollowerShooterMotor.getSimState();
+      this.leftLeadShooterMotorSimState = this.leftLeadShooterMotor.getSimState();
+      this.leftFollowerShooterMotorSimState = this.leftFollowerShooterMotor.getSimState();
+    }
+    
     this.setPointTolerance = shooterMaxVelocityRPS * this.setPointTolerancePercent;
   }
 
@@ -207,6 +245,39 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
+    if (Robot.isSimulation()) {
+      // 1. Feed current battery voltage to sim states
+      this.rightLeadShooterMotorSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
+      this.rightFollowerShooterMotorSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
+      this.leftLeadShooterMotorSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
+      this.leftFollowerShooterMotorSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
+
+      // 2. Read the voltage the leader motor is actually applying
+      double rightLeadShooterMotorVoltage = this.rightLeadShooterMotorSimState.getMotorVoltage();
+      double leftLeadShooterMotorVoltage = this.leftLeadShooterMotorSimState.getMotorVoltage();
+
+      // 3. Update the physics model
+      this.rightFlywheelSim.setInput(rightLeadShooterMotorVoltage);
+      this.rightFlywheelSim.update(0.020);
+      this.leftFlywheelSim.setInput(leftLeadShooterMotorVoltage);
+      this.leftFlywheelSim.update(0.020);
+
+
+      // 4. Write simulated velocity/position back into the TalonFX sim states
+      double rightFlywheelRPS = rightFlywheelSim.getAngularVelocityRPM() / 60;
+      double leftFlywheelRPS = leftFlywheelSim.getAngularVelocityRPM() / 60;
+
+      this.rightLeadShooterMotorSimState.setRotorVelocity(rightFlywheelRPS);
+      this.rightLeadShooterMotorSimState.setRotorVelocity(-rightFlywheelRPS);
+      this.leftLeadShooterMotorSimState.setRotorVelocity(leftFlywheelRPS);
+      this.leftFollowerShooterMotorSimState.setRotorVelocity(-leftFlywheelRPS);
+
+      this.rightLeadShooterMotorSimState.addRotorPosition(rightFlywheelRPS * 0.020);
+      this.rightFollowerShooterMotorSimState.addRotorPosition(-rightFlywheelRPS * 0.020);
+      this.leftLeadShooterMotorSimState.addRotorPosition(leftFlywheelRPS * 0.020);
+      this.leftFollowerShooterMotorSimState.addRotorPosition(-leftFlywheelRPS * 0.020);
+    }
+    
     inputs.connected = BaseStatusSignal.refreshAll(
         rightLeadShooterVolts,
         rightLeadShooterPosition,
@@ -233,13 +304,11 @@ public class ShooterIOTalonFX implements ShooterIO {
 
     // Update Hardware fields
     inputs.rightLeadShooterVolts = this.rightLeadShooterVolts.getValueAsDouble();
-    inputs.rightLeadShooterPosition = this.rightLeadShooterPosition.getValueAsDouble();
     inputs.rightLeadShooterRps = this.rightLeadShooterRps.getValueAsDouble();
     inputs.rightLeadShooterCurrent = this.rightLeadShooterCurrent.getValueAsDouble();
     inputs.rightLeadShooterSupplyCurrent = this.rightLeadShooterSupplyCurrent.getValueAsDouble();
 
     inputs.rightFollowShooterVolts = this.rightFollowerShooterVolts.getValueAsDouble();
-    inputs.rightFollowShooterPosition = this.rightFollowerShooterPosition.getValueAsDouble();
     inputs.rightFollowShooterRps = this.rightFollowerShooterRps.getValueAsDouble();
     inputs.rightFollowShooterCurrent = this.rightFollowerShooterCurrent.getValueAsDouble();
     inputs.rightFollowShooterSupplyCurrent = this.rightFollowerShooterSupplyCurrent.getValueAsDouble();
@@ -251,13 +320,11 @@ public class ShooterIOTalonFX implements ShooterIO {
 
     // Update Hardware fields
     inputs.leftLeadShooterVolts = this.leftLeadShooterVolts.getValueAsDouble();
-    inputs.leftLeadShooterPosition = this.leftLeadShooterPosition.getValueAsDouble();
     inputs.leftLeadShooterRps = this.leftLeadShooterRps.getValueAsDouble();
     inputs.leftLeadShooterCurrent = this.leftLeadShooterCurrent.getValueAsDouble();
     inputs.leftLeadShooterSupplyCurrent = this.leftLeadShooterSupplyCurrent.getValueAsDouble();
 
     inputs.leftFollowShooterVolts = this.leftFollowerShooterVolts.getValueAsDouble();
-    inputs.leftFollowShooterPosition = this.leftFollowerShooterPosition.getValueAsDouble();
     inputs.leftFollowShooterRps = this.leftFollowerShooterRps.getValueAsDouble();
     inputs.leftFollowShooterCurrent = this.leftFollowerShooterCurrent.getValueAsDouble();
     inputs.leftFollowShooterSupplyCurrent = this.leftFollowerShooterSupplyCurrent.getValueAsDouble();

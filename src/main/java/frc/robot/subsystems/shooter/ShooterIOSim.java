@@ -1,13 +1,31 @@
 package frc.robot.subsystems.shooter;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterIOSim implements ShooterIO {
-  FlywheelSim leadShooterMotor;
-  DCMotor LEAD_SHOOTER_GEARBOX = DCMotor.getKrakenX60(1);
+  FlywheelSim rightFlyWheelSim;
+  FlywheelSim leftFlyWheelSim;
+  DCMotor SHOOTER_GEARBOX = DCMotor.getKrakenX60(2);
+
+  SimpleMotorFeedforward rightFeedforward = new SimpleMotorFeedforward(
+    0.0, 
+    0.12, 
+    0.0
+    );
+
+  SimpleMotorFeedforward leftFeedforward = new SimpleMotorFeedforward(
+    0.0, 
+    0.12, 
+    0.0
+    );
+
+  double rightFlywheelAppliedVoltage = 0.0;
+  double leftFlywheelAppliedVoltage = 0.0;
+
   public static final double shooterMinVelocityRPS = 0;
   public static final double shooterMaxVelocityRPS = 100;
   private double rps = 0.0;
@@ -15,8 +33,25 @@ public class ShooterIOSim implements ShooterIO {
   private double setpointThreshold = 1;
 
   public ShooterIOSim() {
-    this.leadShooterMotor = new FlywheelSim(LinearSystemId.createFlywheelSystem(LEAD_SHOOTER_GEARBOX, 12, 1),
-        LEAD_SHOOTER_GEARBOX, 0.004);
+    this.rightFlyWheelSim = new FlywheelSim(
+      LinearSystemId.createFlywheelSystem(
+        SHOOTER_GEARBOX, 
+        0.001, 
+        1
+      ),
+      SHOOTER_GEARBOX, 
+      0.004
+    );
+    
+    this.leftFlyWheelSim = new FlywheelSim(
+      LinearSystemId.createFlywheelSystem(
+        SHOOTER_GEARBOX, 
+        0.001, 
+        1
+      ),
+      SHOOTER_GEARBOX, 
+      0.004
+    );
   }
 
   @Override
@@ -24,17 +59,25 @@ public class ShooterIOSim implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     this.rps = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
     this.radPerSeconds = this.rps * 2 * Math.PI;
-    this.leadShooterMotor.setAngularVelocity(radPerSeconds);
+    
+    // Using Feed Forward models to convert rotations to voltage
+    // and then setting applied voltage to be used in updateInputs()
+    double rightVoltage = this.rightFeedforward.calculate(radPerSeconds);
+    this.rightFlywheelAppliedVoltage = MathUtil.clamp(rightVoltage, -12.0, 12.0);
+
+    double leftVoltage = this.leftFeedforward.calculate(radPerSeconds);
+    this.leftFlywheelAppliedVoltage = MathUtil.clamp(leftVoltage, -12.0, 12.0);
+    
   }
 
   @Override
   public double getRightShooterVelocityError() {
-    return this.rps - this.leadShooterMotor.getAngularVelocityRPM() / 60;
+    return this.rps - this.rightFlyWheelSim.getAngularVelocityRPM() / 60;
   }
 
   @Override
   public double getLeftShooterVelocityError() {
-    return this.rps - this.leadShooterMotor.getAngularVelocityRPM() / 60;
+    return this.rps - this.rightFlyWheelSim.getAngularVelocityRPM() / 60;
   }
 
   @Override
@@ -49,32 +92,34 @@ public class ShooterIOSim implements ShooterIO {
 
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
+    // Update the applied voltage to the motors and 
+    this.rightFlyWheelSim.setInput(this.rightFlywheelAppliedVoltage);
+    this.leftFlyWheelSim.setInput(this.leftFlywheelAppliedVoltage);
+    this.rightFlyWheelSim.update(0.020);
+    this.leftFlyWheelSim.update(0.020);
+    
     inputs.connected = true;
-    inputs.rightLeadShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.rightLeadShooterPosition = Double.POSITIVE_INFINITY;
-    inputs.rightLeadShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
-    inputs.rightLeadShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.rightLeadShooterVolts = this.leadShooterMotor.getInputVoltage();
-    inputs.rightFollowShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.rightFollowShooterPosition = Double.POSITIVE_INFINITY;
-    inputs.rightFollowShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
-    inputs.rightFollowShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.rightFollowShooterVolts = this.leadShooterMotor.getInputVoltage();
-    inputs.rightShooterVelocitySetpoint = this.leadShooterMotor.getAngularVelocityRPM();
+    inputs.rightLeadShooterCurrent = this.rightFlyWheelSim.getCurrentDrawAmps();
+    inputs.rightLeadShooterRps = this.rightFlyWheelSim.getAngularVelocityRPM() / 60;
+    inputs.rightLeadShooterSupplyCurrent = this.rightFlyWheelSim.getCurrentDrawAmps();
+    inputs.rightLeadShooterVolts = this.rightFlyWheelSim.getInputVoltage();
+    inputs.rightFollowShooterCurrent = this.rightFlyWheelSim.getCurrentDrawAmps();
+    inputs.rightFollowShooterRps = this.rightFlyWheelSim.getAngularVelocityRPM() / 60;
+    inputs.rightFollowShooterSupplyCurrent = this.rightFlyWheelSim.getCurrentDrawAmps();
+    inputs.rightFollowShooterVolts = this.rightFlyWheelSim.getInputVoltage();
+    inputs.rightShooterVelocitySetpoint = this.rightFlyWheelSim.getAngularVelocityRPM();
     inputs.rightShooterVelocityError = this.getRightShooterVelocityError();
     inputs.rightShooterAtVelocitySetpoint = this.rightShooterAtVelocitySetPoint();
 
-    inputs.leftLeadShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.leftLeadShooterPosition = Double.POSITIVE_INFINITY;
-    inputs.leftLeadShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
-    inputs.leftLeadShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.leftLeadShooterVolts = this.leadShooterMotor.getInputVoltage();
-    inputs.leftFollowShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.leftFollowShooterPosition = Double.POSITIVE_INFINITY;
-    inputs.leftFollowShooterRps = this.leadShooterMotor.getAngularVelocityRPM() / 60;
-    inputs.leftFollowShooterSupplyCurrent = this.leadShooterMotor.getCurrentDrawAmps();
-    inputs.leftFollowShooterVolts = this.leadShooterMotor.getInputVoltage();
-    inputs.leftShooterVelocitySetpoint = this.leadShooterMotor.getAngularVelocityRPM();
+    inputs.leftLeadShooterCurrent = this.leftFlyWheelSim.getCurrentDrawAmps();
+    inputs.leftLeadShooterRps = this.leftFlyWheelSim.getAngularVelocityRPM() / 60;
+    inputs.leftLeadShooterSupplyCurrent = this.leftFlyWheelSim.getCurrentDrawAmps();
+    inputs.leftLeadShooterVolts = this.leftFlyWheelSim.getInputVoltage();
+    inputs.leftFollowShooterCurrent = this.leftFlyWheelSim.getCurrentDrawAmps();
+    inputs.leftFollowShooterRps = this.leftFlyWheelSim.getAngularVelocityRPM() / 60;
+    inputs.leftFollowShooterSupplyCurrent = this.leftFlyWheelSim.getCurrentDrawAmps();
+    inputs.leftFollowShooterVolts = this.leftFlyWheelSim.getInputVoltage();
+    inputs.leftShooterVelocitySetpoint = this.leftFlyWheelSim.getAngularVelocityRPM();
     inputs.leftShooterVelocityError = this.getLeftShooterVelocityError();
     inputs.leftShooterAtVelocitySetpoint = this.leftShooterAtVelocitySetPoint();
   }

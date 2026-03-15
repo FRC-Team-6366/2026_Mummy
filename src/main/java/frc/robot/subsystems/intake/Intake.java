@@ -32,11 +32,19 @@ public class Intake extends SubsystemBase {
         () -> this.intakeIO.intakeResetCanCoder()).withName("intakeResetCanCoder()");
   }
 
-  // Sets pivot to brake on true, coast on false
+  /**
+   * Sets pivot to brake on true, coast on false
+   * @param brakeMode brake on true, coast on false
+   * @return Command to set intake pivot motor brake mode
+   */
   public Command setBrakeMode(boolean brakeMode) {
     return this.runOnce(() -> this.intakeIO.setBrakeMode(brakeMode)).withName("setBrakeMode()");
   }
 
+  /**
+   * Returns command to run the intake rollers at full power
+   * @return Command to run the intake rollers
+   */
   public Command intakeRunRollers() {
     return this.run(
         () -> {
@@ -48,6 +56,10 @@ public class Intake extends SubsystemBase {
         }).withName("intakeRunRollers()");
   }
 
+  /**
+   * Stops the intake rollers 
+   * @return Command to stop Intake Rollers
+   */
   public Command intakeStopRollers() {
     return this.runOnce(
         () -> {
@@ -59,8 +71,7 @@ public class Intake extends SubsystemBase {
    * Sets intake pivot motor to a certain angle based on what we put in to the
    * double
    * 
-   * @param angle
-   *          Angle in degrees
+   * @param angle Angle in degrees
    * @return Command to set the Intake Pivot Motor at angle for shooting
    */
   public Command intakePivotToAngle(double angle) {
@@ -136,10 +147,19 @@ public class Intake extends SubsystemBase {
         }).withName("toggleIntakePivot()");
   }
 
+  /**
+   * Gets the set point angle of the intake pivot
+   * @return Angle in degrees
+   */
   public double getIntakeAngleSetpoint() {
     return this.angle;
   }
 
+  /**
+   * Pulses the intake rollers on for 1 second and off for 0.5 seconds. Used to help
+   * jostle fuel in the robot's hopper
+   * @return Command to pulse intake rollers
+   */
   public Command intakePulsePivot() {
     return Commands.repeatingSequence(
             Commands.race(
