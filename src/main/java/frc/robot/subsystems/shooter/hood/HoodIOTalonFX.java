@@ -270,7 +270,7 @@ public class HoodIOTalonFX implements HoodIO {
       this.hoodMotorRightSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
       this.hoodMotorLeftSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
 
-      // 2. Read the voltage the leader motor is actually applying
+      // 2. Read the voltage the hood motors are actually applying
       double hoodMotorRightVoltage = this.hoodMotorRightSimState.getMotorVoltage();
       double hoodMotorLeftVoltage = this.hoodMotorLeftSimState.getMotorVoltage();
 
