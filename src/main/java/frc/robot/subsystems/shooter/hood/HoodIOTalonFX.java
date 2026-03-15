@@ -6,20 +6,31 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 
 public class HoodIOTalonFX implements HoodIO {
 
   TalonFX hoodMotorRight;
   TalonFX hoodMotorLeft;
+
+  // ---- Simulation objects (only used in sim) ----
+  ElevatorSim hoodRightSim;
+  ElevatorSim hoodLeftSim;
+  TalonFXSimState hoodMotorRightSimState;
+  TalonFXSimState hoodMotorLeftSimState;
 
   /**
    * Used to control motor output by specifying postiton setpoint
@@ -145,6 +156,37 @@ public class HoodIOTalonFX implements HoodIO {
 
     // Compute setpoint tolerance from max position and tolerance percent
     this.setPointTolerance = hoodMaxPosition * this.setPointTolerancePercent / 100;
+
+    if (Robot.isSimulation()) {
+      // Instantiate the elevator sim object that best simulates the hood system
+      this.hoodRightSim = new ElevatorSim(
+        DCMotor.getKrakenX60(1), 
+        1, 
+        0.05, 
+        0.01, 
+        0, 
+        0.127, // 5 inches to meters
+        false, 
+        0, 
+        0.004
+      );
+
+      this.hoodLeftSim = new ElevatorSim(
+        DCMotor.getKrakenX60(1), 
+        1, 
+        0.05, 
+        0.01, 
+        0, 
+        0.127, // inch to meters
+        false, 
+        0, 
+        0.004
+      );
+
+      // Instantiate the motor simulated states for reporting to simulators
+      this.hoodMotorRightSimState = this.hoodMotorRight.getSimState();
+      this.hoodMotorLeftSimState = this.hoodMotorLeft.getSimState();
+    }
   }
 
   /**
@@ -223,6 +265,32 @@ public class HoodIOTalonFX implements HoodIO {
 
   @Override
   public void updateInputs(HoodIOInputs inputs) {
+    if (Robot.isSimulation()) {
+      // 1. Feed current battery voltage to sim states
+      this.hoodMotorRightSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
+      this.hoodMotorLeftSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
+
+      // 2. Read the voltage the leader motor is actually applying
+      double hoodMotorRightVoltage = this.hoodMotorRightSimState.getMotorVoltage();
+      double hoodMotorLeftVoltage = this.hoodMotorLeftSimState.getMotorVoltage();
+
+      // 3. Update the physics model
+      this.hoodRightSim.setInput(hoodMotorRightVoltage);
+      this.hoodRightSim.update(0.020);
+      this.hoodLeftSim.setInput(hoodMotorLeftVoltage);
+      this.hoodLeftSim.update(0.020);
+
+      // 4. Write simulated velocity/position back into the TalonFX sim states
+      double hoodMotorRightRPS = hoodRightSim.getVelocityMetersPerSecond();
+      double hoodMotorLeftRPS = hoodLeftSim.getVelocityMetersPerSecond();
+
+      this.hoodMotorRightSimState.setRotorVelocity(hoodMotorRightRPS);
+      this.hoodMotorLeftSimState.setRotorVelocity(hoodMotorLeftRPS);
+
+      this.hoodMotorRightSimState.addRotorPosition(hoodMotorRightRPS * 0.020);
+      this.hoodMotorLeftSimState.addRotorPosition(hoodMotorLeftRPS * 0.020);
+    }
+    
     inputs.connected = BaseStatusSignal.refreshAll(
       hoodVoltsRight,
       hoodPositionRight,
