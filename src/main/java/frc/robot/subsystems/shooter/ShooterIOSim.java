@@ -107,7 +107,7 @@ public class ShooterIOSim implements ShooterIO {
     inputs.rightFollowShooterRps = this.rightFlyWheelSim.getAngularVelocityRPM() / 60;
     inputs.rightFollowShooterSupplyCurrent = this.rightFlyWheelSim.getCurrentDrawAmps();
     inputs.rightFollowShooterVolts = this.rightFlyWheelSim.getInputVoltage();
-    inputs.rightShooterVelocitySetpoint = this.rightFlyWheelSim.getAngularVelocityRPM();
+    inputs.rightShooterVelocitySetpoint = this.rightFlyWheelSim.getAngularVelocityRPM() / 60;
     inputs.rightShooterVelocityError = this.getRightShooterVelocityError();
     inputs.rightShooterAtVelocitySetpoint = this.rightShooterAtVelocitySetPoint();
 
@@ -119,7 +119,7 @@ public class ShooterIOSim implements ShooterIO {
     inputs.leftFollowShooterRps = this.leftFlyWheelSim.getAngularVelocityRPM() / 60;
     inputs.leftFollowShooterSupplyCurrent = this.leftFlyWheelSim.getCurrentDrawAmps();
     inputs.leftFollowShooterVolts = this.leftFlyWheelSim.getInputVoltage();
-    inputs.leftShooterVelocitySetpoint = this.leftFlyWheelSim.getAngularVelocityRPM();
+    inputs.leftShooterVelocitySetpoint = this.leftFlyWheelSim.getAngularVelocityRPM() / 60;
     inputs.leftShooterVelocityError = this.getLeftShooterVelocityError();
     inputs.leftShooterAtVelocitySetpoint = this.leftShooterAtVelocitySetPoint();
   }
