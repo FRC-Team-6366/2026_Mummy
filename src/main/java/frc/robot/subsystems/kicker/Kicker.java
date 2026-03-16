@@ -62,7 +62,7 @@ public class Kicker extends SubsystemBase {
     return this.run(
         () -> {
           // Set power to full (1)
-          this.power = 1;
+          this.power = 1.0;
 
           // Use power to start the KickerIO Hardware motor
           this.io.setKickPower(this.power);
@@ -85,7 +85,7 @@ public class Kicker extends SubsystemBase {
     return this.runOnce(
         () -> {
           // Set power to 0
-          this.power = 0;
+          this.power = 0.0;
 
           // Use power to stop the KickerIO Hardware motor
           this.io.setKickPower(this.power);
