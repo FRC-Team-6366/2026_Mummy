@@ -98,7 +98,7 @@ public class DriveCommands {
                       ? drive.getRotation().plus(new Rotation2d(Math.PI))
                       : drive.getRotation()));
         },
-        drive);
+        drive).withName("joystickDrive");
   }
 
   /**
@@ -152,7 +152,7 @@ public class DriveCommands {
             drive)
 
         // Reset PID controller when command starts
-        .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
+        .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians())).withName("joystickDriveAtAngle");
   }
 
   public static Command joystickDriveAutoAim(
@@ -216,7 +216,7 @@ public class DriveCommands {
       drive)
       
     // Reset PID controller when command starts
-    .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
+    .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians())).withName("joystickDriveAutoAim");
   }
 
   // Uses PathPlanner AutoBuilder to create a path to pose which avoids field obstructions
@@ -224,7 +224,7 @@ public class DriveCommands {
     PathConstraints constraints = new PathConstraints(5, 5, Units.degreesToRadians(360), Units.degreesToRadians(540));
     return Commands.defer(
       () -> AutoBuilder.pathfindToPose(targetPoseSupplier.get(), constraints, 0.0), Set.of(drive)
-    );
+    ).withName("driveToPose");
   }
 
   /**
@@ -287,7 +287,7 @@ public class DriveCommands {
                   System.out.println("********** Drive FF Characterization Results **********");
                   System.out.println("\tkS: " + formatter.format(kS));
                   System.out.println("\tkV: " + formatter.format(kV));
-                }));
+                })).withName("feedforwardCharacterization");
   }
 
   /** Measures the robot's wheel radius by spinning in a circle. */
@@ -356,7 +356,7 @@ public class DriveCommands {
                               + " meters, "
                               + formatter.format(Units.metersToInches(wheelRadius))
                               + " inches");
-                    })));
+                    }))).withName("wheelRadiusCharacterization");
   }
 
   private static class WheelRadiusCharacterizationState {
