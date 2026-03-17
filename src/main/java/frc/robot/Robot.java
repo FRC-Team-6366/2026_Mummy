@@ -12,6 +12,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -37,6 +38,8 @@ public class Robot extends LoggedRobot {
     // This code must be first in the constructor to (hopefully) properly run Advantagkit
     Logger.recordMetadata("ProjectName", "2026_Mummy"); // Set a metadata value
      Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.

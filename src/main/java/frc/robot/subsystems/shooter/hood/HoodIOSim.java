@@ -1,6 +1,7 @@
 package frc.robot.subsystems.shooter.hood;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -23,6 +24,13 @@ public class HoodIOSim implements HoodIO {
     new TrapezoidProfile.Constraints(
       0.5,
       0.25)
+  );
+
+  private PIDController hoodPID = new PIDController(
+    100.0, 
+    0.0, 
+    0.0, 
+    0.020
   );
 
   private SimpleMotorFeedforward hoodFeedForward = new SimpleMotorFeedforward(
@@ -111,15 +119,20 @@ public class HoodIOSim implements HoodIO {
     this.hoodLeftSetpointRotations = this.metersToRotations(angleToMeters);
     this.hoodRightSetpointRotations = this.metersToRotations(angleToMeters);
     
-    TrapezoidProfile.State previousSetpoint = this.hoodPPID.getSetpoint();
+    // TrapezoidProfile.State previousSetpoint = this.hoodPPID.getSetpoint();
 
-    double pidVoltsLeft= this.hoodPPID.calculate(this.hoodSimLeft.getPositionMeters(), angleToMeters);
-    double pidVoltsRight = this.hoodPPID.calculate(this.hoodSimRight.getPositionMeters(), angleToMeters);
+    // double pidVoltsLeft= this.hoodPPID.calculate(this.hoodSimLeft.getPositionMeters(), angleToMeters);
+    // double pidVoltsRight = this.hoodPPID.calculate(this.hoodSimRight.getPositionMeters(), angleToMeters);
 
-    double ffVolts = hoodFeedForward.calculate(
-      previousSetpoint.velocity, // Old setpoint and old velocity
-      this.hoodPPID.getSetpoint().velocity // New setpoint and new velocity
-    );
+    double pidVoltsLeft = this.hoodPID.calculate(this.hoodSimLeft.getPositionMeters(), angleToMeters);
+    double pidVoltsRight = this.hoodPID.calculate(this.hoodSimRight.getPositionMeters(), angleToMeters);
+
+    // double ffVolts = hoodFeedForward.calculate(
+    //   previousSetpoint.velocity, // Old setpoint and old velocity
+    //   this.hoodPPID.getSetpoint().velocity // New setpoint and new velocity
+    // );
+
+    double ffVolts = hoodFeedForward.calculate(0.0, 0.0);
 
     this.hoodMotorLeftAppliedVoltage = MathUtil.clamp(pidVoltsLeft + ffVolts, -12.0, 12.0);
     this.hoodMotorRightAppliedVoltage = MathUtil.clamp(pidVoltsRight + ffVolts, -12.0, 12.0);
