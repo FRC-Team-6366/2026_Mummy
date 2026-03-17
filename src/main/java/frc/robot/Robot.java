@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -25,10 +26,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends LoggedRobot {
 
   private Command m_autonomousCommand;
-
-
-
   private final RobotContainer m_robotContainer;
+  private long testStartTime = 0;
+  private long testPeriodMilliseconds = 3000;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -168,11 +168,34 @@ public class Robot extends LoggedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    this.testStartTime = System.currentTimeMillis();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if (System.currentTimeMillis() > this.testStartTime + testPeriodMilliseconds) {
+      // Do Command
+      CommandScheduler.getInstance().schedule(
+        Commands.parallel(
+        this.m_robotContainer.intake.intakePivotToAngle(140)
+        )
+      );
+      
+    }
+
+    if (System.currentTimeMillis() > this.testStartTime + testPeriodMilliseconds * 2) {
+      // Do Stop Command
+      CommandScheduler.getInstance().schedule(
+        Commands.parallel(
+        this.m_robotContainer.intake.intakePivotToAngle(0)
+        )
+      );
+      
+      // Reset timer
+      this.testStartTime = System.currentTimeMillis();
+    }
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

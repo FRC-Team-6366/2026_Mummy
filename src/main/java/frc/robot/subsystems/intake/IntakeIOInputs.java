@@ -7,6 +7,7 @@ public class IntakeIOInputs {
   boolean connected = false;
 
   double intakePivotSetpoint = 0;
+  boolean intakePivotAtSetpoint = false;
   double intakePivotVolts = 0;
   double intakePivotPosition = 0;
   double intakePivotRps = 0;

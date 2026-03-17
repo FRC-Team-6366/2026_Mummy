@@ -211,6 +211,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     inputs.intakePivotSupplyCurrent = this.intakePivotSupplyCurrent.getValueAsDouble();
     inputs.intakePivotErrorFromSetpoint = this.intakePivotErrorFromSetpoint.getValueAsDouble();
     inputs.intakePivotSetpoint = this.positionVoltageRequest.Position;
+    inputs.intakePivotAtSetpoint = this.intakeAtPositionSetpoint();
 
   }
 
