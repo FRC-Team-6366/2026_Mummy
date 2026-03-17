@@ -60,7 +60,7 @@ public class RobotContainer {
   public Indexer indexer;
   public Kicker kicker;
   public Hood hood;
-  public int mode; //
+  public int mode; 
   public Drive drive;
   public Intake intake;
   public Vision vision;
@@ -312,7 +312,7 @@ public class RobotContainer {
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),
         Commands.repeatingSequence(Commands.race(
-            indexer.pulseIndexer(),
+            indexer.runIndexer(),
             kicker.runKicker())))
         .withName("autoShootForever");
   }
