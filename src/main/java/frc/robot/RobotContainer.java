@@ -218,8 +218,8 @@ public class RobotContainer {
     driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
     // Switch to X pattern when X button is pressed
-    // driverController.x().onTrue(NamedCommands.getCommand("StopWithX"));
-    driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
+    driverController.x().onTrue( Commands.run(drive::stopWithX, drive));
+    // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
     driverController.rightBumper().onTrue(this.intake.toggleIntakePivot());
 
