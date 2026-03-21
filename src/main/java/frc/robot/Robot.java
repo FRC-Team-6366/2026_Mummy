@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.util.ActiveHubState;
+import frc.robot.util.GameTimeMarkers;
 import frc.robot.util.HubStatusEnum;
 
 /**
@@ -29,13 +31,14 @@ import frc.robot.util.HubStatusEnum;
  */
 
 public class Robot extends LoggedRobot {
-
+  private ActiveHubState activeHubState;
   private Command m_autonomousCommand;
   private final RobotContainer m_robotContainer;
   private long testStartTime = 0;
   private long testPeriodMilliseconds = 3000;
   private HubStatusEnum hubStatus = HubStatusEnum.BOTH;
   private HubStatusEnum hubStatusWeCareAbout = HubStatusEnum.BOTH;
+  private GameTimeMarkers gameTimeMarker;
 
   private HashMap<String,Integer> gamePeriodTime;
   /**
@@ -73,7 +76,7 @@ public class Robot extends LoggedRobot {
     HashMap<HubStatusEnum,Integer> myHashMap = new HashMap<HubStatusEnum,Integer>();
     myHashMap.put(HubStatusEnum.ODD, 2);
     
-
+    activeHubState = ActiveHubState.UNDEFINED;
   
 
 
@@ -159,10 +162,74 @@ public class Robot extends LoggedRobot {
       this.hubStatus = HubStatusEnum.BOTH;
       this.sendActiveHubStatus();    
       m_robotContainer.rumbleBoth(1.0);
-    }
+    } 
     else {
       m_robotContainer.rumbleBoth(0.0);
     }
+
+    switch (gameTimeMarker){
+      case SHIFT_1_RUNNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_2_WARNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_2_WARNING;
+        }
+        break;
+      case SHIFT_1_WARNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_1_RUNNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_1_RUNNING;
+        }
+        break;
+      case SHIFT_2_RUNNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_3_WARNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_3_WARNING;
+        }
+        break;
+      case SHIFT_2_WARNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_2_RUNNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_2_RUNNING;
+        }
+        break;
+      case SHIFT_3_RUNNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_4_WARNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_4_WARNING;
+        }
+      
+        break;
+      case SHIFT_3_WARNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_3_RUNNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_3_RUNNING;
+        }
+        break;
+      case SHIFT_4_RUNNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_END_WARNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_END_WARNING;
+        }
+        break;
+      case SHIFT_4_WARNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_4_RUNNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_4_RUNNING;
+        }
+        break;
+      case SHIFT_END_RUNNING:
+        break;
+      case SHIFT_END_WARNING:
+      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_END_RUNNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_END_RUNNING;
+        }
+        break;
+      case SHIFT_TRANSITION_RUNNING:
+        if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_1_WARNING)){
+          this.gameTimeMarker=GameTimeMarkers.SHIFT_1_WARNING;
+        }
+        break;
+      case UNDEFINED:
+        this.gameTimeMarker=GameTimeMarkers.SHIFT_TRANSITION_RUNNING;
+        break;
+
+      default:
+        break;
+
+    }
+get
     switch ((int)DriverStation.getMatchTime()){
       case (Constants.GameTimeConstants.shift1Constant):
       this.shiftChangeAction();
