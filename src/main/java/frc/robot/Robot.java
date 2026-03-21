@@ -11,8 +11,13 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.util.HubStatusEnum;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -23,8 +28,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends LoggedRobot {
 
   private Command m_autonomousCommand;
-
   private final RobotContainer m_robotContainer;
+  private long testStartTime = 0;
+  private long testPeriodMilliseconds = 3000;
+  private HubStatusEnum hubStatus = HubStatusEnum.BOTH;
+  private HubStatusEnum hubStatusWeCareAbout = HubStatusEnum.BOTH;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,6 +42,8 @@ public class Robot extends LoggedRobot {
     // This code must be first in the constructor to (hopefully) properly run Advantagkit
     Logger.recordMetadata("ProjectName", "2026_Mummy"); // Set a metadata value
      Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -84,11 +94,53 @@ public class Robot extends LoggedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    double time = DriverStation.getMatchTime();
+    
+    // Shifting to Hub Period 1 (2:10 -> 1:45)
+    if (time <= 135 && time > 134) {
+      this.hubStatus = HubStatusEnum.ODD;
+      this.sendActiveHubStatus();  
+      m_robotContainer.rumbleBoth(1.0);
+    }
+    // Shifting to Hub Period 2 (1:45 -> 1:20)
+    else if (time <= 110 && time > 109) {
+      this.hubStatus = HubStatusEnum.EVEN;
+      this.sendActiveHubStatus();  
+      m_robotContainer.rumbleBoth(1.0);
+    }
+    // Shifting to Hub Period 3 (1:20 -> 0:55)
+    else if (time <= 85 && time > 84) {
+      this.hubStatus = HubStatusEnum.ODD;
+      this.sendActiveHubStatus();    
+      m_robotContainer.rumbleBoth(1.0);
+    }
+    // Shifting to Hub Period 4 (0:55 -> 0:30)
+    else if (time <= 60 && time > 59) {
+      this.hubStatus = HubStatusEnum.EVEN;
+      this.sendActiveHubStatus();    
+      m_robotContainer.rumbleBoth(1.0);
+    }
+    // Shifting to Hub Period Both (0:30 -> 0:00)
+    else if (time <= 35 && time > 34) {
+      this.hubStatus = HubStatusEnum.BOTH;
+      this.sendActiveHubStatus();    
+      m_robotContainer.rumbleBoth(1.0);
+    }
+    else {
+      m_robotContainer.rumbleBoth(0.0);
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    CommandScheduler.getInstance().cancelAll();
+    if (m_robotContainer.intake.getIntakeAngleSetpoint() == Constants.IntakeConstants.intakePivotPulseUpAngleDegrees ){
+      CommandScheduler.getInstance().schedule(m_robotContainer.intake.intakePivotToAngle(Constants.IntakeConstants
+      .intakePivotDeployAngleDegrees));
+        }
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -96,6 +148,10 @@ public class Robot extends LoggedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_robotContainer.hood.removeDefaultCommand();
+    m_robotContainer.indexer.removeDefaultCommand();
+    m_robotContainer.kicker.removeDefaultCommand();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -106,7 +162,10 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    this.hubStatus = HubStatusEnum.BOTH;
+    this.sendActiveHubStatus(); 
+  }
 
   @Override
   public void teleopInit() {
@@ -117,21 +176,64 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.hood.setDefaultCommand(m_robotContainer.hood.retractHood());
+    m_robotContainer.kicker.setDefaultCommand(m_robotContainer.kicker.stopKicker());
+    m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer());
+    m_robotContainer.intake.setDefaultCommand(m_robotContainer.intake.intakeStopRollers());
+    m_robotContainer.shooter.setDefaultCommand(m_robotContainer.shooter.shooterTurnOff());
+    
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if(DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue) {
+      if (DriverStation.getGameSpecificMessage().contains("B")) {
+        this.hubStatusWeCareAbout = HubStatusEnum.EVEN;
+      } else {
+        this.hubStatusWeCareAbout = HubStatusEnum.ODD;
+      } 
+    } else {
+      if (DriverStation.getGameSpecificMessage().contains("R")) {
+        this.hubStatusWeCareAbout = HubStatusEnum.EVEN;
+      } else {
+        this.hubStatusWeCareAbout = HubStatusEnum.ODD;
+      } 
+    }
+  }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    this.testStartTime = System.currentTimeMillis();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if (System.currentTimeMillis() > this.testStartTime + testPeriodMilliseconds) {
+      // Do Command
+      CommandScheduler.getInstance().schedule(
+        Commands.parallel(
+        this.m_robotContainer.intake.intakePivotToAngle(140)
+        )
+      );
+      
+    }
+
+    if (System.currentTimeMillis() > this.testStartTime + testPeriodMilliseconds * 2) {
+      // Do Stop Command
+      CommandScheduler.getInstance().schedule(
+        Commands.parallel(
+        this.m_robotContainer.intake.intakePivotToAngle(0)
+        )
+      );
+      
+      // Reset timer
+      this.testStartTime = System.currentTimeMillis();
+    }
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override
@@ -140,4 +242,12 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  public void sendActiveHubStatus() {
+    if (this.hubStatus == this.hubStatusWeCareAbout || this.hubStatus == HubStatusEnum.BOTH) {
+      Logger.recordOutput("GoalActive", true);
+    } else {
+      Logger.recordOutput("GoalActive", false);
+    }
+  }
 }

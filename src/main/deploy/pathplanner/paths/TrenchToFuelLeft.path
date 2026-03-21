@@ -1,0 +1,59 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 7.45
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.827894144144144,
+        "y": 7.548603603603603
+      },
+      "isLocked": false,
+      "linkedName": "TrenchStartLeft"
+    },
+    {
+      "anchor": {
+        "x": 7.7,
+        "y": 7.0838313253012055
+      },
+      "prevControl": {
+        "x": 6.647961711711711,
+        "y": 7.400464208184089
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "FuelPickupLeft"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -89.81262823067561
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "Starting Locations to Get Fuel",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -88.63693122095023
+  },
+  "useDefaultConstraints": true
+}

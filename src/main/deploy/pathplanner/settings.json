@@ -1,0 +1,42 @@
+{
+  "robotWidth": 0.572,
+  "robotLength": 0.61,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Fuel Locations to Shot Locations",
+    "Picking Up Fuel",
+    "Simple Shot Locations",
+    "Starting Locations to Get Fuel"
+  ],
+  "autoFolders": [
+    "Collect Fuel",
+    "Get Fuel Then Shoot",
+    "Test Autos",
+    "Simple Shots"
+  ],
+  "defaultMaxVel": 5.5,
+  "defaultMaxAccel": 10.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "defaultNominalVoltage": 12.0,
+  "robotMass": 52.6,
+  "robotMOI": 6.883,
+  "robotTrackwidth": 0.546,
+  "driveWheelRadius": 0.048,
+  "driveGearing": 5.143,
+  "maxDriveSpeed": 5.45,
+  "driveMotorType": "krakenX60",
+  "driveCurrentLimit": 60.0,
+  "wheelCOF": 1.2,
+  "flModuleX": 0.24,
+  "flModuleY": 0.24,
+  "frModuleX": 0.24,
+  "frModuleY": -0.24,
+  "blModuleX": -0.24,
+  "blModuleY": 0.24,
+  "brModuleX": -0.24,
+  "brModuleY": -0.24,
+  "bumperOffsetX": 0.0,
+  "bumperOffsetY": 0.0,
+  "robotFeatures": []
+}

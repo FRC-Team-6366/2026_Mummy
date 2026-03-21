@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.7,
+        "y": 4.056855421686747
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.6353067047075625,
+        "y": 2.1548725400890305
+      },
+      "isLocked": false,
+      "linkedName": "MidfieldIntakeLeft"
+    },
+    {
+      "anchor": {
+        "x": 6.704422253922965,
+        "y": 0.858559201141228
+      },
+      "prevControl": {
+        "x": 7.432964016254015,
+        "y": 0.9963914264471023
+      },
+      "nextControl": {
+        "x": 5.746961483594863,
+        "y": 0.6774179743223975
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.100963855421687,
+        "y": 0.6474096385542167
+      },
+      "prevControl": {
+        "x": 5.838521822673119,
+        "y": 0.6567458153548692
+      },
+      "nextControl": {
+        "x": 4.078809789801146,
+        "y": 0.6344709794957267
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.5381740370898713,
+        "y": 1.0914550641940093
+      },
+      "prevControl": {
+        "x": 3.0028433734939757,
+        "y": 0.34143373493975904
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5628997867803756,
+      "rotationDegrees": 178.93382971460724
+    },
+    {
+      "waypointRelativePos": 2.5266524520255733,
+      "rotationDegrees": -177.92946093361567
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -129.1736579704442
+  },
+  "reversed": false,
+  "folder": "Fuel Locations to Shot Locations",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

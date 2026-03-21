@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.459660714285714,
+        "y": 4.05
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.385050747831425,
+        "y": 4.05
+      },
+      "isLocked": false,
+      "linkedName": "HubStartCenter"
+    },
+    {
+      "anchor": {
+        "x": 0.7397004279600568,
+        "y": 0.6256633380884444
+      },
+      "prevControl": {
+        "x": 2.331155492154065,
+        "y": 0.6256633380884444
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "OutpostReload"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Starting Locations to Get Fuel",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
