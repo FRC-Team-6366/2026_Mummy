@@ -28,7 +28,6 @@ public class HoodIOSim implements HoodIO {
   private DCMotor HOOD_GEARBOX = DCMotor.getKrakenX60(1);
   static final double hoodMinPosition = 0;
   static final double hoodMaxPosition = 5.6;
-  private double hoodLeftSetpointRotations = 0.0;
   private double hoodRightSetpointRotations = 0.0;
   private double setpointThreshold = (5.6 / 100) * 1;
 
@@ -80,7 +79,7 @@ public class HoodIOSim implements HoodIO {
   }
 
   @Override
-  public void hoodToAngle(double angle) {
+  public void hoodsToAngle(double angle) {
     double angleToMeters = this.angleToMeters(angle);
     this.hoodRightSetpointRotations = this.metersToRotations(angleToMeters);
 
