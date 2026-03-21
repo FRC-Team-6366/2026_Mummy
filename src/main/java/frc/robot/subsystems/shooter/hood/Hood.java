@@ -60,31 +60,6 @@ public class Hood extends SubsystemBase {
         }).withName("hoodsToAngle()");
   }
 
-  /**
-   * Sets the left hood to the supplied angle (in degrees)
-   * @param angle (double) Angle in degrees
-   * @return Command to set the left hood's angle
-   */
-  public Command hoodToAngleLeft(double angle) {
-    return this.run(
-      () -> {
-        this.hoodIO.hoodToAngleLeft(angle);
-      }
-    ).withName("hoodToAngleLeft()");
-  }
-
-  /**
-   * Sets the right hood to the supplied angle (in degrees)
-   * @param angle (double) Angle in degrees
-   * @return Command to set the right hood's angle
-   */
-  public Command hoodToAngleRight(double angle) {
-    return this.run(
-      () -> {
-        this.hoodIO.hoodToAngleRight(angle);
-      }
-    ).withName("hoodToAngleRight()");
-  }
 
   /**
    * Sets both the left and rightt hoods for shooting at tower station

@@ -193,7 +193,7 @@ public class HoodIOTalonFX implements HoodIO {
    * {@inheritDoc}
    */
   @Override
-  public Rotation2d getRotationsRight() {
+  public Rotation2d getRotations() {
     return new Rotation2d(Units.rotationsToRadians(hoodMotorRight.getPosition().getValueAsDouble()));
   }
 
@@ -247,7 +247,7 @@ public class HoodIOTalonFX implements HoodIO {
     }
 
   @Override
-  public double getHoodPositionErrorRight() {
+  public double getHoodPositionError() {
     return this.hoodMotorRight.getClosedLoopError().getValueAsDouble();
   }
 
@@ -260,7 +260,7 @@ public class HoodIOTalonFX implements HoodIO {
   public boolean hoodsAtPositionSetpoint() {
     // Get absolute value of the error and see if it is less
     // than the setpoint tolerance for both shooter assemblies
-    return (Math.abs(this.getHoodPositionErrorRight()) < this.setPointTolerance) && (Math.abs(this.getHoodPositionErrorLeft()) < this.setPointTolerance);
+    return (Math.abs(this.getHoodPositionError()) < this.setPointTolerance) && (Math.abs(this.getHoodPositionErrorLeft()) < this.setPointTolerance);
   }
 
   @Override
