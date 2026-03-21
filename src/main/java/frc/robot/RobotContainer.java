@@ -269,6 +269,10 @@ public class RobotContainer {
     operatorController.setRumble(GenericHID.RumbleType.kBothRumble, power);
   }
 
+  public void rumblePulseBoth(double power){
+    //no rumble yet
+  }
+
   // |==============================|
   // | Auto Commands |
   // |==============================|

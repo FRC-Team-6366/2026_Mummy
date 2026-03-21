@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.time.Period;
+import java.util.HashMap;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -34,6 +37,7 @@ public class Robot extends LoggedRobot {
   private HubStatusEnum hubStatus = HubStatusEnum.BOTH;
   private HubStatusEnum hubStatusWeCareAbout = HubStatusEnum.BOTH;
 
+  private HashMap<String,Integer> gamePeriodTime;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -44,6 +48,34 @@ public class Robot extends LoggedRobot {
      Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
 
     SmartDashboard.putData(CommandScheduler.getInstance());
+
+    this.gamePeriodTime = new HashMap<String,Integer>();
+    this.gamePeriodTime.put("transitionShiftStart",Constants.GameTimeConstants.transitionStartConstant);
+    this.gamePeriodTime.put("shift1Start", Constants.GameTimeConstants.shift1Constant);
+    this.gamePeriodTime.put("shift2Start",Constants.GameTimeConstants.shift2Constant);
+    this.gamePeriodTime.put("shift3Start",Constants.GameTimeConstants.shift3Constant);
+    this.gamePeriodTime.put("shift4Start", Constants.GameTimeConstants.shift4Constant);
+    this.gamePeriodTime.put("endgameStart",Constants.GameTimeConstants.endgameConstant);
+
+    this.gamePeriodTime.put("shift1Warning", 130 +Constants.GameTimeConstants.warningConstant);
+    this.gamePeriodTime.put("shift2Warning",105 +Constants.GameTimeConstants.warningConstant);
+    this.gamePeriodTime.put("shift3Warning",80 +Constants.GameTimeConstants.warningConstant);
+    this.gamePeriodTime.put("shift4Warning", 55 +Constants.GameTimeConstants.warningConstant);
+    this.gamePeriodTime.put("endgameWarning",30 +Constants.GameTimeConstants.warningConstant);
+
+    this.gamePeriodTime.put("shift1Shoot", 130 +Constants.GameTimeConstants.shootConstant);
+    this.gamePeriodTime.put("shift2Shoot",105 +Constants.GameTimeConstants.shootConstant);
+    this.gamePeriodTime.put("shift3Shoot",80 +Constants.GameTimeConstants.shootConstant);
+    this.gamePeriodTime.put("shift4Shoot", 55 +Constants.GameTimeConstants.shootConstant);
+    this.gamePeriodTime.put("endgameShoot",30 +Constants.GameTimeConstants.shootConstant);
+
+    this.gamePeriodTime.get("shift1Shoot");
+    HashMap<HubStatusEnum,Integer> myHashMap = new HashMap<HubStatusEnum,Integer>();
+    myHashMap.put(HubStatusEnum.ODD, 2);
+    
+
+  
+
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -95,6 +127,7 @@ public class Robot extends LoggedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
+
     double time = DriverStation.getMatchTime();
     
     // Shifting to Hub Period 1 (2:10 -> 1:45)
@@ -130,6 +163,78 @@ public class Robot extends LoggedRobot {
     else {
       m_robotContainer.rumbleBoth(0.0);
     }
+    switch ((int)DriverStation.getMatchTime()){
+      case (Constants.GameTimeConstants.shift1Constant):
+      this.shiftChangeAction();
+      break;
+
+      case (Constants.GameTimeConstants.shift2Constant):
+      this.shiftChangeAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift3Constant):
+      this.shiftChangeAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift4Constant):
+      this.shiftChangeAction();      
+      break;
+
+      case (Constants.GameTimeConstants.endgameConstant):
+      this.shiftChangeAction();      
+      break;
+      
+//    ------------------------
+
+      case (Constants.GameTimeConstants.shift1Constant+Constants.GameTimeConstants.warningConstant):
+      this.shiftWarningAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift2Constant+Constants.GameTimeConstants.warningConstant):
+      this.shiftWarningAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift3Constant+Constants.GameTimeConstants.warningConstant):
+      this.shiftWarningAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift4Constant+Constants.GameTimeConstants.warningConstant):
+      this.shiftWarningAction();      
+      break;
+
+      case (Constants.GameTimeConstants.endgameConstant+Constants.GameTimeConstants.warningConstant):
+      this.shiftWarningAction();      
+      break;
+
+// -----------------------
+
+      case (Constants.GameTimeConstants.shift1Constant+Constants.GameTimeConstants.shootConstant):
+      this.shiftShootAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift2Constant+Constants.GameTimeConstants.shootConstant):
+      this.shiftShootAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift3Constant+Constants.GameTimeConstants.shootConstant):
+      this.shiftShootAction();      
+      break;
+
+      case (Constants.GameTimeConstants.shift4Constant+Constants.GameTimeConstants.shootConstant):
+      this.shiftShootAction();      
+      break;
+
+      case (Constants.GameTimeConstants.endgameConstant+Constants.GameTimeConstants.shootConstant):
+      this.shiftShootAction();      
+      break;
+
+//--------------------------
+      default:
+      break;
+  
+    }
+
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -200,6 +305,7 @@ public class Robot extends LoggedRobot {
         this.hubStatusWeCareAbout = HubStatusEnum.ODD;
       } 
     }
+    
   }
 
   @Override
@@ -246,8 +352,27 @@ public class Robot extends LoggedRobot {
   public void sendActiveHubStatus() {
     if (this.hubStatus == this.hubStatusWeCareAbout || this.hubStatus == HubStatusEnum.BOTH) {
       Logger.recordOutput("GoalActive", true);
+      //Logger.recordOutput("StopLight", "#00ED35");
     } else {
       Logger.recordOutput("GoalActive", false);
+      //Logger.recordOutput("StopLight", "#ED0000");
     }
   }
+  public void shiftChangeAction(){
+    if (this.hubStatus == this.hubStatusWeCareAbout || this.hubStatus == HubStatusEnum.BOTH) {
+      Logger.recordOutput("GoalActive", true);
+      Logger.recordOutput("StopLight", "#00ED35");
+    } else {
+      Logger.recordOutput("GoalActive", false);
+      Logger.recordOutput("StopLight", "#ED0000");
+    }
+  }
+  public void shiftWarningAction(){
+    Logger.recordOutput("StopLight", "#ffec20");
+  }
+  public void shiftShootAction(){
+    m_robotContainer.rumblePulseBoth(1.0);
+    //doesntwork :()
+  }
+
 }

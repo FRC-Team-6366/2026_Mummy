@@ -83,33 +83,16 @@
             }
           },
           {
-            "title": "GameSpecificMessage",
-            "x": 704.0,
-            "y": 512.0,
-            "width": 640.0,
-            "height": 128.0,
-            "type": "Large Text Display",
+            "title": "StopLight",
+            "x": 640.0,
+            "y": 576.0,
+            "width": 256.0,
+            "height": 192.0,
+            "type": "Single Color View",
             "properties": {
-              "topic": "/FMSInfo/GameSpecificMessage",
+              "topic": "/AdvantageKit/RealOutputs/StopLight",
               "period": 0.06,
               "data_type": "string"
-            }
-          },
-          {
-            "title": "GoalActive",
-            "x": 1088.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 384.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/AdvantageKit/RealOutputs/GoalActive",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
             }
           }
         ]
