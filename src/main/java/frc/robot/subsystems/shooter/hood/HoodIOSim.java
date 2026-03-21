@@ -80,7 +80,7 @@ public class HoodIOSim implements HoodIO {
   }
 
   @Override
-  public void hoodsToAngle(double angle) {
+  public void hoodToAngle(double angle) {
     double angleToMeters = this.angleToMeters(angle);
     this.hoodRightSetpointRotations = this.metersToRotations(angleToMeters);
 
