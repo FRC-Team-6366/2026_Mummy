@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeRetract"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "TrenchToFuelRight"
