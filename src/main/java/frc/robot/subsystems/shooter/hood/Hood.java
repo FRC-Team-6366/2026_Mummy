@@ -56,7 +56,7 @@ public class Hood extends SubsystemBase {
     return this.run(
         () -> {
           this.angle = angle;
-          this.hoodIO.hoodsToAngle(this.angle);
+          this.hoodIO.hoodToAngle(this.angle);
         }).withName("hoodsToAngle()");
   }
 
@@ -148,7 +148,7 @@ public class Hood extends SubsystemBase {
           double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
 
           this.angle = hoodAngleMap.get(distanceToHub);
-          this.hoodIO.hoodsToAngle(angle);
+          this.hoodIO.hoodToAngle(angle);
           // hubPose.getTranslation().getDistance(drive.getPose().getTranslation());
         }).withName("setHoodAutoAngle()");
   }

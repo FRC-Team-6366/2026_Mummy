@@ -16,34 +16,13 @@ public interface HoodIO {
   public Rotation2d getRotationsRight();
 
   /**
-   * Gets the current number of rotations of the left hood motor from its starting
-   * position
-   * <p>
-   * <b>NOTE: Move the hood to fully restracted position before turning on the
-   * robot!</b>
-   * 
-   * @return Rotation2d object representing the number of rotations of the hood
-   *         motor
-   */
-  public Rotation2d getRotationsLeft();
-
-  /**
    * Sets both hoods to the position (number of rotations from start) based on
    * provided angle.
    * 
    * @param angle
    *          Angle in degrees. Valid from 0 to 45 degrees max
    */
-  public void hoodsToAngle(double angle);
-
-  /**
-   * Sets left hood to the position (number of rotations from start) based on
-   * provided angle.
-   * 
-   * @param angle
-   *          Angle in degrees. Valid from 0 to 45 degrees max
-   */
-  public void hoodToAngleLeft(double angle);
+  public void hoodToAngle(double angle);
 
   /**
    * Sets left hood to the position (number of rotations from start) based on
@@ -73,13 +52,6 @@ public interface HoodIO {
    */
   public double getHoodPositionErrorRight();
 
-  /**
-   * Gets the difference between the left motor's position (number of rotations) from
-   * its current setpoint
-   * 
-   * @return Error amount
-   */
-  public double getHoodPositionErrorLeft();
 
   /**
    * Returns whether both hoods are at its set point distance, given a percent of
