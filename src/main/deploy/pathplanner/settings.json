@@ -4,6 +4,7 @@
   "holonomicMode": true,
   "pathFolders": [
     "Fuel Locations to Shot Locations",
+    "Shoot Auto Aim",
     "Picking Up Fuel",
     "Simple Shot Locations",
     "Starting Locations to Get Fuel"

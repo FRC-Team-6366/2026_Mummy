@@ -56,6 +56,15 @@ public class Intake extends SubsystemBase {
         }).withName("intakeRunRollers()");
   }
 
+    public Command intakeStopPivot() {
+    return this.run(
+        () -> {
+          // Set roller power
+          // Use power to start the IntakeIO Hardware motor
+          this.intakeIO.pivotRunVolts(0.0);
+        }).withName("intakeStopPivot()");
+  }
+
   /**
    * Stops the intake rollers 
    * @return Command to stop Intake Rollers

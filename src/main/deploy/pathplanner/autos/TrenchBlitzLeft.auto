@@ -11,15 +11,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TrenchToFuelLeft"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeDeploy"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TrenchToFuelLeft"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
+                }
+              }
+            ]
           }
         },
         {
@@ -74,6 +81,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutoShooterSixSeconds"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftAutoShoot"
                 }
               }
             ]

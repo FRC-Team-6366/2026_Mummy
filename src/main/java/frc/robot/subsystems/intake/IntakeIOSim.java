@@ -127,4 +127,10 @@ public class IntakeIOSim implements IntakeIO {
     inputs.intakePivotSetpoint = this.intakePivotRotationSetPoint;
     inputs.intakePivotAtSetpoint = this.intakeAtPositionSetpoint();
   }
+
+  @Override
+  public void pivotRunVolts(double power) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'pivotRunVolts'");
+  }
 }

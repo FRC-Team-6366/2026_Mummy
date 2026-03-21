@@ -57,6 +57,8 @@ public interface IntakeIO {
 
   public void rollersRunVolts(double power);
 
+  public void pivotRunVolts(double power);
+
   public void rollersStop();
 
   public void updateInputs(IntakeIOInputs inputs);

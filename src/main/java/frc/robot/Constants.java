@@ -93,7 +93,7 @@ public final class Constants {
 
     public static final double intakePivotStartAngleDegrees = 0;
     public static final double intakePivotRetractAngleDegrees = 0.1;
-    public static final double intakePivotDeployAngleDegrees = 136;
+    public static final double intakePivotDeployAngleDegrees = 133;
     public static final double intakePivotPulseUpAngleDegrees = 50;
 
     // Intake roller power from 0 to 1

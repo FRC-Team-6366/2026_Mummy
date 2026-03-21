@@ -60,7 +60,7 @@ public class Shooter extends SubsystemBase {
     // Interpolation map to calculate shooter speed for any given distance
     // Starting with values from three set points
     shooterSpeedMap.put(1.01, 40.0);
-    shooterSpeedMap.put(1.596, 55.0);
+    shooterSpeedMap.put(1.596, 45.0);
     shooterSpeedMap.put(3.369, 58.0);
     shooterSpeedMap.put(4.004, 63.0);
   }
@@ -194,11 +194,13 @@ public class Shooter extends SubsystemBase {
           double hubToPoseY = hubToPose.getY();
           // Find the hypotenuse of the triangle
           this.distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+          Logger.recordOutput("distanceToHub", this.distanceToHub);
 
           this.velocityFPS = shooterSpeedMap.get(distanceToHub);
           this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
 
         }).withName("setShooterAutoVelocity()");
+        
   }
 
   /**

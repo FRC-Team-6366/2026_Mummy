@@ -150,6 +150,13 @@ public class IntakeIOTalonFX implements IntakeIO {
     intakeRollersMotor.setControl(volts);
   }
 
+    @Override
+  public void pivotRunVolts(double power) {
+    double voltage = power * 12;
+    VoltageOut volts = new VoltageOut(voltage);
+    intakePivotMotor.setControl(volts);
+  }
+
   @Override
   public void rollersStop() {
     intakeRollersMotor.stopMotor();
