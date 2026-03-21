@@ -106,10 +106,6 @@ public class Hood extends SubsystemBase {
     return this.run(
         () -> {
           // Check for alliance side
-          // boolean isFlipped =
-          // DriverStation.getAlliance().isPresent()
-          // && DriverStation.getAlliance().get() == Alliance.Red;
-
           boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
 
           // Select correct dummy pose
