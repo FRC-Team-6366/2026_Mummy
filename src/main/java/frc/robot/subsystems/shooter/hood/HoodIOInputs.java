@@ -13,18 +13,8 @@ public class HoodIOInputs {
   double hoodCurrentRight = 0;
   double hoodSupplyCurrentRight = 0;
 
-  double hoodVoltsLeft = 0;
-  double hoodPositionLeft = 0;
-  double hoodRPSLeft = 0;
-  double hoodCurrentLeft = 0;
-  double hoodSupplyCurrentLeft = 0;
-
   // For tracking Setpoint statuses
   double hoodPositionSetpointRight = 0;
   double hoodPositionErrorRight = 0;
   boolean hoodAtSetpointRight = false;
-
-  double hoodPositionSetpointLeft = 0;
-  double hoodPositionErrorLeft = 0;
-  boolean hoodAtSetpointLeft = false;
 }

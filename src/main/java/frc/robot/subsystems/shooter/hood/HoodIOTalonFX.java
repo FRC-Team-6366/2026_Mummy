@@ -202,7 +202,7 @@ public class HoodIOTalonFX implements HoodIO {
   public boolean hoodsAtPositionSetpoint() {
     // Get absolute value of the error and see if it is less
     // than the setpoint tolerance for both shooter assemblies
-    return (Math.abs(this.getHoodPositionErrorRight()) < this.setPointTolerance) && (Math.abs(this.getHoodPositionErrorLeft()) < this.setPointTolerance);
+    return (Math.abs(this.getHoodPositionErrorRight()) < this.setPointTolerance);
   }
 
   @Override
