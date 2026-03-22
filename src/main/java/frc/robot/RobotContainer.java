@@ -155,6 +155,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
     NamedCommands.registerCommand("AutoShooterSixSeconds", autoShootForSixSeconds());
     NamedCommands.registerCommand("AutoShooterEndless", autoShootForever());
+    NamedCommands.registerCommand("AutoShooterWithLifter", autoShootWithIntakeLifter());
     NamedCommands.registerCommand("Stop", autoTurnOffAllButIntake());
     NamedCommands.registerCommand("IntakeDeploy",
         intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
@@ -233,7 +234,7 @@ public class RobotContainer {
     operatorController.rightBumper().whileTrue(passFuel());
 
     // Auto speed and angle when RT is held
-    operatorController.rightTrigger().whileTrue(this.autoShootForever());
+    operatorController.rightTrigger().whileTrue(this.autoShootWithIntakeLifter()).onFalse(intake.deployIntake());
 
     // Stop all subsystems (except drivetrain)
     operatorController.b().whileTrue(turnOffAll());
@@ -315,6 +316,23 @@ public class RobotContainer {
             indexer.runIndexer(),
             kicker.runKicker())))
         .withName("autoShootForever");
+  }
+
+    /**
+   * Returns command to run shooter and hood based on distance to goal as 
+   * well as run the indexer (either pulse or full) 
+   * AND slowly lifts the intake to feed the indexer
+   * 
+   * @return Command for auto-shooting
+   */
+  public Command autoShootWithIntakeLifter() {
+    return Commands.parallel(
+        shooter.setShooterAutoVelocity(drive),
+        hood.setHoodAutoAngle(drive),
+        kicker.runKicker(),
+        indexer.runIndexer(),
+        intake.intakePivotLifter()
+    ).withName("autoShootForever");
   }
 
   /**

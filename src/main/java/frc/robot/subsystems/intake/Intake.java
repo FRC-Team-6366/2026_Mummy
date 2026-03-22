@@ -93,6 +93,16 @@ public class Intake extends SubsystemBase {
 
   }
 
+  public Command intakePivotLifter() {
+    return this.run(
+      () -> {
+        this.angle -= 0.5;
+        Logger.recordOutput("Pivot/Angle", this.angle);
+        this.intakeIO.intakePivotToAngle(this.angle);
+      }
+    ).withName("intakePivotLifter");
+  }
+
   /**
    * Retracts the Intake Pivot Motor to its starting position
    * <p>
@@ -116,7 +126,12 @@ public class Intake extends SubsystemBase {
    * @return Command to set Intake Pivot Motor for close shooting
    */
   public Command deployIntake() {
-    return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).withName("deployIntake()");
+    return this.runOnce(
+      () -> {
+        this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
+        this.intakeIO.intakePivotToAngle(this.angle);
+      }
+    ).withName("deployIntake()");
   }
 
   /**

@@ -80,32 +80,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterSixSeconds"
+                  "name": "AutoShooterWithLifter"
                 }
               },
               {
                 "type": "path",
                 "data": {
                   "pathName": "LeftAutoShoot"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeHalfRetract"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoShooterEndless"
                 }
               }
             ]
