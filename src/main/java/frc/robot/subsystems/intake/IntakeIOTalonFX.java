@@ -200,6 +200,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         intakePivotCurrent,
         intakePivotSupplyCurrent,
         intakePivotErrorFromSetpoint
+        
 
     ).isOK();
 

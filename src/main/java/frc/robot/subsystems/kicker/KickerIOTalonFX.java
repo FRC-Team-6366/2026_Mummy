@@ -78,8 +78,8 @@ public class KickerIOTalonFX implements KickerIO {
     // Update the inputs object with the current status if the
     // Kicker's object's current statuses
     inputs.kickVolts = this.kickVolts.getValueAsDouble();
-    inputs.kickRps = this.kickVolts.getValueAsDouble();
-    inputs.kickCurrent = this.kickVolts.getValueAsDouble();
-    inputs.kickSupplyCurrent = this.kickVolts.getValueAsDouble();
+    inputs.kickRps = this.kickRps.getValueAsDouble();
+    inputs.kickCurrent = this.kickCurrent.getValueAsDouble();
+    inputs.kickSupplyCurrent = this.kickSupplyCurrent.getValueAsDouble();
   }
 }
