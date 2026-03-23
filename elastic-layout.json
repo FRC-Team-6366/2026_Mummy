@@ -83,14 +83,27 @@
             }
           },
           {
-            "title": "StopLight",
-            "x": 640.0,
-            "y": 576.0,
+            "title": "GoalActive",
+            "x": 1088.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 192.0,
+            "type": "Multi Color View",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/GoalActive",
+              "period": 0.06,
+              "data_type": "string[]"
+            }
+          },
+          {
+            "title": "Won Auto Period",
+            "x": 1088.0,
+            "y": 192.0,
             "width": 256.0,
             "height": 192.0,
             "type": "Single Color View",
             "properties": {
-              "topic": "/AdvantageKit/RealOutputs/StopLight",
+              "topic": "/AdvantageKit/RealOutputs/WonAuto",
               "period": 0.06,
               "data_type": "string"
             }

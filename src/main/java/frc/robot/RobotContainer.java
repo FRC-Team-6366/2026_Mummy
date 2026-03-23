@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.extras.RamRodController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.driveTrain.Drive;
 import frc.robot.subsystems.driveTrain.DriveCommands;
@@ -13,6 +14,7 @@ import frc.robot.subsystems.driveTrain.GyroIOPigeon2;
 import frc.robot.subsystems.driveTrain.ModuleIO;
 import frc.robot.subsystems.driveTrain.ModuleIOSim;
 import frc.robot.subsystems.driveTrain.ModuleIOTalonFX;
+import frc.robot.subsystems.hubStateTracker.HubStateTracker;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOSim;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
@@ -40,6 +42,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -64,13 +67,19 @@ public class RobotContainer {
   public Drive drive;
   public Intake intake;
   public Vision vision;
+  public HubStateTracker hubStateTracker;
   LoggedDashboardChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController driverController = new CommandXboxController(
-      OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController operatorController = new CommandXboxController(
-      OperatorConstants.kOperatorControllerPort);
+  // private final CommandXboxController driverController = new CommandXboxController(
+  //     OperatorConstants.kDriverControllerPort);
+  // private final CommandXboxController operatorController = new CommandXboxController(
+  //     OperatorConstants.kOperatorControllerPort);
+  public final RamRodController driverController = new RamRodController(
+    OperatorConstants.kDriverControllerPort);
+  public final RamRodController operatorController = new RamRodController(
+    OperatorConstants.kOperatorControllerPort);
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -145,6 +154,8 @@ public class RobotContainer {
             new ModuleIO() {});
         break;
     }
+    this.hubStateTracker = HubStateTracker.getInstance();
+    this.hubStateTracker.setDefaultCommand(this.hubStateTracker.runHubStateTracker());
 
     this.mode = 0;
 
@@ -265,8 +276,10 @@ public class RobotContainer {
    * @param power 0.0 to 1.0: 0.0 being off, 1.0 being full power rumble on the controller
    */
   public void rumbleBoth(double power) {
-    driverController.setRumble(GenericHID.RumbleType.kBothRumble, power);
-    operatorController.setRumble(GenericHID.RumbleType.kBothRumble, power);
+    // driverController.setRumble(GenericHID.RumbleType.kBothRumble, power);
+    // operatorController.setRumble(GenericHID.RumbleType.kBothRumble, power);
+    driverController.rumbleForSetTime(power, 1, 6);
+    operatorController.rumbleForSetTime(power, 1, 6);
   }
 
   public void rumblePulseBoth(double power){

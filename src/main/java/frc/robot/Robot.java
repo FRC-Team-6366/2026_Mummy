@@ -4,8 +4,7 @@
 
 package frc.robot;
 
-import java.time.Period;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
@@ -14,13 +13,11 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.util.ActiveHubState;
+import frc.robot.util.AutoResult;
 import frc.robot.util.GameTimeMarkers;
 import frc.robot.util.HubStatusEnum;
 
@@ -31,16 +28,15 @@ import frc.robot.util.HubStatusEnum;
  */
 
 public class Robot extends LoggedRobot {
-  private ActiveHubState activeHubState;
+  
   private Command m_autonomousCommand;
   private final RobotContainer m_robotContainer;
   private long testStartTime = 0;
   private long testPeriodMilliseconds = 3000;
-  private HubStatusEnum hubStatus = HubStatusEnum.BOTH;
-  private HubStatusEnum hubStatusWeCareAbout = HubStatusEnum.BOTH;
-  private GameTimeMarkers gameTimeMarker;
+  private int gameMatchTime;
+  private GameTimeMarkers currenTimeMarker;
+  private LinkedList<GameTimeMarkers> warningShifts = GameTimeMarkers.getWarningEnums();
 
-  private HashMap<String,Integer> gamePeriodTime;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -48,37 +44,9 @@ public class Robot extends LoggedRobot {
   public Robot() {
     // This code must be first in the constructor to (hopefully) properly run Advantagkit
     Logger.recordMetadata("ProjectName", "2026_Mummy"); // Set a metadata value
-     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
+    Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
 
     SmartDashboard.putData(CommandScheduler.getInstance());
-
-    this.gamePeriodTime = new HashMap<String,Integer>();
-    this.gamePeriodTime.put("transitionShiftStart",Constants.GameTimeConstants.transitionStartConstant);
-    this.gamePeriodTime.put("shift1Start", Constants.GameTimeConstants.shift1Constant);
-    this.gamePeriodTime.put("shift2Start",Constants.GameTimeConstants.shift2Constant);
-    this.gamePeriodTime.put("shift3Start",Constants.GameTimeConstants.shift3Constant);
-    this.gamePeriodTime.put("shift4Start", Constants.GameTimeConstants.shift4Constant);
-    this.gamePeriodTime.put("endgameStart",Constants.GameTimeConstants.endgameConstant);
-
-    this.gamePeriodTime.put("shift1Warning", 130 +Constants.GameTimeConstants.warningConstant);
-    this.gamePeriodTime.put("shift2Warning",105 +Constants.GameTimeConstants.warningConstant);
-    this.gamePeriodTime.put("shift3Warning",80 +Constants.GameTimeConstants.warningConstant);
-    this.gamePeriodTime.put("shift4Warning", 55 +Constants.GameTimeConstants.warningConstant);
-    this.gamePeriodTime.put("endgameWarning",30 +Constants.GameTimeConstants.warningConstant);
-
-    this.gamePeriodTime.put("shift1Shoot", 130 +Constants.GameTimeConstants.shootConstant);
-    this.gamePeriodTime.put("shift2Shoot",105 +Constants.GameTimeConstants.shootConstant);
-    this.gamePeriodTime.put("shift3Shoot",80 +Constants.GameTimeConstants.shootConstant);
-    this.gamePeriodTime.put("shift4Shoot", 55 +Constants.GameTimeConstants.shootConstant);
-    this.gamePeriodTime.put("endgameShoot",30 +Constants.GameTimeConstants.shootConstant);
-
-    this.gamePeriodTime.get("shift1Shoot");
-    HashMap<HubStatusEnum,Integer> myHashMap = new HashMap<HubStatusEnum,Integer>();
-    myHashMap.put(HubStatusEnum.ODD, 2);
-    
-    activeHubState = ActiveHubState.UNDEFINED;
-  
-
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -130,178 +98,14 @@ public class Robot extends LoggedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-
-    double time = DriverStation.getMatchTime();
-    
-    // Shifting to Hub Period 1 (2:10 -> 1:45)
-    if (time <= 135 && time > 134) {
-      this.hubStatus = HubStatusEnum.ODD;
-      this.sendActiveHubStatus();  
+    this.currenTimeMarker = m_robotContainer.hubStateTracker.getCurrentShiftPeriod();
+    if (this.warningShifts.contains(this.currenTimeMarker)) {
       m_robotContainer.rumbleBoth(1.0);
     }
-    // Shifting to Hub Period 2 (1:45 -> 1:20)
-    else if (time <= 110 && time > 109) {
-      this.hubStatus = HubStatusEnum.EVEN;
-      this.sendActiveHubStatus();  
-      m_robotContainer.rumbleBoth(1.0);
-    }
-    // Shifting to Hub Period 3 (1:20 -> 0:55)
-    else if (time <= 85 && time > 84) {
-      this.hubStatus = HubStatusEnum.ODD;
-      this.sendActiveHubStatus();    
-      m_robotContainer.rumbleBoth(1.0);
-    }
-    // Shifting to Hub Period 4 (0:55 -> 0:30)
-    else if (time <= 60 && time > 59) {
-      this.hubStatus = HubStatusEnum.EVEN;
-      this.sendActiveHubStatus();    
-      m_robotContainer.rumbleBoth(1.0);
-    }
-    // Shifting to Hub Period Both (0:30 -> 0:00)
-    else if (time <= 35 && time > 34) {
-      this.hubStatus = HubStatusEnum.BOTH;
-      this.sendActiveHubStatus();    
-      m_robotContainer.rumbleBoth(1.0);
-    } 
-    else {
-      m_robotContainer.rumbleBoth(0.0);
-    }
 
-    switch (gameTimeMarker){
-      case SHIFT_1_RUNNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_2_WARNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_2_WARNING;
-        }
-        break;
-      case SHIFT_1_WARNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_1_RUNNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_1_RUNNING;
-        }
-        break;
-      case SHIFT_2_RUNNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_3_WARNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_3_WARNING;
-        }
-        break;
-      case SHIFT_2_WARNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_2_RUNNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_2_RUNNING;
-        }
-        break;
-      case SHIFT_3_RUNNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_4_WARNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_4_WARNING;
-        }
-      
-        break;
-      case SHIFT_3_WARNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_3_RUNNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_3_RUNNING;
-        }
-        break;
-      case SHIFT_4_RUNNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_END_WARNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_END_WARNING;
-        }
-        break;
-      case SHIFT_4_WARNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_4_RUNNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_4_RUNNING;
-        }
-        break;
-      case SHIFT_END_RUNNING:
-        break;
-      case SHIFT_END_WARNING:
-      if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_END_RUNNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_END_RUNNING;
-        }
-        break;
-      case SHIFT_TRANSITION_RUNNING:
-        if (DriverStation.getMatchTime() == GameTimeMarkers.getTime(GameTimeMarkers.SHIFT_1_WARNING)){
-          this.gameTimeMarker=GameTimeMarkers.SHIFT_1_WARNING;
-        }
-        break;
-      case UNDEFINED:
-        this.gameTimeMarker=GameTimeMarkers.SHIFT_TRANSITION_RUNNING;
-        break;
-
-      default:
-        break;
-
-    }
-get
-    switch ((int)DriverStation.getMatchTime()){
-      case (Constants.GameTimeConstants.shift1Constant):
-      this.shiftChangeAction();
-      break;
-
-      case (Constants.GameTimeConstants.shift2Constant):
-      this.shiftChangeAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift3Constant):
-      this.shiftChangeAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift4Constant):
-      this.shiftChangeAction();      
-      break;
-
-      case (Constants.GameTimeConstants.endgameConstant):
-      this.shiftChangeAction();      
-      break;
-      
-//    ------------------------
-
-      case (Constants.GameTimeConstants.shift1Constant+Constants.GameTimeConstants.warningConstant):
-      this.shiftWarningAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift2Constant+Constants.GameTimeConstants.warningConstant):
-      this.shiftWarningAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift3Constant+Constants.GameTimeConstants.warningConstant):
-      this.shiftWarningAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift4Constant+Constants.GameTimeConstants.warningConstant):
-      this.shiftWarningAction();      
-      break;
-
-      case (Constants.GameTimeConstants.endgameConstant+Constants.GameTimeConstants.warningConstant):
-      this.shiftWarningAction();      
-      break;
-
-// -----------------------
-
-      case (Constants.GameTimeConstants.shift1Constant+Constants.GameTimeConstants.shootConstant):
-      this.shiftShootAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift2Constant+Constants.GameTimeConstants.shootConstant):
-      this.shiftShootAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift3Constant+Constants.GameTimeConstants.shootConstant):
-      this.shiftShootAction();      
-      break;
-
-      case (Constants.GameTimeConstants.shift4Constant+Constants.GameTimeConstants.shootConstant):
-      this.shiftShootAction();      
-      break;
-
-      case (Constants.GameTimeConstants.endgameConstant+Constants.GameTimeConstants.shootConstant):
-      this.shiftShootAction();      
-      break;
-
-//--------------------------
-      default:
-      break;
-  
-    }
-
-    
+    // Handle the controllers' rumble
+    this.m_robotContainer.driverController.periodic();
+    this.m_robotContainer.operatorController.periodic();    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -312,6 +116,8 @@ get
       CommandScheduler.getInstance().schedule(m_robotContainer.intake.intakePivotToAngle(Constants.IntakeConstants
       .intakePivotDeployAngleDegrees));
         }
+    m_robotContainer.hubStateTracker.reset();
+    this.m_robotContainer.hubStateTracker.setDefaultCommand(this.m_robotContainer.hubStateTracker.runHubStateTracker()); 
   }
 
   @Override
@@ -334,10 +140,7 @@ get
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    this.hubStatus = HubStatusEnum.BOTH;
-    this.sendActiveHubStatus(); 
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -358,22 +161,7 @@ get
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    if(DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue) {
-      if (DriverStation.getGameSpecificMessage().contains("B")) {
-        this.hubStatusWeCareAbout = HubStatusEnum.EVEN;
-      } else {
-        this.hubStatusWeCareAbout = HubStatusEnum.ODD;
-      } 
-    } else {
-      if (DriverStation.getGameSpecificMessage().contains("R")) {
-        this.hubStatusWeCareAbout = HubStatusEnum.EVEN;
-      } else {
-        this.hubStatusWeCareAbout = HubStatusEnum.ODD;
-      } 
-    }
-    
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
@@ -415,31 +203,5 @@ get
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
-
-  public void sendActiveHubStatus() {
-    if (this.hubStatus == this.hubStatusWeCareAbout || this.hubStatus == HubStatusEnum.BOTH) {
-      Logger.recordOutput("GoalActive", true);
-      //Logger.recordOutput("StopLight", "#00ED35");
-    } else {
-      Logger.recordOutput("GoalActive", false);
-      //Logger.recordOutput("StopLight", "#ED0000");
-    }
-  }
-  public void shiftChangeAction(){
-    if (this.hubStatus == this.hubStatusWeCareAbout || this.hubStatus == HubStatusEnum.BOTH) {
-      Logger.recordOutput("GoalActive", true);
-      Logger.recordOutput("StopLight", "#00ED35");
-    } else {
-      Logger.recordOutput("GoalActive", false);
-      Logger.recordOutput("StopLight", "#ED0000");
-    }
-  }
-  public void shiftWarningAction(){
-    Logger.recordOutput("StopLight", "#ffec20");
-  }
-  public void shiftShootAction(){
-    m_robotContainer.rumblePulseBoth(1.0);
-    //doesntwork :()
-  }
 
 }
