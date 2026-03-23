@@ -1,9 +1,5 @@
 package frc.robot.util;
 
-import javax.lang.model.util.ElementScanner14;
-
-import org.littletonrobotics.junction.AutoLogOutput;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
