@@ -17,9 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.util.AutoResult;
 import frc.robot.util.GameTimeMarkers;
-import frc.robot.util.HubStatusEnum;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -33,7 +31,6 @@ public class Robot extends LoggedRobot {
   private final RobotContainer m_robotContainer;
   private long testStartTime = 0;
   private long testPeriodMilliseconds = 3000;
-  private int gameMatchTime;
   private GameTimeMarkers currenTimeMarker;
   private LinkedList<GameTimeMarkers> warningShifts = GameTimeMarkers.getWarningEnums();
 
