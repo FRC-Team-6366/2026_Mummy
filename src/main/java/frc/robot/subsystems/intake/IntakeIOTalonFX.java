@@ -126,6 +126,9 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     voltageRequest = new VoltageOut(0);
     positionVoltageRequest = new PositionVoltage(0.12);
+    
+    // Set motor position to CANcoder position
+    intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
 
     this.setPointTolerance = intakePivotMaxPosition * this.setPointTolerancePercent;
   }
