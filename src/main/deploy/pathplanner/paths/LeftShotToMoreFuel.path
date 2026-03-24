@@ -1,0 +1,99 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.706376604850214,
+        "y": 6.887
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.9263493975903616,
+        "y": 7.608361445783132
+      },
+      "isLocked": false,
+      "linkedName": "LeftShootSpot"
+    },
+    {
+      "anchor": {
+        "x": 4.095614457831325,
+        "y": 7.389807228915663
+      },
+      "prevControl": {
+        "x": 3.2350445041838185,
+        "y": 7.468040861065433
+      },
+      "nextControl": {
+        "x": 4.344587759448252,
+        "y": 7.367173292405034
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.9314698795180725,
+        "y": 7.018265060240964
+      },
+      "prevControl": {
+        "x": 5.59329555370933,
+        "y": 7.431589236229426
+      },
+      "nextControl": {
+        "x": 6.423216867469881,
+        "y": 6.417240963855422
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.7019879518072285,
+        "y": 4.078710843373494
+      },
+      "prevControl": {
+        "x": 5.848117469879517,
+        "y": 6.720484939759037
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6140077821011873,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.3610894941634244,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.9914396887158587,
+      "rotationDegrees": -90.11050498387604
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -88.15238973400547
+  },
+  "reversed": false,
+  "folder": "Picking Up Fuel",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 121.09235713985599
+  },
+  "useDefaultConstraints": true
+}

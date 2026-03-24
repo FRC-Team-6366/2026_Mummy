@@ -21,7 +21,7 @@
           },
           {
             "title": "Auto Choices",
-            "x": 704.0,
+            "x": 576.0,
             "y": 384.0,
             "width": 640.0,
             "height": 128.0,
@@ -34,7 +34,7 @@
           },
           {
             "title": "Sim Field",
-            "x": 1344.0,
+            "x": 1216.0,
             "y": 0.0,
             "width": 320.0,
             "height": 768.0,
@@ -47,7 +47,7 @@
               "robot_length": 0.85,
               "show_other_objects": true,
               "show_trajectories": false,
-              "field_rotation": -90.0,
+              "field_rotation": 90.0,
               "robot_color": 4288285440,
               "trajectory_color": 4294967295,
               "show_robot_outside_widget": true
@@ -55,7 +55,7 @@
           },
           {
             "title": "MatchTime",
-            "x": 704.0,
+            "x": 576.0,
             "y": 0.0,
             "width": 384.0,
             "height": 384.0,
@@ -70,21 +70,8 @@
             }
           },
           {
-            "title": "camFrontLeft-processed",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 704.0,
-            "height": 576.0,
-            "type": "Camera Stream",
-            "properties": {
-              "topic": "/CameraPublisher/camFrontLeft-processed",
-              "period": 0.06,
-              "rotation_turns": 0
-            }
-          },
-          {
             "title": "GameSpecificMessage",
-            "x": 704.0,
+            "x": 576.0,
             "y": 512.0,
             "width": 640.0,
             "height": 128.0,
@@ -97,7 +84,7 @@
           },
           {
             "title": "GoalActive",
-            "x": 1088.0,
+            "x": 960.0,
             "y": 0.0,
             "width": 256.0,
             "height": 384.0,
@@ -110,6 +97,19 @@
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
+            }
+          },
+          {
+            "title": "StationCamera",
+            "x": 64.0,
+            "y": 0.0,
+            "width": 448.0,
+            "height": 512.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/StationCamera",
+              "period": 0.06,
+              "rotation_turns": 0
             }
           }
         ]
@@ -878,8 +878,8 @@
           },
           {
             "title": "IntakePivotPosition",
-            "x": 256.0,
-            "y": 256.0,
+            "x": 320.0,
+            "y": 128.0,
             "width": 640.0,
             "height": 384.0,
             "type": "Graph",

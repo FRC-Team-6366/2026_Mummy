@@ -11,6 +11,9 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cameraserver.CameraServerShared;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,6 +47,13 @@ public class Robot extends LoggedRobot {
      Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
 
     SmartDashboard.putData(CommandScheduler.getInstance());
+
+
+    // drive station camera
+    UsbCamera stationCamera = CameraServer.startAutomaticCapture("StationCamera", 0);
+    stationCamera.setResolution(320, 240);
+    stationCamera.setFPS(30);
+
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.

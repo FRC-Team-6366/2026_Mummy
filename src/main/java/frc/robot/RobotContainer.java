@@ -155,7 +155,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
     NamedCommands.registerCommand("AutoShooterSixSeconds", autoShootForSixSeconds());
     NamedCommands.registerCommand("AutoShooterEndless", autoShootForever());
-    NamedCommands.registerCommand("AutoShooterWithLifter", autoShootWithIntakeLifter());
+    NamedCommands.registerCommand("AutoShooterWithLifter", autoShootWithIntakeLifter().until(
+        () -> {
+            double currentAngle = intake.getIntakeAngleRotations();
+            return currentAngle <= 0.125;
+        }
+    ));
     NamedCommands.registerCommand("Stop", autoTurnOffAllButIntake());
     NamedCommands.registerCommand("IntakeDeploy",
         intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));

@@ -80,19 +80,50 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
+          "data": {
+            "name": "AutoShooterWithLifter"
+          }
+        },
+        {
+          "type": "race",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterWithLifter"
+                  "name": "Stop"
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.25
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftAutoShoot"
+                  "pathName": "LeftShotToMoreFuel"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
                 }
               }
             ]

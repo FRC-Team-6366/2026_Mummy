@@ -96,7 +96,7 @@ public class Intake extends SubsystemBase {
   public Command intakePivotLifter() {
     return this.run(
       () -> {
-        this.angle -= 0.5;
+        this.angle -= 1.0;
         Logger.recordOutput("Pivot/Angle", this.angle);
         this.intakeIO.intakePivotToAngle(this.angle);
       }
@@ -177,6 +177,10 @@ public class Intake extends SubsystemBase {
    */
   public double getIntakeAngleSetpoint() {
     return this.angle;
+  }
+
+  public double getIntakeAngleRotations(){
+    return this.intakeIO.getRotations().getRotations();
   }
 
   /**
