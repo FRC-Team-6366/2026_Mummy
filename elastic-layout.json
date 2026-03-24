@@ -21,7 +21,7 @@
           },
           {
             "title": "Auto Choices",
-            "x": 704.0,
+            "x": 576.0,
             "y": 384.0,
             "width": 640.0,
             "height": 128.0,
@@ -34,7 +34,7 @@
           },
           {
             "title": "Sim Field",
-            "x": 1344.0,
+            "x": 1216.0,
             "y": 0.0,
             "width": 320.0,
             "height": 768.0,
@@ -55,7 +55,7 @@
           },
           {
             "title": "MatchTime",
-            "x": 704.0,
+            "x": 576.0,
             "y": 0.0,
             "width": 384.0,
             "height": 384.0,
@@ -73,8 +73,8 @@
             "title": "camFrontLeft-processed",
             "x": 0.0,
             "y": 0.0,
-            "width": 704.0,
-            "height": 576.0,
+            "width": 576.0,
+            "height": 512.0,
             "type": "Camera Stream",
             "properties": {
               "topic": "/CameraPublisher/camFrontLeft-processed",
@@ -84,7 +84,7 @@
           },
           {
             "title": "GameSpecificMessage",
-            "x": 704.0,
+            "x": 576.0,
             "y": 512.0,
             "width": 640.0,
             "height": 128.0,
@@ -97,7 +97,7 @@
           },
           {
             "title": "GoalActive",
-            "x": 1088.0,
+            "x": 960.0,
             "y": 0.0,
             "width": 256.0,
             "height": 384.0,
