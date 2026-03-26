@@ -29,7 +29,6 @@ public class ShooterIOSim implements ShooterIO {
   public static final double shooterMinVelocityRPS = 0;
   public static final double shooterMaxVelocityRPS = 100;
   private double rps = 0.0;
-  private double radPerSeconds = 0.0;
   private double setpointThreshold = 1;
 
   public ShooterIOSim() {
@@ -58,7 +57,6 @@ public class ShooterIOSim implements ShooterIO {
   public void setShooterVelocityFeetPerSecond(double feetPerSecond) {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     this.rps = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
-    this.radPerSeconds = this.rps * 2 * Math.PI;
     
     // Using Feed Forward models to convert rotations to voltage
     // and then setting applied voltage to be used in updateInputs()
