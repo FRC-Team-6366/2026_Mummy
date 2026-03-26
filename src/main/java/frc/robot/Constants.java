@@ -34,6 +34,21 @@ public final class Constants {
 
   }
 
+  public class GameTimeConstants {
+    public static final int transitionStartConstant = 140;
+    public static final int shift1Constant =130;
+    public static final int shift2Constant = 105;
+    public static final int shift3Constant = 80;
+    public static final int shift4Constant = 55;
+    public static final int endgameConstant = 30;
+
+
+    public static final int warningConstant = 5;
+    public static final int shootConstant = 2;
+
+
+  }
+
   public class drivetrainConstants {
     public static final int frontLeftDriveMotorId = 0;
     public static final int frontLeftSteerMotorId = 1;

@@ -1,5 +1,5 @@
 package frc.robot.util;
 
 public enum HubStatusEnum {
-  BOTH, ODD, EVEN;
+  BOTH, ODD, EVEN, UNDEFINED;
 }
