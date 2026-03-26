@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.6968674698795176,
+        "y": 6.908987951807229
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.5820120481927695,
+        "y": 7.335168674698796
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.286734939759036,
+        "y": 7.520939759036144
+      },
+      "prevControl": {
+        "x": 4.8524591466048665,
+        "y": 7.502289790343676
+      },
+      "nextControl": {
+        "x": 6.141727667224716,
+        "y": 7.557657411391827
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.30278313253012,
+        "y": 6.908987951807229
+      },
+      "prevControl": {
+        "x": 7.638614851404541,
+        "y": 7.109994643636564
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "IntakingBallsToHome"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -92.60256220249947
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 137.60256220249974
+  },
+  "useDefaultConstraints": true
+}

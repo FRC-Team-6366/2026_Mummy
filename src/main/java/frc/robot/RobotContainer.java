@@ -150,6 +150,7 @@ public class RobotContainer {
 
     // Naming commands for Autos
     NamedCommands.registerCommand("StopWithX", Commands.run(drive::stopWithX, drive));
+    NamedCommands.registerCommand("StopAllButIntake", autoTurnOffAllButIntake());
     NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
     NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
     NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
@@ -337,7 +338,7 @@ public class RobotContainer {
         kicker.runKicker(),
         indexer.runIndexer(),
         intake.intakePivotLifter()
-    ).withName("autoShootForever");
+    ).withName("autoShooterWithLifter");
   }
 
   /**

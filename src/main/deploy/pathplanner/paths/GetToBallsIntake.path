@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.31077032810271,
+        "y": 7.521968616262482
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.3158971278351235,
+        "y": 7.608549024290902
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.25706134094151,
+        "y": 6.887974322396576
+      },
+      "prevControl": {
+        "x": 7.56759420344119,
+        "y": 6.916185645338818
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "IntakingGetToHome"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -97.12501634890157
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
