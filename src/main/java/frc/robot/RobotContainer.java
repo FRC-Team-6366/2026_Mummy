@@ -74,9 +74,11 @@ public class RobotContainer {
   // private final CommandXboxController operatorController = new CommandXboxController(
   //     OperatorConstants.kOperatorControllerPort);
   public final RamRodController driverController = new RamRodController(
-    OperatorConstants.kDriverControllerPort);
+    OperatorConstants.kDriverControllerPort,
+    0.1);
   public final RamRodController operatorController = new RamRodController(
-    OperatorConstants.kOperatorControllerPort);
+    OperatorConstants.kOperatorControllerPort,
+    0.1);
 
 
   /**

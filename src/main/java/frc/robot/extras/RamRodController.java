@@ -120,7 +120,7 @@ public class RamRodController extends CommandXboxController {
 
     if(value < precision && value > -precision)
 		{
-			value = 0;
+			value = 0.0;
 		}
     
     if(ramp)

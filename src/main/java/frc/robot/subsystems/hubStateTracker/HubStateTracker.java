@@ -232,6 +232,7 @@ public class HubStateTracker extends SubsystemBase{
     this.determineGameShiftPeriodsWeCareAbout();
     this.determineCurrentGameShiftPeriod();
     this.sendActiveGoalStateToDashboard();
+    Logger.recordOutput("ShiftName", this.gameTimeMarker.toString());
   }
 
 

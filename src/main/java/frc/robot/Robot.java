@@ -97,7 +97,8 @@ public class Robot extends LoggedRobot {
 
     this.currenTimeMarker = m_robotContainer.hubStateTracker.getCurrentShiftPeriod();
     if (this.warningShifts.contains(this.currenTimeMarker)) {
-      m_robotContainer.rumbleBoth(1.0);
+      m_robotContainer.rumbleBoth(1.0); // Controller rummblings
+      // to test in sim MUST use FRC driverstation
     }
 
     // Handle the controllers' rumble
