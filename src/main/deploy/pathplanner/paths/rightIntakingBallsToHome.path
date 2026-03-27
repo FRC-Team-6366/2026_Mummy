@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.997,
-        "y": 1.163
+        "x": 8.165,
+        "y": 1.209
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.303180634923692,
-        "y": 0.5770066678626188
+        "x": 8.471180634923691,
+        "y": 0.6230066678626188
       },
       "isLocked": false,
       "linkedName": "rightGetToBallsIntake"
@@ -52,8 +52,8 @@
         "y": 0.5465384615384619
       },
       "prevControl": {
-        "x": 4.272798052617783,
-        "y": 0.5085241654749771
+        "x": 4.272798052617784,
+        "y": 0.508524165474977
       },
       "nextControl": {
         "x": 3.723371794871796,
@@ -64,16 +64,16 @@
     },
     {
       "anchor": {
-        "x": 2.6419487179487193,
-        "y": 1.314000000000001
+        "x": 3.2432530120481924,
+        "y": 0.9315301204819275
       },
       "prevControl": {
-        "x": 2.85455562736073,
-        "y": 1.5327705755663086
+        "x": 3.5164457831325304,
+        "y": 0.6036987951807224
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "rightIntakeGoesBack"
     }
   ],
   "rotationTargets": [
@@ -95,7 +95,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -137.72631099390622
+    "rotation": -119.19748604606451
   },
   "reversed": false,
   "folder": "PhoenixHackIntoCde",
