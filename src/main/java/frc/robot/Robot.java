@@ -52,11 +52,9 @@ public class Robot extends LoggedRobot {
 
 
     // drive station camera
-    UsbCamera stationCamera = CameraServer.startAutomaticCapture("StationCamera", 0);
-    stationCamera.setResolution(320, 240);
-    stationCamera.setFPS(30);
-
-
+    
+    // end of camera code
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     // Logger.registerURCL(URCL.startExternal());

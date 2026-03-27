@@ -39,6 +39,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -114,6 +116,9 @@ public class RobotContainer {
         this.indexer = new Indexer(new IndexerIOTalonFX());
         this.intake = new Intake(new IntakeIOTalonFX());
         this.kicker = new Kicker(new KickerIOTalonFX());
+        UsbCamera stationCamera = CameraServer.startAutomaticCapture("StationCamera", 0);
+        stationCamera.setResolution(320, 240);
+        stationCamera.setFPS(30);
         break;
 
       case SIM:
