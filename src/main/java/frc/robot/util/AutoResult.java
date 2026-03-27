@@ -63,6 +63,11 @@ public enum AutoResult {
   }
   }
 
+  /**
+   * Returns a color hex string for the AtuoResult enum. A 
+   * will is Green, a loss is RED, otherwise BLACK for unknown
+   * @return Hex Color String
+   */
   public String getAsColorString() {
     if (this == AutoResult.WON)
       return "#00FF00";

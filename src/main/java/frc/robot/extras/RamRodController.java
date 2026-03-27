@@ -2,6 +2,7 @@ package frc.robot.extras;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Robot;
 
 /**
  * Custom Controller class based on Xbox Controller that adds quality of life features
@@ -214,6 +215,7 @@ public class RamRodController extends CommandXboxController {
 
   /**
    * Hanlde the timed rumble feature of the controller. Add to Robot.periodic()
+   * @see Robot#robotPeriodic()
    */
   public void periodic() {
     // Only run if there is a value for stopRumbleTime
