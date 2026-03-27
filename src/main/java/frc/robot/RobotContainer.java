@@ -61,7 +61,7 @@ public class RobotContainer {
   public Indexer indexer;
   public Kicker kicker;
   public Hood hood;
-  public int mode; 
+  public int mode;
   public Drive drive;
   public Intake intake;
   public Vision vision;
@@ -69,17 +69,18 @@ public class RobotContainer {
   LoggedDashboardChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  // private final CommandXboxController driverController = new CommandXboxController(
-  //     OperatorConstants.kDriverControllerPort);
-  // private final CommandXboxController operatorController = new CommandXboxController(
-  //     OperatorConstants.kOperatorControllerPort);
+  // private final CommandXboxController driverController = new
+  // CommandXboxController(
+  // OperatorConstants.kDriverControllerPort);
+  // private final CommandXboxController operatorController = new
+  // CommandXboxController(
+  // OperatorConstants.kOperatorControllerPort);
   public final RamRodController driverController = new RamRodController(
-    OperatorConstants.kDriverControllerPort,
-    0.1);
+      OperatorConstants.kDriverControllerPort,
+      0.1);
   public final RamRodController operatorController = new RamRodController(
-    OperatorConstants.kOperatorControllerPort,
-    0.1);
-
+      OperatorConstants.kOperatorControllerPort,
+      0.1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -167,12 +168,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
     NamedCommands.registerCommand("AutoShooterSixSeconds", autoShootForSixSeconds());
     NamedCommands.registerCommand("AutoShooterEndless", autoShootForever());
+    NamedCommands.registerCommand("AutoShootForeverDuringAuto", autoShootForeverDuringAuto());
     NamedCommands.registerCommand("AutoShooterWithLifter", autoShootWithIntakeLifter().until(
         () -> {
-            double currentAngle = intake.getIntakeAngleRotations();
-            return currentAngle <= 0.125;
-        }
-    ));
+          double currentAngle = intake.getIntakeAngleRotations();
+          return currentAngle <= 0.125;
+        }));
     NamedCommands.registerCommand("Stop", autoTurnOffAllButIntake());
     NamedCommands.registerCommand("IntakeDeploy",
         intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
@@ -184,7 +185,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    // Configure the trigger bindings 
+    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -236,7 +237,7 @@ public class RobotContainer {
     driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
     // Switch to X pattern when X button is pressed
-    driverController.x().onTrue( Commands.run(drive::stopWithX, drive));
+    driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
     // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
     driverController.rightBumper().onTrue(this.intake.toggleIntakePivot());
@@ -280,7 +281,10 @@ public class RobotContainer {
 
   /**
    * Sets the rumble for both the driver and operator controllers
-   * @param power 0.0 to 1.0: 0.0 being off, 1.0 being full power rumble on the controller
+   * 
+   * @param power
+   *          0.0 to 1.0: 0.0 being off, 1.0 being full power rumble on the
+   *          controller
    */
   public void rumbleBoth(double power) {
     // driverController.setRumble(GenericHID.RumbleType.kBothRumble, power);
@@ -289,8 +293,8 @@ public class RobotContainer {
     operatorController.rumbleForSetTime(power, 1, 6);
   }
 
-  public void rumblePulseBoth(double power){
-    //no rumble yet
+  public void rumblePulseBoth(double power) {
+    // no rumble yet
   }
 
   // |==============================|
@@ -314,7 +318,8 @@ public class RobotContainer {
   }
 
   /**
-   * Returns command to spin up the shooter to shooting velocity as well as move the hood to its position
+   * Returns command to spin up the shooter to shooting velocity as well as move
+   * the hood to its position
    * based on distance from the goal
    * 
    * @return Command to spin up shooter and move hood to angle for shooting
@@ -326,7 +331,7 @@ public class RobotContainer {
   }
 
   /**
-   * Returns command to run shooter and hood based on distance to goal as 
+   * Returns command to run shooter and hood based on distance to goal as
    * well as run the indexer (either pulse or full)
    * 
    * @return Command for auto-shooting
@@ -341,9 +346,40 @@ public class RobotContainer {
         .withName("autoShootForever");
   }
 
-    /**
-   * Returns command to run shooter and hood based on distance to goal as 
-   * well as run the indexer (either pulse or full) 
+  /**
+   * Returns command to run shooter and hood based on distance to goal as
+   * well as run the indexer (either pulse or full)
+   * 
+   * @return Command for auto-shooting
+   */
+  public Command autoShootForeverDuringAuto() {
+    return Commands.parallel(
+        shooter.setShooterAutoVelocity(drive),
+        hood.setHoodAutoAngle(drive),
+        this.autoAimDriveTrainDuringAuto(),
+        Commands.repeatingSequence(Commands.race(
+            indexer.runIndexer(),
+            kicker.runKicker())))
+        .withName("autoShootForeverDuringAuto");
+  }
+
+  public Command autoAimDriveTrain() {
+    return DriveCommands.joystickDriveAutoAim(
+        drive,
+        () -> -driverController.getLeftY(), () -> -driverController.getLeftX());
+
+  }
+
+  public Command autoAimDriveTrainDuringAuto() {
+    return DriveCommands.joystickDriveAutoAim(
+        drive,
+        () -> 0, () -> 0);
+
+  }
+
+  /**
+   * Returns command to run shooter and hood based on distance to goal as
+   * well as run the indexer (either pulse or full)
    * AND slowly lifts the intake to feed the indexer
    * 
    * @return Command for auto-shooting
@@ -355,15 +391,16 @@ public class RobotContainer {
         kicker.runKicker(),
         indexer.runIndexer(),
         intake.intakePivotLifter()
-        // Commands.sequence(
-        //     new WaitCommand(3),
-        //     intake.intakePivotLifter()
-        // )
+    // Commands.sequence(
+    // new WaitCommand(3),
+    // intake.intakePivotLifter()
+    // )
     ).withName("autoShooterWithLifter");
   }
 
   /**
    * Command to turn off all subsystems except for Intake, Vision and Drive
+   * 
    * @return Command to turn off most subsystems
    */
   public Command autoTurnOffAllButIntake() {
@@ -381,6 +418,7 @@ public class RobotContainer {
   /**
    * Returns command to turn off shooter, kicker, indexer, hood and intake roller
    * subsystems
+   * 
    * @return Command to turn off subsystems
    */
   public Command turnOffAll() {
@@ -392,23 +430,24 @@ public class RobotContainer {
         intake.intakeStopRollers()).withName("turnOffAll");
   }
 
-    public Command shootWithIntakeLifter() {
+  public Command shootWithIntakeLifter() {
     return Commands.parallel(
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),
         kicker.runKicker(),
         indexer.runIndexer(),
         intake.intakePivotLifter()
-        // Commands.sequence(
-        //     new WaitCommand(3),
-        //     intake.intakePivotLifter()
-        // )
+    // Commands.sequence(
+    // new WaitCommand(3),
+    // intake.intakePivotLifter()
+    // )
     ).withName("autoShooterWithLifter");
   }
 
   /**
    * Command to set shooter velocity and hood position to shoot
    * from in front of the tower
+   * 
    * @return Command to run shooter and hood for shooting from the tower
    */
   public Command shootAtPostion1() {
@@ -417,28 +456,27 @@ public class RobotContainer {
             shooter.setShooterVelocityPosition1().until(
                 shooter.shooterAtVelocitySetPoint()),
             hood.hoodToAnglePosition1()
-                .until(hood.hoodAtPositionSetpoint())
-        ),
+                .until(hood.hoodAtPositionSetpoint())),
         Commands.parallel(
             shooter.setShooterVelocityPosition1(),
             hood.hoodToAnglePosition1(),
             kicker.runKicker(),
-            indexer.pulseIndexer()
-        )
-    ).withName("shootAtPostion1");
+            indexer.pulseIndexer()))
+        .withName("shootAtPostion1");
   }
 
-    public Command runBackwardsNoStuck() {
+  public Command runBackwardsNoStuck() {
     return Commands.parallel(
         kicker.runKickerBackwards(),
-        indexer.runIndexerBackwards()
-    ).withName("runBackwardsNoStuck");
+        indexer.runIndexerBackwards()).withName("runBackwardsNoStuck");
   }
 
   /**
-   * Returns command for shooting fuel from the middle area of the 
+   * Returns command for shooting fuel from the middle area of the
    * field to the alliance side of the field
-   * @return Command to set shooter velocity, hood position, kicker and to run indexer
+   * 
+   * @return Command to set shooter velocity, hood position, kicker and to run
+   *         indexer
    */
   public Command passFuel() {
     return Commands.parallel(
