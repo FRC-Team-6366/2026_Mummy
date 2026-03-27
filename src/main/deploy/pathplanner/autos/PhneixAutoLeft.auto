@@ -61,7 +61,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterWithLifter"
+                  "name": "AutoShootForeverDuringAuto"
                 }
               }
             ]
@@ -92,7 +92,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterWithLifter"
+                  "name": "AutoShootForeverDuringAuto"
                 }
               }
             ]
