@@ -7,6 +7,7 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.util.ActiveHubState;
 import frc.robot.util.AutoResult;
 import frc.robot.util.GameTimeMarkers;
@@ -68,7 +69,7 @@ public class HubStateTracker extends SubsystemBase{
    * is set too. This should be called in robotPeriodic
    * @see #gameMatchTime
    * @see #gameTimeMarker
-   * @see #robotPeriodic()
+   * @see Robot#robotPeriodic()
    */
   private void determineCurrentGameShiftPeriod() {
     // Convert Driver Station time to integer
