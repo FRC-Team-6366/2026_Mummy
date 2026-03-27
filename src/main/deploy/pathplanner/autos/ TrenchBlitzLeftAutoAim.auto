@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeRetract"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -61,53 +55,16 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StopWithX"
+                  "name": "AutoShootForeverDuringAuto"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeStopRollers"
+                  "waitTime": 6.0
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShooterWithLifter"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stop"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.25
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeDeploy"
           }
         },
         {
@@ -115,15 +72,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "LeftShotToMoreFuel"
+                  "name": "AutoShooterWithLifter"
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "IntakeRunRollers"
+                  "pathName": "LeftAutoShoot"
                 }
               }
             ]
