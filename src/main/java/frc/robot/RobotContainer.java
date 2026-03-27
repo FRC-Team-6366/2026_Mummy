@@ -423,7 +423,7 @@ public class RobotContainer {
             shooter.setShooterVelocityPosition1(),
             hood.hoodToAnglePosition1(),
             kicker.runKicker(),
-            indexer.pulseIndexer()
+            indexer.runIndexer()
         )
     ).withName("shootAtPostion1");
   }
@@ -445,12 +445,7 @@ public class RobotContainer {
         shooter.setShooterVelocityPosition3(),
         hood.hoodsToAngle(45),
         kicker.runKicker(),
-        Commands.repeatingSequence(Commands.race(
-            indexer.runIndexer(),
-            new WaitCommand(0.5)),
-            Commands.race(
-                indexer.stopIndexer(),
-                new WaitCommand(0.2))))
+       indexer.runIndexer())
         .withName("passFuel");
   }
 
