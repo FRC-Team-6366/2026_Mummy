@@ -93,7 +93,7 @@
   "folder": "Picking Up Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 121.09235713985599
+    "rotation": 131.68386063375408
   },
   "useDefaultConstraints": true
 }
