@@ -474,7 +474,9 @@ public class RobotContainer {
   public Command runBackwardsNoStuck() {
     return Commands.parallel(
         kicker.runKickerBackwards(),
-        indexer.runIndexerBackwards()).withName("runBackwardsNoStuck");
+        indexer.runIndexerBackwards(),
+        intake.intakeRunRollersBackwards()
+        ).withName("runBackwardsNoStuck");
   }
 
   /**
