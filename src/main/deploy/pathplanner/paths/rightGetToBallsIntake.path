@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 2.0
+        "x": 4.566,
+        "y": 0.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.75,
-        "y": 2.0
+        "x": 5.539012698666063,
+        "y": 0.4561560923891945
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 2.0
+        "x": 7.991,
+        "y": 1.163
       },
       "prevControl": {
-        "x": 2.2499999999999996,
-        "y": 2.0
+        "x": 7.2608744207903975,
+        "y": 1.008650975635033
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 87.73949808885881
   },
   "reversed": false,
-  "folder": null,
+  "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

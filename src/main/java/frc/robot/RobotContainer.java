@@ -184,7 +184,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    // Configure the trigger bindings
+    // Configure the trigger bindings 
     configureBindings();
   }
 
@@ -251,7 +251,7 @@ public class RobotContainer {
     operatorController.rightBumper().whileTrue(passFuel());
 
     // Auto speed and angle when RT is held
-    operatorController.rightTrigger().whileTrue(this.autoShootWithIntakeLifter()).onFalse(intake.deployIntake());
+    operatorController.rightTrigger().whileTrue(this.shootWithIntakeLifter()).onFalse(intake.deployIntake());
 
     // Stop all subsystems (except drivetrain)
     operatorController.b().whileTrue(turnOffAll());
@@ -265,7 +265,7 @@ public class RobotContainer {
 
     operatorController.x().whileTrue(intake.intakePulsePivot());
 
-    // operatorController.y().whileTrue(this.miataWink());
+    operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
   }
 
@@ -355,6 +355,10 @@ public class RobotContainer {
         kicker.runKicker(),
         indexer.runIndexer(),
         intake.intakePivotLifter()
+        // Commands.sequence(
+        //     new WaitCommand(3),
+        //     intake.intakePivotLifter()
+        // )
     ).withName("autoShooterWithLifter");
   }
 
@@ -388,6 +392,20 @@ public class RobotContainer {
         intake.intakeStopRollers()).withName("turnOffAll");
   }
 
+    public Command shootWithIntakeLifter() {
+    return Commands.parallel(
+        shooter.setShooterAutoVelocity(drive),
+        hood.setHoodAutoAngle(drive),
+        kicker.runKicker(),
+        indexer.runIndexer(),
+        intake.intakePivotLifter()
+        // Commands.sequence(
+        //     new WaitCommand(3),
+        //     intake.intakePivotLifter()
+        // )
+    ).withName("autoShooterWithLifter");
+  }
+
   /**
    * Command to set shooter velocity and hood position to shoot
    * from in front of the tower
@@ -408,6 +426,13 @@ public class RobotContainer {
             indexer.pulseIndexer()
         )
     ).withName("shootAtPostion1");
+  }
+
+    public Command runBackwardsNoStuck() {
+    return Commands.parallel(
+        kicker.runKickerBackwards(),
+        indexer.runIndexerBackwards()
+    ).withName("runBackwardsNoStuck");
   }
 
   /**

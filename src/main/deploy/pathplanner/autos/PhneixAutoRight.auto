@@ -11,7 +11,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -23,7 +23,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "leftGetToBallsIntake"
+                  "pathName": "rightGetToBallsIntake"
                 }
               }
             ]
@@ -42,7 +42,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "leftIntakingBallsToHome"
+                  "pathName": "rightIntakingBallsToHome"
                 }
               }
             ]
@@ -76,13 +76,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "leftIntakeGoesBack"
+            "pathName": "rightIntakeGoesBack"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "leftIntakingBallsToHome"
+            "pathName": "rightIntakingBallsToHome"
           }
         },
         {

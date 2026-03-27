@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.723346153846155,
+        "y": 1.2093461538461543
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2955256410256433,
+        "y": 0.5547179487179505
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.444346153846156,
+        "y": 0.558166666666666
+      },
+      "prevControl": {
+        "x": 5.010070360691986,
+        "y": 0.5395166979741977
+      },
+      "nextControl": {
+        "x": 6.299338881311836,
+        "y": 0.5948843190223487
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.165,
+        "y": 1.2093461538461543
+      },
+      "prevControl": {
+        "x": 7.500753927631979,
+        "y": 1.4103763887454324
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "rightIntakingBallsToHome"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4860426929392473,
+      "rotationDegrees": -176.78181571882115
+    },
+    {
+      "waypointRelativePos": 1.172413793103448,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 91.33221985386953
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -124.13143725230115
+  },
+  "useDefaultConstraints": true
+}

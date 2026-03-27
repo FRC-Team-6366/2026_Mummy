@@ -3,80 +3,85 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.282938659058486,
-        "y": 6.849158345221112
+        "x": 7.997,
+        "y": 1.163
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.589119100473706,
-        "y": 6.2631649119758865
+        "x": 8.303180634923692,
+        "y": 0.5770066678626188
       },
       "isLocked": false,
-      "linkedName": "GetToBallsIntake"
+      "linkedName": "rightGetToBallsIntake"
     },
     {
       "anchor": {
-        "x": 7.752,
-        "y": 4.714279600570615
+        "x": 7.29323076923077,
+        "y": 4.046628205128206
       },
       "prevControl": {
-        "x": 8.572482500473217,
-        "y": 4.598902057043441
+        "x": 8.113713269703988,
+        "y": 3.931250661601032
       },
       "nextControl": {
-        "x": 6.815986229279605,
-        "y": 4.845903333570454
+        "x": 6.357216998510375,
+        "y": 4.178251938128045
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.876831325301204,
-        "y": 7.0729036144578314
+        "x": 5.758307692307693,
+        "y": 0.5465384615384619
       },
       "prevControl": {
-        "x": 7.013313253012049,
-        "y": 6.701361445783132
+        "x": 6.874615384615385,
+        "y": 0.558166666666666
       },
       "nextControl": {
-        "x": 4.593365002931378,
-        "y": 7.492498373694121
+        "x": 5.269811167436749,
+        "y": 0.5414499560710566
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.3525301204819278,
-        "y": 7.214963855421687
+        "x": 4.0257051282051295,
+        "y": 0.5465384615384619
       },
       "prevControl": {
-        "x": 4.248602409638554,
-        "y": 7.520939759036144
+        "x": 4.272798052617783,
+        "y": 0.5085241654749771
       },
       "nextControl": {
-        "x": 3.115942656464929,
-        "y": 7.13417789209881
+        "x": 3.723371794871796,
+        "y": 0.5930512820512819
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8170722891566267,
-        "y": 6.849158345221112
+        "x": 2.6419487179487193,
+        "y": 1.314000000000001
       },
       "prevControl": {
-        "x": 3.0296791985686373,
-        "y": 7.06792892078742
+        "x": 2.85455562736073,
+        "y": 1.5327705755663086
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2.798029556650275,
+      "rotationDegrees": 176.73244701024603
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -90,13 +95,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 121.95457596119387
+    "rotation": -137.72631099390622
   },
   "reversed": false,
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -103.32453126189064
+    "rotation": 93.27048792318354
   },
   "useDefaultConstraints": true
 }
