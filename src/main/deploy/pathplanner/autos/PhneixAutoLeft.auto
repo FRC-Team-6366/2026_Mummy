@@ -15,34 +15,34 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "IntakeDeploy"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "leftGetToBallsIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
                 }
               }
             ]
           }
         },
         {
-          "type": "sequential",
+          "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeRunRollers"
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "leftIntakingBallsToHome"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
                 }
               }
             ]
