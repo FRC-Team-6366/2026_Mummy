@@ -11,26 +11,19 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeDeploy"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "rightGetToBallsIntake"
-                }
-              }
-            ]
+            "pathName": "leftGetToBallsIntake"
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -42,7 +35,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "rightIntakingBallsToHome"
+                  "pathName": "leftIntakingBallsToHome"
                 }
               }
             ]
@@ -55,13 +48,63 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 5.0
+                  "waitTime": 3.0
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterWithLifter"
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.3
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopAllButIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "leftIntakeGoesBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "leftIntakingBallsToHome"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.0
                 }
               }
             ]
@@ -70,32 +113,7 @@
         {
           "type": "named",
           "data": {
-            "name": "StopAllButIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "rightIntakeGoesBack"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "rightIntakingBallsToHome"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoShooterWithLifter"
-                }
-              }
-            ]
+            "name": "IntakeHalfRetract"
           }
         }
       ]
