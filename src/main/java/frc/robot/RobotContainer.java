@@ -442,7 +442,7 @@ public class RobotContainer {
         hood.setHoodAutoAngle(drive),
         kicker.runKicker(),
         indexer.runIndexer(),
-        intake.intakePivotLifter().unless(operatorController.leftBumper())
+        intake.intakePivotLifter().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers()))
     // Commands.sequence(
     // new WaitCommand(3),
     // intake.intakePivotLifter()
