@@ -11,15 +11,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TrenchToFuelRight"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeDeploy"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TrenchToFuelRight"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
+                }
+              }
+            ]
           }
         },
         {
