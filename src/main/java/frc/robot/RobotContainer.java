@@ -42,6 +42,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -68,6 +70,8 @@ public class RobotContainer {
   public Intake intake;
   public Vision vision;
   public HubStateTracker hubStateTracker;
+
+  public Alliance alliance;
   LoggedDashboardChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -163,8 +167,6 @@ public class RobotContainer {
     this.hubStateTracker = HubStateTracker.getInstance();
     this.hubStateTracker.setDefaultCommand(this.hubStateTracker.runHubStateTracker());
 
-    this.mode = 0;
-
     // Naming commands for Autos
     NamedCommands.registerCommand("StopWithX", Commands.run(drive::stopWithX, drive));
     NamedCommands.registerCommand("StopAllButIntake", autoTurnOffAllButIntake());
@@ -216,6 +218,7 @@ public class RobotContainer {
 
     // Set the drivers movement for steering and driving on the driver joysticks
     drive.setDefaultCommand(
+      
         DriveCommands.joystickDrive(
             drive,
             () -> -driverController.getLeftY(),
@@ -223,22 +226,21 @@ public class RobotContainer {
             () -> -driverController.getRightX()));
 
     // Lock to 0° when A button is held
+    if ( DriverStation.getAlliance().get() == Alliance.Red){
     driverController
         .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kZero));
-driverController
+        .whileTrue(this.orientIntakeRedTrench());
+    driverController 
         .rightStick()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kCCW_90deg));
+        .whileTrue(this.orientIntakeToRedDepot());
+    } else {
+      driverController
+      .a()
+      .whileTrue(this.orientIntakeBlueTrench());
+      driverController
+      .rightStick()
+      .whileTrue(this.orientIntaketoBlueDepot());
+    }
     // Lock to Hub when RT is held
     driverController.leftTrigger().whileTrue(
         DriveCommands.joystickDriveAutoAim(
@@ -253,6 +255,8 @@ driverController
     // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
     driverController.rightBumper().onTrue(this.intake.toggleIntakePivot());
+
+
 
     // |==============================|
     // | Operator Controls |
@@ -508,19 +512,42 @@ driverController
   }
 
   // |==============================|
-  // | Meme Commands |
+  // | Orientation Commands |
   // |==============================|
+  public Command orientIntakeBlueTrench() {
+      return DriveCommands.joystickDriveAtAngle(
+          drive,
+          () -> -driverController.getLeftY(),
+          () -> -driverController.getLeftX(),
+          () -> Rotation2d.kZero);
+  }
 
-  // public Command miataWink() {
-  // return Commands.repeatingSequence(
-  // Commands.parallel(
-  // hood.hoodToAngleLeft(0).until(hood.hoodAtPositionSetpoint()),
-  // hood.hoodToAngleRight(20).until(hood.hoodAtPositionSetpoint())
-  // ),
-  // Commands.parallel(
-  // hood.hoodToAngleLeft(20).until(hood.hoodAtPositionSetpoint()),
-  // hood.hoodToAngleRight(0).until(hood.hoodAtPositionSetpoint())
-  // )
-  // );
-  // }
+  public Command orientIntakeRedTrench(){
+    return DriveCommands.joystickDriveAtAngle(
+          drive,
+          () -> -driverController.getLeftY(),
+          () -> -driverController.getLeftX(),
+          () -> Rotation2d.k180deg);
+  }
+
+  public Command orientIntaketoBlueDepot() {
+  return  DriveCommands.joystickDriveAtAngle(
+          drive,
+          () -> -driverController.getLeftY(),
+          () -> -driverController.getLeftX(),
+          () -> Rotation2d.kCCW_90deg);
+  }
+
+  public Command orientIntakeToRedDepot(){
+    return DriveCommands.joystickDriveAtAngle(
+          drive,
+          () -> -driverController.getLeftY(),
+          () -> -driverController.getLeftX(),
+          () -> Rotation2d.kCW_90deg);
+  }
+
+  public void updateAlliance(){
+    this.alliance=DriverStation.getAlliance().orElse(Alliance.Blue);
+  }
+  
 }
