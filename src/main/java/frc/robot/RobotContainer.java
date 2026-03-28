@@ -273,6 +273,7 @@ public class RobotContainer {
 
     operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
+
   }
 
   /**
@@ -441,13 +442,15 @@ public class RobotContainer {
         hood.setHoodAutoAngle(drive),
         kicker.runKicker(),
         indexer.runIndexer(),
-        intake.intakePivotLifter()
+        intake.intakePivotLifter().unless(operatorController.leftBumper())
     // Commands.sequence(
     // new WaitCommand(3),
     // intake.intakePivotLifter()
     // )
     ).withName("autoShooterWithLifter");
   }
+
+  
 
   /**
    * Command to set shooter velocity and hood position to shoot
@@ -466,7 +469,8 @@ public class RobotContainer {
             shooter.setShooterVelocityPosition1(),
             hood.hoodToAnglePosition1(),
             kicker.runKicker(),
-            indexer.runIndexer()
+            indexer.runIndexer(),
+        intake.intakePivotLifter()
         )
     ).withName("shootAtPostion1");
   }
@@ -491,7 +495,8 @@ public class RobotContainer {
         shooter.setShooterVelocityPosition3(),
         hood.hoodsToAngle(45),
         kicker.runKicker(),
-       indexer.runIndexer())
+       indexer.runIndexer(),
+        intake.intakePivotLifter())
         .withName("passFuel");
   }
 
