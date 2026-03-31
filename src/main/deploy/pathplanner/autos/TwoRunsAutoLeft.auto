@@ -11,15 +11,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "sequential",
           "data": {
-            "pathName": "leftGetToBallsIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeDeploy"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "leftGetToBallsIntake"
+                }
+              }
+            ]
           }
         },
         {
