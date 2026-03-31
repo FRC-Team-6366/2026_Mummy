@@ -23,6 +23,8 @@ public class ShooterIOTalonFX implements ShooterIO {
   TalonFX leftLeadShooterMotor;
   TalonFX leftFollowerShooterMotor;
 
+  double shotFuelCurrentThreshold = 5;
+
   // Used to control motor output by specifying rotaion speed
   VelocityVoltage velocityVoltageRequest;
   // Used to make followShooterMotor mimic the leadShooterMotor
@@ -33,6 +35,7 @@ public class ShooterIOTalonFX implements ShooterIO {
   StatusSignal<Angle> rightLeadShooterPosition;
   StatusSignal<AngularVelocity> rightLeadShooterRps;
   StatusSignal<Current> rightLeadShooterCurrent;
+  double rightLeadShooterCurrentPrevious;
   StatusSignal<Current> rightLeadShooterSupplyCurrent;
 
   StatusSignal<Voltage> rightFollowerShooterVolts;
@@ -206,6 +209,12 @@ public class ShooterIOTalonFX implements ShooterIO {
   }
 
   @Override
+  public boolean detectShot() {
+    return (this.rightFollowerShooterCurrent.getValueAsDouble() 
+    - this.rightLeadShooterCurrentPrevious) > shotFuelCurrentThreshold;
+  }
+
+  @Override
   public void updateInputs(ShooterIOInputs inputs) {
     inputs.connected = BaseStatusSignal.refreshAll(
         rightLeadShooterVolts,
@@ -236,6 +245,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.rightLeadShooterPosition = this.rightLeadShooterPosition.getValueAsDouble();
     inputs.rightLeadShooterRps = this.rightLeadShooterRps.getValueAsDouble();
     inputs.rightLeadShooterCurrent = this.rightLeadShooterCurrent.getValueAsDouble();
+    this.rightLeadShooterCurrentPrevious = inputs.rightLeadShooterCurrent;
     inputs.rightLeadShooterSupplyCurrent = this.rightLeadShooterSupplyCurrent.getValueAsDouble();
 
     inputs.rightFollowShooterVolts = this.rightFollowerShooterVolts.getValueAsDouble();

@@ -48,6 +48,11 @@ public class ShooterIOSim implements ShooterIO {
   }
 
   @Override
+  public boolean detectShot() {
+    return false;
+  }
+
+  @Override
   public void updateInputs(ShooterIOInputs inputs) {
     inputs.connected = true;
     inputs.rightLeadShooterCurrent = this.leadShooterMotor.getCurrentDrawAmps();

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
+import frc.robot.subsystems.shooter.shoterCounter.ShooterCounter;
 
 /**
  * Big H here- this Substemy is for the Shooter class for the 2026 Mummybot.
@@ -32,6 +33,7 @@ public class Shooter extends SubsystemBase {
   private double velocityFPS = 0;
   double distanceToHub = 0;
   ShooterIO shooterIO;
+  ShooterCounter counter = new ShooterCounter();
 
   /**
    * IOInputs object that holds and updates values of the devices in the
@@ -215,7 +217,13 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    
     // This method will be called once per scheduler run
+    if (this.shooterIO.detectShot()) {
+      this.counter.incrementShot();
+    }
+    this.counter.periodic();
+    Logger.recordOutput("ShooterSubsystem/RateOfFirePerSec", this.counter.getAvgBallsPerSecond());
 
     // Update inputs object with the current status of the ShooterIO hardware
     // and then write values to the Log
