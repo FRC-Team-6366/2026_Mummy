@@ -5,15 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "TrenchToFuelRight"
+            "name": "IntakeRetract"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "IntakeDeploy"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "leftGetToBallsIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
+                }
+              }
+            ]
           }
         },
         {
@@ -23,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "GettingFuelRightToMid"
+                  "pathName": "leftIntakingBallsToHome"
                 }
               },
               {
@@ -36,9 +49,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "MidfieldToShootRight"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 5.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
           }
         },
         {
@@ -48,45 +74,38 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StopWithX"
+                  "name": "StopAllButIntake"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 0.3
                 }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoShooterSixSeconds"
-                }
-              }
-            ]
+            "pathName": "leftIntakeGoesBack"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
+          "data": {
+            "pathName": "leftIntakingBallsToHome"
+          }
+        },
+        {
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "IntakeHalfRetract"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoShooterEndless"
+                  "name": "AutoShootForeverDuringAuto"
                 }
               }
             ]
@@ -96,6 +115,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Get Fuel Then Shoot",
+  "folder": "DestroyerFile",
   "choreoAuto": false
 }

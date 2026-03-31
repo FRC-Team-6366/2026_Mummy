@@ -62,7 +62,30 @@ public class Kicker extends SubsystemBase {
     return this.run(
         () -> {
           // Set power to full (1)
-          this.power = 1;
+          this.power = 1.0;
+
+          // Use power to start the KickerIO Hardware motor
+          this.io.setKickPower(this.power);
+        }).withName("runKicker()");
+  }
+
+    /**
+   * Returns the command for the kicker to turn on backwards, thus moving
+   * fuel out of the shooter
+   * <p>
+   * Example use:
+   * 
+   * <pre>{@code
+   * controller.a().whileTrue(kicker.turnOnKickerBackwards());
+   * }</pre>
+   * 
+   * @return Command for turning on the kicker subsystem but backwards
+   */
+  public Command runKickerBackwards() {
+    return this.run(
+        () -> {
+          // Set power to full (1)
+          this.power = -1.0;
 
           // Use power to start the KickerIO Hardware motor
           this.io.setKickPower(this.power);
@@ -85,7 +108,7 @@ public class Kicker extends SubsystemBase {
     return this.runOnce(
         () -> {
           // Set power to 0
-          this.power = 0;
+          this.power = 0.0;
 
           // Use power to stop the KickerIO Hardware motor
           this.io.setKickPower(this.power);
@@ -102,6 +125,8 @@ public class Kicker extends SubsystemBase {
     Logger.processInputs("Kicker Subsystem", inputs);
     Logger.recordOutput("KickerSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("KickerSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

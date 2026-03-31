@@ -34,6 +34,21 @@ public final class Constants {
 
   }
 
+  public class GameTimeConstants {
+    public static final int transitionStartConstant = 140;
+    public static final int shift1Constant =130;
+    public static final int shift2Constant = 105;
+    public static final int shift3Constant = 80;
+    public static final int shift4Constant = 55;
+    public static final int endgameConstant = 30;
+
+
+    public static final int warningConstant = 5;
+    public static final int shootConstant = 2;
+
+
+  }
+
   public class drivetrainConstants {
     public static final int frontLeftDriveMotorId = 0;
     public static final int frontLeftSteerMotorId = 1;
@@ -68,23 +83,20 @@ public final class Constants {
      */
     public static final int rightLeadShooterMotorId = 15; // 15
     public static final int rightFollowerShooterMotorId = 16; // 16
+    public static final int leftLeadShooterMotorId = 22; // 
+    public static final int leftFollowerShooterMotorId = 23; // 
     public static final double shooterPosition1VelocityFPS = 55.0;
     public static final double shooterPosition2VelocityFPS = 63.0;
     public static final double shooterPosition3VelocityFPS = 100.0;
 
-
-    public static final int leftLeadShooterMotorId = 22; // 
-    public static final int leftFollowerShooterMotorId = 23; // 
-
-    public static final int hoodMotorId = 17; // 17
+    public static final int hoodRightMotorId = 17; // 17
+    public static final int hoodLeftMotorId = 18;
     public static final double hoodPosition1Angle = 22.0;
     public static final double hoodPosition2Angle = 36.3;
     public static final double hoodPosition3Angle = 25.17;
 
-    public static final int turretAimMotorId = 18; // 18
-
     // Small angle adjustment to compensate for shooter offset
-    public static final double autoAimCompAngleRad = 0.0349;
+    public static final double autoAimCompAngleRad = 0.0;// camera 3, the camera left back, is off badly
   }
 
   
@@ -96,11 +108,13 @@ public final class Constants {
 
     public static final double intakePivotStartAngleDegrees = 0;
     public static final double intakePivotRetractAngleDegrees = 0.1;
-    public static final double intakePivotDeployAngleDegrees = 136;
+    public static final double intakePivotDeployAngleDegrees = 172;
     public static final double intakePivotPulseUpAngleDegrees = 50;
 
     // Intake roller power from 0 to 1
+    
     public static final double intakeRollerPower = 0.67;
+    public static final double intakeRollerPowerBackwards = -0.67;
   }
 
   public class VisionConstants {
@@ -151,7 +165,7 @@ public final class Constants {
         new Rotation3d(0.0, camRearRightPitch, camRearRightYaw));
 
     // Basic filtering thresholds
-    public static double maxAmbiguity = 0.3;
+    public static double maxAmbiguity = 0.2;
     public static double maxZError = 0.75;
 
     // Standard deviation baselines, for 1 meter distance and 1 tag

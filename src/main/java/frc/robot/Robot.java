@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.LinkedList;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -11,9 +13,16 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cameraserver.CameraServerShared;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.util.GameTimeMarkers;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -22,12 +31,13 @@ import frc.robot.subsystems.intake.IntakeIOTalonFX;
  */
 
 public class Robot extends LoggedRobot {
-
+  
   private Command m_autonomousCommand;
-
-
-
   private final RobotContainer m_robotContainer;
+  private long testStartTime = 0;
+  private long testPeriodMilliseconds = 3000;
+  private GameTimeMarkers currenTimeMarker;
+  private LinkedList<GameTimeMarkers> warningShifts = GameTimeMarkers.getWarningEnums();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -36,8 +46,15 @@ public class Robot extends LoggedRobot {
   public Robot() {
     // This code must be first in the constructor to (hopefully) properly run Advantagkit
     Logger.recordMetadata("ProjectName", "2026_Mummy"); // Set a metadata value
-     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
+    Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA); //
 
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
+
+    // drive station camera
+    
+    // end of camera code
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     // Logger.registerURCL(URCL.startExternal());
@@ -87,6 +104,16 @@ public class Robot extends LoggedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    this.currenTimeMarker = m_robotContainer.hubStateTracker.getCurrentShiftPeriod();
+    if (this.warningShifts.contains(this.currenTimeMarker)) {
+      m_robotContainer.rumbleBoth(1.0); // Controller rummblings
+      // to test in sim MUST use FRC driverstation
+    }
+
+    // Handle the controllers' rumble
+    this.m_robotContainer.driverController.periodic();
+    this.m_robotContainer.operatorController.periodic();    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -97,6 +124,8 @@ public class Robot extends LoggedRobot {
       CommandScheduler.getInstance().schedule(m_robotContainer.intake.intakePivotToAngle(Constants.IntakeConstants
       .intakePivotDeployAngleDegrees));
         }
+    m_robotContainer.hubStateTracker.reset();
+    this.m_robotContainer.hubStateTracker.setDefaultCommand(this.m_robotContainer.hubStateTracker.runHubStateTracker()); 
   }
 
   @Override
@@ -135,23 +164,47 @@ public class Robot extends LoggedRobot {
     m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer());
     m_robotContainer.intake.setDefaultCommand(m_robotContainer.intake.intakeStopRollers());
     m_robotContainer.shooter.setDefaultCommand(m_robotContainer.shooter.shooterTurnOff());
+
+    m_robotContainer.updateAlliance();
+    
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-  
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    this.testStartTime = System.currentTimeMillis();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if (System.currentTimeMillis() > this.testStartTime + testPeriodMilliseconds) {
+      // Do Command
+      CommandScheduler.getInstance().schedule(
+        Commands.parallel(
+        this.m_robotContainer.intake.intakePivotToAngle(140)
+        )
+      );
+      
+    }
+
+    if (System.currentTimeMillis() > this.testStartTime + testPeriodMilliseconds * 2) {
+      // Do Stop Command
+      CommandScheduler.getInstance().schedule(
+        Commands.parallel(
+        this.m_robotContainer.intake.intakePivotToAngle(0)
+        )
+      );
+      
+      // Reset timer
+      this.testStartTime = System.currentTimeMillis();
+    }
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override
@@ -160,4 +213,5 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
 }

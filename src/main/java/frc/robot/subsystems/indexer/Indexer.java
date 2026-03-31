@@ -83,6 +83,25 @@ public class Indexer extends SubsystemBase {
         }).withName("runIndexer()");
   }
 
+    /**
+   * Turns on the Indexer subsystem's motors but backwards
+   * <p>
+   * Example use:
+   * 
+   * <pre>{@code
+   * controller.a().whileTrue(indexer.runIndexerBackwards());
+   * }</pre>
+   * 
+   * @return Command to turn on indexer motors but backwards
+   */
+  public Command runIndexerBackwards() {
+    return this.run(
+        () -> {
+          this.power = -1;
+          this.indexerIO.setIndexerPower(this.power);
+        }).withName("runIndexer()");
+  }
+
   /**
    * Increases the Indexer's subsystem's output by 0.2 to a maximum power
    * of 1.
@@ -125,6 +144,11 @@ public class Indexer extends SubsystemBase {
         }).withName("decrementIndexer()");
   }
 
+  /**
+   * Returns command to pulse the indexer on for 1 second and off for half
+   * a second
+   * @return Pulse Indexer command
+   */
   public Command pulseIndexer() {
     return Commands.repeatingSequence(
         Commands.race(
@@ -140,6 +164,8 @@ public class Indexer extends SubsystemBase {
     Logger.processInputs("Indexer Subsystem", inputs);
     Logger.recordOutput("IndexerSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("IndexerSubsystem/CurrentCommand",
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

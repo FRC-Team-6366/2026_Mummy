@@ -1,6 +1,5 @@
 package frc.robot.subsystems.intake;
 
-import java.time.chrono.ThaiBuddhistChronology;
 import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
@@ -33,11 +32,19 @@ public class Intake extends SubsystemBase {
         () -> this.intakeIO.intakeResetCanCoder()).withName("intakeResetCanCoder()");
   }
 
-  // Sets pivot to brake on true, coast on false
+  /**
+   * Sets pivot to brake on true, coast on false
+   * @param brakeMode brake on true, coast on false
+   * @return Command to set intake pivot motor brake mode
+   */
   public Command setBrakeMode(boolean brakeMode) {
     return this.runOnce(() -> this.intakeIO.setBrakeMode(brakeMode)).withName("setBrakeMode()");
   }
 
+  /**
+   * Returns command to run the intake rollers at full power
+   * @return Command to run the intake rollers
+   */
   public Command intakeRunRollers() {
     return this.run(
         () -> {
@@ -49,6 +56,35 @@ public class Intake extends SubsystemBase {
         }).withName("intakeRunRollers()");
   }
 
+
+    /**
+   * Returns command to run the intake rollers backwards
+   * @return Command to run the intake roller backwards
+   */
+    public Command intakeRunRollersBackwards() {
+    return this.run(
+        () -> {
+          // Set roller power
+          this.power = Constants.IntakeConstants.intakeRollerPowerBackwards;
+
+          // Use power to start the IntakeIO Hardware motor
+          this.intakeIO.rollersRunVolts(this.power);
+        }).withName("intakeRunRollers()");
+  }
+
+    public Command intakeStopPivot() {
+    return this.run(
+        () -> {
+          // Set roller power
+          // Use power to start the IntakeIO Hardware motor
+          this.intakeIO.pivotRunVolts(0.0);
+        }).withName("intakeStopPivot()");
+  }
+
+  /**
+   * Stops the intake rollers 
+   * @return Command to stop Intake Rollers
+   */
   public Command intakeStopRollers() {
     return this.runOnce(
         () -> {
@@ -60,8 +96,7 @@ public class Intake extends SubsystemBase {
    * Sets intake pivot motor to a certain angle based on what we put in to the
    * double
    * 
-   * @param angle
-   *          Angle in degrees
+   * @param angle Angle in degrees
    * @return Command to set the Intake Pivot Motor at angle for shooting
    */
   public Command intakePivotToAngle(double angle) {
@@ -72,6 +107,16 @@ public class Intake extends SubsystemBase {
           this.intakeIO.intakePivotToAngle(this.angle);
         }).withName("intakePivotToAngle()");
 
+  }
+
+  public Command intakePivotLifter() {
+    return this.run(
+      () -> {
+        this.angle -= 1.0;
+        Logger.recordOutput("Pivot/Angle", this.angle);
+        this.intakeIO.intakePivotToAngle(this.angle);
+      }
+    ).withName("intakePivotLifter");
   }
 
   /**
@@ -97,7 +142,12 @@ public class Intake extends SubsystemBase {
    * @return Command to set Intake Pivot Motor for close shooting
    */
   public Command deployIntake() {
-    return this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees).withName("deployIntake()");
+    return this.runOnce(
+      () -> {
+        this.angle = Constants.IntakeConstants.intakePivotDeployAngleDegrees;
+        this.intakeIO.intakePivotToAngle(this.angle);
+      }
+    ).withName("deployIntake()");
   }
 
   /**
@@ -137,10 +187,23 @@ public class Intake extends SubsystemBase {
         }).withName("toggleIntakePivot()");
   }
 
+  /**
+   * Gets the set point angle of the intake pivot
+   * @return Angle in degrees
+   */
   public double getIntakeAngleSetpoint() {
     return this.angle;
   }
 
+  public double getIntakeAngleRotations(){
+    return this.intakeIO.getRotations().getRotations();
+  }
+
+  /**
+   * Pulses the intake rollers on for 1 second and off for 0.5 seconds. Used to help
+   * jostle fuel in the robot's hopper
+   * @return Command to pulse intake rollers
+   */
   public Command intakePulsePivot() {
     return Commands.repeatingSequence(
             Commands.race(
@@ -161,6 +224,8 @@ public class Intake extends SubsystemBase {
     Logger.processInputs("IntakeSubsystem", inputs);
     Logger.recordOutput("IntakeSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("IntakeSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

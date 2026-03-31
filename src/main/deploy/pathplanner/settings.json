@@ -4,15 +4,19 @@
   "holonomicMode": true,
   "pathFolders": [
     "Fuel Locations to Shot Locations",
+    "TestFiles",
+    "PhoenixHackIntoCde",
     "Picking Up Fuel",
+    "Shoot Auto Aim",
     "Simple Shot Locations",
     "Starting Locations to Get Fuel"
   ],
   "autoFolders": [
     "Collect Fuel",
     "Get Fuel Then Shoot",
-    "Test Autos",
-    "Simple Shots"
+    "DestroyerFile",
+    "Simple Shots",
+    "Test Autos"
   ],
   "defaultMaxVel": 5.5,
   "defaultMaxAccel": 10.0,

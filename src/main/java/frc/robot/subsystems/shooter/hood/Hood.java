@@ -9,7 +9,6 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
@@ -41,7 +40,7 @@ public class Hood extends SubsystemBase {
    * @return Command to set hood to starting position
    */
   public Command retractHood() {
-    return this.hoodToAngle(15).withName("retractHood()");
+    return this.hoodsToAngle(15).withName("retractHood()");
   }
 
   /**
@@ -53,49 +52,50 @@ public class Hood extends SubsystemBase {
    *          Angle in degrees
    * @return Command to set hood at angle for shooting
    */
-  public Command hoodToAngle(double angle) {
+  public Command hoodsToAngle(double angle) {
     return this.run(
         () -> {
           this.angle = angle;
-          this.hoodIO.hoodToAngle(this.angle);
-        }).withName("hoodToAngle()");
+          this.hoodIO.hoodsToAngle(this.angle);
+        }).withName("hoodsToAngle()");
   }
 
+
   /**
-   * Sets the hood for shooting at hanging station
+   * Sets both the left and rightt hoods for shooting at tower station
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
    * @return Command to set hood for close shooting
    */
   public Command hoodToAnglePosition1() {
-    return this.hoodToAngle(Constants.ShooterConstants.hoodPosition1Angle).withName("hoodToAnglePosition1()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition1Angle).withName("hoodToAnglePosition1()");
   }
 
   /**
-   * Sets the hood for shooting at trench wall
+   * Sets both the left and rightt hoods for shooting at trench wall
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
    * @return Command to set hood for medium shooting
    */
   public Command hoodToAnglePosition2() {
-    return this.hoodToAngle(Constants.ShooterConstants.hoodPosition2Angle).withName("hoodToAnglePosition2()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition2Angle).withName("hoodToAnglePosition2()");
   }
 
   /**
-   * Sets the hood for shooting at human player station
+   * Sets both the left and rightt hoods for shooting at human player station
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
    * @return Command to set hood for far shooting
    */
   public Command hoodToAnglePosition3() {
-    return this.hoodToAngle(Constants.ShooterConstants.hoodPosition3Angle).withName("hoodToAnglePosition3()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition3Angle).withName("hoodToAnglePosition3()");
   }
 
   /**
-   * Automatically sets the hood for shooting from any distance
+   * Automatically sets the hoods for shooting from any distance
    * <p>
    * <b>NOTE: Start the robot with the hood in the fully retracted position!</b>
    * 
@@ -106,10 +106,6 @@ public class Hood extends SubsystemBase {
     return this.run(
         () -> {
           // Check for alliance side
-          // boolean isFlipped =
-          // DriverStation.getAlliance().isPresent()
-          // && DriverStation.getAlliance().get() == Alliance.Red;
-
           boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
 
           // Select correct dummy pose
@@ -123,7 +119,7 @@ public class Hood extends SubsystemBase {
           double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
 
           this.angle = hoodAngleMap.get(distanceToHub);
-          this.hoodIO.hoodToAngle(angle);
+          this.hoodIO.hoodsToAngle(angle);
           // hubPose.getTranslation().getDistance(drive.getPose().getTranslation());
         }).withName("setHoodAutoAngle()");
   }
@@ -136,7 +132,7 @@ public class Hood extends SubsystemBase {
    * @return BooleanSupplier: True hood is at its setpoint, false otherwise
    */
   public BooleanSupplier hoodAtPositionSetpoint() {
-    return () -> this.hoodIO.hoodAtPositionSetpoint();
+    return () -> this.hoodIO.hoodsAtPositionSetpoint();
   }
 
   @Override
@@ -146,6 +142,8 @@ public class Hood extends SubsystemBase {
     Logger.recordOutput("HoodSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
     Logger.recordOutput("HoodSubsystem/DefaultCommand",
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+    Logger.recordOutput("HoodSubsystem/CurrentCommand", 
+        this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
   }
 
   @Override

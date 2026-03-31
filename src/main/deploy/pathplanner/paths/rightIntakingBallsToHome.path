@@ -1,0 +1,129 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.165,
+        "y": 1.209
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.14061340941512,
+        "y": 1.531369472182596
+      },
+      "isLocked": false,
+      "linkedName": "rightGetToBallsIntake"
+    },
+    {
+      "anchor": {
+        "x": 7.312539229671896,
+        "y": 3.9897146932952925
+      },
+      "prevControl": {
+        "x": 8.133021730145114,
+        "y": 3.8743371497681185
+      },
+      "nextControl": {
+        "x": 6.376525458951501,
+        "y": 4.121338426295131
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.758307692307693,
+        "y": 0.5465384615384619
+      },
+      "prevControl": {
+        "x": 7.752453637660485,
+        "y": 0.5221540656205423
+      },
+      "nextControl": {
+        "x": 5.269821184320335,
+        "y": 0.5525116694869997
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.0257051282051295,
+        "y": 0.5465384615384619
+      },
+      "prevControl": {
+        "x": 4.272798052617784,
+        "y": 0.508524165474977
+      },
+      "nextControl": {
+        "x": 3.723371794871796,
+        "y": 0.5930512820512819
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.838306818181818,
+        "y": 0.9532613636363636
+      },
+      "prevControl": {
+        "x": 3.111499589266156,
+        "y": 0.6254300383351585
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "rightIntakeGoesBack"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.4476570289132444,
+      "rotationDegrees": -119.99999999999999
+    },
+    {
+      "waypointRelativePos": 1.8244680851063804,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2.798029556650275,
+      "rotationDegrees": 176.73244701024603
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.5,
+      "maxWaypointRelativePos": 2.4,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 10.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -119.19748604606451
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 93.27048792318354
+  },
+  "useDefaultConstraints": true
+}

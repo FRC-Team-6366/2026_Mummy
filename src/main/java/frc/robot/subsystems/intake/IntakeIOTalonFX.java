@@ -126,6 +126,9 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     voltageRequest = new VoltageOut(0);
     positionVoltageRequest = new PositionVoltage(0.12);
+    
+    // Set motor position to CANcoder position
+    intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
 
     this.setPointTolerance = intakePivotMaxPosition * this.setPointTolerancePercent;
   }
@@ -148,6 +151,13 @@ public class IntakeIOTalonFX implements IntakeIO {
     double voltage = power * 12;
     VoltageOut volts = new VoltageOut(voltage);
     intakeRollersMotor.setControl(volts);
+  }
+
+    @Override
+  public void pivotRunVolts(double power) {
+    double voltage = power * 12;
+    VoltageOut volts = new VoltageOut(voltage);
+    intakePivotMotor.setControl(volts);
   }
 
   @Override
@@ -193,6 +203,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         intakePivotCurrent,
         intakePivotSupplyCurrent,
         intakePivotErrorFromSetpoint
+        
 
     ).isOK();
 
@@ -211,6 +222,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     inputs.intakePivotSupplyCurrent = this.intakePivotSupplyCurrent.getValueAsDouble();
     inputs.intakePivotErrorFromSetpoint = this.intakePivotErrorFromSetpoint.getValueAsDouble();
     inputs.intakePivotSetpoint = this.positionVoltageRequest.Position;
+    inputs.intakePivotAtSetpoint = this.intakeAtPositionSetpoint();
 
   }
 

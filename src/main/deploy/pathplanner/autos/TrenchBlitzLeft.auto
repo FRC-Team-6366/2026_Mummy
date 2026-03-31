@@ -5,15 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "TrenchToFuelLeft"
+            "name": "IntakeRetract"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "IntakeDeploy"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TrenchToFuelLeft"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
+                }
+              }
+            ]
           }
         },
         {
@@ -56,37 +69,30 @@
                 "data": {
                   "waitTime": 1.0
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoShooterSixSeconds"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeHalfRetract"
-                }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterEndless"
+                  "name": "IntakeStopRollers"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShooterWithLifter"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftAutoShoot"
                 }
               }
             ]
