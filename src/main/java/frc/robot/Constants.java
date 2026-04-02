@@ -113,8 +113,8 @@ public final class Constants {
 
     // Intake roller power from 0 to 1
     
-    public static final double intakeRollerPower = 0.67;
-    public static final double intakeRollerPowerBackwards = -0.67;
+    public static final double intakeRollerPower = 0.8; //0.67
+    public static final double intakeRollerPowerBackwards = -0.8; //-0.67
   }
 
   public class VisionConstants {
