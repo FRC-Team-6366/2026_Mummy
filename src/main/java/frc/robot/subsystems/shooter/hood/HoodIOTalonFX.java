@@ -189,6 +189,12 @@ public class HoodIOTalonFX implements HoodIO {
     return this.hoodMotorRight.getClosedLoopError().getValueAsDouble();
   }
 
+   @Override
+  public double getHoodPosition() {
+    this.hoodMotorRight.getPosition();
+
+    return this.hoodMotorRight.getClosedLoopError().getValueAsDouble();
+  }
   @Override
   public boolean hoodsAtPositionSetpoint() {
     // Get absolute value of the error and see if it is less
