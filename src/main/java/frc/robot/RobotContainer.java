@@ -188,6 +188,8 @@ public class RobotContainer {
         intake.retractIntake().until(intake.intakePivotAtPositionSetpoint()));
     NamedCommands.registerCommand("IntakeHalfRetract",
         intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
+    NamedCommands.registerCommand("ShooterStop",
+        shooter.shooterDecrements()); //Had to add but NOT REAL COMMAND
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
