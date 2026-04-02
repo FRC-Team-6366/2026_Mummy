@@ -25,7 +25,7 @@ public class IndexerIOTalonFX implements IndexerIO {
     indexMotor = new TalonFX(Constants.IndexerConstants.indexerMotorId); // 16
     TalonFXConfiguration indMotorconfiguration = new TalonFXConfiguration();
     indMotorconfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    indMotorconfiguration.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    indMotorconfiguration.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
     indexMotor.getConfigurator().apply(indMotorconfiguration);
 
     indexVolts = indexMotor.getMotorVoltage();
