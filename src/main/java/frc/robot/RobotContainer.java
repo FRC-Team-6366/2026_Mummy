@@ -226,7 +226,7 @@ public class RobotContainer {
             () -> -driverController.getRightX()));
 
     // Lock to 0° when A button is held
-    if ( DriverStation.getAlliance().get() == Alliance.Red){
+    if ( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red){
     driverController
         .a()
         .whileTrue(this.orientIntakeRedTrench());
