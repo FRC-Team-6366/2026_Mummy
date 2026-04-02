@@ -59,24 +59,43 @@
           "data": {
             "commands": [
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 5.0
+                }
+              },
+              {
                 "type": "named",
                 "data": {
-                  "name": "StopWithX"
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stop"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeStopRollers"
+                  "waitTime": 0.25
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
           }
         },
         {
@@ -84,15 +103,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "AutoShooterWithLifter"
+                  "pathName": "LeftShotToMoreFuel"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "LeftAutoShoot"
+                  "name": "IntakeRunRollers"
                 }
               }
             ]

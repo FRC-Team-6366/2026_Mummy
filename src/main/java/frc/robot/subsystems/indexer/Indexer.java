@@ -83,6 +83,25 @@ public class Indexer extends SubsystemBase {
         }).withName("runIndexer()");
   }
 
+    /**
+   * Turns on the Indexer subsystem's motors but backwards
+   * <p>
+   * Example use:
+   * 
+   * <pre>{@code
+   * controller.a().whileTrue(indexer.runIndexerBackwards());
+   * }</pre>
+   * 
+   * @return Command to turn on indexer motors but backwards
+   */
+  public Command runIndexerBackwards() {
+    return this.run(
+        () -> {
+          this.power = -1;
+          this.indexerIO.setIndexerPower(this.power);
+        }).withName("runIndexer()");
+  }
+
   /**
    * Increases the Indexer's subsystem's output by 0.2 to a maximum power
    * of 1.

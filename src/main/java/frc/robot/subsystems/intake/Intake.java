@@ -56,6 +56,22 @@ public class Intake extends SubsystemBase {
         }).withName("intakeRunRollers()");
   }
 
+
+    /**
+   * Returns command to run the intake rollers backwards
+   * @return Command to run the intake roller backwards
+   */
+    public Command intakeRunRollersBackwards() {
+    return this.run(
+        () -> {
+          // Set roller power
+          this.power = Constants.IntakeConstants.intakeRollerPowerBackwards;
+
+          // Use power to start the IntakeIO Hardware motor
+          this.intakeIO.rollersRunVolts(this.power);
+        }).withName("intakeRunRollers()");
+  }
+
     public Command intakeStopPivot() {
     return this.run(
         () -> {
@@ -96,7 +112,7 @@ public class Intake extends SubsystemBase {
   public Command intakePivotLifter() {
     return this.run(
       () -> {
-        this.angle -= 0.5;
+        this.angle -= 1.0;
         Logger.recordOutput("Pivot/Angle", this.angle);
         this.intakeIO.intakePivotToAngle(this.angle);
       }
@@ -177,6 +193,10 @@ public class Intake extends SubsystemBase {
    */
   public double getIntakeAngleSetpoint() {
     return this.angle;
+  }
+
+  public double getIntakeAngleRotations(){
+    return this.intakeIO.getRotations().getRotations();
   }
 
   /**

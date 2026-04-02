@@ -53,7 +53,7 @@
   "folder": "Starting Locations to Get Fuel",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 0.47294970196929936
   },
   "useDefaultConstraints": true
 }

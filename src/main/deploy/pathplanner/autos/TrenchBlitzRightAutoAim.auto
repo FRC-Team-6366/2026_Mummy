@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TrenchToFuelLeft"
+                  "pathName": "TrenchToFuelRight"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "GettingFuelLeftToMid"
+                  "pathName": "GettingFuelRightToMid"
                 }
               },
               {
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MidfieldToShootLeft"
+            "pathName": "MidfieldToShootRight"
           }
         },
         {
@@ -69,11 +69,24 @@
                 "data": {
                   "waitTime": 1.0
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "IntakeStopRollers"
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 6.0
                 }
               }
             ]
@@ -86,13 +99,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShooterWithLifter"
+                  "name": "IntakeHalfRetract"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "LeftAutoShoot"
+                  "name": "AutoShootForeverDuringAuto"
                 }
               }
             ]

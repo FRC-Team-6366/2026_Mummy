@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7397004279600568,
-        "y": 0.6256633380884444
+        "x": 2.8170722891566267,
+        "y": 6.849158345221112
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1479602532377555,
-        "y": 0.8766293405383685
+        "x": 3.7022168674698785,
+        "y": 7.275339068112679
       },
-      "isLocked": true,
+      "isLocked": false,
+      "linkedName": "AM"
+    },
+    {
+      "anchor": {
+        "x": 5.286734939759036,
+        "y": 7.520939759036144
+      },
+      "prevControl": {
+        "x": 4.8524591466048665,
+        "y": 7.502289790343676
+      },
+      "nextControl": {
+        "x": 6.141727667224716,
+        "y": 7.557657411391827
+      },
+      "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.590067567567568,
-        "y": 1.2976576576576577
+        "x": 8.138867469879518,
+        "y": 6.832493975903614
       },
       "prevControl": {
-        "x": 1.319614364817735,
-        "y": 1.1246003319237228
+        "x": 7.474699188753939,
+        "y": 7.033500667732949
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -147.52880770915155
+    "rotation": -88.99491399474593
   },
   "reversed": false,
-  "folder": "Fuel Locations to Shot Locations",
+  "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 121.95457596119387
   },
   "useDefaultConstraints": true
 }
