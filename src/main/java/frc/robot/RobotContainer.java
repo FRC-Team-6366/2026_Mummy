@@ -371,14 +371,15 @@ public class RobotContainer {
    * 
    * @return Command for auto-shooting
    */
-  public Command autoShootForeverDuringAuto() {
+    public Command autoShootForeverDuringAuto() {
     return Commands.parallel(
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),
         this.autoAimDriveTrainDuringAuto(),
         Commands.repeatingSequence(Commands.race(
             indexer.runIndexer(),
-            kicker.runKicker())))
+            kicker.runKicker(),
+            intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))))
         .withName("autoShootForeverDuringAuto");
   }
 
