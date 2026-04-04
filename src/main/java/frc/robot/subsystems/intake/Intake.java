@@ -208,10 +208,10 @@ public class Intake extends SubsystemBase {
     return Commands.repeatingSequence(
             Commands.race(
                 this.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees),
-                new WaitCommand(1)),
+                new WaitCommand(0.3)),
             Commands.race(
                 this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees),
-                new WaitCommand(1)));
+                new WaitCommand(0.2)));
   }
 
   @Override

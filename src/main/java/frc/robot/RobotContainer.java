@@ -250,7 +250,7 @@ public class RobotContainer {
             () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
     // Run intake rollers when RT is pressed
-    driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
+    // driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
     // Switch to X pattern when X button is pressed
     driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
@@ -455,7 +455,9 @@ public class RobotContainer {
         hood.setHoodAutoAngle(drive),
         kicker.runKicker(),
         indexer.runIndexer(),
-        intake.intakePivotLifter().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers()))
+        // intake.intakePivotLifter()
+        Commands.sequence(new WaitCommand(0.5),
+        intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))
     // Commands.sequence(
     // new WaitCommand(3),
     // intake.intakePivotLifter()
