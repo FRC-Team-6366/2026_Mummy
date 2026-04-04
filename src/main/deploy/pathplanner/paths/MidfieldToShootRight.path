@@ -53,7 +53,7 @@
   "constraintZones": [
     {
       "name": "Going Over Ramp Slow",
-      "minWaypointRelativePos": 1.5369335816263279,
+      "minWaypointRelativePos": 2.0,
       "maxWaypointRelativePos": 0.042209807572940294,
       "constraints": {
         "maxVelocity": 2.0,
