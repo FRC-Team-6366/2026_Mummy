@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 
 public class HoodIOSim implements HoodIO {
   private ElevatorSim hoodSim;
+  double inchesPerRotation = 5.0 / 5.6;
   private double hoodMotorRightAppliedVoltage = 0.0;
   double pidVoltsRight;
 
@@ -31,6 +32,7 @@ public class HoodIOSim implements HoodIO {
   static final double hoodMaxPosition = 5.6;
   private double hoodRightSetpointRotations = 0.0;
   private double setpointThreshold = (5.6 / 100) * 1;
+   private double metersPerRotation = Units.inchesToMeters(inchesPerRotation);
 
   public HoodIOSim() {
     this.hoodSim = new ElevatorSim(
@@ -66,8 +68,8 @@ public class HoodIOSim implements HoodIO {
     double angletoRotations = (MathUtil.clamp(angle, 15.0, 45.0) - 15.0) / ((45.0 - 15.0) / hoodMaxPosition);
     
     // 2. Get inches per rotation
-    double inchesPerRotation = 5.0 / 5.6; //5 inches for 5.6 rotations = 0.8928 inches per rotation
-    double metersPerRotation = Units.inchesToMeters(inchesPerRotation);
+     //5 inches for 5.6 rotations = 0.8928 inches per rotation
+    
     
     // 3. Return rotations * meter per rotations
     return angletoRotations * metersPerRotation;
@@ -96,7 +98,7 @@ public class HoodIOSim implements HoodIO {
     // double currentAngle =  HoodIOInputs.getPosition().getValueAsDouble();
     // currentAngle = ((hoodMaxPosition/30)*(15+currentAngle));
 
-    double currentAngle = (((hoodSim.getPositionMeters()/360.0))+15)*((hoodMaxPosition/30));
+    double currentAngle = (((hoodSim.getPositionMeters()/metersPerRotation))+15)*((hoodMaxPosition/30));
     return currentAngle;
   }
   @Override
