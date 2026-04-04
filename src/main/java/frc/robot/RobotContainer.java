@@ -458,10 +458,6 @@ public class RobotContainer {
         // intake.intakePivotLifter()
         Commands.sequence(new WaitCommand(0.5),
         intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))
-    // Commands.sequence(
-    // new WaitCommand(3),
-    // intake.intakePivotLifter()
-    // )
     ).withName("autoShooterWithLifter");
   }
 

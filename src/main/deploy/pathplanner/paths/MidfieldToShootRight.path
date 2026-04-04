@@ -8,52 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.6353067047075625,
-        "y": 2.1548725400890305
+        "x": 6.31626248216833,
+        "y": 2.825235378031384
       },
       "isLocked": false,
       "linkedName": "MidfieldIntakeLeft"
     },
     {
       "anchor": {
-        "x": 6.704422253922965,
-        "y": 0.858559201141228
+        "x": 5.358801711840228,
+        "y": 2.462952924393724
       },
       "prevControl": {
-        "x": 7.432964016254015,
-        "y": 0.9963914264471023
+        "x": 6.007757977880676,
+        "y": 2.58177590268282
       },
       "nextControl": {
-        "x": 5.746961483594863,
-        "y": 0.6774179743223975
+        "x": 4.440156918687589,
+        "y": 2.294750356633381
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.177660485021397,
-        "y": 0.5997860199714706
+        "x": 3.0815977175463622,
+        "y": 2.3594436519258206
       },
       "prevControl": {
-        "x": 5.915218452272828,
-        "y": 0.6091221967721231
-      },
-      "nextControl": {
-        "x": 4.155506419400855,
-        "y": 0.5868473609129806
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.5381740370898713,
-        "y": 1.0914550641940093
-      },
-      "prevControl": {
-        "x": 3.0028433734939757,
-        "y": 0.34143373493975904
+        "x": 3.430941512125535,
+        "y": 2.3335663338088457
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,19 +46,28 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5628997867803756,
-      "rotationDegrees": 178.93382971460724
-    },
-    {
-      "waypointRelativePos": 2.5266524520255733,
-      "rotationDegrees": -177.92946093361567
+      "waypointRelativePos": 0.5922233300099699,
+      "rotationDegrees": -129.91920451848952
     }
   ],
   "constraintZones": [
     {
+      "name": "Going Over Ramp Slow",
+      "minWaypointRelativePos": 1.5369335816263279,
+      "maxWaypointRelativePos": 0.042209807572940294,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 4.0,
+        "maxAngularVelocity": 530.0,
+        "maxAngularAcceleration": 710.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.9851024208565655,
-      "maxWaypointRelativePos": 3.0,
+      "minWaypointRelativePos": 1.25,
+      "maxWaypointRelativePos": 1.5,
       "constraints": {
         "maxVelocity": 4.5,
         "maxAcceleration": 9.0,
@@ -97,7 +90,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -131.8201698801357
+    "rotation": -138.1798301198642
   },
   "reversed": false,
   "folder": "Fuel Locations to Shot Locations",
