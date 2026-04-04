@@ -62,5 +62,5 @@ public interface HoodIO {
    */
   public void updateInputs(HoodIOInputs inputs);
 
-  public double getHoodPosition();
+  public  double getHoodPosition();
 }

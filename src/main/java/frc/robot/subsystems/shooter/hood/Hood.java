@@ -16,6 +16,7 @@ import frc.robot.subsystems.driveTrain.Drive;
 public class Hood extends SubsystemBase {
   HoodIO hoodIO;
   double angle = 0;
+  double position;
 
   HoodIOInputsAutoLogged inputs = new HoodIOInputsAutoLogged();
 
@@ -61,6 +62,11 @@ public class Hood extends SubsystemBase {
   }
 
 
+
+  public double gotHoodPosition(){
+    position =  hoodIO.getHoodPosition();
+    return position;
+  }
   /**
    * Sets both the left and rightt hoods for shooting at tower station
    * <p>
@@ -144,6 +150,7 @@ public class Hood extends SubsystemBase {
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
     Logger.recordOutput("HoodSubsystem/CurrentCommand", 
         this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
+    Logger.recordOutput("HoodTrueAngle", this.gotHoodPosition());
   }
 
   @Override

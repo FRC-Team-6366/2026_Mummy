@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 public class HoodIOSim implements HoodIO {
   private ElevatorSim hoodSim;
   private double hoodMotorRightAppliedVoltage = 0.0;
+  double pidVoltsRight;
 
   private PIDController hoodPID = new PIDController(
     100.0, 
@@ -83,14 +84,21 @@ public class HoodIOSim implements HoodIO {
     double angleToMeters = this.angleToMeters(angle);
     this.hoodRightSetpointRotations = this.metersToRotations(angleToMeters);
 
-    double pidVoltsRight = this.hoodPID.calculate(this.hoodSim.getPositionMeters(), angleToMeters);
+    this.pidVoltsRight = this.hoodPID.calculate(this.hoodSim.getPositionMeters(), angleToMeters);
 
     double ffVolts = hoodFeedForward.calculate(0.0, 0.0);
 
     this.hoodMotorRightAppliedVoltage = MathUtil.clamp(pidVoltsRight + ffVolts, -12.0, 12.0);
   }
 
+  @Override
+  public double getHoodPosition() {
+    // double currentAngle =  HoodIOInputs.getPosition().getValueAsDouble();
+    // currentAngle = ((hoodMaxPosition/30)*(15+currentAngle));
 
+    double currentAngle = (((hoodSim.getPositionMeters()))+15)*((hoodMaxPosition/30));
+    return currentAngle;
+  }
   @Override
   public double getHoodPositionError() {
     return this.hoodRightSetpointRotations - this.metersToRotations(this.hoodSim.getPositionMeters());
@@ -117,9 +125,5 @@ public class HoodIOSim implements HoodIO {
     inputs.hoodAtSetpointRight = this.hoodsAtPositionSetpoint();
   }
 
-  @Override
-  public double getHoodPosition() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getHoodPosition'");
-  }
+
 }
