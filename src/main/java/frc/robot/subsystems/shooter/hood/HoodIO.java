@@ -61,4 +61,6 @@ public interface HoodIO {
    * @param inputs
    */
   public void updateInputs(HoodIOInputs inputs);
+
+  public double getHoodPosition();
 }

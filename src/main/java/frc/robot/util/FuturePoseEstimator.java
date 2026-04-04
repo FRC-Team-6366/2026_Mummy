@@ -15,7 +15,7 @@ public class FuturePoseEstimator {
  Transform2d virtulTargetTransformation;
 
 
-   Transform2d robotChassisPose(){
+   Pose2d getFutureChasisPose( double BallTime){
         //     boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
         
         // // Select correct dummy pose
@@ -26,9 +26,11 @@ public class FuturePoseEstimator {
         ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(chassisSpeed, drive.getRotation());
 
         // Get the current pose relative to the field
-        double virtualTargetX = fieldRelativeSpeeds.vxMetersPerSecond;
-        double virtualTargetY = fieldRelativeSpeeds.vyMetersPerSecond;
-        return virtulTargetTransformation = new Transform2d(virtualTargetX, virtualTargetY, new Rotation2d(0));
+        double virtualTargetX = fieldRelativeSpeeds.vxMetersPerSecond *BallTime;
+        double virtualTargetY = fieldRelativeSpeeds.vyMetersPerSecond *BallTime;
+        virtulTargetTransformation = new Transform2d(virtualTargetX, virtualTargetY, new Rotation2d(0));
+        Pose2d futureRobotPose = drive.getPose().transformBy(virtulTargetTransformation);
+        return futureRobotPose;
       //  return virtualTarget = hubPose.transformBy(virtulTargetTransformation);
   }
 

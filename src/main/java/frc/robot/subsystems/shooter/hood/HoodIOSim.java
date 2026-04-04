@@ -116,4 +116,10 @@ public class HoodIOSim implements HoodIO {
     inputs.hoodVoltsRight = this.hoodMotorRightAppliedVoltage;
     inputs.hoodAtSetpointRight = this.hoodsAtPositionSetpoint();
   }
+
+  @Override
+  public double getHoodPosition() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getHoodPosition'");
+  }
 }

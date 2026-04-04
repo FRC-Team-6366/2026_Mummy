@@ -63,6 +63,8 @@ public class HoodIOTalonFX implements HoodIO {
   double positionSetPointLow;
   double positionSetPointHigh;
 
+  double currentAngle;
+
   public HoodIOTalonFX() {
 
     // |==============================|
@@ -188,12 +190,13 @@ public class HoodIOTalonFX implements HoodIO {
   public double getHoodPositionError() {
     return this.hoodMotorRight.getClosedLoopError().getValueAsDouble();
   }
-
+  
    @Override
   public double getHoodPosition() {
-    this.hoodMotorRight.getPosition();
+    double currentAngle =  this.hoodMotorRight.getPosition().getValueAsDouble();
+    currentAngle = ((hoodMaxPosition/30)*(15+currentAngle));
 
-    return this.hoodMotorRight.getClosedLoopError().getValueAsDouble();
+    return this.currentAngle;
   }
   @Override
   public boolean hoodsAtPositionSetpoint() {
