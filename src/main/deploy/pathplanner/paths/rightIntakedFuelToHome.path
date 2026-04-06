@@ -3,61 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.22,
-        "y": 0.649
+        "x": 8.280927710843374,
+        "y": 3.78366265060241
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.195613409415122,
-        "y": 0.9713694721825958
+        "x": 8.256541120258495,
+        "y": 4.106032122785006
       },
       "isLocked": false,
-      "linkedName": "rightGetToBallsIntake"
+      "linkedName": "phenixIntakedFuel"
     },
     {
       "anchor": {
-        "x": 7.312539229671896,
-        "y": 3.9897146932952925
+        "x": 7.057024096385543,
+        "y": 0.9532613636363636
       },
       "prevControl": {
-        "x": 8.133021730145114,
-        "y": 3.8743371497681185
+        "x": 7.642901008003143,
+        "y": 1.539138275253963
       },
       "nextControl": {
-        "x": 6.376525458951501,
-        "y": 4.121338426295131
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.758307692307693,
-        "y": 0.5465384615384619
-      },
-      "prevControl": {
-        "x": 8.078522222222222,
-        "y": 0.5077777777777772
-      },
-      "nextControl": {
-        "x": 5.269852819425469,
-        "y": 0.5546984159801964
+        "x": 6.510638554216869,
+        "y": 0.40687582146768964
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.0257051282051295,
-        "y": 0.5465384615384619
+        "x": 3.254180722891566,
+        "y": 0.6583373493975899
       },
       "prevControl": {
-        "x": 4.272798052617784,
-        "y": 0.508524165474977
+        "x": 3.5012736473042203,
+        "y": 0.6203230533341051
       },
       "nextControl": {
-        "x": 3.723371794871796,
-        "y": 0.5930512820512819
+        "x": 2.9518473895582327,
+        "y": 0.7048501699104099
       },
       "isLocked": false,
       "linkedName": null
@@ -78,23 +62,23 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.4476570289132444,
-      "rotationDegrees": -119.99999999999999
+      "waypointRelativePos": 1.2,
+      "rotationDegrees": -148.6748850305482
     },
     {
-      "waypointRelativePos": 1.8244680851063804,
+      "waypointRelativePos": 1.4,
       "rotationDegrees": 180.0
     },
     {
-      "waypointRelativePos": 2.798029556650275,
-      "rotationDegrees": 176.73244701024603
+      "waypointRelativePos": 1.9,
+      "rotationDegrees": -175.43644128480884
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.5,
-      "maxWaypointRelativePos": 2.4,
+      "minWaypointRelativePos": 1.25,
+      "maxWaypointRelativePos": 1.7,
       "constraints": {
         "maxVelocity": 3.0,
         "maxAcceleration": 10.0,
@@ -108,8 +92,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.5,
-    "maxAcceleration": 10.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -123,7 +107,7 @@
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 93.27048792318354
+    "rotation": 90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

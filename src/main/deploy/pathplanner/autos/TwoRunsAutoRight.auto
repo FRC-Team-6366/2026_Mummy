@@ -42,10 +42,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "rightIntakingBallsToHome"
+                  "pathName": "rightIntakingFuel"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "rightIntakedFuelToHome"
           }
         },
         {
@@ -95,7 +101,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "rightIntakingBallsToHome"
+            "pathName": "rightIntakingFuel"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "rightIntakedFuelToHome"
           }
         },
         {

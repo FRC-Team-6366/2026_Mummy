@@ -113,7 +113,7 @@ public final class Constants {
 
     // Intake roller power from 0 to 1
     
-    public static final double intakeRollerPower = 0.9; //0.67
+    public static final double intakeRollerPower = 1; //0.67
     public static final double intakeRollerPowerBackwards = -1; //-0.67
   }
 
