@@ -378,8 +378,8 @@ public class RobotContainer {
         this.autoAimDriveTrainDuringAuto(),
         Commands.repeatingSequence(Commands.race(
             indexer.runIndexer(),
-            kicker.runKicker(),
-            intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))))
+            kicker.runKicker()
+       )))
         .withName("autoShootForeverDuringAuto");
   }
 
