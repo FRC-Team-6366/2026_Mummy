@@ -42,7 +42,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "leftIntakingBallsToHome"
+                  "pathName": "leftIntakingFuel"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "leftIntakedBallsToHome"
                 }
               }
             ]
@@ -93,9 +112,28 @@
           }
         },
         {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "leftIntakingFuel"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "leftIntakingBallsToHome"
+            "pathName": "leftIntakedBallsToHome"
           }
         },
         {
