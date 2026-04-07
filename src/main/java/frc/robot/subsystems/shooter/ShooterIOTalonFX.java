@@ -215,7 +215,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
 
-    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse));
+    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.95));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
     this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.95));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);

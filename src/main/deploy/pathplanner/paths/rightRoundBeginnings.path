@@ -8,50 +8,66 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1776867469879515,
-        "y": 0.6255542168674697
+        "x": 3.0758317413418674,
+        "y": 0.8752747565950728
       },
       "isLocked": false,
       "linkedName": "rightIntakeGoesBack"
     },
     {
       "anchor": {
-        "x": 4.7117692307692325,
-        "y": 0.5232820512820513
+        "x": 3.8280256410256417,
+        "y": 0.6860769230769233
       },
       "prevControl": {
-        "x": 4.085578751644385,
-        "y": 0.5105026537488917
+        "x": 3.421038461538462,
+        "y": 0.6747129953379951
       },
       "nextControl": {
-        "x": 5.2472270620945345,
-        "y": 0.5342097621254244
+        "x": 4.2350128205128215,
+        "y": 0.6974408508158514
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.060692307692308,
-        "y": 0.8139871794871807
+        "x": 5.432717948717949,
+        "y": 0.6860769230769233
       },
       "prevControl": {
-        "x": 7.4152500823000125,
-        "y": 0.8387674933245555
+        "x": 4.630371794871795,
+        "y": 0.6219896561771566
+      },
+      "nextControl": {
+        "x": 6.2350641025641025,
+        "y": 0.7501641899766899
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.072269230769232,
+        "y": 1.2558589743589743
+      },
+      "prevControl": {
+        "x": 6.072269230769231,
+        "y": 1.0058589743589743
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "rightGetToBallsIntake"
+      "linkedName": "rightRoundMiddle"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4860426929392473,
-      "rotationDegrees": -176.78181571882115
+      "waypointRelativePos": 0.9113300492610736,
+      "rotationDegrees": 0.0
     },
     {
-      "waypointRelativePos": 1.3957307060755395,
-      "rotationDegrees": 180.0
+      "waypointRelativePos": 2.1034482758620716,
+      "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [],
@@ -67,7 +83,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 87.13759477388815
   },
   "reversed": false,
   "folder": "PhoenixHackIntoCde",

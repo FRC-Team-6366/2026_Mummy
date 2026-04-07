@@ -3,55 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.838306818181818,
-        "y": 0.9532613636363636
+        "x": 7.037410256410258,
+        "y": 0.6744487179487191
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1776867469879515,
-        "y": 0.6255542168674697
+        "x": 6.72344871794872,
+        "y": 0.6628205128205127
       },
       "isLocked": false,
-      "linkedName": "rightIntakeGoesBack"
+      "linkedName": "rightRoundEnd"
     },
     {
       "anchor": {
-        "x": 4.7117692307692325,
-        "y": 0.5232820512820513
+        "x": 4.653628205128207,
+        "y": 0.5349102564102577
       },
       "prevControl": {
-        "x": 4.085578751644385,
-        "y": 0.5105026537488917
+        "x": 5.944358974358977,
+        "y": 0.48839743589743545
       },
       "nextControl": {
-        "x": 5.2472270620945345,
-        "y": 0.5342097621254244
+        "x": 3.654276871376635,
+        "y": 0.5709229170859913
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.060692307692308,
-        "y": 0.8139871794871807
+        "x": 2.7349743589743607,
+        "y": 0.837243589743589
       },
       "prevControl": {
-        "x": 7.4152500823000125,
-        "y": 0.8387674933245555
+        "x": 2.9785721578980158,
+        "y": 0.7810287130688998
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "rightGetToBallsIntake"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4860426929392473,
-      "rotationDegrees": -176.78181571882115
-    },
-    {
-      "waypointRelativePos": 1.3957307060755395,
-      "rotationDegrees": 180.0
+      "waypointRelativePos": 1.2151067323481155,
+      "rotationDegrees": 176.18700379211015
     }
   ],
   "constraintZones": [],
@@ -67,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -131.34777721969365
   },
   "reversed": false,
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.19748604606451
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

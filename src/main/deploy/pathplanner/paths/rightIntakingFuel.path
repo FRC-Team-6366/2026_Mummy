@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.280927710843374,
-        "y": 1.161012048192772
+        "x": 8.060692307692308,
+        "y": 0.8139871794871807
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.256541120258495,
-        "y": 1.4833815203753677
+        "x": 8.03630571710743,
+        "y": 1.1363566516697765
       },
       "isLocked": false,
       "linkedName": "rightGetToBallsIntake"
@@ -29,25 +29,11 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.65,
-      "maxWaypointRelativePos": 0.8,
-      "constraints": {
-        "maxVelocity": 3.0,
-        "maxAcceleration": 10.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
+    "maxVelocity": 1.5,
     "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -62,7 +48,7 @@
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 93.27048792318354
+    "rotation": 90.0
   },
   "useDefaultConstraints": false
 }

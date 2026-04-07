@@ -11,7 +11,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -61,7 +61,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 4.0
+                  "waitTime": 1.5
                 }
               },
               {
@@ -71,6 +71,37 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeHalfRetract"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
           }
         },
         {
@@ -95,19 +126,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "rightIntakeGoesBack"
+            "pathName": "rightRoundBeginnings"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "rightIntakingFuel"
+            "pathName": "rightRound"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "rightIntakedFuelToHome"
+            "pathName": "rightRoundBack"
           }
         },
         {
@@ -123,7 +154,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 4.0
+                  "waitTime": 3.0
                 }
               }
             ]
