@@ -98,8 +98,12 @@ public class HoodIOSim implements HoodIO {
     // double currentAngle =  HoodIOInputs.getPosition().getValueAsDouble();
     // currentAngle = ((hoodMaxPosition/30)*(15+currentAngle));
 
-    double currentAngle = (((hoodSim.getPositionMeters()/metersPerRotation))+15)*((hoodMaxPosition/30));
-    return currentAngle;
+    double currentAngle =  this.hoodSim.getPositionMeters();
+    // currentAngle = ((hoodMaxPosition/30)*(15+currentAngle));
+    // return this.currentAngle;
+    double position = (currentAngle/360.0);
+    double finalAngle = 90.0 - position;
+    return finalAngle;
   }
   @Override
   public double getHoodPositionError() {
