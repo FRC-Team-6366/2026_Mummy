@@ -196,8 +196,8 @@ public class HoodIOTalonFX implements HoodIO {
     double currentRotation =  this.hoodMotorRight.getPosition().getValueAsDouble();
     // currentAngle = ((hoodMaxPosition/30)*(15+currentAngle));
     // return this.currentAngle;
-    double rotationsToAngle = Math.abs(currentRotation) + 15 * (30.0 /5.6);
-    double finalAngle = 90.0 - rotationsToAngle;
+    double currentDegrees = Math.abs(currentRotation * (45.0 /5.6)) + 15;
+    double finalAngle = 90.0 - currentDegrees;
     return finalAngle;
   }
   @Override
