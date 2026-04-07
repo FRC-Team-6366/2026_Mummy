@@ -379,7 +379,7 @@ public class RobotContainer {
         Commands.repeatingSequence(Commands.race(
             indexer.runIndexer(),
             kicker.runKicker(),
-            intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))))
+            intake.intakePulsePivot())))
         .withName("autoShootForeverDuringAuto");
   }
 
