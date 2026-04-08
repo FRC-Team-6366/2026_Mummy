@@ -269,6 +269,8 @@ public class RobotContainer {
 
     operatorController.rightBumper().whileTrue(passFuel());
 
+    operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
+
     // Auto speed and angle when RT is held
     operatorController.rightTrigger().whileTrue(this.shootWithIntakeLifter()).onFalse(intake.deployIntake());
 
@@ -457,9 +459,9 @@ public class RobotContainer {
         kicker.runKicker(),
         indexer.runIndexer(),
         // intake.intakePivotLifter()
-        Commands.sequence(new WaitCommand(0.5),
-        intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))
-    ).withName("autoShooterWithLifter");
+        Commands.sequence(new WaitCommand(1)
+        // ,intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))
+    )).withName("autoShooterWithLifter");
   }
 
   
