@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.458587731811697,
+        "y": 7.198502139800285
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.14462619335016,
+        "y": 7.186873934672079
+      },
+      "isLocked": false,
+      "linkedName": "left1Back"
+    },
+    {
+      "anchor": {
+        "x": 4.271954350927246,
+        "y": 7.405520684736091
+      },
+      "prevControl": {
+        "x": 5.562685120158016,
+        "y": 7.359007864223269
+      },
+      "nextControl": {
+        "x": 3.2726030171756744,
+        "y": 7.441533345411825
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.1462910128388017,
+        "y": 7.198502139800285
+      },
+      "prevControl": {
+        "x": 3.389888811762457,
+        "y": 7.142287263125596
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.2151067323481155,
+      "rotationDegrees": 176.18700379211015
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 118.61045966596521
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

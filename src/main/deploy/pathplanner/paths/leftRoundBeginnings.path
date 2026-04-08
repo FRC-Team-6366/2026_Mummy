@@ -3,61 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.838306818181818,
-        "y": 0.9532613636363636
+        "x": 2.8170722891566267,
+        "y": 6.849158345221112
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0758317413418674,
-        "y": 0.8752747565950728
+        "x": 3.054597212316676,
+        "y": 6.771171738179821
       },
       "isLocked": false,
-      "linkedName": "rightIntakeGoesBack"
+      "linkedName": "leftRoundBeginnings"
     },
     {
       "anchor": {
-        "x": 3.8280256410256417,
-        "y": 0.6860769230769233
+        "x": 3.7026533523537797,
+        "y": 7.379643366619116
       },
       "prevControl": {
-        "x": 3.421038461538462,
-        "y": 0.6747129953379951
+        "x": 3.2956661728666,
+        "y": 7.368279438880188
       },
       "nextControl": {
-        "x": 4.2350128205128215,
-        "y": 0.6974408508158514
+        "x": 4.1096405318409595,
+        "y": 7.391007294358044
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.432717948717949,
-        "y": 0.6860769230769233
+        "x": 5.255292439372324,
+        "y": 7.379643366619116
       },
       "prevControl": {
-        "x": 4.630371794871795,
-        "y": 0.6219896561771566
+        "x": 4.491695768653184,
+        "y": 7.634175590192163
       },
       "nextControl": {
-        "x": 6.2350641025641025,
-        "y": 0.7501641899766899
+        "x": 5.643452211126961,
+        "y": 7.250256776034237
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.072269230769232,
-        "y": 1.2558589743589743
+        "x": 5.772838801711839,
+        "y": 7.0820542082738935
       },
       "prevControl": {
-        "x": 6.072269230769231,
-        "y": 1.0058589743589739
+        "x": 5.596062106415203,
+        "y": 7.258830903570531
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "rightRoundMiddle"
+      "linkedName": "leftStarte"
     }
   ],
   "rotationTargets": [
@@ -83,13 +83,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 87.13759477388815
+    "rotation": -91.53217766038446
   },
   "reversed": false,
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.19748604606451
+    "rotation": 121.95457596119387
   },
   "useDefaultConstraints": true
 }
