@@ -458,11 +458,11 @@ public class RobotContainer {
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),
         kicker.runKicker(),
-        indexer.runIndexer(),
+        indexer.runIndexer()
         // intake.intakePivotLifter()
-        Commands.sequence(new WaitCommand(1)
+       
         // ,intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))
-    )).withName("autoShooterWithLifter");
+    ).withName("autoShooterWithLifter");
   }
 
   
