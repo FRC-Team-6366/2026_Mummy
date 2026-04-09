@@ -33,7 +33,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 6.0
+                        "waitTime": 4.0
                       }
                     }
                   ]
@@ -42,7 +42,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ttc1r"
+                  "pathName": "lem1"
                 }
               }
             ]
@@ -51,13 +51,26 @@
         {
           "type": "path",
           "data": {
-            "pathName": "c1otbr"
+            "pathName": "lem2"
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "aimDrive"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimDrive"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
+                }
+              }
+            ]
           }
         },
         {
@@ -67,7 +80,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 1.5
                 }
               },
               {
@@ -86,7 +99,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 1.5
                 }
               },
               {
@@ -127,7 +140,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 6.0
+                        "waitTime": 4.0
                       }
                     }
                   ]
@@ -136,7 +149,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RunOUT2"
+                  "pathName": "lem3"
                 }
               }
             ]
@@ -168,7 +181,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Pu4"
+                  "pathName": "lem4"
                 }
               }
             ]
@@ -177,13 +190,26 @@
         {
           "type": "path",
           "data": {
-            "pathName": "bumpt5"
+            "pathName": "lem5"
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "aimDrive"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimDrive"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
+                }
+              }
+            ]
           }
         },
         {
@@ -193,7 +219,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 1.5
                 }
               },
               {
@@ -212,7 +238,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 1.5
                 }
               },
               {
@@ -234,6 +260,12 @@
           "type": "named",
           "data": {
             "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "lem3"
           }
         }
       ]

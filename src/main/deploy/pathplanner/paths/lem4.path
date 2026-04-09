@@ -4,34 +4,34 @@
     {
       "anchor": {
         "x": 8.03710413694722,
-        "y": 3.3815977175463625
+        "y": 4.546077032810271
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.01866265060241,
-        "y": 4.931072289156628
+        "x": 6.728146499978444,
+        "y": 2.623850554298648
       },
       "isLocked": false,
-      "linkedName": "stc3"
+      "linkedName": "lemend3"
     },
     {
       "anchor": {
-        "x": 5.942,
-        "y": 2.68
+        "x": 5.6434522111213115,
+        "y": 5.3353352353813515
       },
       "prevControl": {
-        "x": 5.166132530120481,
-        "y": 5.3135783132530126
+        "x": 5.670050502507886,
+        "y": 3.414515695265659
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ctpb4"
+      "linkedName": "lemend4"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": -163.76873121911393
+      "rotationDegrees": 126.90397337619159
     }
   ],
   "constraintZones": [],
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 132.316224840531
+    "rotation": 47.04540848888716
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",

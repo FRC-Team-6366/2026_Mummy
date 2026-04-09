@@ -32,19 +32,24 @@
     },
     {
       "anchor": {
-        "x": 8.676987179490588,
-        "y": 3.3024230769264897
+        "x": 8.669954216867469,
+        "y": 3.303936144578314
       },
       "prevControl": {
-        "x": 8.851738298973405,
-        "y": 2.6941459106125496
+        "x": 8.736528957431343,
+        "y": 2.768567116286491
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "ctt1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9229571984435777,
+      "rotationDegrees": 69.80369586012006
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

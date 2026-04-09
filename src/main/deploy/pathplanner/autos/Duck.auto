@@ -11,38 +11,38 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeDeploy"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "rightGetToBallsIntake"
-                }
-              }
-            ]
+            "name": "IntakeDeploy"
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "IntakeRunRollers"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeRunRollers"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 4.0
+                      }
+                    }
+                  ]
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "rightIntakingFuel"
+                  "pathName": "ttc1r"
                 }
               }
             ]
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "rightIntakedFuelToHome"
+            "pathName": "c1otbr"
           }
         },
         {
@@ -124,19 +124,64 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "race",
                 "data": {
-                  "waitTime": 0.3
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeRunRollers"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 4.0
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "StopAllButIntake"
+                  "pathName": "RunOUT2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeRunRollers"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 6.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Pu4"
                 }
               }
             ]
@@ -145,19 +190,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "rightRoundBeginnings"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "rightRound"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "rightRoundBack"
+            "pathName": "bumpt5"
           }
         },
         {
@@ -184,15 +217,40 @@
           "data": {
             "commands": [
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "AutoShootForeverDuringAuto"
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.0
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeHalfRetract"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
                 }
               }
             ]
@@ -201,13 +259,13 @@
         {
           "type": "named",
           "data": {
-            "name": "IntakeHalfRetract"
+            "name": "IntakeDeploy"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "IntakeDeploy"
+            "pathName": "RunOUT2"
           }
         }
       ]
