@@ -189,7 +189,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeHalfRetract",
         intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
     NamedCommands.registerCommand("ShooterStop",
-        shooter.shooterDecrements()); //Had to add but NOT REAL COMMAND
+        shooter.shooterDecrements());
+        NamedCommands.registerCommand("aimDrive", autoAimDriveTrain()); //Had to add but NOT REAL COMMAND
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -250,7 +251,7 @@ public class RobotContainer {
             () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
     // Run intake rollers when RT is pressed
-    // driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
+    driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
     // Switch to X pattern when X button is pressed
     driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
