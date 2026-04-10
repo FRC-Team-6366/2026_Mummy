@@ -87,7 +87,6 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
 
-    intakePivotCANcoder.setPosition(0.12);
     // Setting the StatusSignal variables to be mapped
     // to actual aspect of the IntakeIO's hardware
     intakePivotVolts = intakePivotMotor.getMotorVoltage();
@@ -104,6 +103,8 @@ public class IntakeIOTalonFX implements IntakeIO {
     iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
     iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
     intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
+
+    intakePivotCANcoder.setPosition(0.12);
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
