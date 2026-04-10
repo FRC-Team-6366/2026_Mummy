@@ -182,6 +182,7 @@ public class IntakeIOTalonFX implements IntakeIO {
   public void intakePivotToAngle(double angleDegrees) {
     double angletoRotations = (MathUtil.clamp(angleDegrees, 0.0, 138.6)) / 360; // Changes angle degree to rotations
     angletoRotations += 0.12;
+    angletoRotations = angletoRotations*8.6;
     this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
   }
 
