@@ -273,7 +273,7 @@ public class RobotContainer {
     operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
 
     // Auto speed and angle when RT is held
-    operatorController.rightTrigger().whileTrue(this.shootWithIntakeLifter()).onFalse(intake.deployIntake());
+    operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLift()).onFalse(intake.deployIntake());
 
     // Stop all subsystems (except drivetrain)
     operatorController.b().whileTrue(turnOffAll());
@@ -453,7 +453,7 @@ public class RobotContainer {
         intake.intakeStopRollers()).withName("turnOffAll");
   }
 
-  public Command shootWithIntakeLifter() {
+  public Command shootWithoutIntakeLift() {
     return Commands.parallel(
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),

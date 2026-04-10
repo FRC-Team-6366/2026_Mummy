@@ -17,26 +17,13 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
-                "type": "race",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeRunRollers"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 4.0
-                      }
-                    }
-                  ]
+                  "name": "IntakeRunRollers"
                 }
               },
               {
@@ -143,64 +130,38 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeRunRollers"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 4.0
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "lem3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
                 }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeRunRollers"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 6.0
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "lem4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
                 }
               }
             ]

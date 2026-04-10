@@ -149,9 +149,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "leftRound"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "leftRound"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              }
+            ]
           }
         },
         {
