@@ -151,7 +151,7 @@ public final class Constants {
     public static double camRearRightY = Units.inchesToMeters(-12.3);
     public static double camRearRightZ = Units.inchesToMeters(20.375);
     public static double camRearRightPitch = Units.degreesToRadians(-15);
-    public static double camRearRightYaw = Units.degreesToRadians(190);
+    public static double camRearRightYaw = Units.degreesToRadians(170);
 
     // Robot to camera transforms or lets the camera know where they are
     // (Not used by Limelight, configure in web UI instead)
