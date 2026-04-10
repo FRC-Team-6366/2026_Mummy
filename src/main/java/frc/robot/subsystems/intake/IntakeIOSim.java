@@ -133,4 +133,10 @@ public class IntakeIOSim implements IntakeIO {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'pivotRunVolts'");
   }
+
+  @Override
+  public void intakeStopPivot() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'intakeStopPivot'");
+  }
 }
