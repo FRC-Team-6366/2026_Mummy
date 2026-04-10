@@ -545,7 +545,14 @@ public class RobotContainer {
           drive,
           () -> -driverController.getLeftY(),
           () -> -driverController.getLeftX(),
-          () -> Rotation2d.kCW_90deg);
+          () -> Rotation2d.kCW_90deg)
+          ;
+  }
+
+  public Command checkAlliance(){
+    return Commands.run(
+      () -> this.updateAlliance()
+      );
   }
 
   public void updateAlliance(){
