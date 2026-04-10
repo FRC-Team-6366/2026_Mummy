@@ -84,10 +84,10 @@ public class IntakeIOSim implements IntakeIO {
     return Math.abs(this.getIntakePivotPositionError()) < this.setPointTolerance;
   }
 
-  @Override
-  public void intakeResetCanCoder() {
-    this.intakePivotSim.setState(Units.rotationsToRadians(0.12), 0);
-  }
+  // @Override
+  // public void intakeResetCanCoder() {
+  //   this.intakePivotSim.setState(Units.rotationsToRadians(0.12), 0);
+  // }
 
   @Override
   public void setBrakeMode(boolean brakeMode) {}

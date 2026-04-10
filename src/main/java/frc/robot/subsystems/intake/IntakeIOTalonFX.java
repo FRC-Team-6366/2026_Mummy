@@ -41,8 +41,8 @@ public class IntakeIOTalonFX implements IntakeIO {
   StatusSignal<Current> intakePivotSupplyCurrent;
   StatusSignal<Double> intakePivotErrorFromSetpoint;
 
-  private CANcoder intakePivotCANcoder;
-  CANcoderConfiguration iPCANcfg;
+  // private CANcoder intakePivotCANcoder;
+  // CANcoderConfiguration iPCANcfg;
 
   PositionVoltage positionVoltageRequest;
   VoltageOut voltageRequest;
@@ -83,7 +83,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
     iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
     iMPcfg.Feedback.RotorToSensorRatio = 8.6;
-    iMPcfg.Feedback.SensorToMechanismRatio = 1;
+    // iMPcfg.Feedback.SensorToMechanismRatio = 1;
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
     // Setting the StatusSignal variables to be mapped
@@ -98,10 +98,10 @@ public class IntakeIOTalonFX implements IntakeIO {
     // intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
     intakePivotMotor.setPosition(0.12);
 
-    iPCANcfg = new CANcoderConfiguration();
-    iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-    iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
-    intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
+    // iPCANcfg = new CANcoderConfiguration();
+    // iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+    // iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
+    // intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -136,10 +136,10 @@ public class IntakeIOTalonFX implements IntakeIO {
 
   // Resets cancoder to 0.12 rotations, must be used when intake is at
   // upper hard limit
-  @Override
-  public void intakeResetCanCoder() {
-    intakePivotCANcoder.setPosition(0.12);
-  }
+  // @Override
+  // public void intakeResetCanCoder() {
+  //   intakePivotCANcoder.setPosition(0.12);
+  // }
 
   // Turns pivot neutral mode to 'brake' on true, 'coast' on false
   @Override
