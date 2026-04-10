@@ -266,7 +266,7 @@ public class RobotContainer {
     driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
     // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
-    driverController.rightBumper().onTrue(this.toggleIntakeStop());
+    driverController.rightBumper().onTrue(intake.toggleIntakePivot());
 
 
 
