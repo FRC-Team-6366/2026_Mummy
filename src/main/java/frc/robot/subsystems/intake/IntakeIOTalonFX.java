@@ -81,8 +81,8 @@ public class IntakeIOTalonFX implements IntakeIO {
     iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
     iMPcfg.MotorOutput.withNeutralMode(NeutralModeValue.Coast);
     // iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
-    iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
-    iMPcfg.Feedback.RotorToSensorRatio = 8.6;
+    // iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+    // iMPcfg.Feedback.RotorToSensorRatio = 8.6;
     // iMPcfg.Feedback.SensorToMechanismRatio = 1;
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
@@ -180,9 +180,8 @@ public class IntakeIOTalonFX implements IntakeIO {
 
   @Override
   public void intakePivotToAngle(double angleDegrees) {
-    double angletoRotations = (MathUtil.clamp(angleDegrees, 0.0, 138.6)) / 360; // Changes angle degree to rotations
+    double angletoRotations = (MathUtil.clamp(angleDegrees, 0.0, 138.6)) / (138.8 / 3.28); // Changes angle degree to rotations
     angletoRotations += 0.12;
-    angletoRotations = angletoRotations*8.6;
     this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
   }
 
