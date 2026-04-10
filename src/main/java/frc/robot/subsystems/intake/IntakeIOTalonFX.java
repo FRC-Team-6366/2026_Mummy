@@ -87,7 +87,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
 
-    intakePivotMotor.setPosition(0.12);
+    intakePivotCANcoder.setPosition(0.12);
     // Setting the StatusSignal variables to be mapped
     // to actual aspect of the IntakeIO's hardware
     intakePivotVolts = intakePivotMotor.getMotorVoltage();
