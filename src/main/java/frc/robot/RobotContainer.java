@@ -229,21 +229,30 @@ public class RobotContainer {
             () -> -driverController.getRightX()));
 
     // Lock to 0° when A button is held
-    if ( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red){
-    driverController
-        .a()
-        .whileTrue(this.orientIntakeRedTrench());
-    driverController 
-        .rightStick()
-        .whileTrue(this.orientIntakeToRedDepot());
-    } else {
-      driverController
-      .a()
-      .whileTrue(this.orientIntakeBlueTrench());
-      driverController
-      .rightStick()
-      .whileTrue(this.orientIntaketoBlueDepot());
-    }
+    driverController.a().whileTrue(
+      DriveCommands.joystickDriveAtAngle(
+        drive,
+        () -> -driverController.getLeftY(),
+        () -> -driverController.getLeftX(),
+        () -> new Rotation2d()
+      )
+    );
+
+    // if ( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red){
+    // driverController
+    //     .a()
+    //     .whileTrue(this.orientIntakeRedTrench());
+    // driverController 
+    //     .rightStick()
+    //     .whileTrue(this.orientIntakeToRedDepot());
+    // } else {
+    //   driverController
+    //   .a()
+    //   .whileTrue(this.orientIntakeBlueTrench());
+    //   driverController
+    //   .rightStick()
+    //   .whileTrue(this.orientIntaketoBlueDepot());
+    // }
     // Lock to Hub when RT is held
     driverController.leftTrigger().whileTrue(
         DriveCommands.joystickDriveAutoAim(
