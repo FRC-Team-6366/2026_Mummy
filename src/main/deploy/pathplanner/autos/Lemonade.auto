@@ -118,6 +118,25 @@
           }
         },
         {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopAllButIntake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "IntakeDeploy"
@@ -251,6 +270,25 @@
                 "type": "named",
                 "data": {
                   "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopAllButIntake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
                 }
               }
             ]

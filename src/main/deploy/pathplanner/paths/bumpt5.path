@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.7245136186770323,
-      "rotationDegrees": -36.30953240604725
+      "rotationDegrees": -60.85164758658758
     }
   ],
   "constraintZones": [
@@ -67,7 +67,7 @@
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 132.316224840531
+    "rotation": -66.72087374020504
   },
   "useDefaultConstraints": false
 }

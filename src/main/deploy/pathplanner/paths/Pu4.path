@@ -47,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 132.316224840531
+    "rotation": -66.72087374020504
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 97.3470171196092
   },
   "useDefaultConstraints": true
 }
