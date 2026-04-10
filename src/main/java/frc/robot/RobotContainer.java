@@ -257,7 +257,7 @@ public class RobotContainer {
     driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
     // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
-    driverController.rightBumper().onTrue(this.intake.toggleIntakePivot());
+    driverController.rightBumper().onTrue(this.toggleIntakeStop());
 
 
 
@@ -512,6 +512,14 @@ public class RobotContainer {
        indexer.runIndexer())
         .withName("passFuel");
   }
+
+  public Command toggleIntakeStop(){
+    return Commands.sequence(
+      intake.toggleIntakePivot().until(intake.intakePivotAtPositionSetpoint()),
+      intake.intakeStopPivot()
+    );
+  }
+
 
   // |==============================|
   // | Orientation Commands |

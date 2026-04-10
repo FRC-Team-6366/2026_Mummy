@@ -199,6 +199,13 @@ public class Intake extends SubsystemBase {
     return this.intakeIO.getRotations().getRotations();
   }
 
+  
+  public Command intakePivotStopCommand() {
+    return Commands.runOnce(
+      () -> this.intakeIO.intakeStopPivot()
+      );
+  }
+
   /**
    * Pulses the intake rollers on for 1 second and off for 0.5 seconds. Used to help
    * jostle fuel in the robot's hopper

@@ -61,6 +61,8 @@ public interface IntakeIO {
 
   public void rollersStop();
 
+  public void intakeStopPivot();
+
   public void updateInputs(IntakeIOInputs inputs);
 
 }
