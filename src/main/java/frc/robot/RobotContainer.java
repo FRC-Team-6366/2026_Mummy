@@ -273,7 +273,7 @@ public class RobotContainer {
     operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
 
     // Auto speed and angle when RT is held
-    operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLift()).onFalse(intake.deployIntake());
+    operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLift()).onFalse(this.deployIntakeStop());
 
     // Stop all subsystems (except drivetrain)
     operatorController.b().whileTrue(turnOffAll());
@@ -516,6 +516,13 @@ public class RobotContainer {
   public Command toggleIntakeStop(){
     return Commands.sequence(
       intake.toggleIntakePivot().until(intake.intakePivotAtPositionSetpoint()),
+      intake.intakeStopPivot()
+    );
+  }
+
+  public Command deployIntakeStop() {
+    return Commands.sequence(
+      intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()),
       intake.intakeStopPivot()
     );
   }
