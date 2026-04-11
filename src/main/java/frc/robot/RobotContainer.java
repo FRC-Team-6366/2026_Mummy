@@ -468,15 +468,32 @@ public class RobotContainer {
   }
 
   public Command shootWithoutIntakeLift() {
-    return Commands.parallel(
-        shooter.setShooterAutoVelocity(drive),
-        hood.setHoodAutoAngle(drive),
-        kicker.runKicker(),
-        indexer.runIndexer()
-        // intake.intakePivotLifter()
-       
-        // ,intake.intakePulsePivot().unless(operatorController.leftBumper().whileTrue(intake.intakeRunRollers())))
-    ).withName("autoShooterWithLifter");
+  //   if (shooter.shooterAtVelocitySetPoint().getAsBoolean() && shooter.setShooterRps > 0){
+  //     return Commands.parallel(
+  //       shooter.setShooterAutoVelocity(drive),
+  //       hood.setHoodAutoAngle(drive),
+  //       kicker.runKicker(),
+  //       indexer.runIndexer()
+  //       // intake.intakePivotLifter()
+  //     ).withName("autoShooterWithLifter");
+  //   } else {
+  //   return Commands.parallel(
+  //       shooter.setShooterAutoVelocity(drive),
+  //       hood.setHoodAutoAngle(drive)
+  //   ).withName("autoShooterWithLifter");
+  // }
+
+    return Commands.sequence(
+      Commands.parallel(
+        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())).withName("autoShooterSpinUp"),
+      Commands.parallel(
+       shooter.setShooterAutoVelocity(drive),
+       hood.setHoodAutoAngle(drive),
+       kicker.runKicker(),
+       indexer.runIndexer()
+      ));
+    
   }
 
   
@@ -590,3 +607,18 @@ public class RobotContainer {
   }
   
 }
+// throw up
+  //   if (shooter.shooterAtVelocitySetPoint().getAsBoolean() && shooter.setShooterRps > 0){
+  //     return Commands.parallel(
+  //       shooter.setShooterAutoVelocity(drive),
+  //       hood.setHoodAutoAngle(drive),
+  //       kicker.runKicker(),
+  //       indexer.runIndexer()
+  //       // intake.intakePivotLifter()
+  //     ).withName("autoShooterWithLifter");
+  //   } else {
+  //   return Commands.parallel(
+  //       shooter.setShooterAutoVelocity(drive),
+  //       hood.setHoodAutoAngle(drive)
+  //   ).withName("autoShooterWithLifter");
+  // }
