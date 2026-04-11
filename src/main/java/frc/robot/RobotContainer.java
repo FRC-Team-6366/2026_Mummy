@@ -294,7 +294,9 @@ public class RobotContainer {
 
     // Resets cancoder to 0.12 rotations when start and back are pressed together,
     // must be used when intake is at upper hard limit
-    operatorController.start().and(operatorController.back()).onTrue(intake.intakeResetCanCoder());
+    operatorController.povDown().onTrue(intake.intakeResetCanCoderBottom());
+
+    operatorController.povUp().onTrue(intake.intakeResetCanCoderTop());
 
     // Shooting setpoints
     operatorController.a().whileTrue(shootAtPostion1());

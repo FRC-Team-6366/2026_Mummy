@@ -51,7 +51,9 @@ public interface IntakeIO {
    */
   public boolean intakeAtPositionSetpoint();
 
-  public void intakeResetCanCoder();
+  public void intakeResetCanCoderTop();
+
+  public void intakeResetCanCoderBottom();
 
   public void setBrakeMode(boolean brakeMode);
 

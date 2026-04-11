@@ -27,9 +27,14 @@ public class Intake extends SubsystemBase {
 
   // Reset the intake cancoder offset when pivot is at upper hard stop.
   // Used for testing.
-  public Command intakeResetCanCoder() {
+  public Command intakeResetCanCoderTop() {
     return this.runOnce(
-        () -> this.intakeIO.intakeResetCanCoder()).withName("intakeResetCanCoder()");
+        () -> this.intakeIO.intakeResetCanCoderTop()).withName("intakeResetCanCoderTop()");
+  }
+
+  public Command intakeResetCanCoderBottom() {
+    return this.runOnce(
+        () -> this.intakeIO.intakeResetCanCoderBottom()).withName("intakeResetCanCoderBottom()");
   }
 
   /**

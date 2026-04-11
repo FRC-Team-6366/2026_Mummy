@@ -140,8 +140,13 @@ public class IntakeIOTalonFX implements IntakeIO {
   // Resets cancoder to 0.12 rotations, must be used when intake is at
   // upper hard limit
   @Override
-  public void intakeResetCanCoder() {
+  public void intakeResetCanCoderTop() {
     intakePivotCANcoder.setPosition(0.12);
+  }
+
+    @Override
+  public void intakeResetCanCoderBottom() {
+    intakePivotCANcoder.setPosition(0.495);
   }
 
   // Turns pivot neutral mode to 'brake' on true, 'coast' on false

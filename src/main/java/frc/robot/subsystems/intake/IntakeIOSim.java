@@ -85,7 +85,7 @@ public class IntakeIOSim implements IntakeIO {
   }
 
   @Override
-  public void intakeResetCanCoder() {
+  public void intakeResetCanCoderTop() {
     this.intakePivotSim.setState(Units.rotationsToRadians(0.12), 0);
   }
 
@@ -138,5 +138,11 @@ public class IntakeIOSim implements IntakeIO {
   public void intakeStopPivot() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'intakeStopPivot'");
+  }
+
+  @Override
+  public void intakeResetCanCoderBottom() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'intakeResetCanCoderBottom'");
   }
 }
