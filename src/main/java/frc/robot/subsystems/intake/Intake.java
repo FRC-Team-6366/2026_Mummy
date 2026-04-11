@@ -218,7 +218,9 @@ public class Intake extends SubsystemBase {
                 new WaitCommand(0.3)),
             Commands.race(
                 this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees),
-                new WaitCommand(0.2)));
+                new WaitCommand(0.2))
+
+          ).withName("intakePulsePivot()");
   }
 
   @Override
