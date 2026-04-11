@@ -190,7 +190,12 @@ public class RobotContainer {
         intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
     NamedCommands.registerCommand("ShooterStop",
         shooter.shooterDecrements());
+    
+
+    NamedCommands.registerCommand("IntakePulsePivot", intake.intakePulsePivot());
+
         NamedCommands.registerCommand("aimDrive", autoAimDriveTrain()); //Had to add but NOT REAL COMMAND
+    
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
