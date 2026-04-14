@@ -1,6 +1,7 @@
 package frc.robot.subsystems.shooter;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -214,6 +215,11 @@ public class Shooter extends SubsystemBase {
    */
   public BooleanSupplier shooterAtVelocitySetPoint() {
     return () -> shooterIO.rightShooterAtVelocitySetPoint();
+  }
+
+    public Command shootAdjustable(DoubleSupplier ySupplier){
+   double voltLimit = 2.5;
+    return this.run(() -> this.shooterIO.setShooterVelocityFeetPerSecond(Math.abs(ySupplier.getAsDouble())*voltLimit));
   }
 
   @Override

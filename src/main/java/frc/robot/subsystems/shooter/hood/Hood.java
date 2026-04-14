@@ -1,6 +1,7 @@
 package frc.robot.subsystems.shooter.hood;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -9,6 +10,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
@@ -133,6 +135,11 @@ public class Hood extends SubsystemBase {
    */
   public BooleanSupplier hoodAtPositionSetpoint() {
     return () -> this.hoodIO.hoodsAtPositionSetpoint();
+  }
+
+  public Command hoodAdjustable(DoubleSupplier ySupplier){
+   double voltLimit = 2.5;
+   return this.run(() -> this.hoodIO.hoodsToAngle(Math.abs(ySupplier.getAsDouble())*voltLimit));
   }
 
   @Override

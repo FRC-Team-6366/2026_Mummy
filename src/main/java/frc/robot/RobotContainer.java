@@ -273,6 +273,15 @@ public class RobotContainer {
     // | Operator Controls |
     // |==============================|
 
+    operatorController.a().whileTrue(Commands.parallel(hood.hoodAdjustable(
+      () -> operatorController.getLeftY()
+    ),
+    shooter.shootAdjustable(
+      () -> operatorController.getRightY()
+    )
+    ));
+
+    
     // Run intake rollers when LT is pressed
     operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
@@ -546,6 +555,8 @@ public class RobotContainer {
         intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()),
         intake.intakeStopPivot());
   }
+
+
 
   // |==============================|
   // | Orientation Commands |
