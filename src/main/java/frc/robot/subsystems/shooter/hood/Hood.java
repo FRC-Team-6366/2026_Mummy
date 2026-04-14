@@ -155,6 +155,10 @@ public class Hood extends SubsystemBase {
          });
     }
 
+    public Command hoodManual(){
+        return this.run(() -> this.hoodIO.hoodsToAngle(this.angle));
+    }
+
 
   @Override
   public void periodic() {

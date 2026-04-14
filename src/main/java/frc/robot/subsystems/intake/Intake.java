@@ -24,6 +24,7 @@ public class Intake extends SubsystemBase {
     // On intake initialization, find out if intake is extended or retracted
     intakeIsExtended = this.intakeIO.getRotations().getRotations() > 0.25 ? true : false;
   }
+  
 
   // Reset the intake cancoder offset when pivot is at upper hard stop.
   // Used for testing.
