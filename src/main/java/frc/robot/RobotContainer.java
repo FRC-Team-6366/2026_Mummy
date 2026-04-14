@@ -564,13 +564,10 @@ public class RobotContainer {
     }
 
     public Command manualShoot() {
-        return Commands.sequence(Commands.parallel(shooter.shooterManual().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodManual().until(hood.hoodAtPositionSetpoint())),
+        return 
                 Commands.parallel(
                     shooter.shooterManual(),
-                    hood.hoodManual(),
-                        indexer.runIndexer(),
-                        intake.intakeRunRollers()))
+                    hood.hoodManual())
                 .withName("manualShoot");
     }
 

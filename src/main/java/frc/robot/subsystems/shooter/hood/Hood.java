@@ -140,7 +140,7 @@ public class Hood extends SubsystemBase {
          () ->
          { 
             this.angle += 1;
-            this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
+            this.angle = MathUtil.clamp(this.angle, 15.0, 45.0);
             this.hoodIO.hoodsToAngle(this.angle);
          });
     }
@@ -150,7 +150,7 @@ public class Hood extends SubsystemBase {
          () ->
          { 
             this.angle -= 1;
-         this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
+         this.angle = MathUtil.clamp(this.angle, 15.0, 45.0);
             this.hoodIO.hoodsToAngle(this.angle);
          });
     }
