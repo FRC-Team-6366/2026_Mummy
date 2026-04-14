@@ -391,7 +391,14 @@ public class RobotContainer {
    * @return Command for auto-shooting
    */
     public Command autoShootForeverDuringAuto() {
-    return Commands.parallel(
+    return Commands.sequence(
+      
+      Commands.parallel(
+        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+        .withName("autoShooterSpinUp"),
+
+     Commands.parallel(
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),
         this.autoAimDriveTrainDuringAuto(),
@@ -399,7 +406,8 @@ public class RobotContainer {
             indexer.runIndexer(),
             kicker.runKicker()
        )))
-        .withName("autoShootForeverDuringAuto");
+        .withName("autoShootForeverDuringAuto")
+    );
   }
 
   public Command autoAimDriveTrain() {
