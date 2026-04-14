@@ -269,19 +269,22 @@ public class RobotContainer {
 
     driverController.rightBumper().onTrue(intake.toggleIntakePivot());
 
+    driverController.povDown().onTrue(intake.intakeResetCanCoderBottom());
+
+    driverController.povUp().onTrue(intake.intakeResetCanCoderTop());
+
     // |==============================|
     // | Operator Controls |
     // |==============================|
 
-    operatorController.a().whileTrue(Commands.parallel(hood.hoodAdjustable(
-      () -> operatorController.getLeftY()
-    ),
-    shooter.shootAdjustable(
-      () -> operatorController.getRightY()
-    )
-    ));
+    operatorController.povUp().onTrue(hood.hoodIncrements());
 
-    
+    operatorController.povLeft().onTrue(shooter.shooterDecrements());
+
+    operatorController.povRight().onTrue(shooter.shooterIncrements());
+
+    operatorController.povDown().onTrue(hood.hoodDecrements());
+
     // Run intake rollers when LT is pressed
     operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
@@ -297,9 +300,7 @@ public class RobotContainer {
 
     // Resets cancoder to 0.12 rotations when start and back are pressed together,
     // must be used when intake is at upper hard limit
-    operatorController.povDown().onTrue(intake.intakeResetCanCoderBottom());
 
-    operatorController.povUp().onTrue(intake.intakeResetCanCoderTop());
 
     // Shooting setpoints
     operatorController.a().whileTrue(shootAtPostion1());

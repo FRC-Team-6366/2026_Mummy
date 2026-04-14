@@ -1,16 +1,14 @@
 package frc.robot.subsystems.shooter.hood;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
@@ -137,9 +135,26 @@ public class Hood extends SubsystemBase {
     return () -> this.hoodIO.hoodsAtPositionSetpoint();
   }
 
-  public Command hoodAdjustable(DoubleSupplier ySupplier){
-   return this.run(() -> this.hoodIO.hoodsToAngle(Math.abs(ySupplier.getAsDouble())));
-  }
+    public Command hoodIncrements(){
+        return this.runOnce(
+         () ->
+         { 
+            this.angle += 1;
+            this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
+            this.hoodIO.hoodsToAngle(this.angle);
+         });
+    }
+
+        public Command hoodDecrements(){
+        return this.runOnce(
+         () ->
+         { 
+            this.angle -= 1;
+         this.angle = MathUtil.clamp(this.angle, 0.0, 45.0);
+            this.hoodIO.hoodsToAngle(this.angle);
+         });
+    }
+
 
   @Override
   public void periodic() {

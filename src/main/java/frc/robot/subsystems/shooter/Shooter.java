@@ -217,10 +217,6 @@ public class Shooter extends SubsystemBase {
     return () -> shooterIO.rightShooterAtVelocitySetPoint();
   }
 
-    public Command shootAdjustable(DoubleSupplier ySupplier){
-   double voltLimit = 2.5;
-    return this.run(() -> this.shooterIO.setShooterVelocityFeetPerSecond(Math.abs(ySupplier.getAsDouble())*voltLimit));
-  }
 
   @Override
   public void periodic() {
