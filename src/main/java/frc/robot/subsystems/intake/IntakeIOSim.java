@@ -145,4 +145,16 @@ public class IntakeIOSim implements IntakeIO {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'intakeResetCanCoderBottom'");
   }
+
+  @Override
+  public void autoBreakMode() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'autoBreakMode'");
+  }
+
+  @Override
+  public void teleOPCoastMode() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'teleOPCoastMode'");
+  }
 }

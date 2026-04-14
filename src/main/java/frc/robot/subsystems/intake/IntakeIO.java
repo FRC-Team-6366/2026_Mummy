@@ -65,6 +65,10 @@ public interface IntakeIO {
 
   public void intakeStopPivot();
 
+  public void autoBreakMode();
+  
+  public void teleOPCoastMode();
+
   public void updateInputs(IntakeIOInputs inputs);
 
 }

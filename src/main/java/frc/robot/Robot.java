@@ -132,6 +132,7 @@ public class Robot extends LoggedRobot {
     m_robotContainer.hood.removeDefaultCommand();
     m_robotContainer.indexer.removeDefaultCommand();
     m_robotContainer.kicker.removeDefaultCommand();
+    m_robotContainer.intake.intakeAutoBreak();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -159,6 +160,7 @@ public class Robot extends LoggedRobot {
     m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer());
     m_robotContainer.intake.setDefaultCommand(m_robotContainer.intake.intakeStopRollers());
     m_robotContainer.shooter.setDefaultCommand(m_robotContainer.shooter.shooterTurnOff());
+    m_robotContainer.intake.intakeTeleOPCoast();
 
     m_robotContainer.updateAlliance();
     

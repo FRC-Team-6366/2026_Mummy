@@ -25,6 +25,13 @@ public class Intake extends SubsystemBase {
     intakeIsExtended = this.intakeIO.getRotations().getRotations() > 0.25 ? true : false;
   }
   
+  public void intakeAutoBreak(){
+    this.intakeIO.autoBreakMode();
+  }
+
+  public void intakeTeleOPCoast(){
+    this.intakeIO.teleOPCoastMode();
+  }
 
   // Reset the intake cancoder offset when pivot is at upper hard stop.
   // Used for testing.
