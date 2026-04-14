@@ -138,8 +138,7 @@ public class Hood extends SubsystemBase {
   }
 
   public Command hoodAdjustable(DoubleSupplier ySupplier){
-   double voltLimit = 2.5;
-   return this.run(() -> this.hoodIO.hoodsToAngle(Math.abs(ySupplier.getAsDouble())*voltLimit));
+   return this.run(() -> this.hoodIO.hoodsToAngle(Math.abs(ySupplier.getAsDouble())));
   }
 
   @Override
