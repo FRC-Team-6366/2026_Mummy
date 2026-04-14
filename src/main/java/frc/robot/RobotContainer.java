@@ -398,22 +398,31 @@ public class RobotContainer {
                 .withName("autoShootForever");
     }
 
-    /**
-     * Returns command to run shooter and hood based on distance to goal as
-     * well as run the indexer (either pulse or full)
-     * 
-     * @return Command for auto-shooting
-     */
+  /**
+   * Returns command to run shooter and hood based on distance to goal as
+   * well as run the indexer (either pulse or full)
+   * 
+   * @return Command for auto-shooting
+   */
     public Command autoShootForeverDuringAuto() {
-        return Commands.parallel(
-                shooter.setShooterAutoVelocity(drive),
-                hood.setHoodAutoAngle(drive),
-                this.autoAimDriveTrainDuringAuto(),
-                Commands.repeatingSequence(Commands.race(
-                        indexer.runIndexer(),
-                        kicker.runKicker())))
-                .withName("autoShootForeverDuringAuto");
-    }
+    return Commands.sequence(
+      
+      Commands.parallel(
+        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+        .withName("autoShooterSpinUp"),
+
+     Commands.parallel(
+        shooter.setShooterAutoVelocity(drive),
+        hood.setHoodAutoAngle(drive),
+        this.autoAimDriveTrainDuringAuto(),
+        Commands.repeatingSequence(Commands.race(
+            indexer.runIndexer(),
+            kicker.runKicker()
+       )))
+        .withName("autoShootForeverDuringAuto")
+    );
+  }
 
     public Command autoAimDriveTrain() {
         return DriveCommands.joystickDriveAutoAim(
