@@ -190,12 +190,10 @@ public class RobotContainer {
         intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
     NamedCommands.registerCommand("ShooterStop",
         shooter.shooterDecrements());
-    
 
     NamedCommands.registerCommand("IntakePulsePivot", intake.intakePulsePivot());
 
-        NamedCommands.registerCommand("aimDrive", autoAimDriveTrain()); //Had to add but NOT REAL COMMAND
-    
+    NamedCommands.registerCommand("aimDrive", autoAimDriveTrain()); // Had to add but NOT REAL COMMAND
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -226,7 +224,7 @@ public class RobotContainer {
 
     // Set the drivers movement for steering and driving on the driver joysticks
     drive.setDefaultCommand(
-      
+
         DriveCommands.joystickDrive(
             drive,
             () -> -driverController.getLeftY(),
@@ -235,28 +233,26 @@ public class RobotContainer {
 
     // Lock to 0° when A button is held
     driverController.a().whileTrue(
-      DriveCommands.joystickDriveAtAngle(
-        drive,
-        () -> -driverController.getLeftY(),
-        () -> -driverController.getLeftX(),
-        () -> new Rotation2d()
-      )
-    );
+        DriveCommands.joystickDriveAtAngle(
+            drive,
+            () -> -driverController.getLeftY(),
+            () -> -driverController.getLeftX(),
+            () -> new Rotation2d()));
 
     // if ( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red){
     // driverController
-    //     .a()
-    //     .whileTrue(this.orientIntakeRedTrench());
-    // driverController 
-    //     .rightStick()
-    //     .whileTrue(this.orientIntakeToRedDepot());
+    // .a()
+    // .whileTrue(this.orientIntakeRedTrench());
+    // driverController
+    // .rightStick()
+    // .whileTrue(this.orientIntakeToRedDepot());
     // } else {
-    //   driverController
-    //   .a()
-    //   .whileTrue(this.orientIntakeBlueTrench());
-    //   driverController
-    //   .rightStick()
-    //   .whileTrue(this.orientIntaketoBlueDepot());
+    // driverController
+    // .a()
+    // .whileTrue(this.orientIntakeBlueTrench());
+    // driverController
+    // .rightStick()
+    // .whileTrue(this.orientIntaketoBlueDepot());
     // }
     // Lock to Hub when RT is held
     driverController.leftTrigger().whileTrue(
@@ -272,8 +268,6 @@ public class RobotContainer {
     // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
     driverController.rightBumper().onTrue(intake.toggleIntakePivot());
-
-
 
     // |==============================|
     // | Operator Controls |
@@ -304,7 +298,6 @@ public class RobotContainer {
     operatorController.x().whileTrue(intake.intakePulsePivot());
 
     operatorController.y().whileTrue(this.runBackwardsNoStuck());
-
 
   }
 
@@ -390,15 +383,14 @@ public class RobotContainer {
    * 
    * @return Command for auto-shooting
    */
-    public Command autoShootForeverDuringAuto() {
+  public Command autoShootForeverDuringAuto() {
     return Commands.parallel(
         shooter.setShooterAutoVelocity(drive),
         hood.setHoodAutoAngle(drive),
         this.autoAimDriveTrainDuringAuto(),
         Commands.repeatingSequence(Commands.race(
             indexer.runIndexer(),
-            kicker.runKicker()
-       )))
+            kicker.runKicker())))
         .withName("autoShootForeverDuringAuto");
   }
 
@@ -470,35 +462,33 @@ public class RobotContainer {
   }
 
   public Command shootWithoutIntakeLift() {
-  //   if (shooter.shooterAtVelocitySetPoint().getAsBoolean() && shooter.setShooterRps > 0){
-  //     return Commands.parallel(
-  //       shooter.setShooterAutoVelocity(drive),
-  //       hood.setHoodAutoAngle(drive),
-  //       kicker.runKicker(),
-  //       indexer.runIndexer()
-  //       // intake.intakePivotLifter()
-  //     ).withName("autoShooterWithLifter");
-  //   } else {
-  //   return Commands.parallel(
-  //       shooter.setShooterAutoVelocity(drive),
-  //       hood.setHoodAutoAngle(drive)
-  //   ).withName("autoShooterWithLifter");
-  // }
+    // if (shooter.shooterAtVelocitySetPoint().getAsBoolean() &&
+    // shooter.setShooterRps > 0){
+    // return Commands.parallel(
+    // shooter.setShooterAutoVelocity(drive),
+    // hood.setHoodAutoAngle(drive),
+    // kicker.runKicker(),
+    // indexer.runIndexer()
+    // // intake.intakePivotLifter()
+    // ).withName("autoShooterWithLifter");
+    // } else {
+    // return Commands.parallel(
+    // shooter.setShooterAutoVelocity(drive),
+    // hood.setHoodAutoAngle(drive)
+    // ).withName("autoShooterWithLifter");
+    // }
 
     return Commands.sequence(
-      Commands.parallel(
-        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())).withName("autoShooterSpinUp"),
-      Commands.parallel(
-       shooter.setShooterAutoVelocity(drive),
-       hood.setHoodAutoAngle(drive),
-       kicker.runKicker(),
-       indexer.runIndexer()
-      ));
-    
-  }
+        Commands.parallel(
+            shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+            hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())).withName("autoShooterSpinUp"),
+        Commands.parallel(
+            shooter.setShooterAutoVelocity(drive),
+            hood.setHoodAutoAngle(drive),
+            kicker.runKicker(),
+            indexer.runIndexer()));
 
-  
+  }
 
   /**
    * Command to set shooter velocity and hood position to shoot
@@ -517,17 +507,15 @@ public class RobotContainer {
             shooter.setShooterVelocityPosition1(),
             hood.hoodToAnglePosition1(),
             kicker.runKicker(),
-            indexer.runIndexer()
-        )
-    ).withName("shootAtPostion1");
+            indexer.runIndexer()))
+        .withName("shootAtPostion1");
   }
 
   public Command runBackwardsNoStuck() {
     return Commands.parallel(
         kicker.runKickerBackwards(),
         indexer.runIndexerBackwards(),
-        intake.intakeRunRollersBackwards()
-        ).withName("runBackwardsNoStuck");
+        intake.intakeRunRollersBackwards()).withName("runBackwardsNoStuck");
   }
 
   /**
@@ -542,85 +530,81 @@ public class RobotContainer {
         shooter.setShooterVelocityPosition3(),
         hood.hoodsToAngle(45),
         kicker.runKicker(),
-       indexer.runIndexer(),
-       intake.intakeRunRollers())       
+        indexer.runIndexer(),
+        intake.intakeRunRollers())
         .withName("passFuel");
   }
 
-  public Command toggleIntakeStop(){
+  public Command toggleIntakeStop() {
     return Commands.sequence(
-      intake.toggleIntakePivot().until(intake.intakePivotAtPositionSetpoint()),
-      intake.intakeStopPivot()
-    );
+        intake.toggleIntakePivot().until(intake.intakePivotAtPositionSetpoint()),
+        intake.intakeStopPivot());
   }
 
   public Command deployIntakeStop() {
     return Commands.sequence(
-      intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()),
-      intake.intakeStopPivot()
-    );
+        intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()),
+        intake.intakeStopPivot());
   }
-
 
   // |==============================|
   // | Orientation Commands |
   // |==============================|
   public Command orientIntakeBlueTrench() {
-      return DriveCommands.joystickDriveAtAngle(
-          drive,
-          () -> -driverController.getLeftY(),
-          () -> -driverController.getLeftX(),
-          () -> Rotation2d.kZero);
+    return DriveCommands.joystickDriveAtAngle(
+        drive,
+        () -> -driverController.getLeftY(),
+        () -> -driverController.getLeftX(),
+        () -> Rotation2d.kZero);
   }
 
-  public Command orientIntakeRedTrench(){
+  public Command orientIntakeRedTrench() {
     return DriveCommands.joystickDriveAtAngle(
-          drive,
-          () -> -driverController.getLeftY(),
-          () -> -driverController.getLeftX(),
-          () -> Rotation2d.k180deg);
+        drive,
+        () -> -driverController.getLeftY(),
+        () -> -driverController.getLeftX(),
+        () -> Rotation2d.k180deg);
   }
 
   public Command orientIntaketoBlueDepot() {
-  return  DriveCommands.joystickDriveAtAngle(
-          drive,
-          () -> -driverController.getLeftY(),
-          () -> -driverController.getLeftX(),
-          () -> Rotation2d.kCCW_90deg);
-  }
-
-  public Command orientIntakeToRedDepot(){
     return DriveCommands.joystickDriveAtAngle(
-          drive,
-          () -> -driverController.getLeftY(),
-          () -> -driverController.getLeftX(),
-          () -> Rotation2d.kCW_90deg)
-          ;
+        drive,
+        () -> -driverController.getLeftY(),
+        () -> -driverController.getLeftX(),
+        () -> Rotation2d.kCCW_90deg);
   }
 
-  public Command checkAlliance(){
+  public Command orientIntakeToRedDepot() {
+    return DriveCommands.joystickDriveAtAngle(
+        drive,
+        () -> -driverController.getLeftY(),
+        () -> -driverController.getLeftX(),
+        () -> Rotation2d.kCW_90deg);
+  }
+
+  public Command checkAlliance() {
     return Commands.run(
-      () -> this.updateAlliance()
-      );
+        () -> this.updateAlliance());
   }
 
-  public void updateAlliance(){
-    this.alliance=DriverStation.getAlliance().orElse(Alliance.Blue);
+  public void updateAlliance() {
+    this.alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
   }
-  
+
 }
 // throw up
-  //   if (shooter.shooterAtVelocitySetPoint().getAsBoolean() && shooter.setShooterRps > 0){
-  //     return Commands.parallel(
-  //       shooter.setShooterAutoVelocity(drive),
-  //       hood.setHoodAutoAngle(drive),
-  //       kicker.runKicker(),
-  //       indexer.runIndexer()
-  //       // intake.intakePivotLifter()
-  //     ).withName("autoShooterWithLifter");
-  //   } else {
-  //   return Commands.parallel(
-  //       shooter.setShooterAutoVelocity(drive),
-  //       hood.setHoodAutoAngle(drive)
-  //   ).withName("autoShooterWithLifter");
-  // }
+// if (shooter.shooterAtVelocitySetPoint().getAsBoolean() &&
+// shooter.setShooterRps > 0){
+// return Commands.parallel(
+// shooter.setShooterAutoVelocity(drive),
+// hood.setHoodAutoAngle(drive),
+// kicker.runKicker(),
+// indexer.runIndexer()
+// // intake.intakePivotLifter()
+// ).withName("autoShooterWithLifter");
+// } else {
+// return Commands.parallel(
+// shooter.setShooterAutoVelocity(drive),
+// hood.setHoodAutoAngle(drive)
+// ).withName("autoShooterWithLifter");
+// }
