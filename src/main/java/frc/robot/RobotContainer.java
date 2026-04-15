@@ -295,6 +295,8 @@ public class RobotContainer {
                 operatorController.povDown()).onTrue(
                         hood.hoodDecrements());
 
+        // operatorController.a().whileTrue(this.passFuel());
+
         // Run intake rollers when LT is pressed
         operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
@@ -312,7 +314,7 @@ public class RobotContainer {
         // must be used when intake is at upper hard limit
 
         // Shooting setpoints
-        operatorController.a().whileTrue(shootAtPostion1());
+        // operatorController.a().whileTrue(shootAtPostion1());
 
         operatorController.x().whileTrue(intake.intakePulsePivot());
 
@@ -533,7 +535,7 @@ public class RobotContainer {
     public Command passFuel() {
         return Commands.parallel(
                 shooter.setShooterVelocityPosition3(),
-                hood.hoodsToAngle(45),
+                hood.hoodsToAngle(0.0),
                 kicker.runKicker(),
                 indexer.runIndexer(),
                 intake.intakeRunRollers())
@@ -553,13 +555,9 @@ public class RobotContainer {
     }
 
     public Command manualShoot() {
-        return Commands.sequence(Commands.parallel(shooter.shooterManual().until(shooter.shooterAtVelocitySetPoint()),
-                hood.hoodManual().until(hood.hoodAtPositionSetpoint())),
-                Commands.parallel(
+        return Commands.parallel(
                     shooter.shooterManual(),
-                    hood.hoodManual(),
-                        indexer.runIndexer(),
-                        intake.intakeRunRollers()))
+                    hood.hoodManual())
                 .withName("manualShoot");
     }
 

@@ -80,7 +80,7 @@ public class Shooter extends SubsystemBase {
      * @return Command to increase the shooter subsystem output by 0.3
      */
     public Command shooterIncrements() {
-        return runOnce(
+        return run(
                 () -> {
                     this.velocityFPS += 1;
                     // Set the power of the ShooterIO hardware
@@ -101,7 +101,7 @@ public class Shooter extends SubsystemBase {
      * @return Command to decrease the shooter subsystem output by 0.3
      */
     public Command shooterDecrements() {
-        return runOnce(
+        return run(
                 () -> {
                     // Clamp method returns either power, or the max or min value
                     // This ensures that power will never be greater than 1

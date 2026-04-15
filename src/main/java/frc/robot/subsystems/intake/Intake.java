@@ -16,6 +16,7 @@ public class Intake extends SubsystemBase {
   double power = 0;
   boolean intakeIsExtended = false;
   IntakeIO intakeIO;
+  boolean brakeModeOn;
   IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
   public Intake(IntakeIO io) {
@@ -27,10 +28,12 @@ public class Intake extends SubsystemBase {
   
   public void intakeAutoBreak(){
     this.intakeIO.autoBreakMode();
+    this.brakeModeOn = true;
   }
 
   public void intakeTeleOPCoast(){
     this.intakeIO.teleOPCoastMode();
+    this.brakeModeOn = false;
   }
 
   // Reset the intake cancoder offset when pivot is at upper hard stop.
@@ -248,6 +251,7 @@ public class Intake extends SubsystemBase {
         this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
     Logger.recordOutput("IntakeSubsystem/CurrentCommand", 
         this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
+        Logger.recordOutput("IntakeSubsystem/BrakeMode", brakeModeOn);
   }
 
   @Override
