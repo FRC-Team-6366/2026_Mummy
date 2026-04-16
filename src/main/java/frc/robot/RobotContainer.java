@@ -258,7 +258,7 @@ public class RobotContainer {
         // }
         // Lock to Hub when RT is held
         driverController.leftTrigger().whileTrue(
-                DriveCommands.joystickDriveAutoAim(
+                DriveCommands.joystickDriveNShootAutoAim(
                         drive,
                         () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
 
@@ -305,7 +305,7 @@ public class RobotContainer {
         operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
 
         // Auto speed and angle when RT is held
-        operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLift()).onFalse(intake.deployIntake());
+        operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLiftMoving()).onFalse(intake.deployIntake());
 
         // Stop all subsystems (except drivetrain)
         operatorController.b().whileTrue(turnOffAll());
@@ -501,6 +501,21 @@ public class RobotContainer {
                 Commands.parallel(
                         shooter.setShooterAutoVelocity(drive),
                         hood.setHoodAutoAngle(drive),
+                        kicker.runKicker(),
+                        indexer.runIndexer()));
+
+    }
+
+    public Command shootWithoutIntakeLiftMoving() {
+
+        return Commands.sequence(
+                Commands.parallel(
+                        shooter.setShooterAutoMovingVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+                        hood.setHoodAutoAngleMoving(drive).until(hood.hoodAtPositionSetpoint()))
+                        .withName("autoShooterSpinUp"),
+                Commands.parallel(
+                        shooter.setShooterAutoMovingVelocity(drive),
+                        hood.setHoodAutoAngleMoving(drive),
                         kicker.runKicker(),
                         indexer.runIndexer()));
 
