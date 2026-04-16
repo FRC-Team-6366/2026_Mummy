@@ -259,7 +259,7 @@ public class DriveCommands {
         
         // Select correct dummy pose
         Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
-        Pose2d movingHubPose = futurePoseEstimator.getMovingHubPose(0.97, hubPose);
+        Pose2d movingHubPose = futurePoseEstimator.getMovingHubPose(drive, 0.97, hubPose);
         hubPose = movingHubPose;
 
         // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose

@@ -141,7 +141,7 @@ public class Hood extends SubsystemBase {
 
           // Select correct dummy pose
           Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
-          hubPose = futurePoseEstimator.getMovingHubPose(0.97, hubPose);
+          hubPose = futurePoseEstimator.getMovingHubPose(drive, 0.97, hubPose);
           // Get the current pose relative to the dummy hub pose. Measurements are from
           // hub to pose
           Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
