@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.942,
-        "y": 2.68
+        "x": 5.902225392296718,
+        "y": 2.3594436519258206
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.3599364911489085,
-        "y": 2.8759227158801726
+        "x": 4.320161883445627,
+        "y": 2.5553663678059935
       },
       "isLocked": false,
       "linkedName": "ctpb4"
@@ -37,10 +37,10 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.10022988505747343,
-      "maxWaypointRelativePos": 0.8560919540229845,
+      "minWaypointRelativePos": 0.20235878336436444,
+      "maxWaypointRelativePos": 0.706393544382372,
       "constraints": {
-        "maxVelocity": 2.5,
+        "maxVelocity": 1.4,
         "maxAcceleration": 10.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -67,7 +67,7 @@
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -66.72087374020504
+    "rotation": -81.25383773744493
   },
   "useDefaultConstraints": false
 }

@@ -85,8 +85,7 @@ public class ShooterIOTalonFX implements ShooterIO {
    * setpoint.
    * Valid values from 0.0 (no tolerance!) to 100.0 (no accuracy!)
    */
-  double setPointTolerancePercent = 1;
-  double setPointTolerance;
+  double setPointTolerancePercent = 5;
   double velocitySetPointLow;
   double velocitySetPointHigh;
 
@@ -207,7 +206,6 @@ public class ShooterIOTalonFX implements ShooterIO {
       this.leftFollowerShooterMotorSimState = this.leftFollowerShooterMotor.getSimState();
     }
     
-    this.setPointTolerance = shooterMaxVelocityRPS * this.setPointTolerancePercent;
   }
 
   @Override
@@ -236,14 +234,14 @@ public class ShooterIOTalonFX implements ShooterIO {
   public boolean rightShooterAtVelocitySetPoint() {
     // Get absolute value of the error and see if it is less
     // than the setpoint tolerance
-    return Math.abs(this.getRightShooterVelocityError()) < this.setPointTolerance;
+    return Math.abs(this.getRightShooterVelocityError()) < this.setPointTolerancePercent;
   }
   
   @Override
   public boolean leftShooterAtVelocitySetPoint() {
     // Get absolute value of the error and see if it is less
     // than the setpoint tolerance
-    return Math.abs(this.getLeftShooterVelocityError()) < this.setPointTolerance;
+    return Math.abs(this.getLeftShooterVelocityError()) < this.setPointTolerancePercent;
   }
 
   @Override

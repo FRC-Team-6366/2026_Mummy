@@ -58,7 +58,7 @@ public class HoodIOTalonFX implements HoodIO {
    * How far the motor position can be off and still be concidered at setpoint.
    * Valid values from 0.0 (no tolerance!) to 100.0 (no accuracy!)
    */
-  double setPointTolerancePercent = 1;
+  double setPointTolerancePercent = 3.5;
   double setPointTolerance;
   double positionSetPointLow;
   double positionSetPointHigh;

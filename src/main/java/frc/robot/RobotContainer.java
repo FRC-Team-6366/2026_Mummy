@@ -277,22 +277,17 @@ public class RobotContainer {
         // | Operator Controls |
         // |==============================|
 
-        operatorController.a().whileTrue(manualShoot());
 
-        operatorController.a().and(
-                operatorController.povUp()).onTrue(
+                operatorController.povUp().onTrue(
                         hood.hoodIncrements());
-
-        operatorController.a().and(
-                operatorController.povLeft()).onTrue(
+        
+                operatorController.povLeft().onTrue(
                         shooter.shooterDecrements());
 
-        operatorController.a().and(
-                operatorController.povRight()).onTrue(
+                operatorController.povRight().onTrue(
                         shooter.shooterIncrements());
 
-        operatorController.a().and(
-                operatorController.povDown()).onTrue(
+                operatorController.povDown().onTrue(
                         hood.hoodDecrements());
 
         // operatorController.a().whileTrue(this.passFuel());
@@ -487,7 +482,9 @@ public class RobotContainer {
         return Commands.sequence(
                 Commands.parallel(
                         shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-                        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+                         kicker.runKickerBackwards().until(shooter.shooterAtVelocitySetPoint()),
+                        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())
+                        )
                         .withName("autoShooterSpinUp"),
                 Commands.parallel(
                         shooter.setShooterAutoVelocity(drive),
@@ -508,6 +505,7 @@ public class RobotContainer {
                 Commands.parallel(
                         shooter.setShooterVelocityPosition1().until(
                                 shooter.shooterAtVelocitySetPoint()),
+                                kicker.runKickerBackwards(),
                         hood.hoodToAnglePosition1()
                                 .until(hood.hoodAtPositionSetpoint())),
                 Commands.parallel(

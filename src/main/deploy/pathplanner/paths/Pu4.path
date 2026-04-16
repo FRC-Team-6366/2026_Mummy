@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.01866265060241,
-        "y": 4.931072289156628
+        "x": 7.739514978601996,
+        "y": 4.830727532097005
       },
       "isLocked": false,
       "linkedName": "stc3"
     },
     {
       "anchor": {
-        "x": 5.942,
-        "y": 2.68
+        "x": 5.902225392296718,
+        "y": 2.3594436519258206
       },
       "prevControl": {
-        "x": 5.166132530120481,
-        "y": 5.3135783132530126
+        "x": 5.255292439372324,
+        "y": 4.571954350927247
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -66.72087374020504
+    "rotation": -81.25383773744493
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",
