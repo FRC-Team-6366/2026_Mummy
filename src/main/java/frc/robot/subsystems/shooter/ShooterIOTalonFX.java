@@ -29,6 +29,8 @@ public class ShooterIOTalonFX implements ShooterIO {
   protected TalonFX leftLeadShooterMotor;
   protected TalonFX leftFollowerShooterMotor;
 
+  double shotFuelCurrentThreshold = 5;
+
   // Used to control motor output by specifying rotaion speed
   VelocityVoltage velocityVoltageRequest;
   // Used to make followShooterMotor mimic the leadShooterMotor
@@ -47,6 +49,7 @@ public class ShooterIOTalonFX implements ShooterIO {
   StatusSignal<Angle> rightLeadShooterPosition;
   StatusSignal<AngularVelocity> rightLeadShooterRps;
   StatusSignal<Current> rightLeadShooterCurrent;
+  double rightLeadShooterCurrentPrevious;
   StatusSignal<Current> rightLeadShooterSupplyCurrent;
 
   StatusSignal<Voltage> rightFollowerShooterVolts;
@@ -212,9 +215,9 @@ public class ShooterIOTalonFX implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
 
-    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse));
+    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.94));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
-    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.95));
+    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.94));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);
   }
 
@@ -241,6 +244,12 @@ public class ShooterIOTalonFX implements ShooterIO {
     // Get absolute value of the error and see if it is less
     // than the setpoint tolerance
     return Math.abs(this.getLeftShooterVelocityError()) < this.setPointTolerance;
+  }
+
+  @Override
+  public boolean detectShot() {
+    return (this.rightFollowerShooterCurrent.getValueAsDouble() 
+    - this.rightLeadShooterCurrentPrevious) > shotFuelCurrentThreshold;
   }
 
   @Override
@@ -305,6 +314,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.rightLeadShooterVolts = this.rightLeadShooterVolts.getValueAsDouble();
     inputs.rightLeadShooterRps = this.rightLeadShooterRps.getValueAsDouble();
     inputs.rightLeadShooterCurrent = this.rightLeadShooterCurrent.getValueAsDouble();
+    this.rightLeadShooterCurrentPrevious = inputs.rightLeadShooterCurrent;
     inputs.rightLeadShooterSupplyCurrent = this.rightLeadShooterSupplyCurrent.getValueAsDouble();
 
     inputs.rightFollowShooterVolts = this.rightFollowerShooterVolts.getValueAsDouble();

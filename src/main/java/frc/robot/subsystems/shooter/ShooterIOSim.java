@@ -89,6 +89,11 @@ public class ShooterIOSim implements ShooterIO {
   }
 
   @Override
+  public boolean detectShot() {
+    return false;
+  }
+
+  @Override
   public void updateInputs(ShooterIOInputs inputs) {
     // Update the applied voltage to the motors and 
     this.rightFlyWheelSim.setInput(this.rightFlywheelAppliedVoltage);

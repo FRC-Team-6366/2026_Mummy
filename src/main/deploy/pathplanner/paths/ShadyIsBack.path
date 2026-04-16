@@ -3,48 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.817,
-        "y": 6.849158345221112
+        "x": 3.374385542168675,
+        "y": 0.8878192771084343
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.702144578313252,
-        "y": 7.275339068112679
+        "x": 4.401590361445783,
+        "y": 0.3960722891566274
       },
       "isLocked": false,
-      "linkedName": "AM"
+      "linkedName": "22WordFam"
     },
     {
       "anchor": {
-        "x": 5.286734939759036,
-        "y": 7.520939759036144
+        "x": 5.920542168674699,
+        "y": 0.5818433734939765
       },
       "prevControl": {
-        "x": 4.8524591466048665,
-        "y": 7.502289790343676
-      },
-      "nextControl": {
-        "x": 6.141727667224716,
-        "y": 7.557657411391827
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.058,
-        "y": 7.455
-      },
-      "prevControl": {
-        "x": 7.393831718874421,
-        "y": 7.656006691829335
+        "x": 5.297662650602409,
+        "y": 0.6036987951807226
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.34785992217899414,
+      "rotationDegrees": -174.08319656152534
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -88.99491399474593
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "PhoenixHackIntoCde",
+  "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 121.95457596119387
+    "rotation": -112.61986494804049
   },
   "useDefaultConstraints": true
 }

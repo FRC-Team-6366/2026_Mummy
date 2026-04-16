@@ -4,12 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "Fuel Locations to Shot Locations",
-    "TestFiles",
     "PhoenixHackIntoCde",
     "Picking Up Fuel",
     "Shoot Auto Aim",
     "Simple Shot Locations",
-    "Starting Locations to Get Fuel"
+    "Starting Locations to Get Fuel",
+    "DoNotTouchTopSecret#hayden"
   ],
   "autoFolders": [
     "Collect Fuel",

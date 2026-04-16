@@ -1,9 +1,9 @@
 package frc.robot.subsystems.shooter.hood;
 
 import java.util.function.BooleanSupplier;
-
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -166,6 +166,31 @@ public class Hood extends SubsystemBase {
   public BooleanSupplier hoodAtPositionSetpoint() {
     return () -> this.hoodIO.hoodsAtPositionSetpoint();
   }
+
+    public Command hoodIncrements(){
+        return this.runOnce(
+         () ->
+         { 
+            this.angle += 1;
+            this.angle = MathUtil.clamp(this.angle, 15.0, 45.0);
+            this.hoodIO.hoodsToAngle(this.angle);
+         });
+    }
+
+        public Command hoodDecrements(){
+        return this.runOnce(
+         () ->
+         { 
+            this.angle -= 1;
+         this.angle = MathUtil.clamp(this.angle, 15.0, 45.0);
+            this.hoodIO.hoodsToAngle(this.angle);
+         });
+    }
+
+    public Command hoodManual(){
+        return this.run(() -> this.hoodIO.hoodsToAngle(this.angle));
+    }
+
 
   @Override
   public void periodic() {

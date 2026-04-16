@@ -79,12 +79,14 @@ public class IntakeIOTalonFX implements IntakeIO {
     iMPcfg.Slot0.kG = 0.75;
     iMPcfg.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
     iMPcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+    iMPcfg.MotorOutput.withNeutralMode(NeutralModeValue.Coast);
     iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
     iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
     iMPcfg.Feedback.RotorToSensorRatio = 8.6;
     iMPcfg.Feedback.SensorToMechanismRatio = 1;
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
+
     // Setting the StatusSignal variables to be mapped
     // to actual aspect of the IntakeIO's hardware
     intakePivotVolts = intakePivotMotor.getMotorVoltage();
@@ -95,12 +97,14 @@ public class IntakeIOTalonFX implements IntakeIO {
     intakePivotErrorFromSetpoint = intakePivotMotor.getClosedLoopError();
 
     intakePivotCANcoder = new CANcoder(Constants.IntakeConstants.intakePivotCANcoderId);
-    intakePivotCANcoder.setPosition(0.12);
+    
 
     iPCANcfg = new CANcoderConfiguration();
     iPCANcfg.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
     iPCANcfg.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.75;
     intakePivotCANcoder.getConfigurator().apply(iPCANcfg);
+
+    intakePivotCANcoder.setPosition(0.12);
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -128,7 +132,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     positionVoltageRequest = new PositionVoltage(0.12);
     
     // Set motor position to CANcoder position
-    intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
+    // intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
 
     this.setPointTolerance = intakePivotMaxPosition * this.setPointTolerancePercent;
   }
@@ -136,14 +140,27 @@ public class IntakeIOTalonFX implements IntakeIO {
   // Resets cancoder to 0.12 rotations, must be used when intake is at
   // upper hard limit
   @Override
-  public void intakeResetCanCoder() {
+  public void intakeResetCanCoderTop() {
     intakePivotCANcoder.setPosition(0.12);
+  }
+
+    @Override
+  public void intakeResetCanCoderBottom() {
+    intakePivotCANcoder.setPosition(0.495);
   }
 
   // Turns pivot neutral mode to 'brake' on true, 'coast' on false
   @Override
   public void setBrakeMode(boolean brakeMode) {
     intakePivotMotor.setNeutralMode(brakeMode ? NeutralModeValue.Brake : NeutralModeValue.Coast);
+  }
+
+   public void autoBreakMode() {
+    intakePivotMotor.setNeutralMode(NeutralModeValue.Brake);
+  }
+
+   public void teleOPCoastMode() {
+    intakePivotMotor.setNeutralMode(NeutralModeValue.Coast);
   }
 
   @Override
@@ -163,6 +180,11 @@ public class IntakeIOTalonFX implements IntakeIO {
   @Override
   public void rollersStop() {
     intakeRollersMotor.stopMotor();
+  }
+  
+    @Override
+  public void intakeStopPivot() {
+    intakePivotMotor.stopMotor();
   }
 
   @Override

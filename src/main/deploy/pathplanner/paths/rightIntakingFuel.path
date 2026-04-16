@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.7,
-        "y": 0.8003975903614469
+        "x": 8.060692307692308,
+        "y": 0.8139871794871807
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.700699001426533,
-        "y": 1.7458469484213603
+        "x": 8.03630571710743,
+        "y": 1.1363566516697765
       },
       "isLocked": false,
-      "linkedName": "FuelPickupRight"
+      "linkedName": "rightGetToBallsIntake"
     },
     {
       "anchor": {
-        "x": 7.712686746987952,
-        "y": 3.936650602409639
+        "x": 8.25706134094151,
+        "y": 3.510984308131241
       },
       "prevControl": {
-        "x": 7.699748087929464,
-        "y": 2.9144965367890974
+        "x": 8.191495075881269,
+        "y": 3.1175867177697953
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MidfieldIntakeLeft"
+      "linkedName": "phenixIntakedFuel"
     }
   ],
   "rotationTargets": [],
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 2.0,
-    "maxAngularVelocity": 530.0,
-    "maxAngularAcceleration": 710.0,
+    "maxVelocity": 2.25,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -45,7 +45,7 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Picking Up Fuel",
+  "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 90.0

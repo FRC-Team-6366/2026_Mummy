@@ -11,22 +11,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeDeploy"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "leftGetToBallsIntake"
-                }
-              }
-            ]
+            "name": "IntakeDeploy"
           }
         },
         {
@@ -42,7 +29,58 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "leftIntakingBallsToHome"
+                  "pathName": "CarterWasNextToME"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeRunRollers"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "pewpew"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimDrive"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
                 }
               }
             ]
@@ -55,7 +93,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.0
+                  "waitTime": 2.0
                 }
               },
               {
@@ -74,53 +112,22 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 1.5
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "StopAllButIntake"
+                  "name": "IntakeHalfRetract"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "leftIntakeGoesBack"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "leftIntakingBallsToHome"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "AutoShootForeverDuringAuto"
                 }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.0
-                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeHalfRetract"
           }
         }
       ]

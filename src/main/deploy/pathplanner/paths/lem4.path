@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.565506024096385,
-        "y": 7.4553734939759035
+        "x": 8.03710413694722,
+        "y": 4.546077032810271
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.537382823681103,
-        "y": 7.481073902016708
+        "x": 6.728146499978444,
+        "y": 2.623850554298648
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "lemend3"
     },
     {
       "anchor": {
-        "x": 8.058,
-        "y": 7.455
+        "x": 5.6434522111213115,
+        "y": 5.3353352353813515
       },
       "prevControl": {
-        "x": 7.33240001505057,
-        "y": 7.471149404489404
+        "x": 5.670050502507886,
+        "y": 3.414515695265659
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "PG"
+      "linkedName": "lemend4"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 126.90397337619159
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -89.18290611543638
+    "rotation": 47.04540848888716
   },
   "reversed": false,
-  "folder": "PhoenixHackIntoCde",
+  "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

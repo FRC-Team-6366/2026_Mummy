@@ -3,48 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.817,
-        "y": 6.849158345221112
+        "x": 4.480371895614446,
+        "y": 0.465403375725142
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.702144578313252,
-        "y": 7.275339068112679
-      },
-      "isLocked": false,
-      "linkedName": "AM"
-    },
-    {
-      "anchor": {
-        "x": 5.286734939759036,
-        "y": 7.520939759036144
-      },
-      "prevControl": {
-        "x": 4.8524591466048665,
-        "y": 7.502289790343676
-      },
-      "nextControl": {
-        "x": 6.141727667224716,
-        "y": 7.557657411391827
+        "x": 5.5186329830183345,
+        "y": 0.6142098397601896
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.058,
-        "y": 7.455
+        "x": 7.8397564102598185,
+        "y": 0.8488717948752083
       },
       "prevControl": {
-        "x": 7.393831718874421,
-        "y": 7.656006691829335
+        "x": 6.80716247099659,
+        "y": 0.07383308968617053
+      },
+      "nextControl": {
+        "x": 8.745984550474445,
+        "y": 1.529063550502749
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.669954216867469,
+        "y": 3.303936144578314
+      },
+      "prevControl": {
+        "x": 8.736528957431343,
+        "y": 2.768567116286491
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ctt1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9229571984435777,
+      "rotationDegrees": 69.80369586012006
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -88.99491399474593
+    "rotation": 132.85261671232067
   },
   "reversed": false,
-  "folder": "PhoenixHackIntoCde",
+  "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 121.95457596119387
+    "rotation": 45.0
   },
   "useDefaultConstraints": true
 }

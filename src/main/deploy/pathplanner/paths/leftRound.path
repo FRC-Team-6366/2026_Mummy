@@ -1,0 +1,123 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.772838801711839,
+        "y": 7.0820542082738935
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.734022824536375,
+        "y": 6.74564907275321
+      },
+      "isLocked": false,
+      "linkedName": "leftStarte"
+    },
+    {
+      "anchor": {
+        "x": 5.669329529243937,
+        "y": 5.516476462196862
+      },
+      "prevControl": {
+        "x": 5.6240389218747024,
+        "y": 5.762339759344131
+      },
+      "nextControl": {
+        "x": 5.759900142653353,
+        "y": 5.024807417974322
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.2774465049928665,
+        "y": 3.0969472182596305
+      },
+      "prevControl": {
+        "x": 5.690378666254098,
+        "y": 2.632185179258106
+      },
+      "nextControl": {
+        "x": 6.587974322396576,
+        "y": 3.3427817403709006
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.963195435092723,
+        "y": 4.326119828815978
+      },
+      "prevControl": {
+        "x": 6.963195435092723,
+        "y": 3.8558569719325155
+      },
+      "nextControl": {
+        "x": 6.963195435092723,
+        "y": 5.115378031383737
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.458587731811697,
+        "y": 7.198502139800285
+      },
+      "prevControl": {
+        "x": 6.562097004279599,
+        "y": 6.92679029957204
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "left1Back"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.4556331006979062,
+      "rotationDegrees": -90.89802609991193
+    },
+    {
+      "waypointRelativePos": 1.5832502492522376,
+      "rotationDegrees": -58.174963379074946
+    },
+    {
+      "waypointRelativePos": 2.1576354679802936,
+      "rotationDegrees": 49.11196558371197
+    },
+    {
+      "waypointRelativePos": 2.6256157635467954,
+      "rotationDegrees": 83.20500094084613
+    },
+    {
+      "waypointRelativePos": 3.266009852216757,
+      "rotationDegrees": 96.99718767852993
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -91.53217766038446
+  },
+  "useDefaultConstraints": true
+}

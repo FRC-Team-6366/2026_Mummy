@@ -24,12 +24,18 @@ public class Intake extends SubsystemBase {
     // On intake initialization, find out if intake is extended or retracted
     intakeIsExtended = this.intakeIO.getRotations().getRotations() > 0.25 ? true : false;
   }
+  
 
   // Reset the intake cancoder offset when pivot is at upper hard stop.
   // Used for testing.
-  public Command intakeResetCanCoder() {
+  public Command intakeResetCanCoderTop() {
     return this.runOnce(
-        () -> this.intakeIO.intakeResetCanCoder()).withName("intakeResetCanCoder()");
+        () -> this.intakeIO.intakeResetCanCoderTop()).withName("intakeResetCanCoderTop()");
+  }
+
+  public Command intakeResetCanCoderBottom() {
+    return this.runOnce(
+        () -> this.intakeIO.intakeResetCanCoderBottom()).withName("intakeResetCanCoderBottom()");
   }
 
   /**
@@ -199,6 +205,13 @@ public class Intake extends SubsystemBase {
     return this.intakeIO.getRotations().getRotations();
   }
 
+  
+  public Command intakePivotStopCommand() {
+    return Commands.runOnce(
+      () -> this.intakeIO.intakeStopPivot()
+      );
+  }
+
   /**
    * Pulses the intake rollers on for 1 second and off for 0.5 seconds. Used to help
    * jostle fuel in the robot's hopper
@@ -208,10 +221,12 @@ public class Intake extends SubsystemBase {
     return Commands.repeatingSequence(
             Commands.race(
                 this.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees),
-                new WaitCommand(1)),
+                new WaitCommand(0.3)),
             Commands.race(
                 this.intakePivotToAngle(Constants.IntakeConstants.intakePivotDeployAngleDegrees),
-                new WaitCommand(1)));
+                new WaitCommand(0.2))
+
+          ).withName("intakePulsePivot()");
   }
 
   @Override

@@ -1,0 +1,93 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.676987179490588,
+        "y": 3.3024230769264897
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.296420588642652,
+        "y": 1.787389096859837
+      },
+      "isLocked": false,
+      "linkedName": "ctt1"
+    },
+    {
+      "anchor": {
+        "x": 6.047333791148016,
+        "y": 2.489178897669964
+      },
+      "prevControl": {
+        "x": 6.336331154824848,
+        "y": 2.438049181168324
+      },
+      "nextControl": {
+        "x": 4.607507207614173,
+        "y": 2.7439145260196143
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.937486594862401,
+        "y": 2.489178897669964
+      },
+      "prevControl": {
+        "x": 5.231460917865531,
+        "y": 2.497938311478163
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "cob2"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9036544850498314,
+      "rotationDegrees": -10.709270238190028
+    },
+    {
+      "waypointRelativePos": 1.8870431893687785,
+      "rotationDegrees": -59.7067369221634
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.9559279950341395,
+      "maxWaypointRelativePos": 1.8696461824953505,
+      "constraints": {
+        "maxVelocity": 2.5,
+        "maxAcceleration": 10.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -125.75388725369828
+  },
+  "reversed": false,
+  "folder": "DoNotTouchTopSecret#hayden",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 132.85261671232067
+  },
+  "useDefaultConstraints": false
+}

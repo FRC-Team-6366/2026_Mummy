@@ -57,4 +57,6 @@ public interface ShooterIO {
    */
   public void updateInputs(ShooterIOInputs inputs);
 
+  public boolean detectShot();
+
 }

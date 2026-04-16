@@ -3,6 +3,7 @@ package frc.robot.subsystems.kicker;
 import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.shooter.Shooter;
 
 /**
  * Kicker subsystem class for the FRC 2026 robot. This class handles the
@@ -20,6 +21,7 @@ public class Kicker extends SubsystemBase {
   double power = 0;
   KickerIO io;
 
+  Shooter shooter;
   /**
    * IOInputs object for holding current values for the devices of the
    * Kicker Subsystem. These values are updated every loop and written

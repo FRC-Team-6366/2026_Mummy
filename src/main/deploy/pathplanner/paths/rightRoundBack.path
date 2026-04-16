@@ -3,48 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.817,
-        "y": 6.849158345221112
+        "x": 7.037410256410258,
+        "y": 0.6744487179487191
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.702144578313252,
-        "y": 7.275339068112679
+        "x": 6.72344871794872,
+        "y": 0.6628205128205127
       },
       "isLocked": false,
-      "linkedName": "AM"
+      "linkedName": "rightRoundEnd"
     },
     {
       "anchor": {
-        "x": 5.286734939759036,
-        "y": 7.520939759036144
+        "x": 4.653628205128207,
+        "y": 0.5349102564102577
       },
       "prevControl": {
-        "x": 4.8524591466048665,
-        "y": 7.502289790343676
+        "x": 5.944358974358977,
+        "y": 0.48839743589743545
       },
       "nextControl": {
-        "x": 6.141727667224716,
-        "y": 7.557657411391827
+        "x": 3.654276871376635,
+        "y": 0.5709229170859913
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.058,
-        "y": 7.455
+        "x": 2.7349743589743607,
+        "y": 0.837243589743589
       },
       "prevControl": {
-        "x": 7.393831718874421,
-        "y": 7.656006691829335
+        "x": 2.9785721578980158,
+        "y": 0.7810287130688998
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.2151067323481155,
+      "rotationDegrees": 176.18700379211015
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -88.99491399474593
+    "rotation": -131.34777721969365
   },
   "reversed": false,
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 121.95457596119387
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

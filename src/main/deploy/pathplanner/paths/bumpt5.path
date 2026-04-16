@@ -3,44 +3,44 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.353653618030843,
-        "y": 0.6512336892052202
+        "x": 5.942,
+        "y": 2.68
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.569442467378411,
-        "y": 0.5651601423487547
+        "x": 4.3599364911489085,
+        "y": 2.8759227158801726
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ctpb4"
     },
     {
       "anchor": {
-        "x": 8.060692307692308,
-        "y": 0.8139871794871807
+        "x": 2.937,
+        "y": 2.489
       },
       "prevControl": {
-        "x": 7.24671794871795,
-        "y": 0.627935897435899
+        "x": 4.703535520730038,
+        "y": 2.677083762815661
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "rightGetToBallsIntake"
+      "linkedName": "sho25"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5564784053156124,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.7245136186770323,
+      "rotationDegrees": -60.85164758658758
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.05,
-      "maxWaypointRelativePos": 1.9,
+      "minWaypointRelativePos": 0.10022988505747343,
+      "maxWaypointRelativePos": 0.8560919540229845,
       "constraints": {
-        "maxVelocity": 5.5,
+        "maxVelocity": 2.5,
         "maxAcceleration": 10.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -53,7 +53,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.5,
-    "maxAcceleration": 7.5,
+    "maxAcceleration": 10.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -61,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -126.14204123637172
   },
   "reversed": false,
-  "folder": "PhoenixHackIntoCde",
+  "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -66.72087374020504
   },
   "useDefaultConstraints": false
 }

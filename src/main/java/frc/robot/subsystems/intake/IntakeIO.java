@@ -51,7 +51,9 @@ public interface IntakeIO {
    */
   public boolean intakeAtPositionSetpoint();
 
-  public void intakeResetCanCoder();
+  public void intakeResetCanCoderTop();
+
+  public void intakeResetCanCoderBottom();
 
   public void setBrakeMode(boolean brakeMode);
 
@@ -60,6 +62,8 @@ public interface IntakeIO {
   public void pivotRunVolts(double power);
 
   public void rollersStop();
+
+  public void intakeStopPivot();
 
   public void updateInputs(IntakeIOInputs inputs);
 

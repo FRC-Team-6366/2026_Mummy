@@ -107,14 +107,14 @@ public final class Constants {
     public static final int intakePivotCANcoderId = 21;
 
     public static final double intakePivotStartAngleDegrees = 0;
-    public static final double intakePivotRetractAngleDegrees = 0.1;
+    public static final double intakePivotRetractAngleDegrees = 0.1; //0.05
     public static final double intakePivotDeployAngleDegrees = 172;
     public static final double intakePivotPulseUpAngleDegrees = 50;
 
     // Intake roller power from 0 to 1
     
-    public static final double intakeRollerPower = 0.67;
-    public static final double intakeRollerPowerBackwards = -0.67;
+    public static final double intakeRollerPower = 1; //0.67
+    public static final double intakeRollerPowerBackwards = -1; //-0.67
   }
 
   public class VisionConstants {

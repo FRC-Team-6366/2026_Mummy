@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.138867469879518,
-        "y": 6.832493975903614
+        "x": 8.058,
+        "y": 3.965
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.445047911294738,
-        "y": 6.246500542658389
+        "x": 8.058,
+        "y": 3.303838320445183
       },
       "isLocked": false,
-      "linkedName": "PG"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,28 +20,28 @@
         "y": 4.1163974358974365
       },
       "prevControl": {
-        "x": 8.636982500473218,
-        "y": 4.0010198923702625
+        "x": 7.876966666666668,
+        "y": 3.4907999999999997
       },
       "nextControl": {
-        "x": 6.880486229279606,
-        "y": 4.248021168897275
+        "x": 7.725563929912641,
+        "y": 5.05723600718589
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.915164051355206,
-        "y": 7.379643366619116
+        "x": 6.0932,
+        "y": 7.632766666666667
       },
       "prevControl": {
-        "x": 7.532496433666189,
-        "y": 7.573723252496434
+        "x": 8.186013726422573,
+        "y": 7.492856633380884
       },
       "nextControl": {
-        "x": 4.574469414878692,
-        "y": 7.218760010241935
+        "x": 4.74589424495589,
+        "y": 7.722837555754618
       },
       "isLocked": false,
       "linkedName": null
@@ -73,7 +73,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AM"
+      "linkedName": "leftRoundBeginnings"
     }
   ],
   "rotationTargets": [
@@ -97,11 +97,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.4143646408839785,
-      "maxWaypointRelativePos": 2.089976322020521,
+      "minWaypointRelativePos": 1.5911602209944709,
+      "maxWaypointRelativePos": 1.9763220205209235,
       "constraints": {
-        "maxVelocity": 5.5,
-        "maxAcceleration": 10.0,
+        "maxVelocity": 2.0,
+        "maxAcceleration": 5.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -127,7 +127,7 @@
   "folder": "PhoenixHackIntoCde",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -88.99491399474593
+    "rotation": -84.84350044362222
   },
   "useDefaultConstraints": true
 }

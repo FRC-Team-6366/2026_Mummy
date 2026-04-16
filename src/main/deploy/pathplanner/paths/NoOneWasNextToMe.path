@@ -3,44 +3,60 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.353653618030843,
-        "y": 0.6512336892052202
+        "x": 4.621298145506419,
+        "y": 7.496091298145506
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.569442467378411,
-        "y": 0.5651601423487547
+        "x": 4.983580599144079,
+        "y": 7.53490727532097
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.060692307692308,
-        "y": 0.8139871794871807
+        "x": 6.859686162624821,
+        "y": 7.237318116975749
       },
       "prevControl": {
-        "x": 7.24671794871795,
-        "y": 0.627935897435899
+        "x": 5.950676872467947,
+        "y": 7.6657018054404835
+      },
+      "nextControl": {
+        "x": 7.985349500713266,
+        "y": 6.706833095577746
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.127674750356633,
+        "y": 5.115378031383738
+      },
+      "prevControl": {
+        "x": 7.88838895026727,
+        "y": 5.042974261622813
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "rightGetToBallsIntake"
+      "linkedName": "inMyMind"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5564784053156124,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 1.0279146141215045,
+      "rotationDegrees": -56.29652914749738
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.05,
-      "maxWaypointRelativePos": 1.9,
+      "minWaypointRelativePos": 1.3774712643678058,
+      "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 5.5,
+        "maxVelocity": 2.0,
         "maxAcceleration": 10.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -53,7 +69,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.5,
-    "maxAcceleration": 7.5,
+    "maxAcceleration": 8.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -61,13 +77,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -94.80348575906909
   },
   "reversed": false,
-  "folder": "PhoenixHackIntoCde",
+  "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -47.52887648687243
   },
   "useDefaultConstraints": false
 }
