@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
+import frc.robot.util.FuturePoseEstimator;
 
 public class Hood extends SubsystemBase {
   HoodIO hoodIO;
@@ -128,6 +129,31 @@ public class Hood extends SubsystemBase {
           this.hoodIO.hoodsToAngle(angle);
           // hubPose.getTranslation().getDistance(drive.getPose().getTranslation());
         }).withName("setHoodAutoAngle()");
+  }
+
+  public Command setHoodAutoAngleMoving(Drive drive) {
+    // Construct command
+    FuturePoseEstimator futurePoseEstimator= new FuturePoseEstimator();
+    return this.run(
+        () -> {
+          // Check for alliance side
+          boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+
+          // Select correct dummy pose
+          Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
+          hubPose = futurePoseEstimator.getMovingHubPose(0.97, hubPose);
+          // Get the current pose relative to the dummy hub pose. Measurements are from
+          // hub to pose
+          Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+          double hubToPoseX = hubToPose.getX();
+          double hubToPoseY = hubToPose.getY();
+          // Find the hypotenuse of the triangle
+          double distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+
+          this.angle = hoodAngleMap.get(distanceToHub);
+          this.hoodIO.hoodsToAngle(angle);
+          // hubPose.getTranslation().getDistance(drive.getPose().getTranslation());
+        }).withName("setHoodAutoAngleMoving()");
   }
 
   /**

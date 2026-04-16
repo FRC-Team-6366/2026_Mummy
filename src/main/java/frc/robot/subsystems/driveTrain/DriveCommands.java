@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
+import frc.robot.util.FuturePoseEstimator;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -33,6 +34,7 @@ import java.util.Set;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import com.ctre.phoenix6.Utils;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -47,6 +49,7 @@ public class DriveCommands {
   private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
   private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
 
+  
   private DriveCommands() {}
 
   private static Translation2d getLinearVelocityFromJoysticks(double x, double y) {
@@ -219,6 +222,80 @@ public class DriveCommands {
     // Reset PID controller when command starts
     .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians())).withName("joystickDriveAutoAim");
   }
+
+
+  // moving while shooting code
+    public static Command joystickDriveNShootAutoAim(
+    Drive drive,
+    DoubleSupplier xSupplier,
+    DoubleSupplier ySupplier) {
+      
+      //create pose for the future
+      FuturePoseEstimator futurePoseEstimator  = new FuturePoseEstimator();
+
+
+    // Create PID controller
+    ProfiledPIDController angleController =
+        new ProfiledPIDController(
+            ANGLE_KP,
+            0.0,
+            ANGLE_KD,
+            new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
+    angleController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Construct command
+    return Commands.run(
+      () -> {
+
+
+        boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+        
+        // Select correct dummy pose
+        Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
+        Pose2d movingHubPose = futurePoseEstimator.getMovingHubPose(0.97, hubPose);
+        hubPose = movingHubPose;
+
+        // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
+        Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+        double hubToPoseX = hubToPose.getX();
+        double hubToPoseY = hubToPose.getY();
+
+        // Use Math.atan2 to get the desired heading angle in radians
+        // Order must be atan2(Y, X)
+        double desiredAngleRad = Math.atan2(hubToPoseY, hubToPoseX);
+        desiredAngleRad = isFlipped ? desiredAngleRad + Math.PI : desiredAngleRad;
+        
+        // Adjust desired angle to account for shooter offset
+        desiredAngleRad -= Constants.ShooterConstants.autoAimCompAngleRad;
+
+        // Get linear velocity
+        Translation2d linearVelocity =
+            getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
+
+        // Calculate angular speed
+        double omega =
+            angleController.calculate(
+                drive.getRotation().getRadians(), desiredAngleRad);
+
+        // Convert to field relative speeds & send command
+        ChassisSpeeds speeds =
+            new ChassisSpeeds(
+                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
+                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
+                omega);
+        drive.runVelocity(
+            ChassisSpeeds.fromFieldRelativeSpeeds(
+                speeds,
+                isFlipped
+                    ? drive.getRotation().plus(new Rotation2d(Math.PI))
+                    : drive.getRotation()));
+      },
+      drive)
+      
+    // Reset PID controller when command starts
+    .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians())).withName("joystickDriveAutoAimMoving");
+  }
+
 
   public static Command joystickDriveAutoAimMoving(
     Drive drive,

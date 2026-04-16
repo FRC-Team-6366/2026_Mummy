@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
+import frc.robot.util.FuturePoseEstimator;
 
 /**
  * Big H here- this Substemy is for the Shooter class for the 2026 Mummybot.
@@ -200,6 +201,37 @@ public class Shooter extends SubsystemBase {
           this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
 
         }).withName("setShooterAutoVelocity()");
+        
+  }
+
+  public Command setShooterAutoMovingVelocity(Drive drive) {
+    // Construct command
+    FuturePoseEstimator futurePoseEstimator = new FuturePoseEstimator();
+    return this.run(
+        () -> {
+          // Check for alliance side
+          // boolean isFlipped =
+          // DriverStation.getAlliance().isPresent()
+          // && DriverStation.getAlliance().get() == Alliance.Red;
+
+          boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+
+          // Select correct dummy pose
+          Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
+          hubPose = futurePoseEstimator.getMovingHubPose(0.97, hubPose);
+          // Get the current pose relative to the dummy hub pose. Measurements are from
+          // hub to pose
+          Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+          double hubToPoseX = hubToPose.getX();
+          double hubToPoseY = hubToPose.getY();
+          // Find the hypotenuse of the triangle
+          this.distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+          Logger.recordOutput("distanceToHub", this.distanceToHub);
+
+          this.velocityFPS = shooterSpeedMap.get(distanceToHub);
+          this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+
+        }).withName("setShooterAutoMovingVelocity()");
         
   }
 
