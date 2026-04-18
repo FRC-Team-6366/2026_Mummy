@@ -63,10 +63,8 @@ public class Shooter extends SubsystemBase {
 
         // Interpolation map to calculate shooter speed for any given distance
         // Starting with values from three set points
-        shooterSpeedMap.put(1.01, 40.0);
-        shooterSpeedMap.put(1.596, 45.0);
-        shooterSpeedMap.put(3.369, 58.0);
-        shooterSpeedMap.put(4.004, 63.0);
+        shooterSpeedMap.put(1.31, 50.0);
+        shooterSpeedMap.put(5.2, 70.0);
     }
 
     /**
@@ -222,7 +220,7 @@ public class Shooter extends SubsystemBase {
 
           // Select correct dummy pose
           Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
-          hubPose = futurePoseEstimator.getMovingHubPose(drive, 0.97, hubPose);
+          hubPose = futurePoseEstimator.getMovingHubPose(drive, Constants.ShooterConstants.ballTime, hubPose);
           // Get the current pose relative to the dummy hub pose. Measurements are from
           // hub to pose
           Pose2d hubToPose = drive.getPose().relativeTo(hubPose);

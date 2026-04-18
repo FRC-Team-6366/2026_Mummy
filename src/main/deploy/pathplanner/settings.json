@@ -3,13 +3,14 @@
   "robotLength": 0.61,
   "holonomicMode": true,
   "pathFolders": [
+    "DoNotTouchTopSecret#hayden",
     "Fuel Locations to Shot Locations",
+    "TestFolder",
     "PhoenixHackIntoCde",
     "Picking Up Fuel",
     "Shoot Auto Aim",
     "Simple Shot Locations",
-    "Starting Locations to Get Fuel",
-    "DoNotTouchTopSecret#hayden"
+    "Starting Locations to Get Fuel"
   ],
   "autoFolders": [
     "Collect Fuel",

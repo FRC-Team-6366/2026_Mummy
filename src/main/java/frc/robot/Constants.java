@@ -85,9 +85,9 @@ public final class Constants {
     public static final int rightFollowerShooterMotorId = 16; // 16
     public static final int leftLeadShooterMotorId = 22; // 
     public static final int leftFollowerShooterMotorId = 23; // 
-    public static final double shooterPosition1VelocityFPS = 55.0;
+    public static final double shooterPosition1VelocityFPS = 63.0;
     public static final double shooterPosition2VelocityFPS = 63.0;
-    public static final double shooterPosition3VelocityFPS = 100.0;
+    public static final double shooterPosition3VelocityFPS = 72.5;
 
     public static final int hoodRightMotorId = 17; // 17
     public static final int hoodLeftMotorId = 18;
@@ -97,6 +97,8 @@ public final class Constants {
 
     // Small angle adjustment to compensate for shooter offset
     public static final double autoAimCompAngleRad = 0.0;// camera 3, the camera left back, is off badly
+
+    public static final double ballTime = 1.00;
   }
 
   

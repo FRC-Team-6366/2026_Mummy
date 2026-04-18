@@ -439,8 +439,8 @@ public class RobotContainer {
      */
     public Command autoShootWithIntakeLifter() {
         return Commands.parallel(
-                shooter.setShooterAutoVelocity(drive),
-                hood.setHoodAutoAngle(drive),
+                shooter.setShooterAutoMovingVelocity(drive),
+                hood.setHoodAutoAngleMoving(drive),
                 kicker.runKicker(),
                 indexer.runIndexer(),
                 intake.intakePivotLifter()
@@ -522,13 +522,13 @@ public class RobotContainer {
     public Command shootAtPostion1() {
         return Commands.sequence(
                 Commands.parallel(
-                        shooter.setShooterVelocityPosition1().until(
+                        shooter.setShooterVelocityPosition3().until(
                                 shooter.shooterAtVelocitySetPoint()),
-                        hood.hoodToAnglePosition1()
+                        hood.hoodToAnglePosition3()
                                 .until(hood.hoodAtPositionSetpoint())),
                 Commands.parallel(
-                        shooter.setShooterVelocityPosition1(),
-                        hood.hoodToAnglePosition1(),
+                        shooter.setShooterVelocityPosition3(),
+                        hood.hoodToAnglePosition3(),
                         kicker.runKicker(),
                         indexer.runIndexer()))
                 .withName("shootAtPostion1");

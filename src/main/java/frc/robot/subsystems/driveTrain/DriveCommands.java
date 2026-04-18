@@ -259,7 +259,7 @@ public class DriveCommands {
         
         // Select correct dummy pose
         Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
-        Pose2d movingHubPose = futurePoseEstimator.getMovingHubPose(drive, 0.97, hubPose);
+        Pose2d movingHubPose = futurePoseEstimator.getMovingHubPose(drive, Constants.ShooterConstants.ballTime, hubPose);
         hubPose = movingHubPose;
 
         // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
@@ -277,7 +277,7 @@ public class DriveCommands {
 
         // Get linear velocity
         Translation2d linearVelocity =
-            getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
+            getLinearVelocityFromJoysticks(xSupplier.getAsDouble()/3.0, ySupplier.getAsDouble()/3.0);
 
         // Calculate angular speed
         double omega =
@@ -287,8 +287,8 @@ public class DriveCommands {
         // Convert to field relative speeds & send command
         ChassisSpeeds speeds =
             new ChassisSpeeds(
-                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec()/4.0,
-                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec()/4.0,
+                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
+                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
                 omega);
         drive.runVelocity(
             ChassisSpeeds.fromFieldRelativeSpeeds(

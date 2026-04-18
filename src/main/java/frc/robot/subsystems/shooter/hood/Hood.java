@@ -28,10 +28,8 @@ public class Hood extends SubsystemBase {
 
     // Interpolation map to calculate hood angle for any given distance
     // Starting with values from three set points
-    hoodAngleMap.put(1.01, 0.0);
-    hoodAngleMap.put(1.596, 22.0);
-    hoodAngleMap.put(3.369, 25.17);
-    hoodAngleMap.put(4.004, 36.3);
+    hoodAngleMap.put(1.31, 15.0);
+    hoodAngleMap.put(5.20,45.0);
   }
 
   /**
@@ -141,7 +139,7 @@ public class Hood extends SubsystemBase {
 
           // Select correct dummy pose
           Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
-          hubPose = futurePoseEstimator.getMovingHubPose(drive, 0.97, hubPose);
+          hubPose = futurePoseEstimator.getMovingHubPose(drive, Constants.ShooterConstants.ballTime, hubPose);
           // Get the current pose relative to the dummy hub pose. Measurements are from
           // hub to pose
           Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
