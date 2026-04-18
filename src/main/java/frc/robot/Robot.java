@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.util.FuturePoseEstimator;
 import frc.robot.util.GameTimeMarkers;
 
 /**
@@ -33,6 +34,8 @@ public class Robot extends LoggedRobot {
   private long testPeriodMilliseconds = 3000;
   private GameTimeMarkers currenTimeMarker;
   private LinkedList<GameTimeMarkers> warningShifts = GameTimeMarkers.getWarningEnums();
+  FuturePoseEstimator futurePoseEstimator = new FuturePoseEstimator();
+  double distanceToHub;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -108,7 +111,11 @@ public class Robot extends LoggedRobot {
 
     // Handle the controllers' rumble
     this.m_robotContainer.driverController.periodic();
-    this.m_robotContainer.operatorController.periodic();    
+    this.m_robotContainer.operatorController.periodic();
+
+    // Continuously record distance to hub
+    distanceToHub = futurePoseEstimator.getDistanceToHub(m_robotContainer.drive);
+    Logger.recordOutput("distanceToHub", distanceToHub);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

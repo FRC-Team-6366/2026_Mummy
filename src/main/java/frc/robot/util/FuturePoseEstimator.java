@@ -4,6 +4,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Constants;
 import frc.robot.subsystems.driveTrain.Drive;
 
 public class FuturePoseEstimator {
@@ -11,7 +14,23 @@ public class FuturePoseEstimator {
  Transform2d movingTargetTransformation;
 
 
-   Pose2d getFutureChasisPose(Drive drive, double BallTime){
+  public double getDistanceToHub(Drive drive) {
+    boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+        
+    // Select correct dummy pose
+    Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
+
+    // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
+    Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+    double hubToPoseX = hubToPose.getX();
+    double hubToPoseY = hubToPose.getY();
+
+    // Calculate distance to hub
+    double distanceToHub = Math.sqrt((hubToPoseY*hubToPoseY) + (hubToPoseX*hubToPoseX));
+    return distanceToHub;
+   }
+ 
+    Pose2d getFutureChasisPose(Drive drive, double BallTime){
         //     boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
         
         // // Select correct dummy pose
