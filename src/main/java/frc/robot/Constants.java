@@ -91,9 +91,9 @@ public final class Constants {
 
     public static final int hoodRightMotorId = 17; // 17
     public static final int hoodLeftMotorId = 18;
-    public static final double hoodPosition1Angle = 22.0;
-    public static final double hoodPosition2Angle = 36.3;
-    public static final double hoodPosition3Angle = 25.17;
+    public static final double hoodPosition1Angle = 15;
+    public static final double hoodPosition2Angle = 30;
+    public static final double hoodPosition3Angle = 45;
 
     // Small angle adjustment to compensate for shooter offset
     public static final double autoAimCompAngleRad = 0.0;// camera 3, the camera left back, is off badly

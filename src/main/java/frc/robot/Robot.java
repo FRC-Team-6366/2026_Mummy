@@ -158,7 +158,7 @@ public class Robot extends LoggedRobot {
     m_robotContainer.kicker.setDefaultCommand(m_robotContainer.kicker.stopKicker());
     m_robotContainer.indexer.setDefaultCommand(m_robotContainer.indexer.stopIndexer());
     m_robotContainer.intake.setDefaultCommand(m_robotContainer.intake.intakeStopRollers());
-    m_robotContainer.shooter.setDefaultCommand(m_robotContainer.shooter.shooterTurnOff());
+    m_robotContainer.shooter.setDefaultCommand(m_robotContainer.shooter.shooterTurnOff()); 
 
     m_robotContainer.updateAlliance();
     

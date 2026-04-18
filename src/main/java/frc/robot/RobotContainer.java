@@ -277,22 +277,17 @@ public class RobotContainer {
         // | Operator Controls |
         // |==============================|
 
-        operatorController.a().whileTrue(manualShoot());
 
-        operatorController.a().and(
-                operatorController.povUp()).onTrue(
+                operatorController.povUp().onTrue(
                         hood.hoodIncrements());
 
-        operatorController.a().and(
-                operatorController.povLeft()).onTrue(
+                operatorController.povLeft().onTrue(
                         shooter.shooterDecrements());
 
-        operatorController.a().and(
-                operatorController.povRight()).onTrue(
+                operatorController.povRight().onTrue(
                         shooter.shooterIncrements());
 
-        operatorController.a().and(
-                operatorController.povDown()).onTrue(
+                operatorController.povDown().onTrue(
                         hood.hoodDecrements());
 
         // Run intake rollers when LT is pressed
@@ -312,9 +307,8 @@ public class RobotContainer {
         // must be used when intake is at upper hard limit
 
         // Shooting setpoints
-        operatorController.a().whileTrue(shootAtPostion1());
 
-        operatorController.x().whileTrue(intake.intakePulsePivot());
+        operatorController.x().whileTrue(shootAtPostion1());
 
         operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
