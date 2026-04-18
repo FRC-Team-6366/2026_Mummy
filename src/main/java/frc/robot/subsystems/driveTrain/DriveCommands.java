@@ -287,8 +287,8 @@ public class DriveCommands {
         // Convert to field relative speeds & send command
         ChassisSpeeds speeds =
             new ChassisSpeeds(
-                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
-                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
+                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec()/4.0,
+                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec()/4.0,
                 omega);
         drive.runVelocity(
             ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -312,7 +312,7 @@ public class DriveCommands {
     // Create PID controller
     ProfiledPIDController angleController =
         new ProfiledPIDController(
-            ANGLE_KP,
+            5,
             0.0,
             ANGLE_KD,
             new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
