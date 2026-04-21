@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.838306818181818,
+        "y": 0.9532613636363636
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.1776867469879515,
+        "y": 0.6255542168674697
+      },
+      "isLocked": false,
+      "linkedName": "rightIntakeGoesBack"
+    },
+    {
+      "anchor": {
+        "x": 4.7117692307692325,
+        "y": 0.5232820512820513
+      },
+      "prevControl": {
+        "x": 4.085578751644385,
+        "y": 0.5105026537488917
+      },
+      "nextControl": {
+        "x": 5.2472270620945345,
+        "y": 0.5342097621254244
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.060692307692308,
+        "y": 0.8139871794871807
+      },
+      "prevControl": {
+        "x": 7.4152500823000125,
+        "y": 0.8387674933245555
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "rightGetToBallsIntake"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4860426929392473,
+      "rotationDegrees": -176.78181571882115
+    },
+    {
+      "waypointRelativePos": 1.3957307060755395,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -119.19748604606451
+  },
+  "useDefaultConstraints": true
+}

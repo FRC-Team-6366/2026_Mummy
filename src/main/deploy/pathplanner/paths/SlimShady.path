@@ -1,0 +1,59 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.109243937232525,
+        "y": 7.41845934379458
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.0612125534950065,
+        "y": 7.263195435092724
+      },
+      "isLocked": false,
+      "linkedName": "TellYourFriends"
+    },
+    {
+      "anchor": {
+        "x": 3.5473894436519258,
+        "y": 7.263195435092724
+      },
+      "prevControl": {
+        "x": 2.9245099255796356,
+        "y": 7.2850508567794705
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "guessWhosBack"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.34785992217899414,
+      "rotationDegrees": 40.521996486605126
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 117.43454414334262
+  },
+  "reversed": false,
+  "folder": "DoNotTouchTopSecret#hayden",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

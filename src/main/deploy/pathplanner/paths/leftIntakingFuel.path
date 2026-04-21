@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.058,
+        "y": 7.455
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.370777777777779,
+        "y": 5.8691555555555555
+      },
+      "isLocked": false,
+      "linkedName": "leftGetToBallsIntake"
+    },
+    {
+      "anchor": {
+        "x": 8.058,
+        "y": 3.965
+      },
+      "prevControl": {
+        "x": 8.001020166073548,
+        "y": 4.7611803084223006
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "leftIntakedBallsToHome"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -89.97294812073777
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": false
+}

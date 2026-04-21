@@ -3,161 +3,274 @@ package frc.robot.subsystems.shooter;
 import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.driveTrain.Drive;
+import frc.robot.subsystems.shooter.shoterCounter.ShooterCounter;
+import frc.robot.util.FuturePoseEstimator;
+
 /**
- *Big H here- this Substemy is for the Shooter class for the 2026 Mummybot. This class
- * handles the interactions for for shooting the subsystem, and should have the could for the 
+ * Big H here- this Substemy is for the Shooter class for the 2026 Mummybot.
+ * This class
+ * handles the interactions for for shooting the subsystem, and should have the
+ * could for the
  * shooting hood as well.
+ * 
  * @author Hayden
- * @author Will 
+ * @author Will
  */
-public class Shooter extends SubsystemBase{
+public class Shooter extends SubsystemBase {
     /**
      * Double value used for the current power setting in
-     *  increment and decrement commmands in the shooter subsystem.
+     * increment and decrement commmands in the shooter subsystem.
      */
-    private double velocityRPS = 0;
+    private double velocityFPS = 0;
+    double distanceToHub = 0;
     ShooterIO shooterIO;
+    ShooterCounter counter = new ShooterCounter();
 
     /**
-     * IOInputs object that holds and updates values of the devices in the 
+     * IOInputs object that holds and updates values of the devices in the
      * shooter system. It get logged and updated every loop.
      */
     ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
+
+    public static InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
 
     /**
      * Creates the subsystem using the shooterIO object and represents
      * the hardware for the shooter subsystem
      * <p>
      * Example use:
-     * <pre>{@code Shooter shooter = new Shooter(new ShooterIOTalonFX());}</pre>
-     * @param io Hardware object that implements the ShooterIO interface class
+     * 
+     * <pre>{@code
+     * Shooter shooter = new Shooter(new ShooterIOTalonFX());
+     * }</pre>
+     * 
+     * @param io
+     *            Hardware object that implements the ShooterIO interface class
      * 
      */
-    public Shooter(ShooterIO io ){
+    public Shooter(ShooterIO io) {
         this.shooterIO = io;
+
+        // Interpolation map to calculate shooter speed for any given distance
+        // Starting with values from three set points
+        shooterSpeedMap.put(1.31, 50.0);
+        shooterSpeedMap.put(5.2, 70.0);
     }
 
-     /**
+    /**
      * Increases the shooter subsystem's output by 0.3 to a maximum power
      * of 1.
      * <p>
      * Example use:
-     * <pre>{@code controller.leftTrigger().whileTrue(shooter.shooterIncrement());}</pre>
+     * 
+     * <pre>{@code
+     * controller.leftTrigger().whileTrue(shooter.shooterIncrement());
+     * }</pre>
+     * 
      * @return Command to increase the shooter subsystem output by 0.3
      */
     public Command shooterIncrements() {
         return runOnce(
-            () -> {                
-                this.velocityRPS += 1;
-                // Set the power of the ShooterIO hardware
-                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
-            }
-        );
+                () -> {
+                    this.velocityFPS += 1;
+                    // Set the power of the ShooterIO hardware
+                    this.shooterIO.setShooterVelocityFeetPerSecond(this.velocityFPS);
+                }).withName("shooterIncrements()");
     }
 
-     /**
+    /**
      * Decreases the shooter subsystem's output by 0.3 down to a minimum power
      * of 0.
      * <p>
      * Example use:
-     * <pre>{@code controller.rightTrigger().whileTrue(shooter.shooterDeccrements());}</pre>
+     * 
+     * <pre>{@code
+     * controller.rightTrigger().whileTrue(shooter.shooterDeccrements());
+     * }</pre>
+     * 
      * @return Command to decrease the shooter subsystem output by 0.3
      */
     public Command shooterDecrements() {
         return runOnce(
-            () -> {
-                // Clamp method returns either power, or the max or min value
-                // This ensures that power will never be greater than 1
-                this.velocityRPS -= 1;
-                
-                // Set the power of the KickerIO hardware
-                this.shooterIO.setShooterVelocityRPS(velocityRPS);
-            }
-        );
+                () -> {
+                    // Clamp method returns either power, or the max or min value
+                    // This ensures that power will never be greater than 1
+                    this.velocityFPS -= 1;
+
+                    // Set the power of the KickerIO hardware
+                    this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+                }).withName("shooterDecrements()");
     }
 
     /**
      * Stops the shooter, setting the power to 0.
      * <p>
      * Example use:
-     * <pre>{@code controller.b().whileTrue(shppter.turnOffShooter());}</pre>
+     * 
+     * <pre>{@code
+     * controller.b().whileTrue(shppter.turnOffShooter());
+     * }</pre>
+     * 
      * @return Command for turning off the shooter subsystem
      */
-    public Command turnOffShooter() {
+    public Command shooterTurnOff() {
         return this.runOnce(
-            () -> {
-                // Set power to 0
-                this.velocityRPS = 0;
+                () -> {
+                    // Set power to 0
+                    this.velocityFPS = 0;
 
-                // Use power to stop the ShooterIO Hardware motor
-                this.shooterIO.setShooterVelocityRPS(this.velocityRPS);
-            }
-        );
+                    // Use power to stop the ShooterIO Hardware motor
+                    this.shooterIO.setShooterVelocityFeetPerSecond(this.velocityFPS);
+                }).withName("turnOffShooter()");
     }
 
-
     /**
-     * Sets the shooter for shooting at when at the human station 
+     * Sets the shooter for shooting at when at the human station
+     * 
      * @return Command to set shooter for close shooting
      */
-    public Command setShooterVelocityPosition1(){
+    public Command setShooterVelocityPosition1() {
 
-        return this.runOnce(
-            () -> {
-                this.velocityRPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
-                this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
-            }
-        );
+        return this.run(
+                () -> {
+                    this.velocityFPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
+                    this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+                }).withName("setShooterVelocityPosition1()");
     }
 
     /**
      * Sets the shooter for shooting at tower/hanging bar
+     * 
      * @return Command to set shooter for medium shooting
      */
-    public Command setShooterVelocityPosition2(){
+    public Command setShooterVelocityPosition2() {
 
-        return this.runOnce(
-            () -> {
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
-        this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
-            }
-        );
+        return this.run(
+                () -> {
+                    this.velocityFPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
+                    this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+                }).withName("setShooterVelocityPosition2()");
     }
 
     /**
      * Sets the shooter for shooting from the trench against the wall
+     * 
      * @return Command to set shooter for far shooting
      */
-    public Command setShooterVelocityPosition3(){
+    public Command setShooterVelocityPosition3() {
 
-        return this.runOnce(
-            () -> {
-        this.velocityRPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
-        this.shooterIO.setShooterVelocityFeetPerSecond(velocityRPS);
-            }
-        );
+        return this.run(
+                () -> {
+                    this.velocityFPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
+                    this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+                }).withName("setShooterVelocityPosition3()");
     }
 
+    public Command setShooterAutoVelocity(Drive drive) {
+        // Construct command
+        return this.run(
+                () -> {
+                    // Check for alliance side
+                    // boolean isFlipped =
+                    // DriverStation.getAlliance().isPresent()
+                    // && DriverStation.getAlliance().get() == Alliance.Red;
+
+                    boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+
+                    // Select correct dummy pose
+                    Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed
+                            : Constants.PoseConstants.hubPoseBlue;
+                    // Get the current pose relative to the dummy hub pose. Measurements are from
+                    // hub to pose
+                    Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+                    double hubToPoseX = hubToPose.getX();
+                    double hubToPoseY = hubToPose.getY();
+                    // Find the hypotenuse of the triangle
+                    this.distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+                    Logger.recordOutput("distanceToHub", this.distanceToHub);
+
+                    this.velocityFPS = shooterSpeedMap.get(distanceToHub);
+                    this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+
+        }).withName("setShooterAutoVelocity()");
+        
+  }
+
+  public Command setShooterAutoMovingVelocity(Drive drive) {
+    // Construct command
+    FuturePoseEstimator futurePoseEstimator = new FuturePoseEstimator();
+    return this.run(
+        () -> {
+          // Check for alliance side
+          // boolean isFlipped =
+          // DriverStation.getAlliance().isPresent()
+          // && DriverStation.getAlliance().get() == Alliance.Red;
+
+          boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+
+          // Select correct dummy pose
+          Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
+          hubPose = futurePoseEstimator.getMovingHubPose(drive, Constants.ShooterConstants.ballTime, hubPose);
+          // Get the current pose relative to the dummy hub pose. Measurements are from
+          // hub to pose
+          Pose2d hubToPose = drive.getPose().relativeTo(hubPose);
+          double hubToPoseX = hubToPose.getX();
+          double hubToPoseY = hubToPose.getY();
+          // Find the hypotenuse of the triangle
+          this.distanceToHub = Math.sqrt((hubToPoseX * hubToPoseX) + (hubToPoseY * hubToPoseY));
+          Logger.recordOutput("distanceToHub", this.distanceToHub);
+
+          this.velocityFPS = shooterSpeedMap.get(distanceToHub);
+          this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+
+        }).withName("setShooterAutoMovingVelocity()");
+        
+  }
+
     /**
-     * Returns whether the shooter is at its set point velocity, given a percent of tolerence
+     * Returns whether the shooter is at its set point velocity, given a percent of
+     * tolerence
      * specified in the ShooterIO hardware class
+     * 
      * @return BooleanSupplier: True hood is at its setpoint, false otherwise
      */
     public BooleanSupplier shooterAtVelocitySetPoint() {
-        return () -> shooterIO.shooterAtVelocitySetPoint();
+        return () -> shooterIO.rightShooterAtVelocitySetPoint();
+    }
+
+    public Command shooterManual() {
+        return this.run(() -> shooterIO.setShooterVelocityFeetPerSecond(velocityFPS));
     }
 
     @Override
     public void periodic() {
+
         // This method will be called once per scheduler run
+        if (this.shooterIO.detectShot()) {
+            this.counter.incrementShot();
+        }
+        this.counter.periodic();
+        Logger.recordOutput("ShooterSubsystem/RateOfFirePerSec", this.counter.getAvgBallsPerSecond());
 
         // Update inputs object with the current status of the ShooterIO hardware
         // and then write values to the Log
         this.shooterIO.updateInputs(inputs);
         Logger.processInputs("ShooterSubsystem", inputs);
+        Logger.recordOutput("ShooterSubsystem/Alliance", DriverStation.getAlliance().orElse(Alliance.Blue));
+        Logger.recordOutput("ShooterSubsystem/DistanceToHub", this.distanceToHub);
+        Logger.recordOutput("ShooterSubsystem/DefaultCommand",
+                this.getDefaultCommand() != null ? this.getDefaultCommand().getName() : "N/A");
+        Logger.recordOutput("ShooterSubsystem/CurrentCommand",
+                this.getCurrentCommand() != null ? this.getCurrentCommand().getName() : "N/A");
     }
 
     @Override

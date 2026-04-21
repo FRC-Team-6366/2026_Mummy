@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.480371895614446,
+        "y": 0.465403375725142
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.5186329830183345,
+        "y": 0.6142098397601896
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.8397564102598185,
+        "y": 0.8488717948752083
+      },
+      "prevControl": {
+        "x": 6.80716247099659,
+        "y": 0.07383308968617053
+      },
+      "nextControl": {
+        "x": 8.745984550474445,
+        "y": 1.529063550502749
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.669954216867469,
+        "y": 3.303936144578314
+      },
+      "prevControl": {
+        "x": 8.736528957431343,
+        "y": 2.768567116286491
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "ctt1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9229571984435777,
+      "rotationDegrees": 69.80369586012006
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 132.85261671232067
+  },
+  "reversed": false,
+  "folder": "DoNotTouchTopSecret#hayden",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 45.0
+  },
+  "useDefaultConstraints": true
+}

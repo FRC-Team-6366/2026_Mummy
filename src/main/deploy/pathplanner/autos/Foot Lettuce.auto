@@ -1,0 +1,225 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeRetract"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Only A SPOONFUL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPOON"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SpoonScoop1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "DownHandle1"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePulsePivot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AnotherScoop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Scooping"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoopShoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.125
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePulsePivot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "DestroyerFile",
+  "choreoAuto": false
+}

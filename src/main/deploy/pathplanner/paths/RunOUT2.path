@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.937486594862401,
+        "y": 2.489178897669964
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.1361528511656482,
+        "y": 1.6522536244453288
+      },
+      "isLocked": false,
+      "linkedName": "cob2"
+    },
+    {
+      "anchor": {
+        "x": 3.650898716119829,
+        "y": 0.6386019971469341
+      },
+      "prevControl": {
+        "x": 2.971405669913594,
+        "y": 0.8294878531208354
+      },
+      "nextControl": {
+        "x": 5.035503618572473,
+        "y": 0.2496333484374464
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.458587731811697,
+        "y": 0.7809272467902997
+      },
+      "prevControl": {
+        "x": 6.106424473221743,
+        "y": 0.6273663911959675
+      },
+      "nextControl": {
+        "x": 7.029592669976922,
+        "y": 1.02991405820363
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.037,
+        "y": 3.3815977175463625
+      },
+      "prevControl": {
+        "x": 7.528411456726469,
+        "y": 1.4730786900117274
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "stc3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0269192422731621,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 97.3470171196092
+  },
+  "reversed": false,
+  "folder": "DoNotTouchTopSecret#hayden",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -125.75388725369828
+  },
+  "useDefaultConstraints": true
+}

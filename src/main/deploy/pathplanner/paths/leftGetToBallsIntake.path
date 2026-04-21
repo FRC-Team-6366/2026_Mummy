@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.565506024096385,
+        "y": 7.4553734939759035
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.537382823681103,
+        "y": 7.481073902016708
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.058,
+        "y": 7.455
+      },
+      "prevControl": {
+        "x": 7.33240001505057,
+        "y": 7.471149404489404
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "PG"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -89.18290611543638
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

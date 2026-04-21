@@ -1,0 +1,103 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.072269230769232,
+        "y": 1.2558589743589743
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.921102564102565,
+        "y": 2.1047179487179495
+      },
+      "isLocked": false,
+      "linkedName": "rightRoundMiddle"
+    },
+    {
+      "anchor": {
+        "x": 6.072269230769232,
+        "y": 2.679963855421686
+      },
+      "prevControl": {
+        "x": 5.95598717948718,
+        "y": 1.3427202656780959
+      },
+      "nextControl": {
+        "x": 6.188551282051283,
+        "y": 4.017207445165278
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.395783132530121,
+        "y": 2.87666265060241
+      },
+      "prevControl": {
+        "x": 7.48179985363692,
+        "y": 3.8945271836995534
+      },
+      "nextControl": {
+        "x": 7.330216867469881,
+        "y": 2.1007951807228915
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.037410256410258,
+        "y": 0.6744487179487191
+      },
+      "prevControl": {
+        "x": 7.130435897435898,
+        "y": 1.5000512820512824
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "rightRoundEnd"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8472906403940934,
+      "rotationDegrees": 84.03312328455495
+    },
+    {
+      "waypointRelativePos": 1.1576354679802936,
+      "rotationDegrees": 11.14610162274693
+    },
+    {
+      "waypointRelativePos": 1.6256157635467954,
+      "rotationDegrees": -39.40312418630125
+    },
+    {
+      "waypointRelativePos": 2.266009852216757,
+      "rotationDegrees": -90.56620974416792
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "PhoenixHackIntoCde",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 87.13759477388815
+  },
+  "useDefaultConstraints": true
+}
