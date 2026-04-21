@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.81910128388017,
-        "y": 2.4888302425106996
+        "x": 7.746,
+        "y": 3.652
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6675606276747494,
-        "y": 2.7346647646219684
+        "x": 7.791269614835947,
+        "y": 4.261426533523538
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "k"
     },
     {
       "anchor": {
-        "x": 2.266462196861626,
-        "y": 2.4888302425106996
+        "x": 7.746,
+        "y": 5.881
       },
       "prevControl": {
-        "x": 2.745192582025677,
-        "y": 2.8122967189728967
+        "x": 7.778330955777461,
+        "y": 5.2059486447931524
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Handle"
+      "linkedName": "al"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 36.02737338510356
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Lacus",
+  "folder": "Defensive Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -135.0
   },
   "useDefaultConstraints": true
 }
