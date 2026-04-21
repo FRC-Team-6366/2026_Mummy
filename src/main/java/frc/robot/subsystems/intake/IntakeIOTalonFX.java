@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.ctre.phoenix6.swerve.SwerveModuleConstants.ClosedLoopOutputType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -33,6 +34,7 @@ public class IntakeIOTalonFX implements IntakeIO {
   StatusSignal<Current> intakeRollersSupplyCurrent;
 
   private TalonFX intakePivotMotor;
+   ClosedLoopOutputType intakePivotOutputType;
   TalonFXConfiguration iMPcfg;
   StatusSignal<Voltage> intakePivotVolts;
   StatusSignal<Angle> intakePivotPosition;
@@ -129,7 +131,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     intakePivotMotor.optimizeBusUtilization(0, 1);
 
     voltageRequest = new VoltageOut(0);
-    positionVoltageRequest = new PositionVoltage(0.12);
+    positionVoltageRequest = new PositionVoltage(0.12).withEnableFOC(true);
     
     // Set motor position to CANcoder position
     // intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
