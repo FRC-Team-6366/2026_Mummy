@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C-G"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "G-ai"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Defensive",
+  "choreoAuto": false
+}

@@ -3,10 +3,11 @@
   "robotLength": 0.61,
   "holonomicMode": true,
   "pathFolders": [
+    "Defensive Autos",
     "DoNotTouchTopSecret#hayden",
     "Fuel Locations to Shot Locations",
     "Lacus",
-    "Defensive Autos",
+    "Named Position Paths",
     "PhoenixHackIntoCde",
     "Picking Up Fuel",
     "Shoot Auto Aim",
@@ -15,8 +16,9 @@
   ],
   "autoFolders": [
     "Collect Fuel",
-    "Get Fuel Then Shoot",
     "DestroyerFile",
+    "Get Fuel Then Shoot",
+    "Defensive",
     "Simple Shots",
     "Test Autos"
   ],

@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C-F"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F-aa"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Defensive",
+  "choreoAuto": false
+}
