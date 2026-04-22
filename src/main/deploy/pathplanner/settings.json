@@ -15,11 +15,8 @@
     "Starting Locations to Get Fuel"
   ],
   "autoFolders": [
-    "Collect Fuel",
     "DestroyerFile",
     "Get Fuel Then Shoot",
-    "Defensive",
-    "Simple Shots",
     "Test Autos"
   ],
   "defaultMaxVel": 5.5,
