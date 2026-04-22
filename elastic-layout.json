@@ -9,7 +9,7 @@
         "containers": [
           {
             "title": "Scheduler",
-            "x": 1664.0,
+            "x": 1536.0,
             "y": 0.0,
             "width": 256.0,
             "height": 512.0,
@@ -21,10 +21,9 @@
           },
           {
             "title": "Auto Choices",
-            "x": 576.0,
-            "x": 576.0,
+            "x": 448.0,
             "y": 384.0,
-            "width": 640.0,
+            "width": 384.0,
             "height": 128.0,
             "type": "ComboBox Chooser",
             "properties": {
@@ -72,9 +71,9 @@
           },
           {
             "title": "GameSpecificMessage",
-            "x": 576.0,
+            "x": 448.0,
             "y": 512.0,
-            "width": 640.0,
+            "width": 768.0,
             "height": 128.0,
             "type": "Large Text Display",
             "properties": {
@@ -120,6 +119,23 @@
               "topic": "/AdvantageKit/RealOutputs/WonAuto",
               "period": 0.06,
               "data_type": "string"
+            }
+          },
+          {
+            "title": "AutoDelaySeconds",
+            "x": 832.0,
+            "y": 384.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Number Slider",
+            "properties": {
+              "topic": "/SmartDashboard/AutoDelaySeconds",
+              "period": 0.06,
+              "data_type": "double",
+              "min_value": 0.0,
+              "max_value": 10.0,
+              "divisions": 6,
+              "update_continuously": false
             }
           }
         ]
