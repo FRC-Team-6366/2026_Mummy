@@ -87,7 +87,7 @@ public final class Constants {
     public static final int leftFollowerShooterMotorId = 23; // 
     public static final double shooterPosition1VelocityFPS = 63.0;
     public static final double shooterPosition2VelocityFPS = 63.0;
-    public static final double shooterPosition3VelocityFPS = 72.5;
+    public static final double shooterPosition3VelocityFPS = 85;
 
     public static final int hoodRightMotorId = 17; // 17
     public static final int hoodLeftMotorId = 18;
