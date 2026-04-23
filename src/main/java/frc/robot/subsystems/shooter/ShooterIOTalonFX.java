@@ -4,6 +4,8 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.TorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -33,6 +35,8 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   // Used to control motor output by specifying rotaion speed
   VelocityVoltage velocityVoltageRequest;
+
+  VelocityTorqueCurrentFOC velocityTorqueCurrentFOCRequest;
   // Used to make followShooterMotor mimic the leadShooterMotor
   Follower rightFollower;
   Follower leftFollower;
@@ -113,14 +117,15 @@ public class ShooterIOTalonFX implements ShooterIO {
     leadcfg.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
     leadcfg.Slot0.kP = 0.05;
     leadcfg.Slot0.kV = 0.1166;
-    leadcfg.Slot0.kD = 0;
+    leadcfg.Slot0.kD = 0.0;
     this.rightLeadShooterMotor.getConfigurator().apply(leadcfg);
     this.leftLeadShooterMotor.getConfigurator().apply(leadcfg);
 
     // Instantiating velocity voltage object for setting the output velocity
     this.velocityVoltageRequest = new VelocityVoltage(0);
-    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withSlot(0));
-    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withSlot(0));
+    this.velocityTorqueCurrentFOCRequest = new VelocityTorqueCurrentFOC(0);
+    this.rightLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withSlot(0));
+    this.leftLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withSlot(0));
 
     // Setting the StatusSignal variables to be mapped to actual
     // aspect of the ShooterIO's hardware
@@ -215,9 +220,9 @@ public class ShooterIOTalonFX implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
 
-    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.94));
+    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withEnableFOC(true));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
-    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.94));
+    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withEnableFOC(true));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);
   }
 
