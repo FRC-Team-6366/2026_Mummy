@@ -302,78 +302,7 @@ public class DriveCommands {
   }
 
 
-  public static Command joystickDriveAutoAimMoving(
-    Drive drive,
-    DoubleSupplier xSupplier,
-    DoubleSupplier ySupplier) {
-
-    // Create PID controller
-    ProfiledPIDController angleController =
-        new ProfiledPIDController(
-            5,
-            0.0,
-            ANGLE_KD,
-            new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
-    angleController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // Construct command
-    return Commands.run(
-      () -> {
-
-        boolean isFlipped = DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
-        
-        // Select correct dummy pose
-        Pose2d hubPose = isFlipped ? Constants.PoseConstants.hubPoseRed : Constants.PoseConstants.hubPoseBlue;
-
-        //Trying to get the Chassis Velocity relative to field
-        ChassisSpeeds chassisSpeed = drive.getChassisSpeeds();
-        ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(chassisSpeed, drive.getRotation());
-
-        // Get the current pose relative to the dummy hub pose. Measurements are from hub to pose
-        double virtualTargetX = fieldRelativeSpeeds.vxMetersPerSecond*1.2;
-        double virtualTargetY = fieldRelativeSpeeds.vyMetersPerSecond*1.2;
-        Transform2d virtulTargetTransformation = new Transform2d(virtualTargetX, virtualTargetY, new Rotation2d(0));
-        Pose2d virtualTarget = hubPose.transformBy(virtulTargetTransformation);
-
-        Pose2d hubToPose = drive.getPose().relativeTo(virtualTarget);
-        double hubToPoseX = hubToPose.getX();
-        double hubToPoseY = hubToPose.getY();
-
-        // Use Math.atan2 to get the desired heading angle in radians
-        // Order must be atan2(Y, X)
-        double desiredAngleRad = Math.atan2(hubToPoseY, hubToPoseX);
-        desiredAngleRad = isFlipped ? desiredAngleRad + Math.PI : desiredAngleRad;
-        
-        // Adjust desired angle to account for shooter offset
-        desiredAngleRad -= Constants.ShooterConstants.autoAimCompAngleRad;
-
-        // Get linear velocity
-        Translation2d linearVelocity =
-            getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
-
-        // Calculate angular speed
-        double omega =
-            angleController.calculate(
-                drive.getRotation().getRadians(), desiredAngleRad);
-
-        // Convert to field relative speeds & send command
-        ChassisSpeeds speeds =
-            new ChassisSpeeds(
-                linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
-                linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
-                omega);
-        drive.runVelocity(
-            ChassisSpeeds.fromFieldRelativeSpeeds(
-                speeds,
-                isFlipped
-                    ? drive.getRotation().plus(new Rotation2d(Math.PI))
-                    : drive.getRotation()));
-      },
-      drive)
-      
-    // Reset PID controller when command starts
-    .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians())).withName("joystickDriveAutoAim");
-  }
+ 
 
 
   // Uses PathPlanner AutoBuilder to create a path to pose which avoids field obstructions
