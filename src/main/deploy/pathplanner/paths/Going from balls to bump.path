@@ -1,0 +1,99 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.231184022824536,
+        "y": 1.259657631954351
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 9.231184022824536,
+        "y": 1.2596576319543509
+      },
+      "isLocked": false,
+      "linkedName": "Why"
+    },
+    {
+      "anchor": {
+        "x": 8.55,
+        "y": 3.783
+      },
+      "prevControl": {
+        "x": 8.725805250184543,
+        "y": 3.605257168899698
+      },
+      "nextControl": {
+        "x": 8.374194749815459,
+        "y": 3.9607428311003017
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.239,
+        "y": 3.783
+      },
+      "prevControl": {
+        "x": 6.495426208996869,
+        "y": 4.04834241903528
+      },
+      "nextControl": {
+        "x": 5.982573791003131,
+        "y": 3.5176575809647197
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.979857346647646,
+        "y": 2.372382310984309
+      },
+      "prevControl": {
+        "x": 6.031611982881596,
+        "y": 2.864051355206848
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BtoB"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7228144989339158,
+      "rotationDegrees": 91.80599879187226
+    },
+    {
+      "waypointRelativePos": 1.0682302771854935,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.4200426439232365,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 34.28687697720899
+  },
+  "reversed": false,
+  "folder": "Named Position Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

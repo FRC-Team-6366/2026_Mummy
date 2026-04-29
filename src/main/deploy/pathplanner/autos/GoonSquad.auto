@@ -1,0 +1,81 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeRetract"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Huh"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunRollers"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Going from balls to bump"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopWithX"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.01
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Going to Shoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": []
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "DestroyerFile",
+  "choreoAuto": false
+}
