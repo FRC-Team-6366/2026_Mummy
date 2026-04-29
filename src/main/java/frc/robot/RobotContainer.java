@@ -286,8 +286,7 @@ public class RobotContainer {
         // |==============================|
 
 
-                operatorController.povUp().onTrue(
-                        shooter.setShooterVelocityPosition2());
+        operatorController.povUp().whileTrue(this.lowPowerShot());
 
                 // operatorController.povLeft().onTrue(
                 //         shooter.shooterDecrements());
@@ -550,6 +549,21 @@ public class RobotContainer {
                 .withName("shootAtPostion1");
     }
 
+    public Command lowPowerShot() {
+        return Commands.sequence(
+                Commands.parallel(
+                        shooter.setShooterVelocityPosition2().until(
+                                shooter.shooterAtVelocitySetPoint()),
+                        hood.hoodToAnglePosition2()
+                                .until(hood.hoodAtPositionSetpoint())),
+                Commands.parallel(
+                        shooter.setShooterVelocityPosition2(),
+                        hood.hoodToAnglePosition2(),
+                        kicker.runKicker(),
+                        indexer.runIndexer()))
+                .withName("shootAtPostion1");
+    }
+    
     public Command runBackwardsNoStuck() {
         return Commands.parallel(
                 kicker.runKickerBackwards(),
