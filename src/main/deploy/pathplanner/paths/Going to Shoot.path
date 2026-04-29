@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 6.979857346647646,
-        "y": 2.3723823109843085
+        "y": 2.372382310984308
       },
       "isLocked": false,
       "linkedName": "BtoB"
     },
     {
       "anchor": {
-        "x": 3.430941512125534,
-        "y": 2.372382310984309
+        "x": 1.014,
+        "y": 2.2319277108433733
       },
       "prevControl": {
-        "x": 4.737988587731811,
-        "y": 2.3546504992867345
+        "x": 2.3210470756062724,
+        "y": 2.214195899145799
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 46.27303002005658
+    "rotation": 20.5560452195835
   },
   "reversed": false,
   "folder": "Named Position Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 34.28687697720899
+    "rotation": 34.286876977209
   },
   "useDefaultConstraints": true
 }

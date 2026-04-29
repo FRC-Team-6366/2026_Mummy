@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Huh"
+            "pathName": "Copy of Huh"
           }
         },
         {
@@ -69,7 +69,39 @@
         {
           "type": "race",
           "data": {
-            "commands": []
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShootForeverDuringAuto"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePulsePivot"
+                }
+              }
+            ]
           }
         }
       ]
