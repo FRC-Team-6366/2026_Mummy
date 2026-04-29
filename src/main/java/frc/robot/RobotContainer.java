@@ -287,16 +287,16 @@ public class RobotContainer {
 
 
                 operatorController.povUp().onTrue(
-                        hood.hoodIncrements());
+                        shooter.setShooterVelocityPosition2());
 
-                operatorController.povLeft().onTrue(
-                        shooter.shooterDecrements());
+                // operatorController.povLeft().onTrue(
+                //         shooter.shooterDecrements());
 
-                operatorController.povRight().onTrue(
-                        shooter.shooterIncrements());
+                // operatorController.povRight().onTrue(
+                //         shooter.shooterIncrements());
 
-                operatorController.povDown().onTrue(
-                        hood.hoodDecrements());
+                // operatorController.povDown().onTrue(
+                //         hood.hoodDecrements());
 
         // Run intake rollers when LT is pressed
         operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
