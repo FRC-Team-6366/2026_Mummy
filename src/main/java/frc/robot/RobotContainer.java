@@ -534,7 +534,7 @@ public class RobotContainer {
                         shooter.setShooterAutoMovingVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
                         hood.setHoodAutoAngleMoving(drive).until(hood.hoodAtPositionSetpoint()),
                         new WaitCommand(0.5)),
-                Commands.parallel(
+                Commands.race(
                         shooter.setShooterAutoMovingVelocity(drive),
                         hood.setHoodAutoAngleMoving(drive),
                         kicker.runKicker(),
