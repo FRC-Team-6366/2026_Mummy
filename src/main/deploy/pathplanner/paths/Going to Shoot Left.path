@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 5.979857346647646,
-        "y": 2.3
+        "y": 5.7
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.979857346647646,
-        "y": 2.299999999999999
+        "y": 5.699999999999999
       },
       "isLocked": false,
-      "linkedName": "BtoB"
+      "linkedName": "worldsOneRunEnd2"
     },
     {
       "anchor": {
-        "x": 1.014,
-        "y": 2.2319277108433733
+        "x": 1.3841162514828003,
+        "y": 5.804887307236061
       },
       "prevControl": {
-        "x": 2.3210470756062724,
-        "y": 2.214195899145799
+        "x": 2.6911633270890714,
+        "y": 5.787155495538487
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 20.5560452195835
+    "rotation": -29.17109259863552
   },
   "reversed": false,
   "folder": "Named Position Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -53.79188615758569
+    "rotation": 36.30305831039576
   },
   "useDefaultConstraints": true
 }

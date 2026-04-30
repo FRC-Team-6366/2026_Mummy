@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 5.979857346647646,
-        "y": 2.372382310984309
+        "y": 2.3
       },
       "prevControl": {
         "x": 6.031611982881596,
-        "y": 2.8640513552068483
+        "y": 2.791669044222539
       },
       "nextControl": null,
       "isLocked": false,
@@ -87,7 +87,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 34.286876977209
+    "rotation": -53.79188615758569
   },
   "reversed": false,
   "folder": "Named Position Paths",
