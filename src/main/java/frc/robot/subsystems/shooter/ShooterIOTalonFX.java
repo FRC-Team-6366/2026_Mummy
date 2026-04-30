@@ -91,7 +91,7 @@ public class ShooterIOTalonFX implements ShooterIO {
    * setpoint.
    * Valid values from 0.0 (no tolerance!) to 100.0 (no accuracy!)
    */
-  double setPointTolerancePercent = 1;
+  double setPointTolerancePercent = 5;
   double setPointTolerance;
   double velocitySetPointLow;
   double velocitySetPointHigh;
@@ -123,7 +123,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     leadcfg.withCurrentLimits(
             new CurrentLimitsConfigs()
             //subtract 5 if it keeps browning out
-                .withStatorCurrentLimit(Amps.of(40))
+                .withStatorCurrentLimit(Amps.of(45))
                 .withStatorCurrentLimitEnable(true)
         );
     this.rightLeadShooterMotor.getConfigurator().apply(leadcfg);
@@ -220,7 +220,7 @@ public class ShooterIOTalonFX implements ShooterIO {
       this.leftFollowerShooterMotorSimState = this.leftFollowerShooterMotor.getSimState();
     }
     
-    this.setPointTolerance = shooterMaxVelocityRPS * this.setPointTolerancePercent;
+    this.setPointTolerance = shooterMaxVelocityRPS * this.setPointTolerancePercent / 100;
   }
 
   @Override
@@ -228,10 +228,10 @@ public class ShooterIOTalonFX implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
 
-    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withSlot(0).withEnableFOC(true));
+    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.95).withSlot(0).withEnableFOC(true));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
     
-    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withSlot(0).withEnableFOC(true));
+    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.95).withSlot(0).withEnableFOC(true));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);
   }
 

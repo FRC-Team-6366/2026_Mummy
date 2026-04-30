@@ -9,23 +9,23 @@
       "prevControl": null,
       "nextControl": {
         "x": 4.3599364911489085,
-        "y": 2.8759227158801726
+        "y": 2.875922715880173
       },
       "isLocked": false,
       "linkedName": "ctpb4"
     },
     {
       "anchor": {
-        "x": 2.937,
-        "y": 2.489
+        "x": 2.937486594862401,
+        "y": 2.489178897669964
       },
       "prevControl": {
-        "x": 4.703535520730038,
-        "y": 2.677083762815661
+        "x": 4.704022115592439,
+        "y": 2.677262660485625
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "sho25"
+      "linkedName": "cob2"
     }
   ],
   "rotationTargets": [
@@ -40,7 +40,7 @@
       "minWaypointRelativePos": 0.10022988505747343,
       "maxWaypointRelativePos": 0.8560919540229845,
       "constraints": {
-        "maxVelocity": 2.5,
+        "maxVelocity": 3.0,
         "maxAcceleration": 10.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -126.14204123637172
+    "rotation": -125.75388725369828
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",

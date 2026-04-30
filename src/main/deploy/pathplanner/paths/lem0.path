@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.03710413694722,
-        "y": 3.3815977175463625
+        "x": 4.441078598161201,
+        "y": 7.594211581708958
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.88093037505861,
-        "y": 3.576814919907118
+        "x": 5.441078598161201,
+        "y": 7.594211581708958
       },
       "isLocked": false,
-      "linkedName": "stc3"
+      "linkedName": "lemStart"
     },
     {
       "anchor": {
-        "x": 5.942,
-        "y": 2.68
+        "x": 8.037,
+        "y": 6.849158345221112
       },
       "prevControl": {
-        "x": 5.501126961483594,
-        "y": 4.028530670470756
+        "x": 8.114736091298145,
+        "y": 7.276134094151213
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ctpb4"
+      "linkedName": "midLem"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -163.76873121911393
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -66.72087374020504
+    "rotation": -77.26856752284029
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 97.3470171196092
+    "rotation": -45.0
   },
   "useDefaultConstraints": true
 }

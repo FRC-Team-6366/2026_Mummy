@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.676987179490588,
-        "y": 3.3024230769264897
+        "x": 8.373509272467903,
+        "y": 3.368659058487874
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.296420588642652,
-        "y": 1.787389096859837
+        "x": 6.992942681619967,
+        "y": 1.8536250784212214
       },
       "isLocked": false,
       "linkedName": "ctt1"
@@ -87,7 +87,7 @@
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 132.85261671232067
+    "rotation": 90.0
   },
   "useDefaultConstraints": false
 }
