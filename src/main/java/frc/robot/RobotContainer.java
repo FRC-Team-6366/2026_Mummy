@@ -64,593 +64,601 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-    public Shooter shooter;
-    public Indexer indexer;
-    public Kicker kicker;
-    public Hood hood;
-    public int mode;
-    public Drive drive;
-    public Intake intake;
-    public Vision vision;
-    public HubStateTracker hubStateTracker;
+        // The robot's subsystems and commands are defined here...
+        public Shooter shooter;
+        public Indexer indexer;
+        public Kicker kicker;
+        public Hood hood;
+        public int mode;
+        public Drive drive;
+        public Intake intake;
+        public Vision vision;
+        public HubStateTracker hubStateTracker;
 
-    public Alliance alliance;
-    LoggedDashboardChooser<Command> autoChooser;
+        public Alliance alliance;
+        LoggedDashboardChooser<Command> autoChooser;
 
-    // Replace with CommandPS4Controller or CommandJoystick if needed
-    // private final CommandXboxController driverController = new
-    // CommandXboxController(
-    // OperatorConstants.kDriverControllerPort);
-    // private final CommandXboxController operatorController = new
-    // CommandXboxController(
-    // OperatorConstants.kOperatorControllerPort);
-    public final RamRodController driverController = new RamRodController(
-            OperatorConstants.kDriverControllerPort,
-            0.1);
-    public final RamRodController operatorController = new RamRodController(
-            OperatorConstants.kOperatorControllerPort,
-            0.1);
+        // Replace with CommandPS4Controller or CommandJoystick if needed
+        // private final CommandXboxController driverController = new
+        // CommandXboxController(
+        // OperatorConstants.kDriverControllerPort);
+        // private final CommandXboxController operatorController = new
+        // CommandXboxController(
+        // OperatorConstants.kOperatorControllerPort);
+        public final RamRodController driverController = new RamRodController(
+                        OperatorConstants.kDriverControllerPort,
+                        0.1);
+        public final RamRodController operatorController = new RamRodController(
+                        OperatorConstants.kOperatorControllerPort,
+                        0.1);
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
 
-        switch (Constants.currentMode) {
-            case REAL:
-                // Real robot, instantiate hardware IO implementations
-                // ModuleIOTalonFX is intended for modules with TalonFX drive, TalonFX turn, and
-                // a CANcoder
-                drive = new Drive(
-                        new GyroIOPigeon2(),
-                        new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                        new ModuleIOTalonFX(TunerConstants.FrontRight),
-                        new ModuleIOTalonFX(TunerConstants.BackLeft),
-                        new ModuleIOTalonFX(TunerConstants.BackRight));
+                switch (Constants.currentMode) {
+                        case REAL:
+                                // Real robot, instantiate hardware IO implementations
+                                // ModuleIOTalonFX is intended for modules with TalonFX drive, TalonFX turn, and
+                                // a CANcoder
+                                drive = new Drive(
+                                                new GyroIOPigeon2(),
+                                                new ModuleIOTalonFX(TunerConstants.FrontLeft),
+                                                new ModuleIOTalonFX(TunerConstants.FrontRight),
+                                                new ModuleIOTalonFX(TunerConstants.BackLeft),
+                                                new ModuleIOTalonFX(TunerConstants.BackRight));
 
-                vision = new Vision(drive::addVisionMeasurement,
-                        new VisionIOPhotonVision(Constants.VisionConstants.camera0Name,
-                                Constants.VisionConstants.robotToCamera0),
-                        new VisionIOPhotonVision(Constants.VisionConstants.camera1Name,
-                                Constants.VisionConstants.robotToCamera1),
-                        new VisionIOPhotonVision(Constants.VisionConstants.camera2Name,
-                                Constants.VisionConstants.robotToCamera2),
-                        new VisionIOPhotonVision(Constants.VisionConstants.camera3Name,
-                                Constants.VisionConstants.robotToCamera3));
+                                vision = new Vision(drive::addVisionMeasurement,
+                                                new VisionIOPhotonVision(Constants.VisionConstants.camera0Name,
+                                                                Constants.VisionConstants.robotToCamera0),
+                                                new VisionIOPhotonVision(Constants.VisionConstants.camera1Name,
+                                                                Constants.VisionConstants.robotToCamera1),
+                                                new VisionIOPhotonVision(Constants.VisionConstants.camera2Name,
+                                                                Constants.VisionConstants.robotToCamera2),
+                                                new VisionIOPhotonVision(Constants.VisionConstants.camera3Name,
+                                                                Constants.VisionConstants.robotToCamera3));
 
-                this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new shooter code
-                this.hood = new Hood(new HoodIOTalonFX());
-                this.indexer = new Indexer(new IndexerIOTalonFX());
-                this.intake = new Intake(new IntakeIOTalonFX());
-                this.kicker = new Kicker(new KickerIOTalonFX());
-                UsbCamera stationCamera = CameraServer.startAutomaticCapture("StationCamera", 0);
-                stationCamera.setResolution(320, 240);
-                stationCamera.setFPS(30);
-                break;
+                                this.shooter = new Shooter(new ShooterIOTalonFX());// fixed an error when merging new
+                                                                                   // shooter code
+                                this.hood = new Hood(new HoodIOTalonFX());
+                                this.indexer = new Indexer(new IndexerIOTalonFX());
+                                this.intake = new Intake(new IntakeIOTalonFX());
+                                this.kicker = new Kicker(new KickerIOTalonFX());
+                                UsbCamera stationCamera = CameraServer.startAutomaticCapture("StationCamera", 0);
+                                stationCamera.setResolution(320, 240);
+                                stationCamera.setFPS(30);
+                                break;
 
-            case SIM:
-                // Sim robot, instantiate physics sim IO implementations
-                drive = new Drive(
-                        new GyroIO() {},
-                        new ModuleIOSim(TunerConstants.FrontLeft),
-                        new ModuleIOSim(TunerConstants.FrontRight),
-                        new ModuleIOSim(TunerConstants.BackLeft),
-                        new ModuleIOSim(TunerConstants.BackRight));
-                this.vision = new Vision(
-                        drive::addVisionMeasurement,
-                        new VisionIOPhotonVisionSim(
-                                Constants.VisionConstants.camera0Name,
-                                Constants.VisionConstants.robotToCamera0, drive::getPose),
-                        new VisionIOPhotonVisionSim(
-                                Constants.VisionConstants.camera1Name,
-                                Constants.VisionConstants.robotToCamera1, drive::getPose),
-                        new VisionIOPhotonVisionSim(
-                                Constants.VisionConstants.camera2Name,
-                                Constants.VisionConstants.robotToCamera2, drive::getPose),
-                        new VisionIOPhotonVisionSim(
-                                Constants.VisionConstants.camera3Name,
-                                Constants.VisionConstants.robotToCamera3, drive::getPose));
-                this.shooter = new Shooter(new ShooterIOSim());
-                this.hood = new Hood(new HoodIOSim());
-                this.indexer = new Indexer(new IndexerIOSim());
-                this.intake = new Intake(new IntakeIOSim());
-                this.kicker = new Kicker(new KickerIOSim());
-                break;
+                        case SIM:
+                                // Sim robot, instantiate physics sim IO implementations
+                                drive = new Drive(
+                                                new GyroIO() {},
+                                                new ModuleIOSim(TunerConstants.FrontLeft),
+                                                new ModuleIOSim(TunerConstants.FrontRight),
+                                                new ModuleIOSim(TunerConstants.BackLeft),
+                                                new ModuleIOSim(TunerConstants.BackRight));
+                                this.vision = new Vision(
+                                                drive::addVisionMeasurement,
+                                                new VisionIOPhotonVisionSim(
+                                                                Constants.VisionConstants.camera0Name,
+                                                                Constants.VisionConstants.robotToCamera0,
+                                                                drive::getPose),
+                                                new VisionIOPhotonVisionSim(
+                                                                Constants.VisionConstants.camera1Name,
+                                                                Constants.VisionConstants.robotToCamera1,
+                                                                drive::getPose),
+                                                new VisionIOPhotonVisionSim(
+                                                                Constants.VisionConstants.camera2Name,
+                                                                Constants.VisionConstants.robotToCamera2,
+                                                                drive::getPose),
+                                                new VisionIOPhotonVisionSim(
+                                                                Constants.VisionConstants.camera3Name,
+                                                                Constants.VisionConstants.robotToCamera3,
+                                                                drive::getPose));
+                                this.shooter = new Shooter(new ShooterIOSim());
+                                this.hood = new Hood(new HoodIOSim());
+                                this.indexer = new Indexer(new IndexerIOSim());
+                                this.intake = new Intake(new IntakeIOSim());
+                                this.kicker = new Kicker(new KickerIOSim());
+                                break;
 
-            default:
-                // Replayed robot, disable IO implementations
-                drive = new Drive(
-                        new GyroIO() {},
-                        new ModuleIO() {},
-                        new ModuleIO() {},
-                        new ModuleIO() {},
-                        new ModuleIO() {});
-                break;
+                        default:
+                                // Replayed robot, disable IO implementations
+                                drive = new Drive(
+                                                new GyroIO() {},
+                                                new ModuleIO() {},
+                                                new ModuleIO() {},
+                                                new ModuleIO() {},
+                                                new ModuleIO() {});
+                                break;
+                }
+                this.hubStateTracker = HubStateTracker.getInstance();
+                this.hubStateTracker.setDefaultCommand(this.hubStateTracker.runHubStateTracker());
+
+                // Adding inputs to Elastic
+                SmartDashboard.putNumber("AutoDelaySeconds", 0.0);
+
+                // Naming commands for Autos
+                NamedCommands.registerCommand("StopWithX", Commands.run(drive::stopWithX, drive));
+                NamedCommands.registerCommand("StopAllButIntake", autoTurnOffAllButIntake());
+                NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
+                NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
+                NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
+                NamedCommands.registerCommand("AutoShooterSixSeconds", autoShootForSixSeconds());
+                NamedCommands.registerCommand("AutoShooterEndless", autoShootForever());
+                NamedCommands.registerCommand("AutoShootForeverDuringAuto", autoShootForeverDuringAuto());
+                NamedCommands.registerCommand("AutoShooterWithLifter", autoShootWithIntakeLifter().until(
+                                () -> {
+                                        double currentAngle = intake.getIntakeAngleRotations();
+                                        return currentAngle <= 0.125;
+                                }));
+                NamedCommands.registerCommand("Stop", autoTurnOffAllButIntake());
+                NamedCommands.registerCommand("IntakeDeploy",
+                                intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
+                NamedCommands.registerCommand("IntakeRetract",
+                                intake.retractIntake().until(intake.intakePivotAtPositionSetpoint()));
+                NamedCommands.registerCommand("IntakeHalfRetract",
+                                intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
+                NamedCommands.registerCommand("ShooterStop",
+                                shooter.shooterDecrements());
+
+                NamedCommands.registerCommand("IntakePulsePivot", intake.intakePulsePivot());
+
+                NamedCommands.registerCommand("aimDrive", autoAimDriveTrain()); // Had to add but NOT REAL COMMAND
+                NamedCommands.registerCommand("StartWithDelay", startAutonomousWithDelay());
+
+                // Set up auto routines
+                autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+                // Configure the trigger bindings
+                configureBindings();
         }
-        this.hubStateTracker = HubStateTracker.getInstance();
-        this.hubStateTracker.setDefaultCommand(this.hubStateTracker.runHubStateTracker());
 
-        // Adding inputs to Elastic
-        SmartDashboard.putNumber("AutoDelaySeconds", 0.0);
+        /**
+         * Use this method to define your trigger->command mappings. Triggers can be
+         * created via the
+         * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+         * an arbitrary
+         * predicate, or via the named factories in {@link
+         * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+         * {@link
+         * CommandXboxController
+         * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+         * PS4} controllers or
+         * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+         * joysticks}.
+         */
+        private void configureBindings() {
 
-        // Naming commands for Autos
-        NamedCommands.registerCommand("StopWithX", Commands.run(drive::stopWithX, drive));
-        NamedCommands.registerCommand("StopAllButIntake", autoTurnOffAllButIntake());
-        NamedCommands.registerCommand("IntakeRunRollers", intake.intakeRunRollers());
-        NamedCommands.registerCommand("IntakeStopRollers", intake.intakeStopRollers());
-        NamedCommands.registerCommand("ShooterSpinUp", autoShooterSpinUp());
-        NamedCommands.registerCommand("AutoShooterSixSeconds", autoShootForSixSeconds());
-        NamedCommands.registerCommand("AutoShooterEndless", autoShootForever());
-        NamedCommands.registerCommand("AutoShootForeverDuringAuto", autoShootForeverDuringAuto());
-        NamedCommands.registerCommand("AutoShooterWithLifter", autoShootWithIntakeLifter().until(
-                () -> {
-                    double currentAngle = intake.getIntakeAngleRotations();
-                    return currentAngle <= 0.125;
-                }));
-        NamedCommands.registerCommand("Stop", autoTurnOffAllButIntake());
-        NamedCommands.registerCommand("IntakeDeploy",
-                intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()));
-        NamedCommands.registerCommand("IntakeRetract",
-                intake.retractIntake().until(intake.intakePivotAtPositionSetpoint()));
-        NamedCommands.registerCommand("IntakeHalfRetract",
-                intake.intakePivotToAngle(Constants.IntakeConstants.intakePivotPulseUpAngleDegrees));
-        NamedCommands.registerCommand("ShooterStop",
-                shooter.shooterDecrements());
+                // |==============================|
+                // | Driver Controls |
+                // |==============================|
 
-        NamedCommands.registerCommand("IntakePulsePivot", intake.intakePulsePivot());
+                // Set the drivers movement for steering and driving on the driver joysticks
+                drive.setDefaultCommand(
 
-        NamedCommands.registerCommand("aimDrive", autoAimDriveTrain()); // Had to add but NOT REAL COMMAND
-        NamedCommands.registerCommand("StartWithDelay", startAutonomousWithDelay());
+                                DriveCommands.joystickDrive(
+                                                drive,
+                                                () -> -driverController.getLeftY(),
+                                                () -> -driverController.getLeftX(),
+                                                () -> -driverController.getRightX()));
 
-        // Set up auto routines
-        autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+                // Lock to 0° when A button is held
+                driverController.a().whileTrue(
+                                DriveCommands.joystickDriveAtAngle(
+                                                drive,
+                                                () -> -driverController.getLeftY(),
+                                                () -> -driverController.getLeftX(),
+                                                () -> new Rotation2d()));
 
-        // Configure the trigger bindings
-        configureBindings();
-    }
+                // if ( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red){
+                // driverController
+                // .a()
+                // .whileTrue(this.orientIntakeRedTrench());
+                // driverController
+                // .rightStick()
+                // .whileTrue(this.orientIntakeToRedDepot());
+                // } else {
+                // driverController
+                // .a()
+                // .whileTrue(this.orientIntakeBlueTrench());
+                // driverController
+                // .rightStick()
+                // .whileTrue(this.orientIntaketoBlueDepot());
+                // }
+                // Lock to Hub when RT is held
+                driverController.leftTrigger().whileTrue(
+                                DriveCommands.joystickDriveNShootAutoAim(
+                                                drive,
+                                                () -> -driverController.getLeftY(),
+                                                () -> -driverController.getLeftX()));
 
-    /**
-     * Use this method to define your trigger->command mappings. Triggers can be
-     * created via the
-     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-     * an arbitrary
-     * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-     * {@link
-     * CommandXboxController
-     * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or
-     * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-     * joysticks}.
-     */
-    private void configureBindings() {
+                // Run intake rollers when RT is pressed
+                driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
 
-        // |==============================|
-        // | Driver Controls |
-        // |==============================|
+                // Switch to X pattern when X button is pressed
+                driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
+                // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
 
-        // Set the drivers movement for steering and driving on the driver joysticks
-        drive.setDefaultCommand(
+                driverController.rightBumper().onTrue(intake.toggleIntakePivot());
 
-                DriveCommands.joystickDrive(
-                        drive,
-                        () -> -driverController.getLeftY(),
-                        () -> -driverController.getLeftX(),
-                        () -> -driverController.getRightX()));
+                driverController.povDown().onTrue(intake.intakeResetCanCoderBottom());
 
-        // Lock to 0° when A button is held
-        driverController.a().whileTrue(
-                DriveCommands.joystickDriveAtAngle(
-                        drive,
-                        () -> -driverController.getLeftY(),
-                        () -> -driverController.getLeftX(),
-                        () -> new Rotation2d()));
+                driverController.povUp().onTrue(intake.intakeResetCanCoderTop());
 
-        // if ( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red){
-        // driverController
-        // .a()
-        // .whileTrue(this.orientIntakeRedTrench());
-        // driverController
-        // .rightStick()
-        // .whileTrue(this.orientIntakeToRedDepot());
-        // } else {
-        // driverController
-        // .a()
-        // .whileTrue(this.orientIntakeBlueTrench());
-        // driverController
-        // .rightStick()
-        // .whileTrue(this.orientIntaketoBlueDepot());
-        // }
-        // Lock to Hub when RT is held
-        driverController.leftTrigger().whileTrue(
-                DriveCommands.joystickDriveNShootAutoAim(
-                        drive,
-                        () -> -driverController.getLeftY(), () -> -driverController.getLeftX()));
+                // |==============================|
+                // | Operator Controls |
+                // |==============================|
 
-        // Run intake rollers when RT is pressed
-        driverController.rightTrigger().whileTrue(intake.intakeRunRollers());
-
-        // Switch to X pattern when X button is pressed
-        driverController.x().onTrue(Commands.run(drive::stopWithX, drive));
-        // driverController.x().onTrue(NamedCommands.getCommand("indexerPulse"));
-
-        driverController.rightBumper().onTrue(intake.toggleIntakePivot());
-
-        driverController.povDown().onTrue(intake.intakeResetCanCoderBottom());
-
-        driverController.povUp().onTrue(intake.intakeResetCanCoderTop());
-
-        // |==============================|
-        // | Operator Controls |
-        // |==============================|
-
-
-        operatorController.povUp().whileTrue(this.halfPowerPass());
+                operatorController.povUp().whileTrue(this.halfPowerPass());
 
                 // operatorController.povLeft().onTrue(
-                //         shooter.shooterDecrements());
+                // shooter.shooterDecrements());
 
                 // operatorController.povRight().onTrue(
-                //         shooter.shooterIncrements());
+                // shooter.shooterIncrements());
 
                 // operatorController.povDown().onTrue(
-                //         hood.hoodDecrements());
+                // hood.hoodDecrements());
 
-        // Run intake rollers when LT is pressed
-        operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
+                // Run intake rollers when LT is pressed
+                operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
-        operatorController.rightBumper().whileTrue(passFuel());
+                operatorController.rightBumper().whileTrue(passFuel());
 
-        operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
+                operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
 
-        // Auto speed and angle when RT is held
-        operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLiftMoving()).onFalse(intake.deployIntake());
+                // Auto speed and angle when RT is held
+                operatorController.rightTrigger().whileTrue(this.shootWithoutIntakeLiftMoving())
+                                .onFalse(intake.deployIntake());
 
-        // Stop all subsystems (except drivetrain)
-        operatorController.b().whileTrue(turnOffAll());
+                // Stop all subsystems (except drivetrain)
+                operatorController.b().whileTrue(turnOffAll());
 
-        // Resets cancoder to 0.12 rotations when start and back are pressed together,
-        // must be used when intake is at upper hard limit
+                // Resets cancoder to 0.12 rotations when start and back are pressed together,
+                // must be used when intake is at upper hard limit
 
-        // Shooting setpoints
+                // Shooting setpoints
 
-        operatorController.x().whileTrue(shootAtPostion1());
+                operatorController.x().whileTrue(shootAtPostion1());
 
-        operatorController.y().whileTrue(this.runBackwardsNoStuck());
+                operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
-    }
+        }
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        return autoChooser.get();
-    }
+        /**
+         * Use this to pass the autonomous command to the main {@link Robot} class.
+         *
+         * @return the command to run in autonomous
+         */
+        public Command getAutonomousCommand() {
+                return autoChooser.get();
+        }
 
-    /**
-     * Sets the rumble for both the driver and operator controllers
-     * 
-     * @param power
-     *            0.0 to 1.0: 0.0 being off, 1.0 being full power rumble on the
-     *            controller
-     */
-    public void rumbleBoth(double power) {
-        // driverController.setRumble(GenericHID.RumbleType.kBothRumble, power);
-        // operatorController.setRumble(GenericHID.RumbleType.kBothRumble, power);
-        driverController.rumbleForSetTime(power, 1, 6);
-        operatorController.rumbleForSetTime(power, 1, 6);
-    }
+        /**
+         * Sets the rumble for both the driver and operator controllers
+         * 
+         * @param power
+         *                0.0 to 1.0: 0.0 being off, 1.0 being full power rumble on the
+         *                controller
+         */
+        public void rumbleBoth(double power) {
+                // driverController.setRumble(GenericHID.RumbleType.kBothRumble, power);
+                // operatorController.setRumble(GenericHID.RumbleType.kBothRumble, power);
+                driverController.rumbleForSetTime(power, 1, 6);
+                operatorController.rumbleForSetTime(power, 1, 6);
+        }
 
-    public void rumblePulseBoth(double power) {
-        // no rumble yet
-    }
+        public void rumblePulseBoth(double power) {
+                // no rumble yet
+        }
 
-    // |==============================|
-    // | Auto Commands |
-    // |==============================|
+        // |==============================|
+        // | Auto Commands |
+        // |==============================|
 
-    /**
-     * Returns command for running the shooter, hood, kicker and indexer
-     * for 6 seconds to support autonomous mode
-     * 
-     * @return Command for auto-shooting for 6 seconds (Excluding the drive train)
-     */
-    public Command autoShootForSixSeconds() {
-        return Commands.race(
-                Commands.parallel(
-                        shooter.setShooterAutoVelocity(drive),
-                        hood.setHoodAutoAngle(drive),
-                        indexer.pulseIndexer(),
-                        kicker.runKicker()),
-                new WaitCommand(6.0)).withName("autoShootForSixSeconds");
-    }
+        /**
+         * Returns command for running the shooter, hood, kicker and indexer
+         * for 6 seconds to support autonomous mode
+         * 
+         * @return Command for auto-shooting for 6 seconds (Excluding the drive train)
+         */
+        public Command autoShootForSixSeconds() {
+                return Commands.race(
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive),
+                                                hood.setHoodAutoAngle(drive),
+                                                indexer.pulseIndexer(),
+                                                kicker.runKicker()),
+                                new WaitCommand(6.0)).withName("autoShootForSixSeconds");
+        }
 
-    /**
-     * Returns command to spin up the shooter to shooting velocity as well as move
-     * the hood to its position
-     * based on distance from the goal
-     * 
-     * @return Command to spin up shooter and move hood to angle for shooting
-     */
-    public Command autoShooterSpinUp() {
-        return Commands.parallel(
-                shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint())).withName("autoShooterSpinUp");
-    }
+        /**
+         * Returns command to spin up the shooter to shooting velocity as well as move
+         * the hood to its position
+         * based on distance from the goal
+         * 
+         * @return Command to spin up shooter and move hood to angle for shooting
+         */
+        public Command autoShooterSpinUp() {
+                return Commands.parallel(
+                                shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+                                .withName("autoShooterSpinUp");
+        }
 
-    /**
-     * Returns command to run shooter and hood based on distance to goal as
-     * well as run the indexer (either pulse or full)
-     * 
-     * @return Command for auto-shooting
-     */
-    public Command autoShootForever() {
-        return Commands.parallel(
-                shooter.setShooterAutoVelocity(drive),
-                hood.setHoodAutoAngle(drive),
-                Commands.repeatingSequence(Commands.race(
-                        indexer.runIndexer(),
-                        kicker.runKicker())))
-                .withName("autoShootForever");
-    }
+        /**
+         * Returns command to run shooter and hood based on distance to goal as
+         * well as run the indexer (either pulse or full)
+         * 
+         * @return Command for auto-shooting
+         */
+        public Command autoShootForever() {
+                return Commands.parallel(
+                                shooter.setShooterAutoVelocity(drive),
+                                hood.setHoodAutoAngle(drive),
+                                Commands.repeatingSequence(Commands.race(
+                                                indexer.runIndexer(),
+                                                kicker.runKicker())))
+                                .withName("autoShootForever");
+        }
 
-  /**
-   * Returns command to run shooter and hood based on distance to goal as
-   * well as run the indexer (either pulse or full)
-   * 
-   * @return Command for auto-shooting
-   */
-    public Command autoShootForeverDuringAuto() {
-    return Commands.sequence(
-      
-      Commands.parallel(
-        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
-        .withName("autoShooterSpinUp"),
+        /**
+         * Returns command to run shooter and hood based on distance to goal as
+         * well as run the indexer (either pulse or full)
+         * 
+         * @return Command for auto-shooting
+         */
+        public Command autoShootForeverDuringAuto() {
+                return Commands.sequence(
 
-     Commands.parallel(
-        shooter.setShooterAutoVelocity(drive),
-        hood.setHoodAutoAngle(drive),
-        this.autoAimDriveTrainDuringAuto(),
-        Commands.repeatingSequence(Commands.race(
-            indexer.runIndexer(),
-            kicker.runKicker()
-       )))
-        .withName("autoShootForeverDuringAuto")
-    );
-  }
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive)
+                                                                .until(shooter.shooterAtVelocitySetPoint()),
+                                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+                                                .withName("autoShooterSpinUp"),
 
-    public Command autoAimDriveTrain() {
-        return DriveCommands.joystickDriveAutoAim(
-                drive,
-                () -> -driverController.getLeftY(), () -> -driverController.getLeftX());
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive),
+                                                hood.setHoodAutoAngle(drive),
+                                                this.autoAimDriveTrainDuringAuto(),
+                                                Commands.repeatingSequence(Commands.race(
+                                                                indexer.runIndexer(),
+                                                                kicker.runKicker())))
+                                                .withName("autoShootForeverDuringAuto"));
+        }
 
-    }
+        public Command autoAimDriveTrain() {
+                return DriveCommands.joystickDriveAutoAim(
+                                drive,
+                                () -> -driverController.getLeftY(), () -> -driverController.getLeftX());
 
-    public Command autoAimDriveTrainDuringAuto() {
-        return DriveCommands.joystickDriveAutoAim(
-                drive,
-                () -> 0, () -> 0);
+        }
 
-    }
+        public Command autoAimDriveTrainDuringAuto() {
+                return DriveCommands.joystickDriveAutoAim(
+                                drive,
+                                () -> 0, () -> 0);
 
-    public Command startAutonomousWithDelay() {
-        return new DeferredCommand(() -> {
-                double delay = SmartDashboard.getNumber("AutoDelaySeconds", 0.0);
-                return new WaitCommand(delay);
-        }, Set.of());
-        
-    }
+        }
 
-    /**
-     * Returns command to run shooter and hood based on distance to goal as
-     * well as run the indexer (either pulse or full)
-     * AND slowly lifts the intake to feed the indexer
-     * 
-     * @return Command for auto-shooting
-     */
-    public Command autoShootWithIntakeLifter() {
-        return Commands.parallel(
-                shooter.setShooterAutoMovingVelocity(drive),
-                hood.setHoodAutoAngleMoving(drive),
-                kicker.runKicker(),
-                indexer.runIndexer(),
-                intake.intakePivotLifter()
-        // Commands.sequence(
-        // new WaitCommand(3),
-        // intake.intakePivotLifter()
-        // )
-        ).withName("autoShooterWithLifter");
-    }
+        public Command startAutonomousWithDelay() {
+                return new DeferredCommand(() -> {
+                        double delay = SmartDashboard.getNumber("AutoDelaySeconds", 0.0);
+                        return new WaitCommand(delay);
+                }, Set.of());
 
-    /**
-     * Command to turn off all subsystems except for Intake, Vision and Drive
-     * 
-     * @return Command to turn off most subsystems
-     */
-    public Command autoTurnOffAllButIntake() {
-        return Commands.parallel(
-                shooter.shooterTurnOff(),
-                hood.retractHood(),
-                indexer.stopIndexer(),
-                kicker.stopKicker()).withName("autoTurnOffAllButIntake");
-    }
+        }
 
-    // |==============================|
-    // | TeleOp Commands |
-    // |==============================|
+        /**
+         * Returns command to run shooter and hood based on distance to goal as
+         * well as run the indexer (either pulse or full)
+         * AND slowly lifts the intake to feed the indexer
+         * 
+         * @return Command for auto-shooting
+         */
+        public Command autoShootWithIntakeLifter() {
+                return Commands.parallel(
+                                shooter.setShooterAutoMovingVelocity(drive),
+                                hood.setHoodAutoAngleMoving(drive),
+                                kicker.runKicker(),
+                                indexer.runIndexer(),
+                                intake.intakePivotLifter()
+                // Commands.sequence(
+                // new WaitCommand(3),
+                // intake.intakePivotLifter()
+                // )
+                ).withName("autoShooterWithLifter");
+        }
 
-    /**
-     * Returns command to turn off shooter, kicker, indexer, hood and intake roller
-     * subsystems
-     * 
-     * @return Command to turn off subsystems
-     */
-    public Command turnOffAll() {
-        return Commands.parallel(
-                shooter.shooterTurnOff(),
-                kicker.stopKicker(),
-                indexer.stopIndexer(),
-                hood.retractHood(),
-                intake.intakeStopRollers()).withName("turnOffAll");
-    }
+        /**
+         * Command to turn off all subsystems except for Intake, Vision and Drive
+         * 
+         * @return Command to turn off most subsystems
+         */
+        public Command autoTurnOffAllButIntake() {
+                return Commands.parallel(
+                                shooter.shooterTurnOff(),
+                                hood.retractHood(),
+                                indexer.stopIndexer(),
+                                kicker.stopKicker()).withName("autoTurnOffAllButIntake");
+        }
 
-    public Command shootWithoutIntakeLift() {
+        // |==============================|
+        // | TeleOp Commands |
+        // |==============================|
 
-        return Commands.sequence(
-                Commands.parallel(
-                        shooter.setShooterAutoVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-                        hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
-                        .withName("autoShooterSpinUp"),
-                Commands.parallel(
-                        shooter.setShooterAutoVelocity(drive),
-                        hood.setHoodAutoAngle(drive),
-                        kicker.runKicker(),
-                        indexer.runIndexer()));
+        /**
+         * Returns command to turn off shooter, kicker, indexer, hood and intake roller
+         * subsystems
+         * 
+         * @return Command to turn off subsystems
+         */
+        public Command turnOffAll() {
+                return Commands.parallel(
+                                shooter.shooterTurnOff(),
+                                kicker.stopKicker(),
+                                indexer.stopIndexer(),
+                                hood.retractHood(),
+                                intake.intakeStopRollers()).withName("turnOffAll");
+        }
 
-    }
+        public Command shootWithoutIntakeLift() {
 
-    public Command shootWithoutIntakeLiftMoving() {
+                return Commands.sequence(
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive)
+                                                                .until(shooter.shooterAtVelocitySetPoint()),
+                                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+                                                .withName("autoShooterSpinUp"),
+                                Commands.parallel(
+                                                shooter.setShooterAutoVelocity(drive),
+                                                hood.setHoodAutoAngle(drive),
+                                                kicker.runKicker(),
+                                                indexer.runIndexer()));
 
-        return Commands.sequence(
-                Commands.parallel(
-                        shooter.setShooterAutoMovingVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
-                        hood.setHoodAutoAngleMoving(drive).until(hood.hoodAtPositionSetpoint()))
-                        .withName("autoShooterSpinUp"),
-                Commands.parallel(
-                        shooter.setShooterAutoMovingVelocity(drive),
-                        hood.setHoodAutoAngleMoving(drive),
-                        kicker.runKicker(),
-                        indexer.runIndexer()));
+        }
 
-    }
+        public Command shootWithoutIntakeLiftMoving() {
 
-    /**
-     * Command to set shooter velocity and hood position to shoot
-     * from in front of the tower
-     * 
-     * @return Command to run shooter and hood for shooting from the tower
-     */
-    public Command shootAtPostion1() {
-        return Commands.sequence(
-                Commands.parallel(
-                        shooter.setShooterVelocityPosition3().until(
-                                shooter.shooterAtVelocitySetPoint()),
-                        hood.hoodToAnglePosition3()
-                                .until(hood.hoodAtPositionSetpoint())),
-                Commands.parallel(
-                        shooter.setShooterVelocityPosition3(),
-                        hood.hoodToAnglePosition3(),
-                        kicker.runKicker(),
-                        indexer.runIndexer()))
-                .withName("shootAtPostion1");
-    }
+                return Commands.sequence(
+                                Commands.parallel(
+                                                shooter.setShooterAutoMovingVelocity(drive)
+                                                                .until(shooter.shooterAtVelocitySetPoint()),
+                                                hood.setHoodAutoAngleMoving(drive)
+                                                                .until(hood.hoodAtPositionSetpoint()))
+                                                .withName("autoShooterSpinUp"),
+                                Commands.parallel(
+                                                shooter.setShooterAutoMovingVelocity(drive),
+                                                hood.setHoodAutoAngleMoving(drive),
+                                                kicker.runKicker(),
+                                                indexer.runIndexer()));
 
-    public Command halfPowerPass() {
-        return Commands.sequence(
-                Commands.parallel(
-                        shooter.setShooterVelocityPosition2().until(
-                                shooter.shooterAtVelocitySetPoint()),
-                        hood.hoodToAnglePosition2()
-                                .until(hood.hoodAtPositionSetpoint())),
-                Commands.parallel(
-                        shooter.setShooterVelocityPosition2(),
-                        hood.hoodToAnglePosition2(),
-                        kicker.runKicker(),
-                        indexer.runIndexer()))
-                .withName("shootAtPostion1");
-    }
-    
-    public Command runBackwardsNoStuck() {
-        return Commands.parallel(
-                kicker.runKickerBackwards(),
-                indexer.runIndexerBackwards(),
-                intake.intakeRunRollersBackwards()).withName("runBackwardsNoStuck");
-    }
+        }
 
-    /**
-     * Returns command for shooting fuel from the middle area of the
-     * field to the alliance side of the field
-     * 
-     * @return Command to set shooter velocity, hood position, kicker and to run
-     *         indexer
-     */
-    public Command passFuel() {
-        return Commands.parallel(
-                shooter.setShooterVelocityPosition3(),
-                hood.hoodsToAngle(45),
-                kicker.runKicker(),
-                indexer.runIndexer(),
-                intake.intakeRunRollers())
-                .withName("passFuel");
-    }
+        /**
+         * Command to set shooter velocity and hood position to shoot
+         * from in front of the tower
+         * 
+         * @return Command to run shooter and hood for shooting from the tower
+         */
+        public Command shootAtPostion1() {
+                return Commands.sequence(
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPosition3().until(
+                                                                shooter.shooterAtVelocitySetPoint()),
+                                                hood.hoodToAnglePosition3()
+                                                                .until(hood.hoodAtPositionSetpoint())),
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPosition3(),
+                                                hood.hoodToAnglePosition3(),
+                                                kicker.runKicker(),
+                                                indexer.runIndexer()))
+                                .withName("shootAtPostion1");
+        }
 
-    public Command toggleIntakeStop() {
-        return Commands.sequence(
-                intake.toggleIntakePivot().until(intake.intakePivotAtPositionSetpoint()),
-                intake.intakeStopPivot());
-    }
+        public Command halfPowerPass() {
+                return Commands.sequence(
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPosition2().until(
+                                                                shooter.shooterAtVelocitySetPoint()),
+                                                hood.hoodToAnglePosition2()
+                                                                .until(hood.hoodAtPositionSetpoint())),
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPosition2(),
+                                                hood.hoodToAnglePosition2(),
+                                                kicker.runKicker(),
+                                                indexer.runIndexer()))
+                                .withName("shootAtPostion1");
+        }
 
-    public Command deployIntakeStop() {
-        return Commands.sequence(
-                intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()),
-                intake.intakeStopPivot());
-    }
+        public Command runBackwardsNoStuck() {
+                return Commands.parallel(
+                                kicker.runKickerBackwards(),
+                                indexer.runIndexerBackwards(),
+                                intake.intakeRunRollersBackwards()).withName("runBackwardsNoStuck");
+        }
 
-    public Command manualShoot() {
-        return 
-                Commands.parallel(
-                    shooter.shooterManual(),
-                    hood.hoodManual())
-                .withName("manualShoot");
-    }
+        /**
+         * Returns command for shooting fuel from the middle area of the
+         * field to the alliance side of the field
+         * 
+         * @return Command to set shooter velocity, hood position, kicker and to run
+         *         indexer
+         */
+        public Command passFuel() {
+                return Commands.parallel(
+                                shooter.setShooterVelocityPosition3(),
+                                hood.hoodsToAngle(45),
+                                kicker.runKicker(),
+                                indexer.runIndexer(),
+                                intake.intakeRunRollers())
+                                .withName("passFuel");
+        }
 
-    // |==============================|
-    // | Orientation Commands |
-    // |==============================|
-    public Command orientIntakeBlueTrench() {
-        return DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kZero);
-    }
+        public Command toggleIntakeStop() {
+                return Commands.sequence(
+                                intake.toggleIntakePivot().until(intake.intakePivotAtPositionSetpoint()),
+                                intake.intakeStopPivot());
+        }
 
-    public Command orientIntakeRedTrench() {
-        return DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.k180deg);
-    }
+        public Command deployIntakeStop() {
+                return Commands.sequence(
+                                intake.deployIntake().until(intake.intakePivotAtPositionSetpoint()),
+                                intake.intakeStopPivot());
+        }
 
-    public Command orientIntaketoBlueDepot() {
-        return DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kCCW_90deg);
-    }
+        public Command manualShoot() {
+                return Commands.parallel(
+                                shooter.shooterManual(),
+                                hood.hoodManual())
+                                .withName("manualShoot");
+        }
 
-    public Command orientIntakeToRedDepot() {
-        return DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX(),
-                () -> Rotation2d.kCW_90deg);
-    }
+        // |==============================|
+        // | Orientation Commands |
+        // |==============================|
+        public Command orientIntakeBlueTrench() {
+                return DriveCommands.joystickDriveAtAngle(
+                                drive,
+                                () -> -driverController.getLeftY(),
+                                () -> -driverController.getLeftX(),
+                                () -> Rotation2d.kZero);
+        }
 
-    public Command checkAlliance() {
-        return Commands.run(
-                () -> this.updateAlliance());
-    }
+        public Command orientIntakeRedTrench() {
+                return DriveCommands.joystickDriveAtAngle(
+                                drive,
+                                () -> -driverController.getLeftY(),
+                                () -> -driverController.getLeftX(),
+                                () -> Rotation2d.k180deg);
+        }
 
-    public void updateAlliance() {
-        this.alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
-    }
+        public Command orientIntaketoBlueDepot() {
+                return DriveCommands.joystickDriveAtAngle(
+                                drive,
+                                () -> -driverController.getLeftY(),
+                                () -> -driverController.getLeftX(),
+                                () -> Rotation2d.kCCW_90deg);
+        }
+
+        public Command orientIntakeToRedDepot() {
+                return DriveCommands.joystickDriveAtAngle(
+                                drive,
+                                () -> -driverController.getLeftY(),
+                                () -> -driverController.getLeftX(),
+                                () -> Rotation2d.kCW_90deg);
+        }
+
+        public Command checkAlliance() {
+                return Commands.run(
+                                () -> this.updateAlliance());
+        }
+
+        public void updateAlliance() {
+                this.alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+        }
 
 }
 // throw up
