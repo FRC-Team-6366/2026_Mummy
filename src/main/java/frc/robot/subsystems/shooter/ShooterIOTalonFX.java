@@ -37,7 +37,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   // Used to control motor output by specifying rotaion speed
 
-
+  VelocityVoltage velocityVoltageRequest;
   VelocityTorqueCurrentFOC velocityTorqueCurrentFOCRequest;
   // Used to make followShooterMotor mimic the leadShooterMotor
   Follower rightFollower;
@@ -122,17 +122,17 @@ public class ShooterIOTalonFX implements ShooterIO {
     leadcfg.Slot0.kD = 0.0;
     leadcfg.withCurrentLimits(
             new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(200))
+                .withStatorCurrentLimit(Amps.of(40))
                 .withStatorCurrentLimitEnable(true)
         );
     this.rightLeadShooterMotor.getConfigurator().apply(leadcfg);
     this.leftLeadShooterMotor.getConfigurator().apply(leadcfg);
 
     // Instantiating velocity voltage object for setting the output velocity
-    // this.velocityVoltageRequest = new VelocityVoltage(0);
+    this.velocityVoltageRequest = new VelocityVoltage(0);
     this.velocityTorqueCurrentFOCRequest = new VelocityTorqueCurrentFOC(0);
-    this.rightLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withSlot(0));
-    this.leftLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withSlot(0));
+    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withSlot(0));
+    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withSlot(0));
 
     // Setting the StatusSignal variables to be mapped to actual
     // aspect of the ShooterIO's hardware
@@ -227,9 +227,9 @@ public class ShooterIOTalonFX implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
 
-    this.rightLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withVelocity(rpsToUse* 0.92).withSlot(0));
+    this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withSlot(0).withEnableFOC(true));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
-    this.leftLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withVelocity(rpsToUse* 0.92).withSlot(0));
+    this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withSlot(0).withEnableFOC(true));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);
   }
 
@@ -351,7 +351,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.leftFollowShooterSupplyCurrent = this.leftFollowerShooterSupplyCurrent.getValueAsDouble();
 
     // Update Setpoint related fields
-    inputs.leftShooterVelocitySetpoint = this.velocityTorqueCurrentFOCRequest.Velocity;
+    inputs.leftShooterVelocitySetpoint = this.velocityVoltageRequest.Velocity;
     inputs.leftShooterVelocityError = this.leftShooterVelocityError.getValueAsDouble();
     inputs.leftShooterAtVelocitySetpoint = this.leftShooterAtVelocitySetPoint();
   }
