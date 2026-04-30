@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9,
-        "y": 6.088
+        "x": 1.9171184022824534,
+        "y": 4.727218259629101
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8999999999999997,
-        "y": 5.088
+        "x": 1.917118402282453,
+        "y": 3.727218259629101
       },
       "isLocked": false,
       "linkedName": "az"
@@ -48,7 +48,7 @@
   "folder": "Named Position Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 135.0
+    "rotation": 158.87528085392742
   },
   "useDefaultConstraints": true
 }
