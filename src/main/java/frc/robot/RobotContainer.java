@@ -286,7 +286,7 @@ public class RobotContainer {
         // |==============================|
 
 
-        operatorController.povUp().whileTrue(this.lowPowerShot());
+        operatorController.povUp().whileTrue(this.halfPowerPass());
 
                 // operatorController.povLeft().onTrue(
                 //         shooter.shooterDecrements());
@@ -549,7 +549,7 @@ public class RobotContainer {
                 .withName("shootAtPostion1");
     }
 
-    public Command lowPowerShot() {
+    public Command halfPowerPass() {
         return Commands.sequence(
                 Commands.parallel(
                         shooter.setShooterVelocityPosition2().until(
