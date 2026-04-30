@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 2.937486594862401,
+        "x": 2.4,
         "y": 2.489178897669964
       },
       "prevControl": {
-        "x": 4.704022115592439,
+        "x": 4.1665355207300365,
         "y": 2.677262660485625
       },
       "nextControl": null,
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.75388725369828
+    "rotation": -141.84524919433022
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",

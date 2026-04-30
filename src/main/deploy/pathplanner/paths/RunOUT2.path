@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.937486594862401,
+        "x": 2.4,
         "y": 2.489178897669964
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1361528511656482,
+        "x": 1.5986662563032468,
         "y": 1.6522536244453288
       },
       "isLocked": false,
@@ -85,7 +85,7 @@
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.75388725369828
+    "rotation": -141.84524919433022
   },
   "useDefaultConstraints": true
 }
