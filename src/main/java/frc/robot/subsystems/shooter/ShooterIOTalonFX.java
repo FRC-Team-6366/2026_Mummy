@@ -122,6 +122,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     leadcfg.Slot0.kD = 0.0;
     leadcfg.withCurrentLimits(
             new CurrentLimitsConfigs()
+            //subtract 5 if it keeps browning out
                 .withStatorCurrentLimit(Amps.of(40))
                 .withStatorCurrentLimitEnable(true)
         );
@@ -229,6 +230,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
     this.rightLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withSlot(0).withEnableFOC(true));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
+    
     this.leftLeadShooterMotor.setControl(velocityVoltageRequest.withVelocity(rpsToUse* 0.92).withSlot(0).withEnableFOC(true));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);
   }
