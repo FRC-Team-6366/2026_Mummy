@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "start to balls right"
+            "pathName": "start to balls left"
           }
         },
         {
@@ -35,7 +35,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": " from balls to bump right"
+                  "pathName": "from balls to bump left"
                 }
               }
             ]
@@ -63,7 +63,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Going to Shoot"
+            "pathName": "Going to Shoot Left"
           }
         },
         {
