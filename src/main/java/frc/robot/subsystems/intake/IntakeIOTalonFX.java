@@ -51,7 +51,7 @@ public class IntakeIOTalonFX implements IntakeIO {
   CANcoderConfiguration iPCANcfg;
 
   PositionVoltage positionVoltageRequest;
-  PositionTorqueCurrentFOC positionTorqueCurrentFOCRequest;
+  // PositionTorqueCurrentFOC positionTorqueCurrentFOCRequest;
   VoltageOut voltageRequest;
 
   double intakePivotMaxPosition = 0.5;
@@ -145,7 +145,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     voltageRequest = new VoltageOut(0);
     positionVoltageRequest = new PositionVoltage(0.12).withEnableFOC(true);
-    positionTorqueCurrentFOCRequest = new PositionTorqueCurrentFOC(0.12);
+    // positionTorqueCurrentFOCRequest = new PositionTorqueCurrentFOC(0.12);
     
     // Set motor position to CANcoder position
     // intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
@@ -212,7 +212,7 @@ public class IntakeIOTalonFX implements IntakeIO {
   public void intakePivotToAngle(double angleDegrees) {
     double angletoRotations = (MathUtil.clamp(angleDegrees, 0.0, 138.6)) / 360; // Changes angle degree to rotations
     angletoRotations += 0.12;
-    this.intakePivotMotor.setControl(positionTorqueCurrentFOCRequest.withPosition(angletoRotations));
+    this.intakePivotMotor.setControl(positionVoltageRequest.withPosition(angletoRotations));
   }
 
   @Override

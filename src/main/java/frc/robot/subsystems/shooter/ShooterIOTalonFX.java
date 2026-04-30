@@ -36,7 +36,7 @@ public class ShooterIOTalonFX implements ShooterIO {
   double shotFuelCurrentThreshold = 5;
 
   // Used to control motor output by specifying rotaion speed
-  VelocityVoltage velocityVoltageRequest;
+
 
   VelocityTorqueCurrentFOC velocityTorqueCurrentFOCRequest;
   // Used to make followShooterMotor mimic the leadShooterMotor
@@ -335,7 +335,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.rightFollowShooterSupplyCurrent = this.rightFollowerShooterSupplyCurrent.getValueAsDouble();
 
     // Update Setpoint related fields
-    inputs.rightShooterVelocitySetpoint = this.velocityVoltageRequest.Velocity;
+    inputs.rightShooterVelocitySetpoint = this.velocityTorqueCurrentFOCRequest.Velocity;
     inputs.rightShooterVelocityError = this.rightShooterVelocityError.getValueAsDouble();
     inputs.rightShooterAtVelocitySetpoint = this.rightShooterAtVelocitySetPoint();
 
@@ -351,7 +351,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     inputs.leftFollowShooterSupplyCurrent = this.leftFollowerShooterSupplyCurrent.getValueAsDouble();
 
     // Update Setpoint related fields
-    inputs.leftShooterVelocitySetpoint = this.velocityVoltageRequest.Velocity;
+    inputs.leftShooterVelocitySetpoint = this.velocityTorqueCurrentFOCRequest.Velocity;
     inputs.leftShooterVelocityError = this.leftShooterVelocityError.getValueAsDouble();
     inputs.leftShooterAtVelocitySetpoint = this.leftShooterAtVelocitySetPoint();
   }
