@@ -1,9 +1,13 @@
 package frc.robot.subsystems.intake;
 
+import static edu.wpi.first.units.Units.Amps;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -47,6 +51,7 @@ public class IntakeIOTalonFX implements IntakeIO {
   CANcoderConfiguration iPCANcfg;
 
   PositionVoltage positionVoltageRequest;
+  // PositionTorqueCurrentFOC positionTorqueCurrentFOCRequest;
   VoltageOut voltageRequest;
 
   double intakePivotMaxPosition = 0.5;
@@ -86,6 +91,14 @@ public class IntakeIOTalonFX implements IntakeIO {
     iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
     iMPcfg.Feedback.RotorToSensorRatio = 8.6;
     iMPcfg.Feedback.SensorToMechanismRatio = 1;
+
+    // iMPcfg.withCurrentLimits(
+    //         new CurrentLimitsConfigs()
+    //             // Swerve azimuth does not require much torque output, so we can set a relatively low
+    //             // stator current limit to help avoid brownouts without impacting performance.
+    //             .withStatorCurrentLimit(Amps.of(40))
+    //             .withStatorCurrentLimitEnable(true)
+        // );
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
 
@@ -132,6 +145,7 @@ public class IntakeIOTalonFX implements IntakeIO {
 
     voltageRequest = new VoltageOut(0);
     positionVoltageRequest = new PositionVoltage(0.12).withEnableFOC(true);
+    // positionTorqueCurrentFOCRequest = new PositionTorqueCurrentFOC(0.12);
     
     // Set motor position to CANcoder position
     // intakePivotMotor.setPosition(intakePivotCANcoder.getAbsolutePosition().getValueAsDouble());
