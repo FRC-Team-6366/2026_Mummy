@@ -122,7 +122,7 @@ public class ShooterIOTalonFX implements ShooterIO {
     leadcfg.Slot0.kD = 0.0;
     leadcfg.withCurrentLimits(
             new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(50))
+                .withStatorCurrentLimit(Amps.of(200))
                 .withStatorCurrentLimitEnable(true)
         );
     this.rightLeadShooterMotor.getConfigurator().apply(leadcfg);
@@ -227,9 +227,9 @@ public class ShooterIOTalonFX implements ShooterIO {
     double rotationsPerSecond = feetPerSecond / ((4.0 / 12.0) * Math.PI);
     double rpsToUse = MathUtil.clamp(rotationsPerSecond, shooterMinVelocityRPS, shooterMaxVelocityRPS);
 
-    this.rightLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withVelocity(rpsToUse* 0.92));
+    this.rightLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withVelocity(rpsToUse* 0.92).withSlot(0));
     this.rightFollowerShooterMotor.setControl(this.rightFollower);
-    this.leftLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withVelocity(rpsToUse* 0.92));
+    this.leftLeadShooterMotor.setControl(velocityTorqueCurrentFOCRequest.withVelocity(rpsToUse* 0.92).withSlot(0));
     this.leftFollowerShooterMotor.setControl(this.leftFollower);
   }
 
