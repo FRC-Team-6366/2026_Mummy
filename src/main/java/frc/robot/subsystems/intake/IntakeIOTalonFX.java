@@ -92,13 +92,13 @@ public class IntakeIOTalonFX implements IntakeIO {
     iMPcfg.Feedback.RotorToSensorRatio = 8.6;
     iMPcfg.Feedback.SensorToMechanismRatio = 1;
 
-    iMPcfg.withCurrentLimits(
-            new CurrentLimitsConfigs()
-                // Swerve azimuth does not require much torque output, so we can set a relatively low
-                // stator current limit to help avoid brownouts without impacting performance.
-                .withStatorCurrentLimit(Amps.of(40))
-                .withStatorCurrentLimitEnable(true)
-        );
+    // iMPcfg.withCurrentLimits(
+    //         new CurrentLimitsConfigs()
+    //             // Swerve azimuth does not require much torque output, so we can set a relatively low
+    //             // stator current limit to help avoid brownouts without impacting performance.
+    //             .withStatorCurrentLimit(Amps.of(40))
+    //             .withStatorCurrentLimitEnable(true)
+        // );
 
     intakePivotMotor.getConfigurator().apply(iMPcfg);
 
