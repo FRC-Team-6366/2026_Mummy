@@ -528,6 +528,25 @@ public class RobotContainer {
 
     }
 
+      public Command shootMovingWithLag() {
+        return Commands.sequence(
+                Commands.parallel(
+                        shooter.setShooterAutoMovingVelocity(drive).until(shooter.shooterAtVelocitySetPoint()),
+                        hood.setHoodAutoAngleMoving(drive).until(hood.hoodAtPositionSetpoint()),
+                        new WaitCommand(0.5)),
+                Commands.parallel(
+                        shooter.setShooterAutoMovingVelocity(drive),
+                        hood.setHoodAutoAngleMoving(drive),
+                        kicker.runKicker(),
+                        new WaitCommand(0.5)),
+                Commands.parallel(
+                        shooter.setShooterAutoMovingVelocity(drive),
+                        hood.setHoodAutoAngleMoving(drive),
+                        kicker.runKicker(),
+                        indexer.runIndexer()));
+
+    }
+
     /**
      * Command to set shooter velocity and hood position to shoot
      * from in front of the tower
