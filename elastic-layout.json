@@ -5,7 +5,102 @@
     {
       "name": "Teleoperated",
       "grid_layout": {
-        "layouts": [],
+        "layouts": [
+          {
+            "title": "Left Cameras Status",
+            "x": 0.0,
+            "y": 512.0,
+            "width": 192.0,
+            "height": 192.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "LEFT"
+            },
+            "children": [
+              {
+                "title": "Left Front",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/CameraPublisher/camFrontLeft-processed/connected",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "Checkmark",
+                  "false_icon": "Exclamation Point"
+                }
+              },
+              {
+                "title": "Left Rear",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/CameraPublisher/camRearLeft-processed/connected",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "Checkmark",
+                  "false_icon": "Exclamation Point"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Right Cameras Status",
+            "x": 192.0,
+            "y": 512.0,
+            "width": 192.0,
+            "height": 192.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "LEFT"
+            },
+            "children": [
+              {
+                "title": "Right Front",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/CameraPublisher/camFrontRight-processed/connected",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "Checkmark",
+                  "false_icon": "Exclamation Point"
+                }
+              },
+              {
+                "title": "Right Rear",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/CameraPublisher/camRearRight-processed/connected",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "Checkmark",
+                  "false_icon": "Exclamation Point"
+                }
+              }
+            ]
+          }
+        ],
         "containers": [
           {
             "title": "Scheduler",
