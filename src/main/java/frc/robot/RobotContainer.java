@@ -523,7 +523,7 @@ public class RobotContainer {
         public Command shootWithoutIntakeLiftMoving() {
                 return Commands.sequence(
                         shooter.setShooterAutoMovingVelocity(drive)
-                                                                .unless(shooter.shooterAtVelocitySetPoint()),
+                                                                .until(shooter.shooterAtVelocityNotSetPoint()),
                                 Commands.parallel(
                                                 shooter.setShooterAutoMovingVelocity(drive)
                                                                 .until(shooter.shooterAtVelocitySetPoint()),
