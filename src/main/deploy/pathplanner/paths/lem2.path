@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.72285306703974,
-        "y": 4.869543509276943
+        "x": 8.218245363766048,
+        "y": 4.804850213980028
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.298110572059789,
-        "y": 6.293494850926147
+        "x": 6.793502868786097,
+        "y": 6.228801555629233
       },
       "isLocked": false,
       "linkedName": "lem1end"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 3.1462910128388017,
-        "y": 5.218887303851641
+        "x": 2.809885877318117,
+        "y": 5.2059486447931524
       },
       "prevControl": {
-        "x": 6.229262524973123,
-        "y": 5.38026202278265
+        "x": 5.89285738945244,
+        "y": 5.367323363724161
       },
       "nextControl": null,
       "isLocked": false,
@@ -87,7 +87,7 @@
   "folder": "DoNotTouchTopSecret#hayden",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -136.11605719796083
+    "rotation": -111.50143432404795
   },
   "useDefaultConstraints": false
 }

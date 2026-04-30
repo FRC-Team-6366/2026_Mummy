@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.146,
-        "y": 5.219
+        "x": 2.809885877318117,
+        "y": 5.2059486447931524
       },
       "prevControl": {
-        "x": 4.920091810114725,
-        "y": 5.31185201731625
+        "x": 4.583977687432842,
+        "y": 5.298800662109402
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "lemend5"
+      "linkedName": "lem2end"
     }
   ],
   "rotationTargets": [
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 130.36453657346027
+    "rotation": 136.49710665232973
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",

@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.992870567187747,
-        "y": 7.633060276967041
+        "x": 5.448072980512048,
+        "y": 7.488608292448002
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.959472182588954,
-        "y": 6.95266761769349
+        "x": 8.075920114122681,
+        "y": 6.745649072753209
       },
       "prevControl": {
-        "x": 6.877599102405321,
-        "y": 7.874362561492491
+        "x": 7.377232524964336,
+        "y": 8.039514978601996
       },
       "nextControl": {
-        "x": 8.742225267165997,
-        "y": 6.285806066636802
+        "x": 8.448102658222505,
+        "y": 6.056422139235017
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.72285306703974,
-        "y": 4.869543509276943
+        "x": 8.218245363766048,
+        "y": 4.804850213980028
       },
       "prevControl": {
-        "x": 8.761669044224284,
-        "y": 5.555292439376628
+        "x": 8.477018544935806,
+        "y": 5.1930099857346645
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.9229571984435777,
-      "rotationDegrees": -71.91317265529666
+      "rotationDegrees": -52.51949591821964
     }
   ],
   "constraintZones": [],
@@ -63,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -136.11605719796083
+    "rotation": -111.50143432404795
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",
