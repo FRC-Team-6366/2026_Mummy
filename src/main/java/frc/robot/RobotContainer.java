@@ -291,7 +291,6 @@ public class RobotContainer {
                 // | Operator Controls |
                 // |==============================|
 
-                operatorController.povDown().whileTrue(this.halfPowerPass());
 
                 // operatorController.povLeft().onTrue(
                 // shooter.shooterDecrements());
@@ -305,7 +304,7 @@ public class RobotContainer {
                 // Run intake rollers when LT is pressed
                 operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
-                operatorController.povUp().whileTrue(this.shootFullPass());
+               
 
                 operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
 
@@ -322,8 +321,11 @@ public class RobotContainer {
                 // must be used when intake is at upper hard limit
 
                 // Shooting setpoints
+ operatorController.povUp().whileTrue(this.shootFullPass());
+ 
+                operatorController.povDown().whileTrue(this.halfPowerPass());
 
-                operatorController.x().whileTrue(shootFullPass());
+                operatorController.povRight().whileTrue(this.shootTowerShot());
 
                 operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
