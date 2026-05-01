@@ -111,6 +111,16 @@ public class Shooter extends SubsystemBase {
                 }).withName("shooterDecrements()");
     }
 
+
+       public Command setShooterVelocityPositionTowerShot() {
+
+        return this.run(
+                () -> {
+                    this.velocityFPS = Constants.ShooterConstants.shooterCornerShotVelocityFPS;
+                    this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
+                }).withName("setShooterVelocityPosition1()");
+    }
+
     /**
      * Stops the shooter, setting the power to 0.
      * <p>
@@ -138,11 +148,11 @@ public class Shooter extends SubsystemBase {
      * 
      * @return Command to set shooter for close shooting
      */
-    public Command setShooterVelocityPosition1() {
+    public Command setShooterVelocityPositionCornerShot() {
 
         return this.run(
                 () -> {
-                    this.velocityFPS = Constants.ShooterConstants.shooterPosition1VelocityFPS;
+                    this.velocityFPS = Constants.ShooterConstants.shooterCornerShotVelocityFPS;
                     this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
                 }).withName("setShooterVelocityPosition1()");
     }
@@ -152,11 +162,11 @@ public class Shooter extends SubsystemBase {
      * 
      * @return Command to set shooter for medium shooting
      */
-    public Command setShooterVelocityPosition2() {
+    public Command setShooterHalfCourtPass() {
 
         return this.run(
                 () -> {
-                    this.velocityFPS = Constants.ShooterConstants.shooterPosition2VelocityFPS;
+                    this.velocityFPS = Constants.ShooterConstants.shooterHalfCourtVelocityFPS;
                     this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
                 }).withName("setShooterVelocityPosition2()");
     }
@@ -166,11 +176,11 @@ public class Shooter extends SubsystemBase {
      * 
      * @return Command to set shooter for far shooting
      */
-    public Command setShooterVelocityPosition3() {
+    public Command setShooterFullCourtPass() {
 
         return this.run(
                 () -> {
-                    this.velocityFPS = Constants.ShooterConstants.shooterPosition3VelocityFPS;
+                    this.velocityFPS = Constants.ShooterConstants.shooterFullCourtVelocityFPS;
                     this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
                 }).withName("setShooterVelocityPosition3()");
     }

@@ -291,7 +291,7 @@ public class RobotContainer {
                 // | Operator Controls |
                 // |==============================|
 
-                operatorController.povUp().whileTrue(this.halfPowerPass());
+                operatorController.povDown().whileTrue(this.halfPowerPass());
 
                 // operatorController.povLeft().onTrue(
                 // shooter.shooterDecrements());
@@ -305,7 +305,7 @@ public class RobotContainer {
                 // Run intake rollers when LT is pressed
                 operatorController.leftTrigger().whileTrue(intake.intakeRunRollers());
 
-                operatorController.rightBumper().whileTrue(passFuel());
+                operatorController.povUp().whileTrue(this.shootFullPass());
 
                 operatorController.leftBumper().whileTrue(intake.intakePulsePivot());
 
@@ -316,12 +316,14 @@ public class RobotContainer {
                 // Stop all subsystems (except drivetrain)
                 operatorController.b().whileTrue(turnOffAll());
 
+                operatorController.a().whileTrue(this.shootCornerShot());
+
                 // Resets cancoder to 0.12 rotations when start and back are pressed together,
                 // must be used when intake is at upper hard limit
 
                 // Shooting setpoints
 
-                operatorController.x().whileTrue(shootAtPostion1());
+                operatorController.x().whileTrue(shootFullPass());
 
                 operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
@@ -504,21 +506,21 @@ public class RobotContainer {
                                 intake.intakeStopRollers()).withName("turnOffAll");
         }
 
-        public Command shootWithoutIntakeLift() {
+        // public Command shootWithoutIntakeLift() {
 
-                return Commands.sequence(
-                                Commands.parallel(
-                                                shooter.setShooterAutoVelocity(drive)
-                                                                .until(shooter.shooterAtVelocitySetPoint()),
-                                                hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
-                                                .withName("autoShooterSpinUp"),
-                                Commands.parallel(
-                                                shooter.setShooterAutoVelocity(drive),
-                                                hood.setHoodAutoAngle(drive),
-                                                kicker.runKicker(),
-                                                indexer.runIndexer()));
+        //         return Commands.sequence(
+        //                         Commands.parallel(
+        //                                         shooter.setShooterAutoVelocity(drive)
+        //                                                         .until(shooter.shooterAtVelocitySetPoint()),
+        //                                         hood.setHoodAutoAngle(drive).until(hood.hoodAtPositionSetpoint()))
+        //                                         .withName("autoShooterSpinUp"),
+        //                         Commands.parallel(
+        //                                         shooter.setShooterAutoVelocity(drive),
+        //                                         hood.setHoodAutoAngle(drive),
+        //                                         kicker.runKicker(),
+        //                                         indexer.runIndexer()));
 
-        }
+        // }
 
         public Command shootWithoutIntakeLiftMoving() {
                 return Commands.sequence(
@@ -538,40 +540,79 @@ public class RobotContainer {
 
         }
 
+                        public Command shootTowerShot() {
+                return Commands.sequence(
+                         shooter.setShooterVelocityPositionTowerShot()
+                                                                .until(shooter.shooterAtVelocityNotSetPoint()),
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPositionTowerShot().until(
+                                                                shooter.shooterAtVelocitySetPoint()),
+                                                hood.hoodToAngleTowerShot()
+                                                                .until(hood.hoodAtPositionSetpoint())),
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPositionTowerShot(),
+                                                hood.hoodToAngleTowerShot(),
+                                                kicker.runKicker(),
+                                                indexer.runIndexer()))
+                                .withName("shooterCornerPower");
+                }
+
+
+                public Command shootCornerShot() {
+                return Commands.sequence(
+                         shooter.setShooterVelocityPositionCornerShot()
+                                                                .until(shooter.shooterAtVelocityNotSetPoint()),
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPositionCornerShot().until(
+                                                                shooter.shooterAtVelocitySetPoint()),
+                                                hood.hoodToAngleCornerShot()
+                                                                .until(hood.hoodAtPositionSetpoint())),
+                                Commands.parallel(
+                                                shooter.setShooterVelocityPositionCornerShot(),
+                                                hood.hoodToAngleCornerShot(),
+                                                kicker.runKicker(),
+                                                indexer.runIndexer()))
+                                .withName("shooterCornerPower");
+                }
+
         /**
          * Command to set shooter velocity and hood position to shoot
          * from in front of the tower
          * 
          * @return Command to run shooter and hood for shooting from the tower
          */
-        public Command shootAtPostion1() {
+        public Command shootFullPass() {
                 return Commands.sequence(
+                         shooter.setShooterFullCourtPass()
+                                                                .until(shooter.shooterAtVelocityNotSetPoint()),
                                 Commands.parallel(
-                                                shooter.setShooterVelocityPosition3().until(
+                                                shooter.setShooterFullCourtPass().until(
                                                                 shooter.shooterAtVelocitySetPoint()),
-                                                hood.hoodToAnglePosition3()
+                                                hood.hoodFullCourtPass()
                                                                 .until(hood.hoodAtPositionSetpoint())),
                                 Commands.parallel(
-                                                shooter.setShooterVelocityPosition3(),
-                                                hood.hoodToAnglePosition3(),
+                                                shooter.setShooterFullCourtPass(),
+                                                hood.hoodFullCourtPass(),
                                                 kicker.runKicker(),
                                                 indexer.runIndexer()))
-                                .withName("shootAtPostion1");
+                                .withName("shooterFullPower");
         }
 
         public Command halfPowerPass() {
                 return Commands.sequence(
+                         shooter.setShooterHalfCourtPass()
+                                                                .until(shooter.shooterAtVelocityNotSetPoint()),
                                 Commands.parallel(
-                                                shooter.setShooterVelocityPosition2().until(
+                                                shooter.setShooterHalfCourtPass().until(
                                                                 shooter.shooterAtVelocitySetPoint()),
-                                                hood.hoodToAnglePosition2()
+                                                hood.hoodHalfCourtPass()
                                                                 .until(hood.hoodAtPositionSetpoint())),
                                 Commands.parallel(
-                                                shooter.setShooterVelocityPosition2(),
-                                                hood.hoodToAnglePosition2(),
+                                                shooter.setShooterHalfCourtPass(),
+                                                hood.hoodHalfCourtPass(),
                                                 kicker.runKicker(),
                                                 indexer.runIndexer()))
-                                .withName("shootAtPostion1");
+                                .withName("ShooterHalfPass");
         }
 
         public Command runBackwardsNoStuck() {
@@ -588,15 +629,15 @@ public class RobotContainer {
          * @return Command to set shooter velocity, hood position, kicker and to run
          *         indexer
          */
-        public Command passFuel() {
-                return Commands.parallel(
-                                shooter.setShooterVelocityPosition3(),
-                                hood.hoodsToAngle(45),
-                                kicker.runKicker(),
-                                indexer.runIndexer(),
-                                intake.intakeRunRollers())
-                                .withName("passFuel");
-        }
+        // public Command passFuel() {
+        //         return Commands.parallel(
+        //                         shooter.setShooterFullCourtPass(),
+        //                         hood.hoodsToAngle(45),
+        //                         kicker.runKicker(),
+        //                         indexer.runIndexer(),
+        //                         intake.intakeRunRollers())
+        //                         .withName("passFuel");
+        // }
 
         public Command toggleIntakeStop() {
                 return Commands.sequence(

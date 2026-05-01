@@ -66,6 +66,11 @@ public class Hood extends SubsystemBase {
     angleOfHood =  hoodIO.getHoodPosition();
     return angleOfHood;
   }
+
+
+  public Command hoodToAngleTowerShot() {
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodAngleCornerShot).withName("hoodToAnglePosition1()");
+  }
   /**
    * Sets both the left and rightt hoods for shooting at tower station
    * <p>
@@ -73,8 +78,8 @@ public class Hood extends SubsystemBase {
    * 
    * @return Command to set hood for close shooting
    */
-  public Command hoodToAnglePosition1() {
-    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition1Angle).withName("hoodToAnglePosition1()");
+  public Command hoodToAngleCornerShot() {
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodAngleCornerShot).withName("hoodToAnglePosition1()");
   }
 
   /**
@@ -84,8 +89,8 @@ public class Hood extends SubsystemBase {
    * 
    * @return Command to set hood for medium shooting
    */
-  public Command hoodToAnglePosition2() {
-    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition2Angle).withName("hoodToAnglePosition2()");
+  public Command hoodHalfCourtPass() {
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodHalfCourtAngle).withName("hoodToAnglePosition2()");
   }
 
   /**
@@ -95,8 +100,8 @@ public class Hood extends SubsystemBase {
    * 
    * @return Command to set hood for far shooting
    */
-  public Command hoodToAnglePosition3() {
-    return this.hoodsToAngle(Constants.ShooterConstants.hoodPosition3Angle).withName("hoodToAnglePosition3()");
+  public Command hoodFullCourtPass() {
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodFullCourtAngle).withName("hoodToAnglePosition3()");
   }
 
   /**
