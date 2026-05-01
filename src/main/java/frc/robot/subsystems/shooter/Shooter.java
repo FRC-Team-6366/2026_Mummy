@@ -116,7 +116,7 @@ public class Shooter extends SubsystemBase {
 
         return this.run(
                 () -> {
-                    this.velocityFPS = Constants.ShooterConstants.shooterCornerShotVelocityFPS;
+                    this.velocityFPS = Constants.ShooterConstants.shooterTowerShotVelocityFPS;
                     this.shooterIO.setShooterVelocityFeetPerSecond(velocityFPS);
                 }).withName("setShooterVelocityPosition1()");
     }

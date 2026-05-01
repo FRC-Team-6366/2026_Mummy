@@ -69,7 +69,7 @@ public class Hood extends SubsystemBase {
 
 
   public Command hoodToAngleTowerShot() {
-    return this.hoodsToAngle(Constants.ShooterConstants.hoodAngleCornerShot).withName("hoodToAnglePosition1()");
+    return this.hoodsToAngle(Constants.ShooterConstants.hoodAngleTowerShot).withName("hoodToAnglePosition1()");
   }
   /**
    * Sets both the left and rightt hoods for shooting at tower station
