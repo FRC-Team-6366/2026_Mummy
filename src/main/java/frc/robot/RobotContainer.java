@@ -321,9 +321,9 @@ public class RobotContainer {
                 // must be used when intake is at upper hard limit
 
                 // Shooting setpoints
-                operatorController.povUp().whileTrue(this.shootFullPass());
+                operatorController.povUp().whileTrue(this.halfPowerPass());
  
-                operatorController.rightBumper().whileTrue(this.halfPowerPass());
+                operatorController.rightBumper().whileTrue(this.shootFullPass());
 
                 operatorController.x().whileTrue(this.shootTowerShot());
 

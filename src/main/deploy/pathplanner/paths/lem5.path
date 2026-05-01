@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.554349397590361,
-        "y": 5.870855421686747
+        "x": 6.497403708987161,
+        "y": 5.5811697574893016
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.972285888739269,
-        "y": 6.06677813756692
+        "x": 4.905948644793153,
+        "y": 5.438844507845934
       },
       "isLocked": false,
       "linkedName": "lemend4"
     },
     {
       "anchor": {
-        "x": 2.809885877318117,
+        "x": 2.31,
         "y": 5.2059486447931524
       },
       "prevControl": {
-        "x": 4.583977687432842,
+        "x": 4.084091810114725,
         "y": 5.298800662109402
       },
       "nextControl": null,
@@ -40,7 +40,7 @@
       "minWaypointRelativePos": 0.10022988505747343,
       "maxWaypointRelativePos": 0.8560919540229845,
       "constraints": {
-        "maxVelocity": 3.5,
+        "maxVelocity": 4.5,
         "maxAcceleration": 10.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,

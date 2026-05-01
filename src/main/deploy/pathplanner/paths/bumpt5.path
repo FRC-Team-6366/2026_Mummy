@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.423216867469879,
-        "y": 2.1991445783132533
+        "x": 6.43271041369472,
+        "y": 2.489178897669964
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.111891566265059,
-        "y": 2.319349397590362
+        "x": 5.1213851124899,
+        "y": 2.6093837169470726
       },
       "isLocked": false,
       "linkedName": "ctpb4"
@@ -40,7 +40,7 @@
       "minWaypointRelativePos": 0.10022988505747343,
       "maxWaypointRelativePos": 0.8560919540229845,
       "constraints": {
-        "maxVelocity": 3.0,
+        "maxVelocity": 4.5,
         "maxAcceleration": 10.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -141.84524919433022
+    "rotation": -145.37350969997496
   },
   "reversed": false,
   "folder": "DoNotTouchTopSecret#hayden",
