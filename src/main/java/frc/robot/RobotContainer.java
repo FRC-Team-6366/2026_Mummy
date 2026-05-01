@@ -321,17 +321,17 @@ public class RobotContainer {
                 // must be used when intake is at upper hard limit
 
                 // Shooting setpoints
- operatorController.povUp().whileTrue(this.shootFullPass());
+                operatorController.povUp().whileTrue(this.shootFullPass());
  
-                operatorController.povDown().whileTrue(this.halfPowerPass());
+                operatorController.rightBumper().whileTrue(this.halfPowerPass());
 
-                operatorController.povRight().whileTrue(this.shootTowerShot());
+                operatorController.x().whileTrue(this.shootTowerShot());
 
                 operatorController.y().whileTrue(this.runBackwardsNoStuck());
 
         }
-
-        /**
+x
+        /**x
          * Use this to pass the autonomous command to the main {@link Robot} class.
          *
          * @return the command to run in autonomous
