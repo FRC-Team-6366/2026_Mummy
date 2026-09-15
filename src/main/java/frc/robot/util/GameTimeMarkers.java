@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * @author Will E
  * @since 2026
  */
-public  enum GameTimeMarkers {
+public enum GameTimeMarkers {
   SHIFT_TRANSITION_RUNNING,
   SHIFT_1_WARNING,
   SHIFT_1_RUNNING,
