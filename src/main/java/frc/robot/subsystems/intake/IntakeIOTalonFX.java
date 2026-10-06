@@ -85,7 +85,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     iMPcfg.MotorOutput.withNeutralMode(NeutralModeValue.Coast);
     iMPcfg.Feedback.FeedbackRemoteSensorID = Constants.IntakeConstants.intakePivotCANcoderId;
     iMPcfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-    iMPcfg.Feedback.RotorToSensorRatio = 8.6;
+    iMPcfg.Feedback.RotorToSensorRatio = 14.379;
     iMPcfg.Feedback.SensorToMechanismRatio = 1;
 
     // iMPcfg.withCurrentLimits(
