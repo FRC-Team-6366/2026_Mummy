@@ -134,10 +134,10 @@ public final class Constants {
     public static String camera3Name = "SearedSteakCamera";
 
     public static double camFrontLeftX = Units.inchesToMeters(-15.66);
-    public static double camFrontLeftY = Units.inchesToMeters(2.3);
-    public static double camFrontLeftZ = Units.inchesToMeters(266.375);
-    public static double camFrontLeftPitch = Units.degreesToRadians(-177);
     public static double camFrontLeftYaw = Units.degreesToRadians(150);
+    public static double camFrontLeftY = Units.inchesToMeters(15.0);
+    public static double camFrontLeftZ = Units.inchesToMeters(20.375);
+    public static double camFrontLeftPitch = Units.degreesToRadians(-15);
 
     public static double camFrontRightX = Units.inchesToMeters(-11.9996);
     public static double camFrontRightY = Units.inchesToMeters(-12.3);
