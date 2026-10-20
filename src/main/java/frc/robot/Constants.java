@@ -133,6 +133,7 @@ public final class Constants {
     public static String camera2Name = "GrillCamera";
     public static String camera3Name = "SearedSteakCamera";
 
+
     public static double camFrontLeftX = Units.inchesToMeters(-15.66);
     public static double camFrontLeftYaw = Units.degreesToRadians(150);
     public static double camFrontLeftY = Units.inchesToMeters(15.0);
