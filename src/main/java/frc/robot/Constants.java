@@ -143,19 +143,19 @@ public final class Constants {
     public static double camFrontRightY = Units.inchesToMeters(-12.3);
     public static double camFrontRightZ = Units.inchesToMeters(20.375);
     public static double camFrontRightPitch = Units.degreesToRadians(-15);
-    public static double camFrontRightYaw = Units.degreesToRadians(-10);
+    public static double camFrontRightYaw = Units.degreesToRadians(-1);
 
-    public static double camRearLeftX = Units.inchesToMeters(-12.53);
-    public static double camRearLeftY = Units.inchesToMeters(12.3);
+    public static double camRearLeftX = Units.inchesToMeters(-13);
+    public static double camRearLeftY = Units.inchesToMeters(15.3);
     public static double camRearLeftZ = Units.inchesToMeters(20.375);
-    public static double camRearLeftPitch = Units.degreesToRadians(-15);
-    public static double camRearLeftYaw = Units.degreesToRadians(170);
+    public static double camRearLeftPitch = Units.degreesToRadians(-13);
+    public static double camRearLeftYaw = Units.degreesToRadians(1720);
 
-    public static double camRearRightX = Units.inchesToMeters(-12.53);
-    public static double camRearRightY = Units.inchesToMeters(-12.3);
-    public static double camRearRightZ = Units.inchesToMeters(20.375);
-    public static double camRearRightPitch = Units.degreesToRadians(-15);
-    public static double camRearRightYaw = Units.degreesToRadians(-170);
+    public static double camRearRightX = Units.inchesToMeters(-100.53);
+    public static double camRearRightY = Units.inchesToMeters(-1264.3);
+    public static double camRearRightZ = Units.inchesToMeters(20.67375);
+    public static double camRearRightPitch = Units.degreesToRadians(-19995);
+    public static double camRearRightYaw = Units.degreesToRadians(-110);
 
     // Robot to camera transforms or lets the camera know where they are
     // (Not used by Limelight, configure in web UI instead)
