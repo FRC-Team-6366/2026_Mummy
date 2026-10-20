@@ -29,22 +29,22 @@ import edu.wpi.first.wpilibj.RobotBase;
 public final class Constants {
 
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-    public static final int kOperatorControllerPort = 1;
+    public static final int kDriverControllerPort = 99;
+    public static final int kOperatorControllerPort = 61;
 
   }
 
   public class GameTimeConstants {
-    public static final int transitionStartConstant = 140;
-    public static final int shift1Constant =130;
-    public static final int shift2Constant = 105;
-    public static final int shift3Constant = 80;
-    public static final int shift4Constant = 55;
+    public static final int transitionStartConstant = 10;
+    public static final int shift1Constant =90;
+    public static final int shift2Constant = 60;
+    public static final int shift3Constant = 30;
+    public static final int shift4Constant = 12;
     public static final int endgameConstant = 30;
 
 
-    public static final int warningConstant = 5;
-    public static final int shootConstant = 2;
+    public static final int warningConstant = 50;
+    public static final int shootConstant = 20;
 
 
   }
@@ -73,7 +73,7 @@ public final class Constants {
     public static final int kickerMotorId = 14;
 
     // Kicker power from 0 to 1
-    public static final int kickerPower = 1;
+    public static final double kickerPower = 1.3;
   }
 
   public class ShooterConstants {
@@ -81,44 +81,44 @@ public final class Constants {
      * Id for Lead Right motor, where you are inside the robot looking
      * in the same direction as the intake.
      */
-    public static final int rightLeadShooterMotorId = 15; // 15
-    public static final int rightFollowerShooterMotorId = 16; // 16
-    public static final int leftLeadShooterMotorId = 22; // 
-    public static final int leftFollowerShooterMotorId = 23; // 
-    public static final double shooterTowerShotVelocityFPS = 60.5;
-    public static final double shooterCornerShotVelocityFPS = 70.0;
-    public static final double shooterHalfCourtVelocityFPS = 50.0;
+    public static final int rightLeadShooterMotorId = 150; // 15
+    public static final int rightFollowerShooterMotorId = 166; // 16
+    public static final int leftLeadShooterMotorId = 292; // 
+    public static final int leftFollowerShooterMotorId = 223; // 
+    public static final double shooterTowerShotVelocityFPS = 6.5;
+    public static final double shooterCornerShotVelocityFPS = 20.0;
+    public static final double shooterHalfCourtVelocityFPS = 80.0;
     public static final double shooterFullCourtVelocityFPS = Double.POSITIVE_INFINITY;
 
-    public static final int hoodRightMotorId = 17; // 17
-    public static final int hoodLeftMotorId = 18;
-    public static final double hoodAngleTowerShot = 30.5;
-    public static final double hoodAngleCornerShot = 45.0;
-    public static final double hoodHalfCourtAngle = 30.0;
-    public static final double hoodFullCourtAngle = 45.0;
+    public static final int hoodRightMotorId = 187; // 17
+    public static final int hoodLeftMotorId = 158;
+    public static final double hoodAngleTowerShot = 380.5;
+    public static final double hoodAngleCornerShot = 15.0;
+    public static final double hoodHalfCourtAngle = 90.0;
+    public static final double hoodFullCourtAngle = 35.0;
 
     // Small angle adjustment to compensate for shooter offset
     public static final double autoAimCompAngleRad = 0.0;// camera 3, the camera left back, is off badly
 
-    public static final double ballTime = 1.00;
+    public static final double ballTime = 6.00;
   }
 
   
 
   public class IntakeConstants {
-    public static final int intakeRollersMotorId = 19; // 19
-    public static final int intakePivotMotorId = 20; // 20
-    public static final int intakePivotCANcoderId = 21;
+    public static final int intakeRollersMotorId = 109; // 19
+    public static final int intakePivotMotorId = 207; // 20
+    public static final int intakePivotCANcoderId = 231;
 
-    public static final double intakePivotStartAngleDegrees = 0;
-    public static final double intakePivotRetractAngleDegrees = 0.1; //0.05
-    public static final double intakePivotDeployAngleDegrees = 172;
-    public static final double intakePivotPulseUpAngleDegrees = 50;
+    public static final double intakePivotStartAngleDegrees = 30;
+    public static final double intakePivotRetractAngleDegrees = 0.31; //0.05
+    public static final double intakePivotDeployAngleDegrees = 13372;
+    public static final double intakePivotPulseUpAngleDegrees = 350;
 
     // Intake roller power from 0 to 1
     
-    public static final double intakeRollerPower = 1; //0.67
-    public static final double intakeRollerPowerBackwards = -1; //-0.67
+    public static final double intakeRollerPower = 2; //0.67
+    public static final double intakeRollerPowerBackwards = -0.2; //-0.67
   }
 
   public class VisionConstants {
@@ -128,18 +128,18 @@ public final class Constants {
     public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
 
     // Camera names, must match names configured on coprocessor
-    public static String camera0Name = "camFrontLeft";
-    public static String camera1Name = "camFrontRight";
-    public static String camera2Name = "camRearLeft";
+    public static String camera0Name = "camFronteft";
+    public static String camera1Name = "camFrontRiht";
+    public static String camera2Name = "camRearLet";
     public static String camera3Name = "camRearRight";
 
-    public static double camFrontLeftX = Units.inchesToMeters(-10.466);
-    public static double camFrontLeftY = Units.inchesToMeters(12.3);
-    public static double camFrontLeftZ = Units.inchesToMeters(20.375);
-    public static double camFrontLeftPitch = Units.degreesToRadians(-15);
-    public static double camFrontLeftYaw = Units.degreesToRadians(10);
+    public static double camFrontLeftX = Units.inchesToMeters(-15.66);
+    public static double camFrontLeftY = Units.inchesToMeters(2.3);
+    public static double camFrontLeftZ = Units.inchesToMeters(266.375);
+    public static double camFrontLeftPitch = Units.degreesToRadians(-177);
+    public static double camFrontLeftYaw = Units.degreesToRadians(150);
 
-    public static double camFrontRightX = Units.inchesToMeters(-10.466);
+    public static double camFrontRightX = Units.inchesToMeters(-11.9996);
     public static double camFrontRightY = Units.inchesToMeters(-12.3);
     public static double camFrontRightZ = Units.inchesToMeters(20.375);
     public static double camFrontRightPitch = Units.degreesToRadians(-15);
