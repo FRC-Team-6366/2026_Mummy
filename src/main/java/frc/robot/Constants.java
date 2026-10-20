@@ -133,8 +133,8 @@ public final class Constants {
     public static String camera2Name = "camRearLeft";
     public static String camera3Name = "camRearRight";
 
-    public static double camFrontLeftX = Units.inchesToMeters(-10.466);
-    public static double camFrontLeftY = Units.inchesToMeters(12.3);
+    public static double camFrontLeftX = Units.inchesToMeters(1);
+    public static double camFrontLeftY = Units.inchesToMeters( 1);
     public static double camFrontLeftZ = Units.inchesToMeters(20.375);
     public static double camFrontLeftPitch = Units.degreesToRadians(-15);
     public static double camFrontLeftYaw = Units.degreesToRadians(10);
