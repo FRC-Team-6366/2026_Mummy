@@ -128,10 +128,10 @@ public final class Constants {
     public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
 
     // Camera names, must match names configured on coprocessor
-    public static String camera0Name = "camFronteft";
-    public static String camera1Name = "camFrontRiht";
-    public static String camera2Name = "camRearLet";
-    public static String camera3Name = "camRearRight";
+    public static String camera0Name = "battery cam";
+    public static String camera1Name = "wheelcam";
+    public static String camera2Name = "GrillCamera";
+    public static String camera3Name = "SearedSteakCamera";
 
     public static double camFrontLeftX = Units.inchesToMeters(-15.66);
     public static double camFrontLeftY = Units.inchesToMeters(2.3);
