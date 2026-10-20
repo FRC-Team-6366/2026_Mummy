@@ -73,7 +73,7 @@ public final class Constants {
     public static final int kickerMotorId = 14;
 
     // Kicker power from 0 to 1
-    public static final int kickerPower = 1;
+    public static final double kickerPower = 0.5;
   }
 
   public class ShooterConstants {
@@ -133,8 +133,8 @@ public final class Constants {
     public static String camera2Name = "camRearLeft";
     public static String camera3Name = "camRearRight";
 
-    public static double camFrontLeftX = Units.inchesToMeters(-10.466);
-    public static double camFrontLeftY = Units.inchesToMeters(12.3);
+    public static double camFrontLeftX = Units.inchesToMeters(-10.4);
+    public static double camFrontLeftY = Units.inchesToMeters(15.0);
     public static double camFrontLeftZ = Units.inchesToMeters(20.375);
     public static double camFrontLeftPitch = Units.degreesToRadians(-15);
     public static double camFrontLeftYaw = Units.degreesToRadians(10);
